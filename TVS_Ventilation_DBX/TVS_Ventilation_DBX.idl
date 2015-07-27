@@ -1,0 +1,253 @@
+// (C) Copyright 2002-2012 by Autodesk, Inc. 
+
+// TVS_Ventilation_DBX.idl : IDL source
+//
+// This file will be processed by the MIDL tool to
+// produce the type library (TVSTVS_Ventilation_DBX.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+//import "acadi.idl";
+
+[
+	uuid(3E4A6B66-8012-4818-9F6C-BDBECFE282CF),
+	version(1.0),
+	helpstring("TVSTVS_Ventilation_DBX 1.0 Type Library")
+]
+library TVSTVS_Ventilation_DBXLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	//----- If the following import fails then it means that the type library 
+	//----- is not on the system path you can fix the problem in two ways:
+	//----- 1. Add it to the system wide PATH environment variable
+	//----- 2. Add it to the executable file list in Developer Studio. You can do
+	//----- this in using the Tools/Option menu and then choosing the 'Directories'
+	//----- tab and finally typing the full path at the Executable files section.
+
+	//----- Importing english is ok here. Autodesk doesn't localize this idl/tlb.
+	//----- axdb16enu.tlb is guaranteed to be available in all locales.
+	//----- If you want to provide localized typelib then you must import
+	//----- localized tlb here.
+	importlib("axdb20enu.tlb");
+	//- Interface definition
+	[
+		object,
+		uuid(D18FCCA1-82A4-4305-AC38-9E572137F808),
+		dual,
+		nonextensible,
+		helpstring("ITVS_ComEntity Interface"),
+		pointer_default(unique)
+	]
+	interface ITVS_ComEntity : IAcadEntity	{
+	};
+	//- Library section of interface ITVS_ComEntity
+	[
+		uuid(C760D18C-F1EF-41B0-B0F3-D701645C7BDF),
+		helpstring("TVS_ComEntity Class")
+	]
+	coclass TVS_ComEntity
+	{
+		[default] interface ITVS_ComEntity;
+		[source] interface IAcadObjectEvents;
+	};
+	//- Interface definition
+	[
+		object,
+		uuid(B1C8DAB6-AFEC-4403-8CDA-7A5ABF82AE44),
+		dual,
+		nonextensible,
+		helpstring("IComPipe Interface"),
+		pointer_default(unique)
+	]
+	interface IComPipe : IAcadEntity	{
+		[propget, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([out, retval] double *pVal);
+        [propput, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([in] double newVal);
+	    [propget, id(2), helpstring("Высота прохода")] HRESULT SizeB([out, retval] double *pVal);
+        [propput, id(2), helpstring("Высота прохода")] HRESULT SizeB([in] double newVal);
+		[propget, id(3), helpstring("Расход м3/ч")] HRESULT Flow([out, retval] double *pVal);
+        [propput, id(3), helpstring("Расход м3/ч")] HRESULT Flow([in] double newVal);
+		[propget, id(4), helpstring("Cкорость м/с")] HRESULT Speed([out, retval] double *pVal);
+		[propput, id(4), helpstring("Cкорость м/с")] HRESULT Speed([in] double newVal);
+		[propget, id(5), helpstring("Длина воздуховода")] HRESULT Length([out, retval] double *pVal);
+        [propput, id(5), helpstring("Длина воздуховода")] HRESULT Length([in] double  newVal);
+		[propget, id(6), helpstring("Угол поворота")] HRESULT Rotation([out, retval] double *pVal);
+		[propput, id(6), helpstring("Угол поворота")] HRESULT Rotation([in] double newVal);
+	    [propget, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([out, retval] int *pVal);
+        [propput, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([in] int  newVal);
+		[propget, id(8), helpstring("Удельные потери давления Па/м")] HRESULT Parami([out, retval] double *pVal);
+		[propput, id(8), helpstring("Удельные потери давления Па/м")] HRESULT Parami([in] double newVal);
+		[propget, id(9), helpstring("Потери давления на участке Па")] HRESULT ParamdP([out, retval] double *pVal);
+		[propput, id(9), helpstring("Потери давления на участке Па")] HRESULT ParamdP([in] double newVal);
+		[propget, id(10), helpstring("Маскировка")] HRESULT Wipeout([out, retval] int *pVal);
+		[propput, id(10), helpstring("Маскировка")] HRESULT Wipeout([in] int newVal);
+		[propget, id(11), helpstring("Грани")] HRESULT Grani([out, retval] int *pVal);
+		[propput, id(11), helpstring("Грани")] HRESULT Grani([in] int newVal);
+		[propget, id(12), helpstring("Отм. низ")] HRESULT ElevUp([out, retval] double *pVal);
+		[propput, id(12), helpstring("Отм. низ")] HRESULT ElevUp([in] double newVal);
+		[propget, id(13), helpstring("Отм. центр")] HRESULT Elev([out, retval] double *pVal);
+		[propput, id(13), helpstring("Отм. центр")] HRESULT Elev([in] double newVal);
+		[propget, id(14), helpstring("Отм. верх")] HRESULT ElevDown([out, retval] double *pVal);
+		[propput, id(14), helpstring("Отм. верх")] HRESULT ElevDown([in] double newVal);
+		//[propget, id(15), helpstring("Тэг 1")] HRESULT Tag1([out, retval]  BSTR *pVal);
+		//[propput, id(15), helpstring("Тэг 1")] HRESULT Tag1([in] BSTR newVal);
+		//[propget, id(16), helpstring("Тэг 2")] HRESULT Tag2([out, retval]  BSTR *pVal);
+		//[propput, id(16), helpstring("Тэг 2")] HRESULT Tag2 ([in] BSTR newVal);
+		//[propget, id(1), helpstring("property StartPoint"),helpcontext(IDH_STARTPOINT)] HRESULT StartPoint([out, retval] VARIANT *pVal);
+		//[propput, id(1), helpstring("property StartPoint"),helpcontext(IDH_STARTPOINT)] HRESULT StartPoint([in] VARIANT newVal);
+	};
+	//- Library section of interface IComPipe
+	[
+		uuid(DA323AD7-6658-44BB-9D63-FB5558F85CB7),
+		helpstring("ComPipe Class")
+	]
+	coclass ComPipe
+	{
+ 		[default] interface IComPipe;
+ 		[source] interface IAcadObjectEvents;
+		
+	};
+	//- Interface definition
+	[
+		object,
+		uuid(B6CE202D-92D8-4A2E-907A-CBFCAE4244F3),
+		dual,
+		nonextensible,
+		helpstring("ICom_TAP Interface"),
+		pointer_default(unique)
+	]
+	interface ICom_TAP : IAcadEntity	{
+		[propget, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([out, retval] double *pVal);
+        [propput, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([in] double newVal);
+	    [propget, id(2), helpstring("Высота прохода")] HRESULT SizeB([out, retval] double *pVal);
+        [propput, id(2), helpstring("Высота прохода")] HRESULT SizeB([in] double newVal);
+		[propget, id(3), helpstring("Расход м3/ч")] HRESULT Flow([out, retval] double *pVal);
+        [propput, id(3), helpstring("Расход м3/ч")] HRESULT Flow([in] double newVal);
+		[propget, id(4), helpstring("Cкорость м/с")] HRESULT Speed([out, retval] double *pVal);
+		[propput, id(4), helpstring("Cкорость м/с")] HRESULT Speed([in] double newVal);
+		//[propget, id(5), helpstring("Длина воздуховода")] HRESULT Length([out, retval] double *pVal);
+        //[propput, id(5), helpstring("Длина воздуховода")] HRESULT Length([in] double  newVal);
+		[propget, id(5), helpstring("Угол отвода")] HRESULT Angle([out, retval] double *pVal);
+		[propput, id(5), helpstring("Угол отвода")] HRESULT Angle([in] double newVal);
+		[propget, id(6), helpstring("Угол поворота")] HRESULT Rotation([out, retval] double *pVal);
+		[propput, id(6), helpstring("Угол поворота")] HRESULT Rotation([in] double newVal);
+		
+		[propget, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([out, retval] int *pVal);
+        [propput, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([in] int  newVal);
+		[propget, id(8), helpstring("Маскировка")] HRESULT Wipeout([out, retval] int *pVal);
+		[propput, id(8), helpstring("Маскировка")] HRESULT Wipeout([in] int newVal);
+		[propget, id(9), helpstring("Отм. центр")] HRESULT Elev([out, retval] double *pVal);
+		[propput, id(9), helpstring("Отм. центр")] HRESULT Elev([in] double newVal);
+// 		[propget, id(10), helpstring("Тэг 1")] HRESULT Tag1([out, retval]  BSTR *pVal);
+// 		[propput, id(10), helpstring("Тэг 1")] HRESULT Tag1([in] BSTR newVal);
+// 		[propget, id(11), helpstring("Тэг 2")] HRESULT Tag2([out, retval]  BSTR *pVal);
+// 		[propput, id(11), helpstring("Тэг 2")] HRESULT Tag2 ([in] BSTR newVal);
+	};
+	//- Library section of interface ICom_TAP
+	[
+		uuid(BA83A3D8-963F-423E-87FE-F977733B9C5B),
+		helpstring("Com_TAP Class")
+	]
+	coclass Com_TAP
+	{
+		[default] interface ICom_TAP;
+		[source] interface IAcadObjectEvents;
+	};
+	//- Interface definition
+	[
+		object,
+		uuid(B22CDDB1-CB06-4A06-8A4D-DA3135CAE57E),
+		dual,
+		nonextensible,
+		helpstring("IComTrans Interface"),
+		pointer_default(unique)
+	]
+	interface IComTrans : IAcadEntity	{
+		[propget, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([out, retval] double *pVal);
+        [propput, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([in] double newVal);
+	    [propget, id(2), helpstring("Высота прохода")] HRESULT SizeB([out, retval] double *pVal);
+        [propput, id(2), helpstring("Высота прохода")] HRESULT SizeB([in] double newVal);
+		[propget, id(3), helpstring("Диаметр или ширина прохода 2")] HRESULT Dpr2([out, retval] double *pVal);
+        [propput, id(3), helpstring("Диаметр или ширина прохода 2")] HRESULT Dpr2([in] double newVal);
+	    [propget, id(4), helpstring("Высота прохода 2")] HRESULT SizeB2([out, retval] double *pVal);
+        [propput, id(4), helpstring("Высота прохода 2")] HRESULT SizeB2([in] double newVal);
+		//[propget, id(3), helpstring("Расход м3/ч")] HRESULT Flow([out, retval] double *pVal);
+        //[propput, id(3), helpstring("Расход м3/ч")] HRESULT Flow([in] double newVal);
+		//[propget, id(4), helpstring("Cкорость м/с")] HRESULT Speed([out, retval] double *pVal);
+		//[propput, id(4), helpstring("Cкорость м/с")] HRESULT Speed([in] double newVal);
+		[propget, id(5), helpstring("Длина воздуховода")] HRESULT Length([out, retval] double *pVal);
+        [propput, id(5), helpstring("Длина воздуховода")] HRESULT Length([in] double  newVal);
+		[propget, id(6), helpstring("Угол поворота")] HRESULT Rotation([out, retval] double *pVal);
+		[propput, id(6), helpstring("Угол поворота")] HRESULT Rotation([in] double newVal);
+	    [propget, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([out, retval] int *pVal);
+        [propput, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([in] int  newVal);
+		[propget, id(8), helpstring("Маскировка")] HRESULT Wipeout([out, retval] int *pVal);
+		[propput, id(8), helpstring("Маскировка")] HRESULT Wipeout([in] int newVal);
+		[propget, id(9), helpstring("Тип")] HRESULT TransType([out, retval] int *pVal);
+		[propput, id(9), helpstring("Тип")] HRESULT TransType([in] int newVal);
+
+		[propget, id(10), helpstring("Отм. центр")] HRESULT Elev([out, retval] double *pVal);
+		[propput, id(10), helpstring("Отм. центр")] HRESULT Elev([in] double newVal);
+// 		[propget, id(11), helpstring("Тэг 1")] HRESULT Tag1([out, retval]  BSTR *pVal);
+// 		[propput, id(11), helpstring("Тэг 1")] HRESULT Tag1([in] BSTR newVal);
+// 		[propget, id(12), helpstring("Тэг 2")] HRESULT Tag2([out, retval]  BSTR *pVal);
+// 		[propput, id(12), helpstring("Тэг 2")] HRESULT Tag2 ([in] BSTR newVal);
+	};
+	//- Library section of interface IComTrans
+	[
+		uuid(9C5FB63E-34A2-40DE-97BD-25B449439C7F),
+		helpstring("ComTrans Class")
+	]
+	coclass ComTrans
+	{
+		[default] interface IComTrans;
+		[source] interface IAcadObjectEvents;
+	};
+	//- Interface definition
+	[
+		object,
+		uuid(561C4980-5DBB-423C-9191-F184793BFD2E),
+		dual,
+		nonextensible,
+		helpstring("IComWye Interface"),
+		pointer_default(unique)
+	]
+	interface IComWye : IAcadEntity	{
+		[propget, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([out, retval] double *pVal);
+        [propput, id(1), helpstring("Диаметр или ширина прохода")] HRESULT Dpr([in] double newVal);
+	    [propget, id(2), helpstring("Высота прохода")] HRESULT SizeB([out, retval] double *pVal);
+        [propput, id(2), helpstring("Высота прохода")] HRESULT SizeB([in] double newVal);
+		[propget, id(3), helpstring("Диаметр или ширина ответвления")] HRESULT Dpr2([out, retval] double *pVal);
+        [propput, id(3), helpstring("Диаметр или ширина ответвления")] HRESULT Dpr2([in] double newVal);
+	    [propget, id(4), helpstring("Высота ответвления")] HRESULT SizeB2([out, retval] double *pVal);
+        [propput, id(4), helpstring("Высота ответвления")] HRESULT SizeB2([in] double newVal);
+		//[propget, id(3), helpstring("Расход м3/ч")] HRESULT Flow([out, retval] double *pVal);
+        //[propput, id(3), helpstring("Расход м3/ч")] HRESULT Flow([in] double newVal);
+		//[propget, id(4), helpstring("Cкорость м/с")] HRESULT Speed([out, retval] double *pVal);
+		//[propput, id(4), helpstring("Cкорость м/с")] HRESULT Speed([in] double newVal);
+		[propget, id(5), helpstring("Длина плеча")] HRESULT Length([out, retval] double *pVal);
+        [propput, id(5), helpstring("Длина плеча")] HRESULT Length([in] double  newVal);
+		[propget, id(6), helpstring("Угол поворота")] HRESULT Rotation([out, retval] double *pVal);
+		[propput, id(6), helpstring("Угол поворота")] HRESULT Rotation([in] double newVal);
+	    [propget, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([out, retval] int *pVal);
+        [propput, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([in] int  newVal);
+		[propget, id(8), helpstring("Маскировка")] HRESULT Wipeout([out, retval] int *pVal);
+		[propput, id(8), helpstring("Маскировка")] HRESULT Wipeout([in] int newVal);
+		[propget, id(9), helpstring("Отм. центр")] HRESULT Elev([out, retval] double *pVal);
+		[propput, id(9), helpstring("Отм. центр")] HRESULT Elev([in] double newVal);
+// 		[propget, id(10), helpstring("Тэг 1")] HRESULT Tag1([out, retval]  BSTR *pVal);
+// 		[propput, id(10), helpstring("Тэг 1")] HRESULT Tag1([in] BSTR newVal);
+// 		[propget, id(11), helpstring("Тэг 2")] HRESULT Tag2([out, retval]  BSTR *pVal);
+// 		[propput, id(11), helpstring("Тэг 2")] HRESULT Tag2([in] BSTR newVal);
+	};
+	//- Library section of interface IComWye
+	[
+		uuid(E7A4FCFE-8ED9-4C74-9ACB-776DB31AE4AC),
+		helpstring("ComWye Class")
+	]
+	coclass ComWye
+	{
+		[default] interface IComWye;
+		[source] interface IAcadObjectEvents;
+	};
+};

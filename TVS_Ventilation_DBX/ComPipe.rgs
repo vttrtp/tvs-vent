@@ -1,0 +1,47 @@
+HKCR
+{
+	TVS_Ventilation_DBX.ComPipe.1 = s 'ComPipe Class'
+	{
+		CLSID = s '{DA323AD7-6658-44BB-9D63-FB5558F85CB7}'
+	}
+	TVS_Ventilation_DBX.ComPipe = s 'ComPipe Class'
+	{
+		CLSID = s '{DA323AD7-6658-44BB-9D63-FB5558F85CB7}'
+		CurVer = s 'TVS_Ventilation_DBX.ComPipe.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DA323AD7-6658-44BB-9D63-FB5558F85CB7} = s 'ComPipe Class'
+		{
+			ProgID = s 'TVS_Ventilation_DBX.ComPipe.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_DBX.ComPipe'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{3E4A6B66-8012-4818-9F6C-BDBECFE282CF}'
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove SOFTWARE
+	{
+		NoRemove Autodesk
+		{
+			NoRemove ObjectDBX
+			{
+				NoRemove R18.0
+				{
+					NoRemove ActiveXCLSID
+					{
+						val TVS_Pipe = s '{DA323AD7-6658-44BB-9D63-FB5558F85CB7}'
+					}
+				}
+			}
+		}
+	}
+}

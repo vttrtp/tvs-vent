@@ -1,0 +1,47 @@
+HKCR
+{
+	TVS_Ventilation_DBX.Com_TAP.1 = s 'Com_TAP Class'
+	{
+		CLSID = s '{BA83A3D8-963F-423E-87FE-F977733B9C5B}'
+	}
+	TVS_Ventilation_DBX.Com_TAP = s 'Com_TAP Class'
+	{
+		CLSID = s '{BA83A3D8-963F-423E-87FE-F977733B9C5B}'
+		CurVer = s 'TVS_Ventilation_DBX.Com_TAP.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {BA83A3D8-963F-423E-87FE-F977733B9C5B} = s 'Com_TAP Class'
+		{
+			ProgID = s 'TVS_Ventilation_DBX.Com_TAP.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_DBX.Com_TAP'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{3E4A6B66-8012-4818-9F6C-BDBECFE282CF}'
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove SOFTWARE
+	{
+		NoRemove Autodesk
+		{
+			NoRemove ObjectDBX
+			{
+				NoRemove R18.0
+				{
+					NoRemove ActiveXCLSID
+					{
+						val TVS_TAP = s '{BA83A3D8-963F-423E-87FE-F977733B9C5B}'
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,47 @@
+HKCR
+{
+	TVS_Ventilation_DBX.ComWye.1 = s 'ComWye Class'
+	{
+		CLSID = s '{E7A4FCFE-8ED9-4C74-9ACB-776DB31AE4AC}'
+	}
+	TVS_Ventilation_DBX.ComWye = s 'ComWye Class'
+	{
+		CLSID = s '{E7A4FCFE-8ED9-4C74-9ACB-776DB31AE4AC}'
+		CurVer = s 'TVS_Ventilation_DBX.ComWye.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {E7A4FCFE-8ED9-4C74-9ACB-776DB31AE4AC} = s 'ComWye Class'
+		{
+			ProgID = s 'TVS_Ventilation_DBX.ComWye.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_DBX.ComWye'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{3E4A6B66-8012-4818-9F6C-BDBECFE282CF}'
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove SOFTWARE
+	{
+		NoRemove Autodesk
+		{
+			NoRemove ObjectDBX
+			{
+				NoRemove R18.0
+				{
+					NoRemove ActiveXCLSID
+					{
+						val TVS_WYE = s '{E7A4FCFE-8ED9-4C74-9ACB-776DB31AE4AC}'
+					}
+				}
+			}
+		}
+	}
+}

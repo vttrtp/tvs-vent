@@ -1,0 +1,47 @@
+HKCR
+{
+	TVS_Ventilation_DBX.TVS_ComEntity.1 = s 'TVS_ComEntity Class'
+	{
+		CLSID = s '{C760D18C-F1EF-41B0-B0F3-D701645C7BDF}'
+	}
+	TVS_Ventilation_DBX.TVS_ComEntity = s 'TVS_ComEntity Class'
+	{
+		CLSID = s '{C760D18C-F1EF-41B0-B0F3-D701645C7BDF}'
+		CurVer = s 'TVS_Ventilation_DBX.TVS_ComEntity.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C760D18C-F1EF-41B0-B0F3-D701645C7BDF} = s 'TVS_ComEntity Class'
+		{
+			ProgID = s 'TVS_Ventilation_DBX.TVS_ComEntity.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_DBX.TVS_ComEntity'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{3E4A6B66-8012-4818-9F6C-BDBECFE282CF}'
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove SOFTWARE
+	{
+		NoRemove Autodesk
+		{
+			NoRemove ObjectDBX
+			{
+				NoRemove R18.0
+				{
+					NoRemove ActiveXCLSID
+					{
+						val TVS_Entity = s '{C760D18C-F1EF-41B0-B0F3-D701645C7BDF}'
+					}
+				}
+			}
+		}
+	}
+}

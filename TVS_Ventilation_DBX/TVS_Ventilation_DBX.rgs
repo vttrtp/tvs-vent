@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'TVS_Ventilation_DBX'
+		'TVSTVS_Ventilation_DBX.dbx'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

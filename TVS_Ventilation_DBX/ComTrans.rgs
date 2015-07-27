@@ -1,0 +1,47 @@
+HKCR
+{
+	TVS_Ventilation_DBX.ComTrans.1 = s 'ComTrans Class'
+	{
+		CLSID = s '{9C5FB63E-34A2-40DE-97BD-25B449439C7F}'
+	}
+	TVS_Ventilation_DBX.ComTrans = s 'ComTrans Class'
+	{
+		CLSID = s '{9C5FB63E-34A2-40DE-97BD-25B449439C7F}'
+		CurVer = s 'TVS_Ventilation_DBX.ComTrans.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9C5FB63E-34A2-40DE-97BD-25B449439C7F} = s 'ComTrans Class'
+		{
+			ProgID = s 'TVS_Ventilation_DBX.ComTrans.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_DBX.ComTrans'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{3E4A6B66-8012-4818-9F6C-BDBECFE282CF}'
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove SOFTWARE
+	{
+		NoRemove Autodesk
+		{
+			NoRemove ObjectDBX
+			{
+				NoRemove R18.0
+				{
+					NoRemove ActiveXCLSID
+					{
+						val TVS_TRANS = s '{9C5FB63E-34A2-40DE-97BD-25B449439C7F}'
+					}
+				}
+			}
+		}
+	}
+}
