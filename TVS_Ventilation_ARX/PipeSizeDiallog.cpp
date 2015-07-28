@@ -46,9 +46,9 @@ BEGIN_MESSAGE_MAP(PipeSizeDiallog, CAdUiBaseDialog)
 	ON_BN_CLICKED(IDC_Wipeout, &PipeSizeDiallog::ChangeWipe)
 	ON_BN_CLICKED(IDC_Grani, &PipeSizeDiallog::ChangeGrani)
 	ON_BN_CLICKED(IDC_1D, &PipeSizeDiallog::ChangeD1)
-	ON_BN_CLICKED(IDC_TapDown, &PipeSizeDiallog::SetForm_Down)
-	ON_BN_CLICKED(IDC_TapMid, &PipeSizeDiallog::SetFForm_Direct)
-	ON_BN_CLICKED(IDC_TapUp, &PipeSizeDiallog::SetForm_Up)
+	//ON_BN_CLICKED(IDC_TapDown, &PipeSizeDiallog::SetForm_Down)
+	//ON_BN_CLICKED(IDC_TapMid, &PipeSizeDiallog::SetFForm_Direct)
+	//ON_BN_CLICKED(IDC_TapUp, &PipeSizeDiallog::SetForm_Up)
 
 	ON_BN_CLICKED(IDC_TapRadiusRoundConst, &PipeSizeDiallog::SetRadiusTypeRound_RadiusConstant)
 	ON_BN_CLICKED(IDC_TapRadiusRoundVariable, &PipeSizeDiallog::SetRadiusTypeRound_RadiusVariable)
@@ -72,8 +72,8 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Control(pDX, IDC_SizeA, fSizeA);
 	DDX_Control(pDX, IDC_SizeB, fSizeB);
 	DDX_Control(pDX, IDC_Flow, fFlow);
-	DDX_Control(pDX, IDC_SizeA2, fSizeA2);
-	DDX_Control(pDX, IDC_SizeB2, fSizeB2);
+	//DDX_Control(pDX, IDC_SizeA2, fSizeA2);
+	//DDX_Control(pDX, IDC_SizeB2, fSizeB2);
 	DDX_Control(pDX, IDC_TransLength, fLengthTr);
 	DDX_Control(pDX, IDC_LengthWye, fLengthW);
 	DDX_Control(pDX, IDCANCEL, F);
@@ -93,10 +93,10 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Control(pDX, IDC_TapRadiusRoundVariable, fTapRadiusRoundVariable);
 	DDX_Control(pDX, IDC_TapRadiusRoundConst, fTapRadiusRoundConst);
 	DDX_Control(pDX, IDC_TapRadiusRoundSpecific, fTapRadiusRoundSpecific);
-	DDX_Control(pDX, IDC_TapUp, fTapUp);
-	DDX_Control(pDX, IDC_TapMid, fTapMid);
-	DDX_Control(pDX, IDC_TapDown, fTapDown);
-	DDX_Control(pDX, IDC_Swectangle, fSwectangle);
+	//DDX_Control(pDX, IDC_TapUp, fTapUp);
+	//DDX_Control(pDX, IDC_TapMid, fTapMid);
+	//DDX_Control(pDX, IDC_TapDown, fTapDown);
+	//DDX_Control(pDX, IDC_Swectangle, fSwectangle);
 	DDX_Control(pDX, IDC_TapRadiusVariableParameter, fTapRadiusVariableParameter);
 	DDX_Control(pDX, IDC_TapRadiusConst, fTapRadiusConst);
 
@@ -105,8 +105,8 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Text(pDX, IDC_SizeA, SizeA);
 	DDX_Text(pDX, IDC_SizeB, SizeB);
 	DDX_Text(pDX, IDC_Flow, Flow);
-	DDX_Text(pDX, IDC_SizeA2, SizeA2);
-	DDX_Text(pDX, IDC_SizeB2, SizeB2);
+	//DDX_Text(pDX, IDC_SizeA2, SizeA2);
+	//DDX_Text(pDX, IDC_SizeB2, SizeB2);
 	DDX_Text(pDX, IDC_TransLength, LengthTr);
 	DDX_Text(pDX, IDC_LengthWye, LengthW);
 	DDX_Text(pDX, IDC_ElevVal, Elev);
@@ -114,7 +114,7 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Text(pDX, IDC_i, I);
 	DDX_Text(pDX, IDC_dP, Dp);
 
-	DDX_Text(pDX, IDC_Swectangle, Swectangle);
+	//DDX_Text(pDX, IDC_Swectangle, Swectangle);
 	DDX_Text(pDX, IDC_TapRadiusVariableParameter, TapRadiusVariableParameter);
 	DDX_Text(pDX, IDC_TapRadiusConst, TapRadiusConst);
 
@@ -141,9 +141,9 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Check(pDX, IDC_TapRadiusRoundVariable, TapRadiusRoundVariable);
 	DDX_Check(pDX, IDC_TapRadiusRoundConst, TapRadiusRoundConst);
 	DDX_Check(pDX, IDC_TapRadiusRoundSpecific, TapRadiusRoundSpecific);
-	DDX_Check(pDX, IDC_TapUp, TapUp);
-	DDX_Check(pDX, IDC_TapMid, TapMid);
-	DDX_Check(pDX, IDC_TapDown, TapDown);
+	//DDX_Check(pDX, IDC_TapUp, TapUp);
+	//DDX_Check(pDX, IDC_TapMid, TapMid);
+	//DDX_Check(pDX, IDC_TapDown, TapDown);
 }
 
 //-----------------------------------------------------------------------------
@@ -286,50 +286,7 @@ void PipeSizeDiallog::ChangeD1()
 	change_BOOL(D1,fD1);
 }
 
-void PipeSizeDiallog::SetForm_Up()
-{
 
-	TapUp=true;
-	fTapUp.SetCheck(1);
-
-
-	TapDown=false;
-	fTapDown.SetCheck(0);
-
-
-	TapMid=false;
-	fTapMid.SetCheck(0);
-
-}
-
-void PipeSizeDiallog::SetForm_Down()
-{
-	TapUp=false;
-	fTapUp.SetCheck(0);
-
-
-	TapDown=true;
-	fTapDown.SetCheck(1);
-
-
-	TapMid=false;
-	fTapMid.SetCheck(0);
-}
-
-void PipeSizeDiallog::SetFForm_Direct()
-{
-	TapUp=false;
-	fTapUp.SetCheck(0);
-
-
-	TapDown=false;
-	fTapDown.SetCheck(0);
-
-
-	TapMid=true;
-	fTapMid.SetCheck(1);
-
-}
 
 void PipeSizeDiallog::SetRadiusTypeRound_RadiusSpecific()
 {

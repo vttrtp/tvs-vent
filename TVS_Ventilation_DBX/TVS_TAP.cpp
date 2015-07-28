@@ -1064,23 +1064,50 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 					else 
 					{
+						double l1=(double) 85*M_PI/180, l2=95*(double)M_PI/180;
 					if (Form==Form_Up)
 					{
+						
+						if ((Swectangle> l1) && (Swectangle< l2))
+						{
+						
 						setMainProperty(el);
 						setMainProperty(el2);
 						setMainProperty(el3);
 						setAxisProperty(pLine1);
 						setAxisProperty(pLine2);
 						setMainProperty(pLn);
+						}
+						else
+						{
+							setHideProperty(el);
+							setMainProperty(el2);
+							//setMainProperty(el3);
+							setAxisProperty(pLine1);
+							setAxisProperty(pLine2);
+							setMainProperty(pLn);
+						}
 					}
 					else
 					{
+						if ((Swectangle> l1) && (Swectangle< l2))
+						{
 						setMainProperty(el);
 						setHideProperty(el2);
 						setHideProperty(el3);
 						setAxisProperty(pLine1);
 						setAxisProperty(pLine2);
 						setMainProperty(pLn);
+						}
+						else
+						{
+							setMainProperty(el);
+							setHideProperty(el2);
+							//setHideProperty(el3);
+							setAxisProperty(pLine1);
+							setAxisProperty(pLine2);
+							setMainProperty(pLn);
+						}
 					}
 					
 					

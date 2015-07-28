@@ -164,14 +164,55 @@ public:
 // 		if (globSizeB==0) globRound=true;
 // 		else globRound=false;
 		
-		PipeSizeDiallog r;
-		a=r.SizeA=globSizeA;
-	b=r.SizeB=globSizeB;
-	r.DoModal();
-		globSizeA=r.SizeA;
-		globSizeB=r.SizeB;
-		//a=150;
-		//	b=150;
+		PipeSizeDiallog dg;
+		a=dg.SizeA=globSizeA;
+	b=dg.SizeB=globSizeB;
+	dg.Flow=globalFlow;
+	dg.LengthTr=globalLengthTr;
+	dg.LengthW=globalLengthW;
+	//dg.Tpipe=firstPipe;
+	//dg.Twye=firstWye;
+	//dg.Ttrans=firstTrans;
+	//dg.Ttap=firstTap;
+	dg.Wipe=globalWipeout;
+	dg.Grani=globalGrani;
+	dg.D1=global1D;
+	dg.ElevMid=globalElevMid;
+	dg.Elev=globalElev;
+	dg.TapForm=globalTapForm;
+	dg.TypeRoundTap=globalTypeRoundTap;
+	dg.RadiusTypeRound=globalRadiusTypeRound;
+	dg.RadiusTypeRect=globalRadiusTypeRect;
+	dg.TapRadiusVariableParameter=globalTapRadiusVariableParameter;
+	dg.TapRadiusConst=globalTapRadiusConst;
+
+	AcApDocument *pDoc=acDocManager->curDocument();
+	acDocManager->lockDocument(pDoc,AcAp::kWrite);
+
+
+
+	
+	 CAcModuleResourceOverride resourceOverride;
+	dg.DoModal();
+	acDocManager->unlockDocument(pDoc);
+		globSizeA=dg.SizeA;
+		globSizeB=dg.SizeB;
+		globalFlow=dg.Flow;
+		globalLengthTr=dg.LengthTr;
+		globalLengthW=dg.LengthW;
+
+		globalWipeout=dg.Wipe;
+		globalGrani=dg.Grani;
+		global1D=dg.D1;
+		globalElevMid=dg.ElevMid;
+		globalElev=dg.Elev;
+		globalTapForm=dg.TapForm;
+		globalTypeRoundTap=dg.TypeRoundTap;
+		globalRadiusTypeRound=dg.RadiusTypeRound;
+		globalRadiusTypeRect=dg.RadiusTypeRect;
+		globalTapRadiusVariableParameter=dg.TapRadiusVariableParameter;
+		globalTapRadiusConst=dg.TapRadiusConst;
+	
 		if (globSizeB==0) globRound=true;
 		else globRound=false;
 		if (a==globSizeA && b==globSizeB)
@@ -221,6 +262,7 @@ public:
 			
 
 			pTap=drawTapDirect(A1,A2,A3);
+			SetGlobalProperty(pTap);
 			double delta=length2p(pTap->MA,pTap->MiddlePoint);
 			AcGePoint3d A2a=shortlength(A1,A2,delta);
 			AcGePoint3d A2b=shortlength(A3,A2,delta);
@@ -235,6 +277,7 @@ public:
 				pipi->LastPoint=A2a;
 				pipi->close();
 				pipi=pipie.add_new(A2b,A3,globSizeA,globSizeB,false,globRound);
+				SetGlobalProperty(pipi);
 				A1=A2;
 				A2=A3;
 

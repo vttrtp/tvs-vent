@@ -7,7 +7,9 @@
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
 #include "SPEC.h"
 #include "dgAllEdit.h"
-
+#define globalElevUp 1
+#define globalElevmid 2
+#define globalElevdown 3
 
 namespace func {
 
@@ -85,6 +87,9 @@ AcGePoint3d AddSpecLine(AcGePoint3d cent,
 static double globSizeA=150;
 static double globSizeB=150;
 static bool globRound=false;
+static bool globalWipeout=false;
+static bool globalGrani=false;
+static bool global1D=false;
 static double ftSizeB=100;
 static double ftSizeroundA=160;
 static double ftLengthp=150;
@@ -96,7 +101,11 @@ static int globalTypeRoundTap=1;
 static int globalTapForm=Form_Direct;
 static double globalTapRadiusVariableParameter=1;
 static double globalTapRadiusConst=150;
-
+static double globalFlow=0;
+static double globalLengthTr=300;
+static double globalLengthW=50;
+static double globalElevMid=0;
+static double globalElev=globalElevdown;
 
 void TVS_CS (AcDbEntity *pEnt);
 void TVS_PEdit (AcDbEntity *pEnt);
@@ -146,6 +155,6 @@ CString &stringconst
 	 );
 
 void PostToModelSpace(AcDbEntity *pEnt);
-
+void SetGlobalProperty(TVS_Entity *pEnt);
 void GiveStartvectorAndAngle (AcGePoint3d &n1, AcGePoint3d &n2, AcGePoint3d &n3, double &pAngle, AcGeVector3d &pStartvector);
 };
