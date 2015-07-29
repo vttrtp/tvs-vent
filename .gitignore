@@ -158,4 +158,7 @@ $RECYCLE.BIN/
 
 
 #main 
-*.vcxproj
+TVS_Ventilation_DBX/*.vcxproj
+TVS_Ventilation_DBX/*.props
+TVS_Ventilation_ARX/*.vcxproj
+TVS_Ventilation_ARX/*.props

@@ -31,6 +31,7 @@ IMPLEMENT_DYNAMIC (PipeSizeDiallog, CAdUiBaseDialog)
 
 BEGIN_MESSAGE_MAP(PipeSizeDiallog, CAdUiBaseDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, OnAcadKeepFocus)
+//		ON_WM_SHOWWINDOW()
 	ON_BN_CLICKED(IDOK, &PipeSizeDiallog::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &PipeSizeDiallog::OnBnClickedCancel)
 
@@ -58,6 +59,7 @@ BEGIN_MESSAGE_MAP(PipeSizeDiallog, CAdUiBaseDialog)
 	ON_BN_CLICKED(IDC_TapRadiusRectVariable, &PipeSizeDiallog::SetRadiusTypeRect_RadiusVariable)
 
 
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
@@ -86,7 +88,7 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Control(pDX, IDC_ElevDown, fElevDown);
 	DDX_Control(pDX, IDC_Speed, fSpeed);
 	DDX_Control(pDX, IDC_i, fI);
-	DDX_Control(pDX, IDC_dP, fDp);
+	//DDX_Control(pDX, IDC_dP, fDp);
 
 	DDX_Control(pDX, IDC_TapRadiusRectVariable, fTapRadiusRectVariable);
 	DDX_Control(pDX, IDC_TapRadiusRectConst, fTapRadiusRectConst);
@@ -112,7 +114,7 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Text(pDX, IDC_ElevVal, Elev);
 	DDX_Text(pDX, IDC_Speed, Speed);
 	DDX_Text(pDX, IDC_i, I);
-	DDX_Text(pDX, IDC_dP, Dp);
+	//DDX_Text(pDX, IDC_dP, Dp);
 
 	//DDX_Text(pDX, IDC_Swectangle, Swectangle);
 	DDX_Text(pDX, IDC_TapRadiusVariableParameter, TapRadiusVariableParameter);
@@ -154,9 +156,43 @@ LRESULT PipeSizeDiallog::OnAcadKeepFocus (WPARAM, LPARAM) {
 }
 
 
+
+
+
 void PipeSizeDiallog::OnBnClickedOk()
 {
+
+
+	if (TapRadiusRoundConst==true)
+	{
+		RadiusTypeRound= RadiusTypeRound_RadiusConstant;
+	}
+
+	if (TapRadiusRoundVariable==true)
+	{
+		RadiusTypeRound= RadiusTypeRound_RadiusVariable;
+	}
+
+	if (TapRadiusRoundSpecific==true)
+	{
+		RadiusTypeRound=RadiusTypeRound_RadiusSpecific;
+	}
+
+	if (TapRadiusRectConst==true)
+	{
+		RadiusTypeRect= RadiusTypeRect_RadiusConstant;
+	}
+
+	if (TapRadiusRectVariable==true)
+	{
+		RadiusTypeRect=RadiusTypeRect_RadiusVariable;
+	}
+
+
+
+
 	this->OnOK();
+	// TODO: добавьте свой код обработчика уведомлений
 	// TODO: добавьте свой код обработчика уведомлений
 }
 
@@ -355,3 +391,68 @@ void PipeSizeDiallog::SetRadiusTypeRect_RadiusVariable()
 	TapRadiusRectVariable=true;
 	fTapRadiusRectVariable.SetCheck(1);
 }
+
+
+void PipeSizeDiallog::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CAdUiBaseDialog::OnShowWindow(bShow, nStatus);
+
+
+	
+
+
+	
+
+
+
+		iTapForm=TapForm;
+		iTypeRoundTap=TypeRoundTap;
+		iRadiusTypeRound=RadiusTypeRound;
+		iRadiusTypeRect=RadiusTypeRect;
+		CString var;
+
+
+
+		switch (iRadiusTypeRound)
+		{
+		case RadiusTypeRound_RadiusSpecific:
+			TapRadiusRoundSpecific=true;
+			fTapRadiusRoundSpecific.SetCheck(1);
+			break;
+		case RadiusTypeRound_RadiusConstant:
+			TapRadiusRoundConst=true;
+			fTapRadiusRoundConst.SetCheck(1);
+			break;
+		case RadiusTypeRound_RadiusVariable:
+			TapRadiusRoundVariable=true;
+			fTapRadiusRoundVariable.SetCheck(1);
+			break;
+		default:
+			break;
+		}
+
+		switch (iRadiusTypeRect)
+		{
+
+		case RadiusTypeRect_RadiusConstant:
+			TapRadiusRectConst=true;
+			fTapRadiusRectConst.SetCheck(1);
+			break;
+		case RadiusTypeRect_RadiusVariable:
+			TapRadiusRectVariable=true;
+			fTapRadiusRectVariable.SetCheck(1);
+			break;
+		default:
+			break;
+		
+
+
+	
+
+}
+
+
+		ChangeSizeA();
+	// TODO: добавьте свой код обработчика сообщений
+}
+

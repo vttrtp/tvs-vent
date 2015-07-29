@@ -1160,13 +1160,13 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 					CenterPoint.z
 					).rotateBy(startangle,vectr,CenterPoint);
 
-				MA=AcGePoint3d(CenterPoint.x,
-					CenterPoint.y+Radius+SizeA/2,
+				MA=AcGePoint3d(CenterPoint.x+(Radius+SizeA/2),
+					CenterPoint.y,
 					CenterPoint.z
 					).rotateBy(startangle,vectr,CenterPoint);
 
-				MC=AcGePoint3d(CenterPoint.x+Radius+SizeA/2,
-					CenterPoint.y,
+				MC=AcGePoint3d(CenterPoint.x+(Radius+SizeA/2)*cos(Swectangle),
+					CenterPoint.y+(Radius+SizeA/2)*sin(Swectangle),
 					CenterPoint.z
 					).rotateBy(startangle,vectr,CenterPoint);
 

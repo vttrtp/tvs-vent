@@ -3248,120 +3248,120 @@ void func::PostToModelSpace(AcDbEntity *pEnt)
 }
 
 
-
-void func::SetGlobalProperty( TVS_Entity *pEnt )
-{
-
-	TVS_Pipe * Pipi;
-	TVS_TAP * Tapie;
-	TVS_WYE* Wyeie;
-	TVS_TRANS * Transie;
-
-
-	if(pEnt->upgradeOpen()==Acad::eOk)
-	{
-
-		pEnt->put_SizeA(globSizeA);
-		pEnt->put_SizeB(globSizeB);
-		pEnt->Wipeout=globalWipeout;
-		pEnt->Grani=globalGrani;
-		pEnt->This1D=global1D;
-		pEnt->Flow=globalFlow;
-		pEnt->put_Elevation(globalElevMid);
-
-
-
-
-
-
-		if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
-		{	
-
-
-			// 			///
-			// 			if (cSizeA==false) Pipi->put_SizeA(SizeA);
-			// 			if (cSizeB==false) Pipi->put_SizeB(SizeB);
-			// 			if (cFlow==false) Pipi->put_Flow(Flow);
-			// 			if (cGrani==false) Pipi->put_Grani(Grani);
-			// 			if (cD1==false) Pipi->put_This1D(D1);
-			// 			if (cWipe==false) Pipi->put_Wipeout(Wipe);
-			// 			if (cElev==false) Pipi->put_Elevation(getElev(Elev,Emode,Pipi->SizeA,Pipi->SizeB));
-			//
-
-
-		}
-
-		if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
-		{	
-
-
-			// 			///
-			// 			if (cSizeA==false) Tapie->put_SizeA(SizeA);
-			// 			if (cSizeB==false) Tapie->put_SizeB(SizeB);
-			// 			if (cFlow==false) Tapie->put_Flow(Flow);
-			// 
-			// 			if (cD1==false) Tapie->put_This1D(D1);
-			// 			if (cWipe==false) Tapie->put_Wipeout(Wipe);
-			// 			if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
-			// 			//
-			// 
-			// 
-			// 			if (cTapForm==false) Tapie->put_Form(TapForm);
- 			 			Tapie->put_TypeRoundTap(globalTypeRoundTap);
- 			 			Tapie->put_RadiusTypeRound(globalRadiusTypeRound);
- 			 			Tapie->put_RadiusTypeRect(globalRadiusTypeRect);
- 			 			Tapie->put_RadiusVariableParameter(globalTapRadiusVariableParameter);
- 			 			Tapie->put_RadiusConst(globalTapRadiusConst);
-			// 			if (cSwectangle==false) Tapie->put_Swectangle(Swectangle);
-
-		}
-
-		if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
-		{	
-
-
-			// 			///
-			// 			if (cSizeA==false) Wyeie->put_SizeApr(SizeA);
-			// 			if (cSizeB==false) Wyeie->put_SizeBpr(SizeB);
-			// 			if (cSizeA2==false) Wyeie->put_SizeAotv(SizeA2);
-			// 			if (cSizeB2==false) Wyeie->put_SizeBotv(SizeB2);
-			// 			if (cLengthW==false) Wyeie->put_Length(LengthW);
-			// 			//if (cFlow==false) Tapie->put_Flow(Flow);
-			// 
-			// 			if (cD1==false) Wyeie->put_This1D(D1);
-			// 			if (cWipe==false) Wyeie->put_Wipeout(Wipe);
-			// 			if (cElev==false) Wyeie->put_Elevation(getElev(Elev,Emode,Wyeie->SizeApr,Wyeie->SizeBpr));
-			// 			//
-
-
-		}
-
-		if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
-		{	
-			// 			///
-			// 			if (cSizeA==false) Transie->put_SizeAp1(SizeA);
-			// 			if (cSizeB==false) Transie->put_SizeBp1(SizeB);
-			// 			if (cSizeA2==false) Transie->put_SizeAp2(SizeA2);
-			// 			if (cSizeB2==false) Transie->put_SizeBp2(SizeB2);
-			// 			if (cLengthTr==false) Transie->put_Length(LengthTr);
-			// 			//if (cFlow==false) Tapie->put_Flow(Flow);
-			// 
-			// 			if (cD1==false) Transie->put_This1D(D1);
-			// 			if (cWipe==false) Transie->put_Wipeout(Wipe);
-			// 			if (cElev==false) Transie->put_Elevation(getElev(Elev,Emode,Transie->SizeAp1,Transie->SizeBp1));
-			// 			//
-
-
-
-		}
-
-		pEnt->draw();
-		pEnt->close();
-		
-	}
-
-
-}
+// 
+// void func::SetGlobalProperty( TVS_Entity *pEnt )
+// {
+// 
+// 	TVS_Pipe * Pipi;
+// 	TVS_TAP * Tapie;
+// 	TVS_WYE* Wyeie;
+// 	TVS_TRANS * Transie;
+// 
+// 
+// 	if(pEnt->upgradeOpen()==Acad::eOk)
+// 	{
+// 
+// 		pEnt->SizeA=globSizeA;
+// 		pEnt->put_SizeB(globSizeB);
+// 		pEnt->Wipeout=globalWipeout;
+// 		pEnt->Grani=globalGrani;
+// 		pEnt->This1D=global1D;
+// 		pEnt->Flow=globalFlow;
+// 		pEnt->put_Elevation(globalElevMid);
+// 
+// 
+// 
+// 
+// 
+// 
+// 		if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+// 		{	
+// 
+// 
+// 			// 			///
+// 			// 			if (cSizeA==false) Pipi->put_SizeA(SizeA);
+// 			// 			if (cSizeB==false) Pipi->put_SizeB(SizeB);
+// 			// 			if (cFlow==false) Pipi->put_Flow(Flow);
+// 			// 			if (cGrani==false) Pipi->put_Grani(Grani);
+// 			// 			if (cD1==false) Pipi->put_This1D(D1);
+// 			// 			if (cWipe==false) Pipi->put_Wipeout(Wipe);
+// 			// 			if (cElev==false) Pipi->put_Elevation(getElev(Elev,Emode,Pipi->SizeA,Pipi->SizeB));
+// 			//
+// 
+// 
+// 		}
+// 
+// 		if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+// 		{	
+// 
+// 
+// 			// 			///
+// 			// 			if (cSizeA==false) Tapie->put_SizeA(SizeA);
+// 			// 			if (cSizeB==false) Tapie->put_SizeB(SizeB);
+// 			// 			if (cFlow==false) Tapie->put_Flow(Flow);
+// 			// 
+// 			// 			if (cD1==false) Tapie->put_This1D(D1);
+// 			// 			if (cWipe==false) Tapie->put_Wipeout(Wipe);
+// 			// 			if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
+// 			// 			//
+// 			// 
+// 			// 
+// 			// 			if (cTapForm==false) Tapie->put_Form(TapForm);
+//  			 			Tapie->put_TypeRoundTap(globalTypeRoundTap);
+//  			 			Tapie->put_RadiusTypeRound(globalRadiusTypeRound);
+//  			 			Tapie->put_RadiusTypeRect(globalRadiusTypeRect);
+//  			 			Tapie->put_RadiusVariableParameter(globalTapRadiusVariableParameter);
+//  			 			Tapie->put_RadiusConst(globalTapRadiusConst);
+// 			// 			if (cSwectangle==false) Tapie->put_Swectangle(Swectangle);
+// 
+// 		}
+// 
+// 		if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+// 		{	
+// 
+// 
+// 			// 			///
+// 			// 			if (cSizeA==false) Wyeie->put_SizeApr(SizeA);
+// 			// 			if (cSizeB==false) Wyeie->put_SizeBpr(SizeB);
+// 			// 			if (cSizeA2==false) Wyeie->put_SizeAotv(SizeA2);
+// 			// 			if (cSizeB2==false) Wyeie->put_SizeBotv(SizeB2);
+// 			// 			if (cLengthW==false) Wyeie->put_Length(LengthW);
+// 			// 			//if (cFlow==false) Tapie->put_Flow(Flow);
+// 			// 
+// 			// 			if (cD1==false) Wyeie->put_This1D(D1);
+// 			// 			if (cWipe==false) Wyeie->put_Wipeout(Wipe);
+// 			// 			if (cElev==false) Wyeie->put_Elevation(getElev(Elev,Emode,Wyeie->SizeApr,Wyeie->SizeBpr));
+// 			// 			//
+// 
+// 
+// 		}
+// 
+// 		if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+// 		{	
+// 			// 			///
+// 			// 			if (cSizeA==false) Transie->put_SizeAp1(SizeA);
+// 			// 			if (cSizeB==false) Transie->put_SizeBp1(SizeB);
+// 			// 			if (cSizeA2==false) Transie->put_SizeAp2(SizeA2);
+// 			// 			if (cSizeB2==false) Transie->put_SizeBp2(SizeB2);
+// 			// 			if (cLengthTr==false) Transie->put_Length(LengthTr);
+// 			// 			//if (cFlow==false) Tapie->put_Flow(Flow);
+// 			// 
+// 			// 			if (cD1==false) Transie->put_This1D(D1);
+// 			// 			if (cWipe==false) Transie->put_Wipeout(Wipe);
+// 			// 			if (cElev==false) Transie->put_Elevation(getElev(Elev,Emode,Transie->SizeAp1,Transie->SizeBp1));
+// 			// 			//
+// 
+// 
+// 
+// 		}
+// 
+// 		pEnt->draw();
+// 		pEnt->close();
+// 		
+// 	}
+// 
+// 
+// }
 
 double func::getElev(double &Elev,
 					 int &EMode,
