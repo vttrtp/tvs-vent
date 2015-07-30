@@ -34,7 +34,10 @@
 #define dCONTINUE 0
 #define dCONNECT 1
 #define dSIZE 2
-
+#define TVSisLinear 1
+#define TVSisPerpendicular 2
+#define TVSisParallel 3
+#define TVSisIntersection 4
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
 class CTVS_Ventilation_ARXApp : public AcRxArxApp {
@@ -1324,6 +1327,23 @@ public:
 			return false;
 		}
 
+	
+	 TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
+	 TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
+	AcGePoint3d p1 = pPipe1->get_FirstPoint();
+	AcGePoint3d p2 = pPipe1->get_Lastpoint();
+	AcGePoint3d p3 = pPipe2->get_FirstPoint();
+	AcGePoint3d p4 = pPipe2->get_Lastpoint();
+
+	AcGeLine3d line1=AcGeLine3d (p1,p2);
+	AcGeLine3d  line2=AcGeLine3d (p3,p4);
+	AcGeTol dop;
+	dop.setEqualPoint(0.01);
+	int LineStatus=TVSisIntersection;
+	if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n ѕараллельны"));} 
+	if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Ћинейны"));} 
+	if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n ѕерпендикул€рны"));} 
+	
 
 	}
 
@@ -2184,7 +2204,7 @@ public:
 
 		}
 
-		pCon(pEnt1,pEnt2);
+		ConnectNew(pEnt1,pEnt2);
 	}
 
 
