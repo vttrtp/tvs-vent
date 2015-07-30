@@ -10,7 +10,16 @@
 #define globalElevUp 1
 #define globalElevmid 2
 #define globalElevdown 3
-
+#define M_PI 3.14159265358979323846
+#define dCONTINUE 0
+#define dCONNECT 1
+#define dSIZE 2
+#define dParal 1
+#define dPerpend 0
+#define dPeresec 2
+#define dNeperesec 3
+#define dComplanar 4
+#define dObshaiztochka 5
 namespace func {
 
 

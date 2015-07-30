@@ -56,7 +56,7 @@
 #define IDC_LevelUp 1013
 #define IDC_LevelCenter 1014
 #define IDC_LevelDown 1015
-#define IDC_LengthWye 1017
+#define IDC_LengthWye 1016
 #define IDC_TransLength 1023
 #define IDC_Wipeout 1020
 #define IDC_Grani 1021
@@ -65,6 +65,8 @@
 #define IDC_ElevUp 1027
 #define IDC_ElevMid 1028
 #define IDC_ElevDown 1029
+
+
 
 #define IDC_TapRadiusRectVariable 1036
 #define IDC_TapRadiusRectConst 1037

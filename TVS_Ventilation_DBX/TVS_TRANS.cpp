@@ -819,7 +819,7 @@ Acad::ErrorStatus TVS_TRANS::subTransformBy(const AcGeMatrix3d & xform)
 	VectTr.transformBy(xform);
 	return (Acad::eOk);
 }
-TVS_TRANS *TVS_TRANS::add_new(
+ TVS_TRANS *TVS_TRANS::add_new(
 	double &pSizeAp1,
 	double &pSizeBp1,
 	double &pSizeAp2,

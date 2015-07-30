@@ -179,7 +179,7 @@ public:
 
 
 
-	TVS_TRANS *add_new(
+	static TVS_TRANS *add_new(
 		double &pSizeAp1,
 		double &pSizeBp1,
 		double &pSizeAp2,

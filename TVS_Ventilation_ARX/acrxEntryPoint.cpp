@@ -49,7 +49,7 @@ public:
 		delete pdbl;
 		// You *must* call On_kInitAppMsg here
 		AcRx::AppRetCode retCode =AcRxArxApp::On_kInitAppMsg (pkt) ;
-		
+
 		// TODO: Add your initialization code here
 
 		return (retCode) ;
@@ -68,14 +68,14 @@ public:
 
 	virtual void RegisterServerComponents () {
 	}
-	
+
 	// The ACED_ARXCOMMAND_ENTRY_AUTO macro can be applied to any static member 
 	// function of the CTVS_Ventilation_ARXApp class.
 	// The function should take no arguments and return nothing.
 	//
 	// NOTE: ACED_ARXCOMMAND_ENTRY_AUTO has overloads where you can provide resourceid and
 	// have arguments to define context and command mechanism.
-	
+
 	// ACED_ARXCOMMAND_ENTRY_AUTO(classname, group, globCmd, locCmd, cmdFlags, UIContext)
 	// ACED_ARXCOMMAND_ENTRYBYID_AUTO(classname, group, globCmd, locCmdId, cmdFlags, UIContext)
 	// only differs that it creates a localized name using a string in the resource file
@@ -95,7 +95,7 @@ public:
 		int iRet =acedSSGet (ACRX_T("_I"), NULL, NULL, NULL, result) ;
 		if ( iRet == RTNORM )
 		{
-			
+
 
 			// There are selected entities
 			// Put your command using pickfirst set code here
@@ -120,7 +120,7 @@ public:
 	// a value to the Lisp interpreter.
 	//
 	// NOTE: ACED_ADSFUNCTION_ENTRY_AUTO / ACED_ADSCOMMAND_ENTRY_AUTO has overloads where you can provide resourceid.
-	
+
 	//- ACED_ADSFUNCTION_ENTRY_AUTO(classname, name, regFunc) - this example
 	//- ACED_ADSSYMBOL_ENTRYBYID_AUTO(classname, name, nameId, regFunc) - only differs that it creates a localized name using a string in the resource file
 	//- ACED_ADSCOMMAND_ENTRY_AUTO(classname, name, regFunc) - a Lisp command (prefix C:)
@@ -132,19 +132,1185 @@ public:
 	// ACED_ADSFUNCTION_ENTRY_AUTO(CTVS_Ventilation_ARXApp, MyLispFunction, false)
 	static int ads_MyLispFunction () {
 		//struct resbuf *args =acedGetArgs () ;
-		
+
 		// Put your command code here
 
 		//acutRelRb (args) ;
-		
+
 		// Return a value to the AutoCAD Lisp Interpreter
 		// acedRetNil, acedRetT, acedRetVoid, acedRetInt, acedRetReal, acedRetStr, acedRetPoint, acedRetName, acedRetList, acedRetVal
 
 		return (RTNORM) ;
 	}
-	
 
-static void SetGlobalProperty( TVS_Entity *pEnt )
+
+
+	static void pCon (	AcDbEntity *pEnt1,
+		AcDbEntity  *pEnt2
+		)
+	{
+		AcGePoint3d lastpipi;
+		AcDbObjectId id;
+		double Lx,Ly, startangle;
+		ads_name vozd1,vozd2, eName;
+		ACHAR handle[17];
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt = NULL;
+		AcDbObjectId id1, id2;
+		TVS_WYE wyie;
+		TVS_TAP * Tapi;
+		TVS_TRANS * Transi;
+		TVS_WYE * Wyi;
+		TVS_Pipe * Pipi1,*Pipi2, *Pip;
+		double NewSiseA, NewRadius;
+		resbuf *rb = NULL;
+		bool ft=false;
+		TVS_Pipe pipie;
+		TVS_TAP tapie;
+		AcGePoint3d kr1,kr2,na1,na2;
+
+
+		AcCmColor pColor;
+		AcDb::LineWeight pWeight;
+		AcDbObjectId pLayer;
+		AcDbObjectId pLineType;
+
+
+		///проверка на класс1
+
+		if (acdbOpenAcDbEntity(pEnt1,pEnt1->id(),AcDb::kForWrite)==eOk)
+		{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+		{	
+
+			pColor=Pipi1->color();
+			pWeight=Pipi1->lineWeight();
+			pLayer=Pipi1->layerId();
+			pLineType=Pipi1->linetypeId();
+
+		}}
+		else {
+			consoleprint(0,_T("\nОбьект заблокирован"));
+
+			return;
+		}
+
+		pEnt1->close();	
+
+
+		///////////оконьчание проверки1
+
+
+		///проверка на класс1
+
+		if (acdbOpenAcDbEntity(pEnt2,pEnt2->id(),AcDb::kForWrite)==eOk)
+		{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
+		{	
+
+
+
+		}}
+		else {
+			consoleprint(0,_T("\nОбьект заблокирован"));
+
+			return;
+		}
+
+		pEnt2->close();	
+
+
+		///////////оконьчание проверки1
+
+
+
+
+
+
+
+
+		//точка пересечения
+		bool b1=false;
+		bool b2=false;
+		AcGePoint3d p1,p2,p3,p4,midp, pPr1,pOtv1,pX,pX2;
+		AcGeVector3d pvectpr,pvectotv;	
+		p1=Pipi1->FirstPoint;
+		p2=Pipi1->LastPoint;
+		p3=Pipi2->FirstPoint;
+		p4=Pipi2->LastPoint;
+		AcGeLine3d line1(p1,p2),line2(p3,p4) ;
+		line1.intersectWith(line2,midp);
+		///////
+		TVS_Pipe *PipiPr,*PipiOtv;
+
+		double lengthX;
+		double pSizeApr=200;
+		double pSizeBpr=0;
+		double pSizeAotv=100;
+		double pSizeBotv=0;
+		double pLengthPl=globalLengthW;
+		AcGeVector3d pVectpr=AcGeVector3d(1,0,0);
+		AcGeVector3d pVectotv=AcGeVector3d(0,1,0);
+		AcGePoint3d pBasepoint=AcGePoint3d(0,0,0);
+		bool pThisRoundpr=true;
+		bool pThisRoundotv=true;
+		bool pThis1D=false;
+		AcDbEntity *pEntX;
+		int statpersec=-1;
+		int statnapr=-1;
+		int obshaia=-1;
+		AcGeVector3d vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+		AcGeVector3d vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+		AcGePoint3d blig1;
+
+		///проверка на общую точку
+		if ((p1==p3)||(p1==p4)||(p2==p3)||(p2==p4))
+		{
+			obshaia=dObshaiztochka;
+			statpersec=dNeperesec;
+			//acutPrintf(_T("\nимеют общую точку"));
+		}
+
+		/////проверка на перпендикуляпность
+
+		if (abs(vect1.x*vect2.x+vect1.y*vect2.y)<=0.00001)
+		{
+			statnapr=dPerpend;
+			//acutPrintf(_T("\nПерпендикулярны"));
+		}
+		if (statnapr!=dPerpend)
+		{
+
+			double asdf,asdk;
+			if (abs(vect2.x)!=0)
+			{
+				asdf=abs(vect1.x/vect2.x);
+			}
+			else
+			{
+				asdf=1;
+			}
+			//consoleprint(asdf,_T("\nasdf "));
+			if (abs(vect2.y)!=0)
+			{
+				asdk=abs(vect1.y/vect2.y);
+			}
+			else
+			{
+				asdk=2;
+			}
+
+			//consoleprint(asdk,_T("\nasdk "));
+			//проверка на параллельность компланарность
+			if ((abs(asdf-asdk)<0.0001)||(abs(vect1.x-vect2.x)<0.0001)||(abs(vect1.y-vect2.y)<0.0001))
+			{
+				if ( (abs(p1.x-p2.x)<0.0001)||(abs(p1.y-p2.y)<0.0001)    )
+				{
+					if(((abs(p1.x-p2.x)<0.0001)&&(abs(p1.x-p4.x)<0.0001))||((abs(p1.y-p2.y)<0.0001)&&(abs(p1.y-p4.y)<0.0001)  ))
+					{
+						statnapr=dComplanar;
+						//acutPrintf(_T("\nКомпланарны 1"));
+
+					}
+					else 
+					{
+						statnapr=dParal;
+						//acutPrintf(_T("\nПараллельны 1"));
+					}
+				} 
+				else
+				{
+					double bb1,bb2;
+					bb1=p1.y-(p1.y-p2.y)/(p1.x-p2.x)*p1.x;
+					bb2=p3.y-(p3.y-p4.y)/(p3.x-p4.x)*p3.x;
+
+					//consoleprint(bb1,_T("\n"));
+					//	consoleprint(bb2,_T("\n"));
+					if (abs(bb1-bb2)<0.0001)
+					{
+						statnapr=dComplanar;
+						//acutPrintf(_T("\nКомпланарны 2"));
+					} 
+					else
+					{
+
+						statnapr=dParal;
+						//acutPrintf(_T("\nПараллельны 2"));
+					}
+				}
+			}
+
+		}
+		///для выбор
+
+		double fSizeA=Pipi1->SizeA;
+		bool fRound=Pipi1->ThisRound;
+		double fSizeB=Pipi1->SizeB;
+
+		double tapradius, radius, pSwectangle;
+		AcGeVector3d normvect1=AcGeVector3d(-vect1.y,vect1.x,0);
+		AcGePoint3d t2norm=AcGePoint3d(p2.x+normvect1.x,p2.y+normvect1.y,0);
+		AcGeLine3d line3=AcGeLine3d(p2,t2norm);
+		AcGePoint3d pCenterpoint;
+		AcGeVector3d pstartvect;
+		AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
+		AcGePoint3d impr;
+
+
+
+		//выбор (исправление параллельности)
+		if (statnapr==dParal)
+		{
+
+			//////////////////////////////////sdfdsfsdf//////
+
+			line3.intersectWith(line2,midp);
+			normvect1=AcGeVector3d(midp.x-p2.x,midp.y-p2.y,0);
+			normvect1.normalize();
+
+			Tapi=drawTapDirect(p1,p2,midp);
+			SetGlobalProperty(Tapi);
+
+			double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+
+			if ((length2p(p1,p2)>=delta)&&(length2p(p2,midp)>=delta))
+			{
+
+				///задание слоя
+				if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+				{	
+					Tapi->setColor(pColor);
+					Tapi->setLineWeight(pWeight);
+					Tapi->setLayer(pLayer);
+					Tapi->setLinetype(pLineType);
+					Tapi->close();
+
+
+				}
+
+
+
+				id=Pipi1->id();
+				acdbGetAdsName(eName,id);
+				acdbGetObjectId(id,eName);
+				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+				Pipi1->assertWriteEnabled();
+				Pipi1->put_Lastpoint(lastpipi);
+				Pipi1->close();
+				impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
+				Pipi1=pipie.add_new(p2,impr,fSizeA,fSizeB,false,fRound);
+				///задание слоя
+				if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
+				{	
+					Pipi1->setColor(pColor);
+					Pipi1->setLineWeight(pWeight);
+					Pipi1->setLayer(pLayer);
+					Pipi1->setLinetype(pLineType);
+					Pipi1->close();
+				}
+
+				p1=Pipi1->FirstPoint;
+				p2=Pipi1->LastPoint;
+				line1=AcGeLine3d(p1,p2);
+				vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+				statnapr=dPerpend;
+			}
+			else
+			{
+
+				AcDbEntity* pnt;
+				acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
+				Tapi->erase();
+				Tapi->close();
+
+			}
+		}
+
+		//проверка на пересеч перпендикуляров
+		if ((statnapr==dPerpend)&&(obshaia!=dObshaiztochka))
+		{
+			if(((((p3.x-midp.x)*(midp.x-p4.x))>=0)&&(((p3.y-midp.y)*(midp.y-p4.y))>=0))||((((p1.x-midp.x)*(midp.x-p2.x))>=0)&&(((p1.y-midp.y)*(midp.y-p2.y))>=0)) )
+			{
+				statpersec=dPeresec;
+				//acutPrintf(_T("\nПеперcекаются"));
+			}
+
+			else statpersec=dNeperesec;
+
+		}
+
+		//проверка на вставку тройника и исправление 
+		// (проверка на пересечение перпендикуляра из крайней точки 1-го возд и второго 
+		// если да превращение в перпендикуляр
+
+		if ((statpersec!=dPeresec)&&(statnapr!=dComplanar)&&(statnapr!=dPeresec))
+		{
+
+			//acutPrintf(_T("\nПроверка на пересечение"));
+
+			if (length2p(p1,midp)>length2p(p2,midp)) 
+			{
+				kr1=p2;
+				na1=p1;
+			}
+			else 
+			{
+				kr1=p1;
+				na1=p2;
+			}
+
+			if (length2p(p3,midp)>length2p(p4,midp)) 
+			{
+				kr2=p4;
+				na2=p3;
+			}
+			else 
+			{
+				kr2=p3;
+				na2=p4;
+			}
+
+			bool ff=false;
+
+			AcGePoint3d ffmidp;
+			AcGeVector3d ffnorm=AcGeVector3d(-(p4.y-p3.y),p4.x-p3.x,0);
+			AcGePoint3d fftnorm=AcGePoint3d(kr1.x+ffnorm.x,kr1.y+ffnorm.y,0);
+			AcGeLine3d ffline=AcGeLine3d(kr1,fftnorm);
+			ffline.intersectWith(line2,ffmidp);
+
+
+
+			//проверка на нахождение точки персеч внутри 2 воздуховода
+			if((((p3.x-ffmidp.x)*(ffmidp.x-p4.x))>=0)&&(((p3.y-ffmidp.y)*(ffmidp.y-p4.y))>=0))
+			{
+				//acutPrintf(_T("\nотвод и перпенд"));
+				midp=ffmidp;
+				line2.intersectWith(ffline,midp);
+				normvect1=AcGeVector3d(midp.x-kr1.x,midp.y-kr1.y,0);
+				normvect1.normalize();
+				Tapi=drawTapDirect(na1,midp,na2);
+				SetGlobalProperty(Tapi);
+
+				double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+
+				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
+				{
+					
+					///задание слоя
+					if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+					{	
+						Tapi->setColor(pColor);
+						Tapi->setLineWeight(pWeight);
+						Tapi->setLayer(pLayer);
+						Tapi->setLinetype(pLineType);
+						Tapi->close();
+					}
+					id=Pipi1->id();
+					acdbGetAdsName(eName,id);
+					acdbGetObjectId(id,eName);
+					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+					Pipi1->assertWriteEnabled();
+					//consoleprint(na1,_T("\nmidp"));
+					//consoleprint(Pipi1->LastPoint,_T("\nmidp"));
+					if (na1==Pipi1->FirstPoint)			
+						Pipi1->LastPoint=lastpipi;
+					else Pipi1->FirstPoint=lastpipi;
+
+					Pipi1->close();
+					impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
+					Pipi1=pipie.add_new(kr1,impr,fSizeA,fSizeB,false,fRound);
+					if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
+					{	
+						Pipi1->setColor(pColor);
+						Pipi1->setLineWeight(pWeight);
+						Pipi1->setLayer(pLayer);
+						Pipi1->setLinetype(pLineType);
+						Pipi1->close();
+					}
+					p1=Pipi1->FirstPoint;
+					p2=Pipi1->LastPoint;
+					line1=AcGeLine3d(p1,p2);
+					vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+					statnapr=dPerpend;
+					statpersec=dPeresec;
+				}
+
+			}
+
+			else
+			{
+				//второй вариант
+				bool dd=false;
+				AcGePoint3d ddmidp;
+				AcGeVector3d ddnorm=AcGeVector3d(-(p2.y-p1.y),p2.x-p1.x,0);
+				AcGePoint3d ddtnorm=AcGePoint3d(kr2.x+ddnorm.x,kr2.y+ddnorm.y,0);
+				AcGeLine3d ddline=AcGeLine3d(kr2,ddtnorm);
+				ddline.intersectWith(line1,ddmidp);
+				if((((p1.x-ddmidp.x)*(ddmidp.x-p2.x))>=0)&&(((p1.y-ddmidp.y)*(ddmidp.y-p2.y))>=0))
+				{
+					fSizeA=Pipi2->SizeA;
+					fRound=Pipi2->ThisRound;
+					fSizeB=Pipi2->SizeB;
+					//	acutPrintf(_T("\nотвод и перпенд вар2"));
+					midp=ddmidp;
+					line1.intersectWith(ddline,midp);
+					normvect1=AcGeVector3d(midp.x-kr2.x,midp.y-kr2.y,0);
+					normvect1.normalize();
+					Tapi=drawTapDirect(na1,midp,na2);
+					SetGlobalProperty(Tapi);
+
+					double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+
+					if ((length2p(na1,midp)>=delta)&&(length2p(midp,na2)>=delta))
+					{
+						
+						if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+						{	
+							Tapi->setColor(pColor);
+							Tapi->setLineWeight(pWeight);
+							Tapi->setLayer(pLayer);
+							Tapi->setLinetype(pLineType);
+							Tapi->close();
+						}
+						id=Pipi2->id();
+						acdbGetAdsName(eName,id);
+						acdbGetObjectId(id,eName);
+						acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+						Pipi2->assertWriteEnabled();
+						//consoleprint(na2,_T("\nmidp"));
+						//consoleprint(Pipi2->LastPoint,_T("\nmidp"));
+						if (na2==Pipi2->FirstPoint)			
+							Pipi2->LastPoint=lastpipi;
+						else Pipi2->FirstPoint=lastpipi;
+
+						Pipi2->close();
+						impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
+						Pipi2=pipie.add_new(kr2,impr,fSizeA,fSizeB,false,fRound);
+						
+						if (acdbOpenAcDbEntity(pEnt,Pipi2->id(),AcDb::kForWrite)==eOk)
+						{	
+							Pipi2->setColor(pColor);
+							Pipi2->setLineWeight(pWeight);
+							Pipi2->setLayer(pLayer);
+							Pipi2->setLinetype(pLineType);
+							Pipi2->close();
+						}
+						p3=Pipi2->FirstPoint;
+						p4=Pipi2->LastPoint;
+						line2=AcGeLine3d(p3,p4);
+						vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+						statnapr=dPerpend;
+						statpersec=dPeresec;
+					}
+					else
+					{
+
+						AcDbEntity* pnt;
+						acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
+						Tapi->erase();
+						Tapi->close();
+
+					}
+
+				} 
+				else {
+					//acutPrintf(_T("\nНепересекаются"));
+					statpersec=dNeperesec;
+
+				}
+			}
+
+		}
+
+
+		//установка перехода
+
+		if ((statpersec!=dPeresec)||(statnapr==dComplanar)||(obshaia==dObshaiztochka))
+		{
+
+			if ((Pipi1->SizeA!=Pipi2->SizeA)||(Pipi1->SizeB!=Pipi2->SizeB))
+			{
+				//acutPrintf(_T("\nСтавлю переход"));
+
+
+
+
+				if (statnapr==dComplanar)
+				{
+					if(Pipi1->SizeA>Pipi2->SizeA)
+					{
+
+
+						if (length2p(p1,p3)>length2p(p1,p4)) midp=p3;
+						else midp=p4;
+
+					}
+					else
+					{
+						if (length2p(p3,p1)>length2p(p3,p2)) midp=p1;
+						else midp=p2;
+					}
+				}
+				if (length2p(p1,midp)>length2p(p2,midp)) 
+				{
+					kr1=p2;
+					na1=p1;
+				}
+				else 
+				{
+					kr1=p1;
+					na1=p2;
+				}
+
+				if (length2p(p3,midp)>length2p(p4,midp)) 
+				{
+					kr2=p4;
+					na2=p3;
+				}
+				else 
+				{
+					kr2=p3;
+					na2=p4;
+				}
+				TVS_TRANS transie;
+				double pSizeAp1;
+				double pSizeBp1;
+				double pSizeAp2;
+				double pSizeBp2;
+				if (Pipi1->SizeA>Pipi2->SizeA)
+				{
+
+
+					pSizeAp1=Pipi1->SizeA;
+					pSizeBp1=Pipi1->SizeB;
+					pSizeAp2=Pipi2->SizeA;
+					pSizeBp2=Pipi2->SizeB;
+
+
+
+					double pLengthTr=globalLengthTr;
+					AcGeVector3d Vect=AcGeVector3d(midp.x-na1.x, midp.y-na1.y,0);
+					AcGeVector3d pVectTr;
+					AcGePoint3d pFirstPoint=na1;
+					pVectTr=Vect.normalize()*pLengthTr;
+
+					double pThisRoundp1,
+						pThisRoundp2;
+					int pTransType=ftTransType;
+					bool pThis1D=false;
+
+					if (pSizeBp1==0) pThisRoundp1=true;
+					else pThisRoundp1=false;
+
+					if (pSizeBp2==0) pThisRoundp2=true;
+					else pThisRoundp2=false;
+
+					Transi=transie.add_new(pSizeAp1,
+						pSizeBp1,
+						pSizeAp2,
+						pSizeBp2,
+						pLengthTr,
+						pVectTr,
+						pFirstPoint,
+						pThisRoundp1,
+						pThisRoundp2,
+						pTransType,
+						pThis1D);
+					if (acdbOpenAcDbEntity(pEnt,Transi->id(),AcDb::kForWrite)==eOk)
+					{	
+						Transi->setColor(pColor);
+						Transi->setLineWeight(pWeight);
+						Transi->setLayer(pLayer);
+						Transi->setLinetype(pLineType);
+						Transi->close();
+					}
+					pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
+						pFirstPoint.y+pLengthTr*Vect.y,
+						pFirstPoint.z+pLengthTr*Vect.z
+						);
+					AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
+						pFirstPoint.y+100*Vect.y,
+						pFirstPoint.z+100*Vect.z
+						);
+
+					bool pThis1d=false;
+
+
+					id=Pipi1->id();
+					acdbGetAdsName(eName,id);
+					acdbEntDel(eName);
+					Pipi1=Pipi2->add_new(pFirstPoint,
+						pLastPoint,
+						pSizeAp2,
+						pSizeBp2,
+						pThis1d,
+						pThisRoundp2);
+					if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
+					{	
+						Pipi1->setColor(pColor);
+						Pipi1->setLineWeight(pWeight);
+						Pipi1->setLayer(pLayer);
+						Pipi1->setLinetype(pLineType);
+						Pipi1->close();
+					}
+					p1=Pipi1->FirstPoint;
+					p2=Pipi1->LastPoint;
+					line1=AcGeLine3d(p1,p2);
+					vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+
+				}
+				else
+				{
+
+					pSizeAp1=Pipi2->SizeA;
+					pSizeBp1=Pipi2->SizeB;
+					pSizeAp2=Pipi1->SizeA;
+					pSizeBp2=Pipi1->SizeB;
+
+
+
+					double pLengthTr=globalLengthTr;
+					AcGeVector3d Vect=AcGeVector3d(midp.x-na2.x, midp.y-na2.y,0);
+					AcGeVector3d pVectTr;
+					AcGePoint3d pFirstPoint=na2;
+					pVectTr=Vect.normalize()*pLengthTr;
+
+					double pThisRoundp1,
+						pThisRoundp2;
+					int pTransType=ftTransType;
+					bool pThis1D=false;
+
+					if (pSizeBp1==0) pThisRoundp1=true;
+					else pThisRoundp1=false;
+
+					if (pSizeBp2==0) pThisRoundp2=true;
+					else pThisRoundp2=false;
+
+					Transi=transie.add_new(pSizeAp1,
+						pSizeBp1,
+						pSizeAp2,
+						pSizeBp2,
+						pLengthTr,
+						pVectTr,
+						pFirstPoint,
+						pThisRoundp1,
+						pThisRoundp2,
+						pTransType,
+						pThis1D);
+
+					if (acdbOpenAcDbEntity(pEnt,Transi->id(),AcDb::kForWrite)==eOk)
+					{	
+						Transi->setColor(pColor);
+						Transi->setLineWeight(pWeight);
+						Transi->setLayer(pLayer);
+						Transi->setLinetype(pLineType);
+						Transi->close();
+					}
+					pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
+						pFirstPoint.y+pLengthTr*Vect.y,
+						pFirstPoint.z+pLengthTr*Vect.z
+						);
+					AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
+						pFirstPoint.y+100*Vect.y,
+						pFirstPoint.z+100*Vect.z
+						);
+
+					bool pThis1d=false;
+					id=Pipi2->id();
+
+					acdbGetAdsName(eName,id);
+					/*acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+					Pipi2->assertWriteEnabled();*/
+					acdbEntDel(eName);
+					Pipi2=Pipi1->add_new(pFirstPoint,
+						pLastPoint,
+						pSizeAp2,
+						pSizeBp2,
+						pThis1d,
+						pThisRoundp2);
+
+					if (acdbOpenAcDbEntity(pEnt,Pipi2->id(),AcDb::kForWrite)==eOk)
+					{	
+						Pipi2->setColor(pColor);
+						Pipi2->setLineWeight(pWeight);
+						Pipi2->setLayer(pLayer);
+						Pipi2->setLinetype(pLineType);
+						Pipi2->close();
+					}
+					p3=Pipi2->FirstPoint;
+					p4=Pipi2->LastPoint;
+					line2=AcGeLine3d(p3,p4);
+					vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+				}
+			}
+
+
+
+		}
+
+
+
+		///////////отводы
+
+
+		if (((statpersec==dNeperesec)||(obshaia==dObshaiztochka))&&(statnapr!=dComplanar))
+
+		{
+			//acutPrintf(_T("\nПытаюсь поставить отвод"));
+			if (length2p(p1,midp)>length2p(p2,midp)) 
+			{
+				kr1=p2;
+				na1=p1;
+			}
+			else 
+			{
+				kr1=p1;
+				na1=p2;
+			}
+
+			if (length2p(p3,midp)>length2p(p4,midp)) 
+			{
+				kr2=p4;
+				na2=p3;
+			}
+			else 
+			{
+				kr2=p3;
+				na2=p4;
+			}
+
+
+			vect1=AcGeVector3d(kr1.x-na1.x,
+				kr1.y-na1.y,
+				kr1.z-na1.z);
+			vect2=AcGeVector3d(kr2.x-na2.x,
+				kr2.y-na2.y,
+				kr2.z-na2.z);
+			vect1.normalize();
+			vect2.normalize();
+			double pSizeAw=Pipi1->SizeA;
+			double pSizeBw=Pipi1->SizeB;
+			bool pRoundw=Pipi1->ThisRound;
+
+			if (vect1!=vect2)
+			{
+
+				Tapi=drawTapDirect(na1,midp,na2);
+				SetGlobalProperty(Tapi);
+
+				double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+
+				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
+				{
+				if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+				{	
+					Tapi->setColor(pColor);
+					Tapi->setLineWeight(pWeight);
+					Tapi->setLayer(pLayer);
+					Tapi->setLinetype(pLineType);
+					Tapi->close();
+				}
+				id=Pipi1->id();
+				acdbGetAdsName(eName,id);
+				acdbGetObjectId(id,eName);
+				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+				Pipi1->assertWriteEnabled();
+				if (na1==Pipi1->FirstPoint)			
+					Pipi1->LastPoint=lastpipi;
+				else Pipi1->FirstPoint=lastpipi;
+
+
+				Pipi1->close();
+
+
+				id=Pipi2->id();
+				acdbGetAdsName(eName,id);
+				acdbGetObjectId(id,eName);
+				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+				Pipi2->assertWriteEnabled();
+				if (na2==Pipi2->FirstPoint)			
+					Pipi2->LastPoint=midp;
+				else Pipi2->FirstPoint=midp;
+
+				Pipi2->close();
+
+				//acutPrintf(_T("\nОтвод поставлен"));
+
+
+
+			}
+			//else acutPrintf(_T("\nНе могу поставить отвод"));
+
+				else
+				{
+
+					AcDbEntity* pnt;
+					acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
+					Tapi->erase();
+					Tapi->close();
+
+				}
+
+
+
+		}
+
+
+}
+
+
+		///////// удлинение компланара
+
+
+		if (statnapr==dComplanar)
+		{
+			if (length2p(p1,p3)>length2p(p2,p3)) kr1=p1;
+			else kr1=p2;
+
+			if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
+			else kr2=p3;
+
+			id=Pipi1->id();
+			acdbGetAdsName(eName,id);
+			acdbGetObjectId(id,eName);
+			acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+			Pipi1->assertWriteEnabled();
+			if (kr1==Pipi1->FirstPoint)			
+				Pipi1->LastPoint=kr2;
+			else Pipi1->FirstPoint=kr2;
+			Pipi1->close();
+
+			id=Pipi2->id();
+			acdbGetAdsName(eName,id);
+			acdbEntDel(eName);
+
+		}
+
+
+
+
+		///////тройники
+		if ((statpersec==dPeresec)&&(statnapr==dPerpend)&&(obshaia!=dObshaiztochka))
+		{
+			if((((p1.x-midp.x)*(midp.x-p2.x))>=0)&&(((p1.y-midp.y)*(midp.y-p2.y))>=0)) //p1-проход (тройник)
+
+			{
+				PipiPr=Pipi1;
+				PipiOtv=Pipi2;
+				pSizeApr=PipiPr->SizeA;
+				pSizeAotv=PipiOtv->SizeA;
+				pSizeBpr=PipiPr->SizeB;
+				pSizeBotv=PipiOtv->SizeB;
+				pThisRoundpr=PipiPr->ThisRound;
+				pThisRoundotv=PipiOtv->ThisRound;
+
+				pVectpr=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+
+
+				////////////kraynaja  точка отвода
+
+				if (length2p(midp,p3)<length2p(midp,p4))
+				{
+					pOtv1=p4;
+					pVectotv=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+				}
+
+				else
+				{
+					pOtv1=p3;
+					pVectotv=AcGeVector3d(p3.x-p4.x,p3.y-p4.y,0);
+				}
+				////////////kraynaja  точка прохода
+
+				if (length2p(midp,p2)<length2p(midp,p1))
+				{
+					pPr1=p2;
+
+				}
+
+				else
+				{
+					pPr1=p1;
+
+				}
+
+				if (length2p(midp,pOtv1)<(pLengthPl+pSizeApr/2))	
+				{
+					//acutPrintf(_T("отвод короткий"));
+				}
+				else b1=true;
+				if ((length2p(midp,p1)<(pLengthPl+pSizeAotv/2))&&(length2p(midp,p2)<(pLengthPl+pSizeAotv/2)))	
+				{
+					//acutPrintf(_T("проход короткий"));
+				}
+				else b2=true;
+
+				if ((b1==true)&&(b1==true))
+				{
+					pBasepoint=midp;
+					Wyi=wyie.add_new(pSizeApr,
+						pSizeBpr,
+						pSizeAotv,
+						pSizeBotv,
+						pLengthPl,
+						pVectpr,
+						pVectotv,
+						pBasepoint,
+						pThisRoundpr,
+						pThisRoundotv,
+						pThis1D);
+
+					if (acdbOpenAcDbEntity(pEnt,Wyi->id(),AcDb::kForWrite)==eOk)
+					{	
+						Wyi->setColor(pColor);
+						Wyi->setLineWeight(pWeight);
+						Wyi->setLayer(pLayer);
+						Wyi->setLinetype(pLineType);
+						Wyi->close();
+					}
+
+				} 
+
+				////построение прохода
+				if (acdbOpenAcDbEntity(pEntX,PipiPr->id(),AcDb::kForWrite)==eOk)
+				{if ( (PipiPr = TVS_Pipe::cast(pEntX)) != NULL )
+				{	
+
+
+
+					pX=midp;
+					pX2=PipiPr->LastPoint;
+					lengthX=pSizeAotv/2+pLengthPl;
+					pX=shortlength(PipiPr->FirstPoint,pX,lengthX);
+
+					PipiPr->put_Lastpoint(pX);
+					pX=midp;
+					pX=shortlength(pX2,pX,lengthX);
+					Pip=PipiPr->add_new(pX2,pX,pSizeApr,pSizeBpr,PipiPr->This1D,PipiPr->ThisRound);
+
+					if (acdbOpenAcDbEntity(pEnt,Pip->id(),AcDb::kForWrite)==eOk)
+					{	
+						Pip->setColor(pColor);
+						Pip->setLineWeight(pWeight);
+						Pip->setLayer(pLayer);
+						Pip->setLinetype(pLineType);
+						Pip->close();
+					}
+
+
+
+					//acutPrintf(_T("\nПостроение 1"));
+
+
+				}}
+				else {
+					consoleprint(0,_T("\nОбьект заблокирован"));
+
+					return;
+				}
+
+				pEntX->close();	
+				/////построение отвода
+				if (acdbOpenAcDbEntity(pEntX,PipiOtv->id(),AcDb::kForWrite)==eOk)
+				{if ( (PipiOtv = TVS_Pipe::cast(pEntX)) != NULL )
+				{	
+
+					pX=midp;
+					lengthX=pSizeApr/2+pLengthPl;
+					if(length2p(midp,PipiOtv->LastPoint)>length2p(midp,PipiOtv->FirstPoint))
+					{
+						pX=shortlength(PipiOtv->FirstPoint,pX,lengthX);
+						PipiOtv->put_FirstPoint(pX);
+					}
+					else 
+					{
+						pX=shortlength(PipiOtv->LastPoint,pX,lengthX);
+						PipiOtv->put_Lastpoint(pX);
+					}
+
+
+					//acutPrintf(_T("\nПостроение 1.2"));
+
+				}}
+				else {
+					acutPrintf(_T("\nОбьект заблокирован"));
+
+					return;
+				}
+
+				pEntX->close();	
+				////////
+
+
+
+
+
+
+
+
+
+			}
+
+
+			if((((p3.x-midp.x)*(midp.x-p4.x))>=0)&&(((p3.y-midp.y)*(midp.y-p4.y))>=0)) //p2-проход (тройник)
+
+			{
+				PipiPr=Pipi2;
+				PipiOtv=Pipi1;
+				pSizeApr=PipiPr->SizeA;
+				pSizeAotv=PipiOtv->SizeA;
+				pSizeBpr=PipiPr->SizeB;
+				pSizeBotv=PipiOtv->SizeB;
+				pThisRoundpr=PipiPr->ThisRound;
+				pThisRoundotv=PipiOtv->ThisRound;
+
+				pVectpr=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+
+
+				////////////kraynaja  точка отвода
+
+				if (length2p(midp,p1)<length2p(midp,p2))
+				{
+					pOtv1=p2;
+					pVectotv=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+				}
+
+				else
+				{
+					pOtv1=p1;
+					pVectotv=AcGeVector3d(p1.x-p2.x,p1.y-p2.y,0);
+				}
+				////////////kraynaja  точка прохода
+
+				if (length2p(midp,p4)<length2p(midp,p3))
+				{
+					pPr1=p4;
+
+				}
+
+				else
+				{
+					pPr1=p3;
+
+				}
+
+				if (length2p(midp,pOtv1)<(pLengthPl+pSizeApr/2))	
+				{
+					acutPrintf(_T("отвод короткий"));
+				}
+				else b1=true;
+				if ((length2p(midp,p3)<(pLengthPl+pSizeAotv/2))&&(length2p(midp,p4)<(pLengthPl+pSizeAotv/2)))	
+				{
+					acutPrintf(_T("проход короткий"));
+				}
+				else b2=true;
+
+				if ((b1==true)&&(b1==true))
+				{
+					pBasepoint=midp;
+					Wyi=wyie.add_new(pSizeApr,
+						pSizeBpr,
+						pSizeAotv,
+						pSizeBotv,
+						pLengthPl,
+						pVectpr,
+						pVectotv,
+						pBasepoint,
+						pThisRoundpr,
+						pThisRoundotv,
+						pThis1D);
+					if (acdbOpenAcDbEntity(pEnt,Wyi->id(),AcDb::kForWrite)==eOk)
+					{	
+						Wyi->setColor(pColor);
+						Wyi->setLineWeight(pWeight);
+						Wyi->setLayer(pLayer);
+						Wyi->setLinetype(pLineType);
+						Wyi->close();
+					}
+
+				} 
+
+				////построение прохода
+				if (acdbOpenAcDbEntity(pEntX,PipiPr->id(),AcDb::kForWrite)==eOk)
+				{if ( (PipiPr = TVS_Pipe::cast(pEntX)) != NULL )
+				{	
+					//acutPrintf(_T("\npEntX...ок"));
+
+
+					pX=midp;
+					pX2=PipiPr->LastPoint;
+					lengthX=pSizeAotv/2+pLengthPl;
+					pX=shortlength(PipiPr->FirstPoint,pX,lengthX);
+
+					PipiPr->put_Lastpoint(pX);
+					pX=midp;
+					pX=shortlength(pX2,pX,lengthX);
+					Pip=PipiPr->add_new(pX2,pX,pSizeApr,pSizeBpr,PipiPr->This1D,PipiPr->ThisRound);
+					if (acdbOpenAcDbEntity(pEnt,Pip->id(),AcDb::kForWrite)==eOk)
+					{	
+						Pip->setColor(pColor);
+						Pip->setLineWeight(pWeight);
+						Pip->setLayer(pLayer);
+						Pip->setLinetype(pLineType);
+						Pip->close();
+					}
+
+					//	acutPrintf(_T("\nПостроение 2"));
+
+
+				}}
+				else {
+					acutPrintf(_T("\nОбьект заблокирован"));
+
+					return;
+				}
+
+				pEntX->close();	
+
+				/////построение отвода
+				if (acdbOpenAcDbEntity(pEntX,PipiOtv->id(),AcDb::kForWrite)==eOk)
+				{if ( (PipiOtv = TVS_Pipe::cast(pEntX)) != NULL )
+				{	
+
+					pX=midp;
+					lengthX=pSizeApr/2+pLengthPl;
+					if(length2p(midp,PipiOtv->LastPoint)>length2p(midp,PipiOtv->FirstPoint))
+					{
+						pX=shortlength(PipiOtv->FirstPoint,pX,lengthX);
+						PipiOtv->put_FirstPoint(pX);
+					}
+					else 
+					{
+						pX=shortlength(PipiOtv->LastPoint,pX,lengthX);
+						PipiOtv->put_Lastpoint(pX);
+					}
+
+
+					//acutPrintf(_T("\nПостроение 1.2"));
+
+				}}
+				else {
+					acutPrintf(_T("\nОбьект заблокирован"));
+
+					return;
+				}
+
+				pEntX->close();	
+				////////
+
+			}
+
+
+
+
+		}
+		///////////////////////конец тройники
+
+	}
+
+
+
+
+	static void SetGlobalProperty( TVS_Entity *pEnt )
 	{
 
 		TVS_Pipe * Pipi;
@@ -161,161 +1327,161 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 
 
 		acdbOpenAcDbEntity(pnt,id,AcDb::kForWrite);
-		
-
-		
-
-			pEnt->SizeA=globSizeA;
-			pEnt->put_SizeB(globSizeB);
-			pEnt->Wipeout=globalWipeout;
-			pEnt->Grani=globalGrani;
-			pEnt->This1D=global1D;
-			pEnt->Flow=globalFlow;
-			pEnt->put_Elevation(globalElevMid);
 
 
 
 
-			if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
-			{	
-
-
-				// 			///
-				// 			if (cSizeA==false) Pipi->put_SizeA(SizeA);
-				// 			if (cSizeB==false) Pipi->put_SizeB(SizeB);
-				// 			if (cFlow==false) Pipi->put_Flow(Flow);
-				// 			if (cGrani==false) Pipi->put_Grani(Grani);
-				// 			if (cD1==false) Pipi->put_This1D(D1);
-				// 			if (cWipe==false) Pipi->put_Wipeout(Wipe);
-				// 			if (cElev==false) Pipi->put_Elevation(getElev(Elev,Emode,Pipi->SizeA,Pipi->SizeB));
-				//
-
-
-			}
-
-			if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
-			{	
-
-
-				// 			///
-				// 			if (cSizeA==false) Tapie->put_SizeA(SizeA);
-				// 			if (cSizeB==false) Tapie->put_SizeB(SizeB);
-				// 			if (cFlow==false) Tapie->put_Flow(Flow);
-				// 
-				// 			if (cD1==false) Tapie->put_This1D(D1);
-				// 			if (cWipe==false) Tapie->put_Wipeout(Wipe);
-				// 			if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
-				// 			//
-				// 
-				// 
-				// 			if (cTapForm==false) Tapie->put_Form(TapForm);
-				Tapie->put_TypeRoundTap(globalTypeRoundTap);
-				Tapie->put_RadiusTypeRound(globalRadiusTypeRound);
-				Tapie->put_RadiusTypeRect(globalRadiusTypeRect);
-				Tapie->put_RadiusVariableParameter(globalTapRadiusVariableParameter);
-				Tapie->put_RadiusConst(globalTapRadiusConst);
-				// 			if (cSwectangle==false) Tapie->put_Swectangle(Swectangle);
-
-			}
-
-			if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
-			{	
-
-
-				// 			///
-				// 			if (cSizeA==false) Wyeie->put_SizeApr(SizeA);
-				// 			if (cSizeB==false) Wyeie->put_SizeBpr(SizeB);
-				// 			if (cSizeA2==false) Wyeie->put_SizeAotv(SizeA2);
-				// 			if (cSizeB2==false) Wyeie->put_SizeBotv(SizeB2);
-				// 			if (cLengthW==false) Wyeie->put_Length(LengthW);
-				// 			//if (cFlow==false) Tapie->put_Flow(Flow);
-				// 
-				// 			if (cD1==false) Wyeie->put_This1D(D1);
-				// 			if (cWipe==false) Wyeie->put_Wipeout(Wipe);
-				// 			if (cElev==false) Wyeie->put_Elevation(getElev(Elev,Emode,Wyeie->SizeApr,Wyeie->SizeBpr));
-				// 			//
-
-
-			}
-
-			if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
-			{	
-				// 			///
-				// 			if (cSizeA==false) Transie->put_SizeAp1(SizeA);
-				// 			if (cSizeB==false) Transie->put_SizeBp1(SizeB);
-				// 			if (cSizeA2==false) Transie->put_SizeAp2(SizeA2);
-				// 			if (cSizeB2==false) Transie->put_SizeBp2(SizeB2);
-				// 			if (cLengthTr==false) Transie->put_Length(LengthTr);
-				// 			//if (cFlow==false) Tapie->put_Flow(Flow);
-				// 
-				// 			if (cD1==false) Transie->put_This1D(D1);
-				// 			if (cWipe==false) Transie->put_Wipeout(Wipe);
-				// 			if (cElev==false) Transie->put_Elevation(getElev(Elev,Emode,Transie->SizeAp1,Transie->SizeBp1));
-				// 			//
+		pEnt->SizeA=globSizeA;
+		pEnt->put_SizeB(globSizeB);
+		pEnt->Wipeout=globalWipeout;
+		pEnt->Grani=globalGrani;
+		pEnt->This1D=global1D;
+		pEnt->Flow=globalFlow;
+		pEnt->put_Elevation(globalElevMid);
 
 
 
-			}
 
-			pEnt->draw();
-			pEnt->close();
+		if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+		{	
 
-		
+
+			// 			///
+			// 			if (cSizeA==false) Pipi->put_SizeA(SizeA);
+			// 			if (cSizeB==false) Pipi->put_SizeB(SizeB);
+			// 			if (cFlow==false) Pipi->put_Flow(Flow);
+			// 			if (cGrani==false) Pipi->put_Grani(Grani);
+			// 			if (cD1==false) Pipi->put_This1D(D1);
+			// 			if (cWipe==false) Pipi->put_Wipeout(Wipe);
+			// 			if (cElev==false) Pipi->put_Elevation(getElev(Elev,Emode,Pipi->SizeA,Pipi->SizeB));
+			//
+
+
+		}
+
+		if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+		{	
+
+
+			// 			///
+			// 			if (cSizeA==false) Tapie->put_SizeA(SizeA);
+			// 			if (cSizeB==false) Tapie->put_SizeB(SizeB);
+			// 			if (cFlow==false) Tapie->put_Flow(Flow);
+			// 
+			// 			if (cD1==false) Tapie->put_This1D(D1);
+			// 			if (cWipe==false) Tapie->put_Wipeout(Wipe);
+			// 			if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
+			// 			//
+			// 
+			// 
+			// 			if (cTapForm==false) Tapie->put_Form(TapForm);
+			Tapie->put_TypeRoundTap(globalTypeRoundTap);
+			Tapie->put_RadiusTypeRound(globalRadiusTypeRound);
+			Tapie->put_RadiusTypeRect(globalRadiusTypeRect);
+			Tapie->put_RadiusVariableParameter(globalTapRadiusVariableParameter);
+			Tapie->put_RadiusConst(globalTapRadiusConst);
+			// 			if (cSwectangle==false) Tapie->put_Swectangle(Swectangle);
+
+		}
+
+		if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+		{	
+
+
+			// 			///
+			// 			if (cSizeA==false) Wyeie->put_SizeApr(SizeA);
+			// 			if (cSizeB==false) Wyeie->put_SizeBpr(SizeB);
+			// 			if (cSizeA2==false) Wyeie->put_SizeAotv(SizeA2);
+			// 			if (cSizeB2==false) Wyeie->put_SizeBotv(SizeB2);
+			// 			if (cLengthW==false) Wyeie->put_Length(LengthW);
+			// 			//if (cFlow==false) Tapie->put_Flow(Flow);
+			// 
+			// 			if (cD1==false) Wyeie->put_This1D(D1);
+			// 			if (cWipe==false) Wyeie->put_Wipeout(Wipe);
+			// 			if (cElev==false) Wyeie->put_Elevation(getElev(Elev,Emode,Wyeie->SizeApr,Wyeie->SizeBpr));
+			// 			//
+
+
+		}
+
+		if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+		{	
+			// 			///
+			// 			if (cSizeA==false) Transie->put_SizeAp1(SizeA);
+			// 			if (cSizeB==false) Transie->put_SizeBp1(SizeB);
+			// 			if (cSizeA2==false) Transie->put_SizeAp2(SizeA2);
+			// 			if (cSizeB2==false) Transie->put_SizeBp2(SizeB2);
+			// 			if (cLengthTr==false) Transie->put_Length(LengthTr);
+			// 			//if (cFlow==false) Tapie->put_Flow(Flow);
+			// 
+			// 			if (cD1==false) Transie->put_This1D(D1);
+			// 			if (cWipe==false) Transie->put_Wipeout(Wipe);
+			// 			if (cElev==false) Transie->put_Elevation(getElev(Elev,Emode,Transie->SizeAp1,Transie->SizeBp1));
+			// 			//
+
+
+
+		}
+
+		pEnt->draw();
+		pEnt->close();
+
+
 
 
 	}
 
-	
+
 	static bool changesize ()
 	{
 
-	//	ads_real sa,sb;
-			double a,b;
-// 			a=globSizeA;
-// 			b=globSizeB;
-// 		if (acedGetReal(_T("\nВведите Ширину:"),&sa) != RTNORM)
-// 		{
-// 			return false;}
-// 
-// 		if (acedGetReal(_T("\nВведите Высоту:"),&sb) != RTNORM)
-// 		{
-// 			return false;}
-// 		globSizeA=sa;
-// 		globSizeB=sb;
-// 		if (globSizeB==0) globRound=true;
-// 		else globRound=false;
-		
+		//	ads_real sa,sb;
+		double a,b;
+		// 			a=globSizeA;
+		// 			b=globSizeB;
+		// 		if (acedGetReal(_T("\nВведите Ширину:"),&sa) != RTNORM)
+		// 		{
+		// 			return false;}
+		// 
+		// 		if (acedGetReal(_T("\nВведите Высоту:"),&sb) != RTNORM)
+		// 		{
+		// 			return false;}
+		// 		globSizeA=sa;
+		// 		globSizeB=sb;
+		// 		if (globSizeB==0) globRound=true;
+		// 		else globRound=false;
+
 		PipeSizeDiallog dg;
 		a=dg.SizeA=globSizeA;
-	b=dg.SizeB=globSizeB;
-	dg.Flow=globalFlow;
-	dg.LengthTr=globalLengthTr;
-	dg.LengthW=globalLengthW;
-	//dg.Tpipe=firstPipe;
-	//dg.Twye=firstWye;
-	//dg.Ttrans=firstTrans;
-	//dg.Ttap=firstTap;
-	dg.Wipe=globalWipeout;
-	dg.Grani=globalGrani;
-	dg.D1=global1D;
-	dg.ElevMid=globalElevMid;
-	dg.Elev=globalElev;
-	dg.TapForm=globalTapForm;
-	dg.TypeRoundTap=globalTypeRoundTap;
-	dg.RadiusTypeRound=globalRadiusTypeRound;
-	dg.RadiusTypeRect=globalRadiusTypeRect;
-	dg.TapRadiusVariableParameter=globalTapRadiusVariableParameter;
-	dg.TapRadiusConst=globalTapRadiusConst;
+		b=dg.SizeB=globSizeB;
+		dg.Flow=globalFlow;
+		dg.LengthTr=globalLengthTr;
+		dg.LengthW=globalLengthW;
+		//dg.Tpipe=firstPipe;
+		//dg.Twye=firstWye;
+		//dg.Ttrans=firstTrans;
+		//dg.Ttap=firstTap;
+		dg.Wipe=globalWipeout;
+		dg.Grani=globalGrani;
+		dg.D1=global1D;
+		dg.ElevMid=true;
+		dg.Elev=globalElev;
+		dg.TapForm=globalTapForm;
+		dg.TypeRoundTap=globalTypeRoundTap;
+		dg.RadiusTypeRound=globalRadiusTypeRound;
+		dg.RadiusTypeRect=globalRadiusTypeRect;
+		dg.TapRadiusVariableParameter=globalTapRadiusVariableParameter;
+		dg.TapRadiusConst=globalTapRadiusConst;
 
-	//AcApDocument *pDoc=acDocManager->curDocument();
-	//acDocManager->lockDocument(pDoc,AcAp::kWrite);
+		//AcApDocument *pDoc=acDocManager->curDocument();
+		//acDocManager->lockDocument(pDoc,AcAp::kWrite);
 
 
 
-	
-	 
-	dg.DoModal();
-	//acDocManager->unlockDocument(pDoc);
+
+
+		dg.DoModal();
+		//acDocManager->unlockDocument(pDoc);
 		globSizeA=dg.SizeA;
 		globSizeB=dg.SizeB;
 		double fl=globalFlow=dg.Flow;
@@ -333,7 +1499,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 		globalRadiusTypeRect=dg.RadiusTypeRect;
 		globalTapRadiusVariableParameter=dg.TapRadiusVariableParameter;
 		globalTapRadiusConst=dg.TapRadiusConst;
-	
+
 		if (globSizeB==0) globRound=true;
 		else globRound=false;
 		if (a==globSizeA && b==globSizeB)
@@ -381,7 +1547,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 		pEnt->RadiusConst=(globalTapRadiusConst);
 		pEnt->draw();
 		pEnt->close();
-		
+
 		return pEnt;
 	}
 
@@ -394,7 +1560,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 		ads_point &pt1
 		)
 	{
-	
+
 
 		double tapradius, radius, pSwectangle;
 		AcGePoint3d pCenterpoint;
@@ -422,7 +1588,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 		if ((vect1!=vect2)&&(vect1!=vect22))
 		{
 
-			
+
 
 			pTap=drawTapDirect(A1,A2,A3);
 			SetGlobalProperty(pTap);
@@ -431,7 +1597,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 			AcGePoint3d A2b=shortlength(A3,A2,delta);
 			if ((length2p(A1,A2)>=delta)&&(length2p(A2,A3)>=delta))
 			{
-			
+
 				id=pipi->id();
 				acdbGetAdsName(eName,id);
 				acdbGetObjectId(id,eName);
@@ -451,12 +1617,12 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 			}
 			else
 			{
-				
+
 				AcDbEntity* pnt;
 				acdbOpenAcDbEntity(pnt,pTap->id(),AcDb::kForWrite);
 				pTap->erase();
 				pTap->close();
-				
+
 			}
 		}
 		else
@@ -559,8 +1725,8 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 		)
 	{
 
-		TVS_TRANS transie;
-		double pLengthTr=300;
+		TVS_TRANS* transie;
+		double pLengthTr=globalLengthTr;
 		AcGeVector3d Vect=AcGeVector3d(pipi->LastPoint.x-pipi->FirstPoint.x,
 			pipi->LastPoint.y-pipi->FirstPoint.y,
 			pipi->LastPoint.z-pipi->FirstPoint.z);
@@ -579,7 +1745,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 		if (pSizeBp2==0) pThisRoundp2=true;
 		else pThisRoundp2=false;
 
-		transie.add_new(pSizeAp1,
+		transie=TVS_TRANS::add_new(pSizeAp1,
 			pSizeBp1,
 			pSizeAp2,
 			pSizeBp2,
@@ -590,7 +1756,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 			pThisRoundp2,
 			pTransType,
 			pThis1D);
-
+		SetGlobalProperty(transie);
 		pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
 			pFirstPoint.y+pLengthTr*Vect.y,
 			pFirstPoint.z+pLengthTr*Vect.z
@@ -608,7 +1774,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 			pSizeBp2,
 			pThis1d,
 			pThisRoundp2);
-
+		SetGlobalProperty(pipi);
 		A1=A2;
 		A2=pLastPoint;
 		pt1[0]=A2.x;
@@ -661,7 +1827,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 		{
 			Astat2=true;
 			acedInitGet(RSG_NONULL, _T("Размер Р h Z я"));
-			Astat=acedGetPoint(pt1,_T("\nУкажите следущую точку или [Размер]/[Z]:"),pt2) ;
+			Astat=acedGetPoint(pt1,_T("\nУкажите следущую точку или [Размер/Z]:"),pt2) ;
 			switch (Astat)
 			{
 			case RTCAN:
@@ -3338,7 +4504,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 	static void Ventilation_ARXTVS_LEAD(void)
 	{
 
-int pstatus;
+		int pstatus;
 		double SizeA,SizeB,Flow,SizeA2, SizeB2;
 		AcGePoint3d pCut;
 		double Lx,Ly, startangle;
@@ -3411,24 +4577,24 @@ int pstatus;
 				{if (id!=AcDbObjectId::kNull)
 				{
 					if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
-					
+
 					{
 						if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
 						{	
-						Line.set(Pipi1->FirstPoint,Pipi1->LastPoint);
-						pCut=Line.closestPointTo(pCut);
-						SizeA=Pipi1->SizeA;
-						SizeB=Pipi1->SizeB;
-						Flow=Pipi1->Flow;
-						ft=true;
-						pstatus=1;
+							Line.set(Pipi1->FirstPoint,Pipi1->LastPoint);
+							pCut=Line.closestPointTo(pCut);
+							SizeA=Pipi1->SizeA;
+							SizeB=Pipi1->SizeB;
+							Flow=Pipi1->Flow;
+							ft=true;
+							pstatus=1;
 						}
 
 						if ( (Tapie = TVS_TAP::cast(pEnt1)) != NULL )
 						{	
 							//Line.set(Tapie->MC,Tapie->LastPoint);
 							//pCut=Line.closestPointTo(pCut);
-pCut=Tapie->MiddlePoint;
+							pCut=Tapie->MiddlePoint;
 							SizeA=Tapie->SizeA;
 							SizeB=Tapie->SizeB;
 							Flow=Tapie->Flow;
@@ -3463,7 +4629,7 @@ pCut=Tapie->MiddlePoint;
 						}
 
 
-					pEnt1->close();
+						pEnt1->close();
 					}
 
 
@@ -3498,92 +4664,92 @@ pCut=Tapie->MiddlePoint;
 		///////Текст
 		AcDbMText *mText=new AcDbMText();
 		ACHAR buffer[512], buffer1[512], buffer2[512] ;
-if (pstatus==1||pstatus==2)
-{
-
-		if (globalMlead==1)
+		if (pstatus==1||pstatus==2)
 		{
+
+			if (globalMlead==1)
+			{
+				if (SizeB==0)
+				{
+
+					wcscpy_s(buffer1,_T("%%C"));
+					acdbRToS(SizeA,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+				else
+				{
+					acdbRToS(SizeA,2,2,buffer1);
+					wcscat_s(buffer1,_T("x"));
+					acdbRToS(SizeB,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+			}
+
+			if (globalMlead==2)
+			{
+				if (SizeB==0)
+				{
+
+					wcscpy_s(buffer1,_T("%%C"));
+					acdbRToS(SizeA,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+				else
+				{
+					acdbRToS(SizeA,2,2,buffer1);
+					wcscat_s(buffer1,_T("x"));
+					acdbRToS(SizeB,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+
+				wcscat_s(buffer1,_T("\\PL"));
+				acdbRToS(Flow,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+			}
+
+
+		}
+		if (pstatus==3||pstatus==4)
+		{
+
 			if (SizeB==0)
 			{
 
 				wcscpy_s(buffer1,_T("%%C"));
 				acdbRToS(SizeA,2,2,buffer);
 				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("x"));
 			}
 			else
 			{
-				acdbRToS(SizeA,2,2,buffer1);
-				wcscat_s(buffer1,_T("x"));
-				acdbRToS(SizeB,2,2,buffer);
-				wcscat_s(buffer1,buffer);
-			}
-		}
-
-		if (globalMlead==2)
-		{
-			if (SizeB==0)
-			{
-
-				wcscpy_s(buffer1,_T("%%C"));
+				wcscpy_s(buffer1,_T("("));
 				acdbRToS(SizeA,2,2,buffer);
 				wcscat_s(buffer1,buffer);
-			}
-			else
-			{
-				acdbRToS(SizeA,2,2,buffer1);
 				wcscat_s(buffer1,_T("x"));
 				acdbRToS(SizeB,2,2,buffer);
 				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")x"));
 			}
 
-			wcscat_s(buffer1,_T("\\PL"));
-			acdbRToS(Flow,2,2,buffer);
-			wcscat_s(buffer1,buffer);
+			if (SizeB2==0)
+			{
+
+				wcscat_s(buffer1,_T("%%C"));
+				acdbRToS(SizeA2,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+			}
+			else
+			{
+				wcscat_s(buffer1,_T("("));
+				acdbRToS(SizeA2,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("x"));
+				acdbRToS(SizeB2,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+			}
+
 		}
-
-
-}
-if (pstatus==3||pstatus==4)
-{
-
-	if (SizeB==0)
-	{
-
-		wcscpy_s(buffer1,_T("%%C"));
-		acdbRToS(SizeA,2,2,buffer);
-		wcscat_s(buffer1,buffer);
-		wcscat_s(buffer1,_T("x"));
-	}
-	else
-	{
-		wcscpy_s(buffer1,_T("("));
-		acdbRToS(SizeA,2,2,buffer);
-		wcscat_s(buffer1,buffer);
-		wcscat_s(buffer1,_T("x"));
-		acdbRToS(SizeB,2,2,buffer);
-		wcscat_s(buffer1,buffer);
-		wcscat_s(buffer1,_T(")x"));
-	}
-
-	if (SizeB2==0)
-	{
-
-		wcscat_s(buffer1,_T("%%C"));
-		acdbRToS(SizeA2,2,2,buffer);
-		wcscat_s(buffer1,buffer);
-	}
-	else
-	{
-		wcscat_s(buffer1,_T("("));
-		acdbRToS(SizeA2,2,2,buffer);
-		wcscat_s(buffer1,buffer);
-		wcscat_s(buffer1,_T("x"));
-		acdbRToS(SizeB2,2,2,buffer);
-		wcscat_s(buffer1,buffer);
-		wcscat_s(buffer1,_T(")"));
-	}
-
-}
 
 
 
@@ -3615,18 +4781,18 @@ if (pstatus==3||pstatus==4)
 		mText->setColor(pEnt1->color());
 		mText->setLineWeight(AcDb::kLnWt025);
 
-//мультивыноска
+		//мультивыноска
 		AcDbMLeader *pEnt=new AcDbMLeader();
-		
+
 		pEnt->setLineWeight(AcDb::kLnWt025);
 		pEnt->setColor(pEnt1->color());
-		
+
 		//pEnt->setTextLocation(ptEnd1);
 		int i;
 		// 		AcGePoint3d ptEnd1(AcGePoint3d(pCut.x+500,
 		// 		pCut.y+500, pCut.z));
 
-		
+
 		pEnt->setContentType(AcDbMLeaderStyle::kMTextContent);
 		pEnt->addLeader(i);
 		pEnt->addLeaderLine(ptStart,i);
@@ -3649,7 +4815,7 @@ if (pstatus==3||pstatus==4)
 
 		if (acdbOpenAcDbEntity(pEnt1,pEnt->id(),AcDb::kForWrite)==eOk)	
 		{
-			
+
 			pEnt->setLastVertex(i,ptEnd1);
 			// 		pEnt->mtext()->setColor(db->cecolor());
 			// 		
@@ -3660,7 +4826,7 @@ if (pstatus==3||pstatus==4)
 
 		}
 
-	
+
 
 		return static void();
 	}
@@ -3690,8 +4856,8 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ERASE, TVS_ERASE, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_LEAD, TVS_LEAD, ACRX_CMD_TRANSPARENT, NULL)
 
-ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyCommand, MyCommandLocal, ACRX_CMD_MODAL, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyPickFirst, MyPickFirstLocal, ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MySessionCmd, MySessionCmdLocal, ACRX_CMD_MODAL | ACRX_CMD_SESSION, NULL)
-ACED_ADSSYMBOL_ENTRY_AUTO(CTVS_Ventilation_ARXApp, MyLispFunction, false)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyCommand, MyCommandLocal, ACRX_CMD_MODAL, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyPickFirst, MyPickFirstLocal, ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MySessionCmd, MySessionCmdLocal, ACRX_CMD_MODAL | ACRX_CMD_SESSION, NULL)
+	ACED_ADSSYMBOL_ENTRY_AUTO(CTVS_Ventilation_ARXApp, MyLispFunction, false)
 
