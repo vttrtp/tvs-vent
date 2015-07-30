@@ -20,6 +20,12 @@
 #define dNeperesec 3
 #define dComplanar 4
 #define dObshaiztochka 5
+#define isBlocked 0
+#define isNoTVS 1
+#define isTVS_Pipe 2
+#define isTVS_TAP 3
+#define isTVS_TRANS 4
+#define isTVS_Wye 5
 namespace func {
 
 
@@ -166,4 +172,5 @@ CString &stringconst
 void PostToModelSpace(AcDbEntity *pEnt);
 void SetGlobalProperty(TVS_Entity *pEnt);
 void GiveStartvectorAndAngle (AcGePoint3d &n1, AcGePoint3d &n2, AcGePoint3d &n3, double &pAngle, AcGeVector3d &pStartvector);
+int TVSClassCheck (AcDbEntity* pEnt);
 };

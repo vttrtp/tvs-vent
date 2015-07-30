@@ -2339,3 +2339,36 @@ void func::GiveStartvectorAndAngle (AcGePoint3d &n1,
 //}
 
 
+int func::TVSClassCheck (AcDbEntity* pEnt)
+{
+	if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForWrite)==eOk){
+	if ( (pEnt = TVS_Pipe::cast(pEnt)) != NULL )
+	{
+		pEnt->close();
+		return isTVS_Pipe;
+	}
+	if ( (pEnt = TVS_TAP::cast(pEnt)) != NULL )
+	{
+		pEnt->close();
+		return isTVS_TAP;
+	}
+	if ( (pEnt = TVS_WYE::cast(pEnt)) != NULL )
+	{
+		pEnt->close();
+		return isTVS_Wye;
+	}
+	if ( (pEnt = TVS_TRANS::cast(pEnt)) != NULL )
+	{
+		pEnt->close();
+		return isTVS_TRANS;
+	}
+	pEnt->close();
+	return isNoTVS;
+	}
+	else
+	{
+
+	acutPrintf(_T("Объект блокирован"));
+		return isBlocked;
+	}
+}

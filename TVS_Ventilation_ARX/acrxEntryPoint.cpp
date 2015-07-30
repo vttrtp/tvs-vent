@@ -1307,6 +1307,26 @@ public:
 
 	}
 
+	static bool ConnectNew(AcDbEntity *pEnt1,
+		AcDbEntity  *pEnt2)
+
+	{
+		//Проверка
+		if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
+		{
+		acutPrintf(_T("\n Выбран не тот обьект"));
+			return false;
+		}
+
+		if (TVSClassCheck(pEnt2)!=isTVS_Pipe)
+		{
+			acutPrintf(_T("\n Выбран не тот обьект"));
+			return false;
+		}
+
+
+	}
+
 
 
 
