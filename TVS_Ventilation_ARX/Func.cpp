@@ -279,8 +279,8 @@ bool func::correctpipes(AcGePoint3d &A,
 
 
 }
-double func::length2p(AcGePoint3d &A,
-					  AcGePoint3d &B
+double func::length2p(AcGePoint3d A,
+					  AcGePoint3d B
 					  )
 {
 	double x1,y1;
@@ -292,7 +292,7 @@ double func::length2p(AcGePoint3d &A,
 }
 AcGePoint3d func::shortlength(AcGePoint3d &A,
 							  AcGePoint3d &B,
-							  double &thislegth
+							  double thislegth
 							  )
 {
 	double x1,y1, R;
@@ -2342,33 +2342,53 @@ void func::GiveStartvectorAndAngle (AcGePoint3d &n1,
 int func::TVSClassCheck (AcDbEntity* pEnt)
 {
 	if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForWrite)==eOk){
-	if ( (pEnt = TVS_Pipe::cast(pEnt)) != NULL )
-	{
+		if ( (pEnt = TVS_Pipe::cast(pEnt)) != NULL )
+		{
+			pEnt->close();
+			return isTVS_Pipe;
+		}
+		if ( (pEnt = TVS_TAP::cast(pEnt)) != NULL )
+		{
+			pEnt->close();
+			return isTVS_TAP;
+		}
+		if ( (pEnt = TVS_WYE::cast(pEnt)) != NULL )
+		{
+			pEnt->close();
+			return isTVS_Wye;
+		}
+		if ( (pEnt = TVS_TRANS::cast(pEnt)) != NULL )
+		{
+			pEnt->close();
+			return isTVS_TRANS;
+		}
 		pEnt->close();
-		return isTVS_Pipe;
-	}
-	if ( (pEnt = TVS_TAP::cast(pEnt)) != NULL )
-	{
-		pEnt->close();
-		return isTVS_TAP;
-	}
-	if ( (pEnt = TVS_WYE::cast(pEnt)) != NULL )
-	{
-		pEnt->close();
-		return isTVS_Wye;
-	}
-	if ( (pEnt = TVS_TRANS::cast(pEnt)) != NULL )
-	{
-		pEnt->close();
-		return isTVS_TRANS;
-	}
-	pEnt->close();
-	return isNoTVS;
+		return isNoTVS;
 	}
 	else
 	{
 
-	acutPrintf(_T("Объект блокирован"));
+		acutPrintf(_T("Объект блокирован"));
 		return isBlocked;
 	}
+}
+
+int func::whyIsGrose( TVS_Entity* pEnt1,TVS_Entity* pEnt2 )
+{
+	if (pEnt1->SizeA>pEnt2->SizeA) return TVSEnt1isGrose;
+	else
+	{
+		if (pEnt1->SizeA<pEnt2->SizeA) return TVSEnt2isGrose;
+		else
+		{
+			if (pEnt1->SizeB>pEnt2->SizeB) return TVSEnt1isGrose;
+			else
+			{
+				if (pEnt1->SizeB<pEnt2->SizeB) return TVSEnt2isGrose;
+				else return TVSEntitiesisSame;
+
+			}
+		}
+	}
+
 }

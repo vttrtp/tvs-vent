@@ -38,6 +38,8 @@
 #define TVSisPerpendicular 2
 #define TVSisParallel 3
 #define TVSisIntersection 4
+#define TVSisNoSameSize 0
+#define TVSisSameSize 1
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
 class CTVS_Ventilation_ARXApp : public AcRxArxApp {
@@ -497,7 +499,7 @@ public:
 
 				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
 				{
-					
+
 					///задание слоя
 					if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
 					{	
@@ -565,7 +567,7 @@ public:
 
 					if ((length2p(na1,midp)>=delta)&&(length2p(midp,na2)>=delta))
 					{
-						
+
 						if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
 						{	
 							Tapi->setColor(pColor);
@@ -588,7 +590,7 @@ public:
 						Pipi2->close();
 						impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
 						Pipi2=pipie.add_new(kr2,impr,fSizeA,fSizeB,false,fRound);
-						
+
 						if (acdbOpenAcDbEntity(pEnt,Pipi2->id(),AcDb::kForWrite)==eOk)
 						{	
 							Pipi2->setColor(pColor);
@@ -904,44 +906,44 @@ public:
 
 				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
 				{
-				if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
-				{	
-					Tapi->setColor(pColor);
-					Tapi->setLineWeight(pWeight);
-					Tapi->setLayer(pLayer);
-					Tapi->setLinetype(pLineType);
-					Tapi->close();
+					if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+					{	
+						Tapi->setColor(pColor);
+						Tapi->setLineWeight(pWeight);
+						Tapi->setLayer(pLayer);
+						Tapi->setLinetype(pLineType);
+						Tapi->close();
+					}
+					id=Pipi1->id();
+					acdbGetAdsName(eName,id);
+					acdbGetObjectId(id,eName);
+					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+					Pipi1->assertWriteEnabled();
+					if (na1==Pipi1->FirstPoint)			
+						Pipi1->LastPoint=lastpipi;
+					else Pipi1->FirstPoint=lastpipi;
+
+
+					Pipi1->close();
+
+
+					id=Pipi2->id();
+					acdbGetAdsName(eName,id);
+					acdbGetObjectId(id,eName);
+					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+					Pipi2->assertWriteEnabled();
+					if (na2==Pipi2->FirstPoint)			
+						Pipi2->LastPoint=midp;
+					else Pipi2->FirstPoint=midp;
+
+					Pipi2->close();
+
+					//acutPrintf(_T("\nОтвод поставлен"));
+
+
+
 				}
-				id=Pipi1->id();
-				acdbGetAdsName(eName,id);
-				acdbGetObjectId(id,eName);
-				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-				Pipi1->assertWriteEnabled();
-				if (na1==Pipi1->FirstPoint)			
-					Pipi1->LastPoint=lastpipi;
-				else Pipi1->FirstPoint=lastpipi;
-
-
-				Pipi1->close();
-
-
-				id=Pipi2->id();
-				acdbGetAdsName(eName,id);
-				acdbGetObjectId(id,eName);
-				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-				Pipi2->assertWriteEnabled();
-				if (na2==Pipi2->FirstPoint)			
-					Pipi2->LastPoint=midp;
-				else Pipi2->FirstPoint=midp;
-
-				Pipi2->close();
-
-				//acutPrintf(_T("\nОтвод поставлен"));
-
-
-
-			}
-			//else acutPrintf(_T("\nНе могу поставить отвод"));
+				//else acutPrintf(_T("\nНе могу поставить отвод"));
 
 				else
 				{
@@ -955,10 +957,10 @@ public:
 
 
 
+			}
+
+
 		}
-
-
-}
 
 
 		///////// удлинение компланара
@@ -1310,14 +1312,14 @@ public:
 
 	}
 
-	static bool ConnectNew(AcDbEntity *pEnt1,
-		AcDbEntity  *pEnt2)
+	static bool ConnectWithTap(AcDbEntity *pEnt1,
+		AcDbEntity  *pEnt2, ads_point pnt1,ads_point pnt2)
 
 	{
 		//Проверка
 		if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
 		{
-		acutPrintf(_T("\n Выбран не тот обьект"));
+			acutPrintf(_T("\n Выбран не тот обьект"));
 			return false;
 		}
 
@@ -1327,29 +1329,108 @@ public:
 			return false;
 		}
 
-	
-	 TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
-	 TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
-	AcGePoint3d p1 = pPipe1->get_FirstPoint();
-	AcGePoint3d p2 = pPipe1->get_Lastpoint();
-	AcGePoint3d p3 = pPipe2->get_FirstPoint();
-	AcGePoint3d p4 = pPipe2->get_Lastpoint();
 
-	AcGeLine3d line1=AcGeLine3d (p1,p2);
-	AcGeLine3d  line2=AcGeLine3d (p3,p4);
-	AcGeTol dop;
-	dop.setEqualPoint(0.01);
-	int LineStatus=TVSisIntersection;
-	if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n Параллельны"));} 
-	if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Линейны"));} 
-	if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n Перпендикулярны"));} 
-	
+		TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
+		TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
+		AcGePoint3d p1 = pPipe1->get_FirstPoint();
+		AcGePoint3d p2 = pPipe1->get_Lastpoint();
+		AcGePoint3d p3 = pPipe2->get_FirstPoint();
+		AcGePoint3d p4 = pPipe2->get_Lastpoint();
 
+		AcGeLine3d line1=AcGeLine3d (p1,p2);
+		AcGeLine3d  line2=AcGeLine3d (p3,p4);
+		AcGeTol dop;
+		dop.setEqualPoint(0.01);
+		int LineStatus=TVSisIntersection;
+		int SizeStatus;
+		if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n Параллельны"));} 
+		if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Линейны"));} 
+		if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n Перпендикулярны"));} 
+		if((pPipe1->SizeA==pPipe2->SizeA)&&(pPipe1->SizeA==pPipe2->SizeA)) SizeStatus=TVSisSameSize;
+		else SizeStatus=TVSisNoSameSize;
+		int GroseStatus=whyIsGrose(pPipe1,pPipe2);
+		AcGePoint3d pointSelect1=line1.closestPointTo(asPnt3d(pnt1));
+		AcGePoint3d pointSelect2=line1.closestPointTo(asPnt3d(pnt2));
+
+		//if line intersection
+		if (LineStatus!=TVSisParallel&&LineStatus!=TVSisLinear)
+		{
+			AcGePoint3d midp, point1,point2;
+
+			line1.intersectWith(line2,midp);
+			//find point1
+			if (line1.isOn(midp))
+			{
+				if (midp.distanceTo(p1)<=pointSelect1.distanceTo(p1)) point1=p1;
+				else point1=p2;	
+			}
+			else
+			{
+				if (midp.distanceTo(p1)>=pointSelect1.distanceTo(p2)) point1=p1;
+				else point1=p2;	
+			}//end findpoint1
+
+			//find point2
+			if (line2.isOn(midp))
+			{
+				if (midp.distanceTo(p3)<=pointSelect2.distanceTo(p3)) point2=p3;
+				else point1=p4;	
+			}
+			else
+			{
+				if (midp.distanceTo(p3)>=pointSelect2.distanceTo(p4)) point2=p3;
+				else point2=p4;	
+			}//end findpoint2
+			///Tap with point1 midp point2;
+			if (GroseStatus=TVSEntitiesisSame)
+			{
+				TVS_TAP* pTap=drawTapDirect(point1,midp,point2);
+				SetGlobalProperty(pTap);
+				SetPropertyLikePipe(pPipe1,pTap);
+				AcDbEntity * pEnt;
+				if (acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite)==eOk){
+					pPipe1->put_FirstPoint(point1);
+					pPipe1->put_Lastpoint(shortlength(point1, midp,length2p(pTap->MA,pTap->MiddlePoint)));
+					pPipe1->close();
+					
+				}
+				if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
+			
+				
+					pPipe2->put_FirstPoint(shortlength(point2, midp,length2p(pTap->MA,pTap->MiddlePoint)));
+					pPipe2->put_Lastpoint(point2);
+						pPipe2->close();
+				}
+
+			}
+		} //end if line intersection
 	}
 
 
-
-
+	static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
+	{
+		AcDbEntity * pAEnt;
+		if (acdbOpenAcDbEntity(pAEnt,pEnt->id(),AcDb::kForWrite)==eOk){
+			pEnt->put_SizeA(pPipe->get_SizeA());
+			pEnt->put_SizeB(pPipe->get_SizeB());
+			pEnt->put_Wipeout(pPipe->get_Wipeout());
+			pEnt->put_Grani(pPipe->get_Grani());
+			pEnt->put_This1D(pPipe->get_This1D());
+			pEnt->put_Flow(pPipe->get_Flow());
+			pEnt->put_Elevation(pPipe->get_Elevation());
+			pEnt->setColor(pPipe->color());
+			pEnt->setLineWeight(pPipe->lineWeight());
+			pEnt->setLayer(pPipe->layer());
+			pEnt->setLinetype(pPipe->linetype());
+			pEnt->setLinetypeScale(pPipe->linetypeScale());
+			pEnt->draw();
+			pEnt->close();
+		}
+		else
+		{
+			acutPrintf(_T("\n Обьект блокирован: невозможно копировать свойства"));
+		}
+	}
 	static void SetGlobalProperty( TVS_Entity *pEnt )
 	{
 
@@ -1371,12 +1452,12 @@ public:
 
 
 
-		pEnt->SizeA=globSizeA;
+		pEnt->put_SizeA(globSizeA);
 		pEnt->put_SizeB(globSizeB);
-		pEnt->Wipeout=globalWipeout;
-		pEnt->Grani=globalGrani;
-		pEnt->This1D=global1D;
-		pEnt->Flow=globalFlow;
+		pEnt->put_Wipeout(globalWipeout);
+		pEnt->put_Grani(globalGrani);
+		pEnt->put_This1D(global1D);
+		pEnt->put_Flow(globalFlow);
 		pEnt->put_Elevation(globalElevMid);
 
 
@@ -2204,7 +2285,7 @@ public:
 
 		}
 
-		ConnectNew(pEnt1,pEnt2);
+		ConnectWithTap(pEnt1,pEnt2,pt1,pt2);
 	}
 
 
