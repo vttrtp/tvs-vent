@@ -26,6 +26,9 @@
 #define isTVS_TAP 3
 #define isTVS_TRANS 4
 #define isTVS_Wye 5
+#define TVSEnt1isGrose 0
+#define TVSEnt2isGrose 1
+#define TVSEntitiesisSame 2
 namespace func {
 
 
@@ -70,12 +73,12 @@ bool correctpipes(AcGePoint3d &A,
 				  double &pRadius,
 				   AcGePoint3d &lastpipi,
 				   bool &pThisRound);
-double length2p(AcGePoint3d &A,
-				  AcGePoint3d &B
+double length2p(AcGePoint3d A,
+				  AcGePoint3d B
 				  );
 AcGePoint3d shortlength(AcGePoint3d &A,
 					AcGePoint3d &B,
-					double &thislegth
+					double thislegth
 				);
 
 void pCon (	AcDbEntity *pEnt1,
@@ -173,4 +176,5 @@ void PostToModelSpace(AcDbEntity *pEnt);
 void SetGlobalProperty(TVS_Entity *pEnt);
 void GiveStartvectorAndAngle (AcGePoint3d &n1, AcGePoint3d &n2, AcGePoint3d &n3, double &pAngle, AcGeVector3d &pStartvector);
 int TVSClassCheck (AcDbEntity* pEnt);
+int whyIsGrose (TVS_Entity* pEnt1,TVS_Entity* pEnt2);
 };
