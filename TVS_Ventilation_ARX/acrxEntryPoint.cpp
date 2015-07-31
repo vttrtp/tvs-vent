@@ -1350,7 +1350,7 @@ public:
 		else SizeStatus=TVSisNoSameSize;
 		int GroseStatus=whyIsGrose(pPipe1,pPipe2);
 		AcGePoint3d pointSelect1=line1.closestPointTo(asPnt3d(pnt1));
-		AcGePoint3d pointSelect2=line2.closestPointTo(asPnt3d(pnt2));
+		AcGePoint3d pointSelect2=line1.closestPointTo(asPnt3d(pnt2));
 
 		//if line intersection
 		if (LineStatus!=TVSisParallel&&LineStatus!=TVSisLinear)
@@ -1359,7 +1359,7 @@ public:
 
 			line1.intersectWith(line2,midp);
 			//find point1
-			if (line1.isOn(midp))
+			if (line1.(midp))
 			{
 				if (midp.distanceTo(p1)<=pointSelect1.distanceTo(p1)) point1=p1;
 				else point1=p2;	
@@ -1374,7 +1374,7 @@ public:
 			if (line2.isOn(midp))
 			{
 				if (midp.distanceTo(p3)<=pointSelect2.distanceTo(p3)) point2=p3;
-				else point1=p4;	
+				else point2=p4;	
 			}
 			else
 			{

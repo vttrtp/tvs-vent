@@ -74,7 +74,7 @@
     <Link>
     </Link>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Program\TVS_Ventilation\TVS_Ventilation_DBX\x64\Debug\TVSTVS_Ventilation_DBX.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Vitaut\Program\TVS_Ventilation\TVS_Ventilation_DBX\x64\Debug\TVSTVS_Ventilation_DBX.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
