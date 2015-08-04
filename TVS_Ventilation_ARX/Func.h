@@ -117,6 +117,7 @@ static int globalRadiusTypeRound=RadiusTypeRound_RadiusSpecific;
 static int globalRadiusTypeRect=RadiusTypeRect_RadiusConstant;
 static int globalTypeRoundTap=1;
 static int globalTapForm=Form_Direct;
+static int globalTransType=0;
 static double globalTapRadiusVariableParameter=1;
 static double globalTapRadiusConst=150;
 static double globalFlow=0;
