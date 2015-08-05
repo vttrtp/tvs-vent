@@ -197,7 +197,7 @@ public:
 	
 	void Gimme4PipePoints ();
 	void Gimme4PipePointsWipe ();
-	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
+static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 		AcGePoint3d &pLastPoint,
 		double &pSizeA,
 		double &pSizeB,

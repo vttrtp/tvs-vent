@@ -1316,7 +1316,100 @@ public:
 // 
 // 	}
 
+static bool addTrans(TVS_Pipe *pPipe1,
+						   TVS_Pipe  *pPipe2, AcGePoint3d &point1,AcGePoint3d &midp,AcGePoint3d &point2)
+{
+	if (length2p(pPipe1->FirstPoint,point1)>length2p(pPipe1->LastPoint,point1))
+	{
+		AcDbEntity* pEnt;
+			if (acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite)==eOk){
+				pPipe1->put_Lastpoint(pPipe1->FirstPoint);
+		pPipe1->put_FirstPoint(point1);
+		pPipe1->close();
 
+	}
+	}
+
+			if (length2p(pPipe2->FirstPoint,point2)<length2p(pPipe2->LastPoint,point2))
+			{
+				AcDbEntity* pEnt;
+				if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
+					pPipe2->put_FirstPoint(pPipe2->LastPoint);
+					pPipe2->put_Lastpoint(point2);
+pPipe2->close();
+				}
+			}
+
+
+	int GroseStatus=whyIsGrose(pPipe1,pPipe2);
+	AcDbEntity* pEnt;
+	if (GroseStatus==TVSEnt1isGrose)		
+	{
+
+		TVS_TRANS * pTrans;
+		TVS_Pipe* GPipe=pPipe1;
+		TVS_Pipe* SPipe=pPipe2;
+
+
+		pTrans=pTrans->add_new(GPipe->SizeA,
+			GPipe->SizeB,
+			SPipe->SizeA,
+			SPipe->SizeB,
+			globalLengthTr,
+			AcGeVector3d(-GPipe->FirstPoint.x+GPipe->LastPoint.x,-GPipe->FirstPoint.y+GPipe->LastPoint.y,-GPipe->FirstPoint.z+GPipe->LastPoint.z).normalize(),
+			GPipe->FirstPoint,
+			GPipe->ThisRound,
+			SPipe->ThisRound,
+			globalLengthTr,
+			GPipe->This1D
+			);
+		if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
+			pTrans->put_Length(globalLengthTr);
+			pTrans->close();
+		}
+		SetGlobalProperty(pTrans);
+		SetPropertyLikePipe(SPipe,pTrans);
+		SetPropertyLikePipe(SPipe,GPipe);
+		AcGePoint3d lastPoint=GPipe->LastPoint;
+
+		point1=shortlength(midp,point1,globalLengthTr);
+		return true;
+	}
+	if (GroseStatus==TVSEnt2isGrose)
+	{
+
+		TVS_TRANS * pTrans;
+		TVS_Pipe* GPipe=pPipe2;
+		TVS_Pipe* SPipe=pPipe1;
+
+
+		pTrans=pTrans->add_new(GPipe->SizeA,
+			GPipe->SizeB,
+			SPipe->SizeA,
+			SPipe->SizeB,
+			globalLengthTr,
+			AcGeVector3d(GPipe->FirstPoint.x-GPipe->LastPoint.x,GPipe->FirstPoint.y-GPipe->LastPoint.y,GPipe->FirstPoint.z-GPipe->LastPoint.z).normalize(),
+			GPipe->LastPoint,
+			GPipe->ThisRound,
+			SPipe->ThisRound,
+			globalLengthTr,
+			GPipe->This1D
+			);
+		if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
+			pTrans->put_Length(globalLengthTr);
+			pTrans->close();
+		}
+		SetGlobalProperty(pTrans);
+		SetPropertyLikePipe(SPipe,pTrans);
+		SetPropertyLikePipe(SPipe,GPipe);
+
+		point2=shortlength(midp,point2,globalLengthTr);
+		return true;
+
+	}
+
+	return false;
+}
 
 
 
@@ -1360,7 +1453,7 @@ public:
 		AcGePoint3d pointSelect1=line1.closestPointTo(asPnt3d(pnt1));
 		AcGePoint3d pointSelect2=line2.closestPointTo(asPnt3d(pnt2));
 
-#pragma region //if line intersection
+#pragma region  line intersection
 		if (LineStatus!=TVSisParallel&&LineStatus!=TVSisLinear)
 		{
 			AcGePoint3d midp, point1,point2;
@@ -1410,71 +1503,9 @@ public:
 			if (GroseStatus!=TVSEntitiesisSame)
 			{
 
+				addTrans(pPipe1,pPipe2,point1,midp,point2);
 
-
-				if (GroseStatus==TVSEnt1isGrose)		
-				{
-
-					TVS_TRANS * pTrans;
-					TVS_Pipe* GPipe=pPipe1;
-					TVS_Pipe* SPipe=pPipe2;
-
-
-					pTrans=pTrans->add_new(GPipe->SizeA,
-						GPipe->SizeB,
-						SPipe->SizeA,
-						SPipe->SizeB,
-						globalLengthTr,
-							AcGeVector3d(-GPipe->FirstPoint.x+GPipe->LastPoint.x,-GPipe->FirstPoint.y+GPipe->LastPoint.y,-GPipe->FirstPoint.z+GPipe->LastPoint.z).normalize(),
-						GPipe->FirstPoint,
-						GPipe->ThisRound,
-						SPipe->ThisRound,
-						globalLengthTr,
-						GPipe->This1D
-						);
-					if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
-						pTrans->put_Length(globalLengthTr);
-						pTrans->close();
-					}
-					SetGlobalProperty(pTrans);
-					SetPropertyLikePipe(SPipe,pTrans);
-					SetPropertyLikePipe(SPipe,GPipe);
-					AcGePoint3d lastPoint=GPipe->LastPoint;
-				
-					point1=shortlength(midp,point1,globalLengthTr);
-
-				}
-				else
-				{
-
-					TVS_TRANS * pTrans;
-					TVS_Pipe* GPipe=pPipe2;
-					TVS_Pipe* SPipe=pPipe1;
-
-
-					pTrans=pTrans->add_new(GPipe->SizeA,
-						GPipe->SizeB,
-						SPipe->SizeA,
-						SPipe->SizeB,
-						globalLengthTr,
-						AcGeVector3d(GPipe->FirstPoint.x-GPipe->LastPoint.x,GPipe->FirstPoint.y-GPipe->LastPoint.y,GPipe->FirstPoint.z-GPipe->LastPoint.z).normalize(),
-						GPipe->LastPoint,
-						GPipe->ThisRound,
-						SPipe->ThisRound,
-						globalLengthTr,
-						GPipe->This1D
-						);
-					if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
-						pTrans->put_Length(globalLengthTr);
-						pTrans->close();
-					}
-					SetGlobalProperty(pTrans);
-					SetPropertyLikePipe(SPipe,pTrans);
-					SetPropertyLikePipe(SPipe,GPipe);
-				
-						point2=shortlength(midp,point2,globalLengthTr);
-
-				}	
+		
 			}
 			#pragma endregion
 				TVS_TAP* pTap=drawTapDirect(point1,midp,point2);
@@ -1500,9 +1531,212 @@ public:
 			
 		
 	} //end if line intersection
-#pragma endregion
+#pragma endregion 
+
+#pragma region linear
+	if (LineStatus==TVSisLinear)
+	{
+		AcGePoint3d kr1;
+		AcGePoint3d kr2;
+	AcGePoint3d midp;
+	if (max(length2p(p1,p3),length2p(p1,p4))>max(length2p(p2,p3),length2p(p2,p4)))
+	{kr1=p1;midp=p2;}
+	else  {kr1=p2;midp=p1;}
+		 
+		 			if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
+		 			else kr2=p3;
+		 
+		 				AcDbEntity * pEnt;
+
+//put trans
+
+					addTrans(pPipe1,pPipe2,kr1,midp,kr2);
+
+		 			acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+		 			pPipe1->assertWriteEnabled();
+		 			pPipe1->put_FirstPoint(kr1);
+		 		pPipe1->put_Lastpoint(kr2);
+		 			pPipe1->close();
+		 
+		 			ads_name eName;
+		 			acdbGetAdsName(eName,pPipe2->id());
+					acdbEntDel(eName);
+		
+	}
+#pragma endregion 
+	if (LineStatus==TVSisParallel) return false;
+	return true;
+}
+
+
+static bool ConnectWithWye(AcDbEntity *pEnt1,
+						   AcDbEntity  *pEnt2, ads_point pnt1,ads_point pnt2)
+
+{
+	//Проверка
+	if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
+	{
+		acutPrintf(_T("\n Выбран не тот обьект"));
+		return false;
+	}
+
+	if (TVSClassCheck(pEnt2)!=isTVS_Pipe)
+	{
+		acutPrintf(_T("\n Выбран не тот обьект"));
+		return false;
+	}
+
+
+	TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
+	TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
+	AcGePoint3d p1 = pPipe1->get_FirstPoint();
+	AcGePoint3d p2 = pPipe1->get_Lastpoint();
+	AcGePoint3d p3 = pPipe2->get_FirstPoint();
+	AcGePoint3d p4 = pPipe2->get_Lastpoint();
+
+	AcGeLine3d line1=AcGeLine3d (p1,p2);
+	AcGeLine3d  line2=AcGeLine3d (p3,p4);
+	AcGeTol dop;
+	dop.setEqualPoint(0.01);
+	int LineStatus=TVSisIntersection;
+	int SizeStatus;
+	if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n Параллельны"));} 
+	if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Линейны"));} 
+	if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n Перпендикулярны"));} 
+	if((pPipe1->SizeA==pPipe2->SizeA)&&(pPipe1->SizeA==pPipe2->SizeA)) SizeStatus=TVSisSameSize;
+	else SizeStatus=TVSisNoSameSize;
+	int GroseStatus=whyIsGrose(pPipe1,pPipe2);
+	AcGePoint3d pointSelect1=line1.closestPointTo(asPnt3d(pnt1));
+	AcGePoint3d pointSelect2=line2.closestPointTo(asPnt3d(pnt2));
+
+#pragma region  line intersection
+	if (LineStatus==TVSisPerpendicular||LineStatus==TVSisIntersection)
+	{
+
+		AcGePoint3d midp, point1,point2,intersectpoint;
+
+		line1.intersectWith(line2,midp);
+		//find point1
+		if (line2.distanceTo(p1)<=line2.distanceTo(p2))
+		{
+			AcGePoint3d temp;
+			temp=p2;
+			p2=p1;
+			p1=temp;
+		}
+	
+		intersectpoint=line2.closestPointTo(p2);
+
+		//made perpendicular
+		
+if (LineStatus==TVSisIntersection)
+{
+	TVS_Pipe* tempPipe;
+	tempPipe=tempPipe->add_new(p2,intersectpoint,globSizeA,globSizeB);
+	SetPropertyLikePipe(pPipe1,tempPipe);
+	ads_point pt1;
+	ads_point pt2;
+	ConnectWithTap(pPipe1,tempPipe,asDblArray(p1),asDblArray(intersectpoint));
+	pPipe1=tempPipe;
+	p1=p2;
+	p2=intersectpoint;
 
 }
+
+
+
+if (length2p(p3,intersectpoint)<length2p(p4,intersectpoint))
+{
+	AcGePoint3d temp;
+	temp=p4;
+	p4=p3;
+	p3=temp;
+}
+	
+
+
+	AcDbEntity * pEnt;
+	acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
+	pPipe2->assertWriteEnabled();
+	pPipe2->put_FirstPoint(p3);
+	pPipe2->put_Lastpoint(intersectpoint);
+	pPipe2->close();
+
+TVS_WYE* pWye;	 				
+	pWye=pWye->add_new(pPipe2->SizeA,
+	 						pPipe2->SizeB,
+	 						pPipe1->SizeA,
+	 						pPipe1->SizeB,
+	 						globalLengthW,
+	 						AcGeVector3d(-pPipe2->FirstPoint.x+pPipe2->LastPoint.x,-pPipe2->FirstPoint.y+pPipe2->LastPoint.y,-pPipe2->FirstPoint.z+pPipe2->LastPoint.z).normalize(),
+	 						AcGeVector3d(pPipe1->FirstPoint.x-pPipe1->LastPoint.x,pPipe1->FirstPoint.y-pPipe1->LastPoint.y,pPipe1->FirstPoint.z-pPipe1->LastPoint.z).normalize(),
+	 						intersectpoint,
+	 						pPipe2->ThisRound,
+	 						pPipe1->ThisRound,
+	 						pPipe2->This1D);
+	SetGlobalProperty(pWye);
+	SetPropertyLikePipe(pPipe2,pWye);
+	acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+	pPipe1->assertWriteEnabled();
+	pPipe1->put_Lastpoint(shortlength(p1,intersectpoint,pPipe2->SizeA/2+pWye->LengthPl));
+	pPipe1->close();
+	acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
+	pPipe2->assertWriteEnabled();
+	pPipe2->put_Lastpoint(shortlength(p3,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
+	pPipe2->close();
+	//if intersection between p3 and p4
+	if (max(length2p(p3,intersectpoint),length2p(p4,intersectpoint))<length2p(p3,p4))
+	{
+		TVS_Pipe* tempPipe;
+		tempPipe=tempPipe->add_new(intersectpoint,p4,globSizeA,globSizeB);
+		SetPropertyLikePipe(pPipe2,tempPipe);
+		acdbOpenAcDbEntity(pEnt,tempPipe->id(),AcDb::kForWrite);
+		tempPipe->assertWriteEnabled();
+		tempPipe->put_FirstPoint(shortlength(p3,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
+		tempPipe->close();
+}
+
+
+
+	} //end if line intersection
+#pragma endregion 
+
+#pragma region linear
+	if (LineStatus==TVSisLinear)
+	{
+		AcGePoint3d kr1;
+		AcGePoint3d kr2;
+		AcGePoint3d midp;
+		if (max(length2p(p1,p3),length2p(p1,p4))>max(length2p(p2,p3),length2p(p2,p4)))
+		{kr1=p1;midp=p2;}
+		else  {kr1=p2;midp=p1;}
+
+		if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
+		else kr2=p3;
+
+		AcDbEntity * pEnt;
+
+		//put trans
+
+		addTrans(pPipe1,pPipe2,kr1,midp,kr2);
+
+		acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+		pPipe1->assertWriteEnabled();
+		pPipe1->put_FirstPoint(kr1);
+		pPipe1->put_Lastpoint(kr2);
+		pPipe1->close();
+
+		ads_name eName;
+		acdbGetAdsName(eName,pPipe2->id());
+		acdbEntDel(eName);
+
+	}
+#pragma endregion 
+	if (LineStatus==TVSisParallel) return false;
+	return true;
+}
+
+
 // 
 // 	static bool ConnectPutTrans(AcDbEntity *pEnt1, AcDbEntity *pEnt2, int pointStatus)
 // 
@@ -2459,7 +2693,7 @@ static void Ventilation_ARXTVS_CONNECT(void)
 
 	}
 
-	ConnectWithTap(pEnt1,pEnt2,pt1,pt2);
+	ConnectWithWye(pEnt1,pEnt2,pt1,pt2);
 }
 
 

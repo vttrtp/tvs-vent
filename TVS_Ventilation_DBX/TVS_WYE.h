@@ -170,7 +170,7 @@ public:
 	bool ThisRoundotv;
 	
 
-	TVS_WYE *add_new(
+	static TVS_WYE *add_new(
 		double &pSizeApr,
 		double &pSizeBpr,
 		double &pSizeAotv,
