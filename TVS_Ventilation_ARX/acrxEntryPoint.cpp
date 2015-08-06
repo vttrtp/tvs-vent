@@ -29,11 +29,14 @@
 #include "tdbl.h"
 #include "dbmleader.h"
 #include "PipeSizeDiallog.h"
+#include "hangeZdg.h"
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
 #define dCONNECT 1
 #define dSIZE 2
+#define dCONNECTT 3
+#define dCONNECTW 4
 #define TVSisLinear 1
 #define TVSisPerpendicular 2
 #define TVSisParallel 3
@@ -2183,6 +2186,7 @@ static void nextpipe(AcGePoint3d &A1,
 
 static void connect2(
 	TVS_Pipe *&pipi1
+	, int connectstatus
 	)
 
 {
@@ -2242,9 +2246,31 @@ static void connect2(
 	}
 	pEnt2=AcDbEntity::cast(pipi1);
 	//pCon(pEnt2,pEnt);
+	if(connectstatus==dCONNECTT) ConnectWithTap(pipi1,pipi2,asDblArray(pipi1->LastPoint),pt1);
+	if(connectstatus==dCONNECTW) ConnectWithWye(pipi1,pipi2,asDblArray(pipi1->LastPoint),pt1);
 
 }
 
+
+static bool changeZ(TVS_Pipe* pPipe)
+{
+
+	double startZ, nextZ, Axis;
+	changeZdg dg;
+	startZ=globalElevMid;
+	nextZ=globalElevMid;
+	Axis=globalAxis;
+	dg.startZ=startZ;
+	dg.nextZ=nextZ;
+	dg.Axis=Axis;
+	dg.DoModal();
+	startZ=dg.startZ;
+	nextZ=dg.nextZ;
+	Axis=dg.Axis;
+	globalAxis=Axis;
+	globalElevMid=nextZ;
+return true;
+}
 static void addtrans(double &pSizeAp1,
 					 double &pSizeBp1,
 					 double &pSizeAp2,
@@ -2364,8 +2390,8 @@ static void Ventilation_ARXTVS_PIPE(void)
 	while (Astat2==false)
 	{
 		Astat2=true;
-		acedInitGet(RSG_NONULL, _T("Размер Р h соедОтвод о j соедТройник n т Z я"));
-		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер/соедОтвод/соедТройник/Z]:"),pt2) ;
+		acedInitGet(RSG_NONULL, _T("Размер Р "));
+		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер]:"),pt2) ;
 		switch (Astat)
 		{
 		case RTCAN:
@@ -2384,13 +2410,7 @@ static void Ventilation_ARXTVS_PIPE(void)
 			acdbRToS(0,2,2,resultss);
 		}
 
-		if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("я"))==0))
-		{
-			reg=dSIZE;
-			setZ();
-			Astat2=false;
-			acdbRToS(0,2,2,resultss);
-		}
+	
 
 	}
 
@@ -2458,17 +2478,27 @@ static void Ventilation_ARXTVS_PIPE(void)
 			Astat2=false;
 			acdbRToS(0,2,2,resultss);
 		}
-		if ((wcscmp(resultss,_T("Соеденить"))==0)||(wcscmp(resultss,_T("с"))==0)||(wcscmp(resultss,_T("c"))==0))
+		if ((wcscmp(resultss,_T("соедОтвод "))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("о"))==0))
 		{
-			reg=dCONNECT;
-			connect2(pipi);
+			reg=dCONNECTT;
+			connect2(pipi,reg);
 			return;
 		}
 
 
+		if ((wcscmp(resultss,_T("соедТройник"))==0)||(wcscmp(resultss,_T("т"))==0)||(wcscmp(resultss,_T("n"))==0))
+		{
+			reg=dCONNECTW;
+			connect2(pipi,reg);
+			return;
+		}
 
-
-
+		if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("z"))==0)||(wcscmp(resultss,_T("я"))==0))
+		{
+			reg=dCONNECT;
+			changeZ(pipi);
+			return;
+		}
 
 
 	}

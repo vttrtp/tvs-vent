@@ -125,6 +125,7 @@ static double globalLengthTr=300;
 static double globalLengthW=50;
 static double globalElevMid=0;
 static double globalElev=globalElevdown;
+static double globalAxis=90;
 
 void TVS_CS (AcDbEntity *pEnt);
 void TVS_PEdit (AcDbEntity *pEnt);

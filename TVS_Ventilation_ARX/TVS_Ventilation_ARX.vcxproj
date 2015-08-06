@@ -82,6 +82,7 @@
     <ClCompile Include="dgAllEdit.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="Func.cpp" />
+    <ClCompile Include="hangeZdg.cpp" />
     <ClCompile Include="PipeSizeDiallog.cpp" />
     <ClCompile Include="SPEC.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -99,6 +100,7 @@
     <ClInclude Include="dgAllEdit.h" />
     <ClInclude Include="DocData.h" />
     <ClInclude Include="Func.h" />
+    <ClInclude Include="hangeZdg.h" />
     <ClInclude Include="PipeSizeDiallog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SPEC.h" />
