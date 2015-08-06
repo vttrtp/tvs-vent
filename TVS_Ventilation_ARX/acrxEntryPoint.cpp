@@ -1692,7 +1692,7 @@ TVS_WYE* pWye;
 		SetPropertyLikePipe(pPipe2,tempPipe);
 		acdbOpenAcDbEntity(pEnt,tempPipe->id(),AcDb::kForWrite);
 		tempPipe->assertWriteEnabled();
-		tempPipe->put_FirstPoint(shortlength(p3,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
+		tempPipe->put_FirstPoint(shortlength(p4,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
 		tempPipe->close();
 }
 
@@ -1959,6 +1959,9 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 
 
 }
+
+
+
 
 
 static bool changesize ()
@@ -2312,7 +2315,10 @@ static void addtrans(double &pSizeAp1,
 }
 
 
-
+static void Ventilation_ARXTVS_SETTINGS(void)
+{
+changesize();
+}
 
 // ----- Ventilation_ARX.TVS_PIPE command
 static void Ventilation_ARXTVS_PIPE(void)
@@ -2352,11 +2358,14 @@ static void Ventilation_ARXTVS_PIPE(void)
 	}
 
 	Astat2=false;
+
+
+
 	while (Astat2==false)
 	{
 		Astat2=true;
-		acedInitGet(RSG_NONULL, _T("Размер Р h Z я"));
-		Astat=acedGetPoint(pt1,_T("\nУкажите следущую точку или [Размер/Z]:"),pt2) ;
+		acedInitGet(RSG_NONULL, _T("Размер Р h соедОтвод о j соедТройник n т Z я"));
+		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер/соедОтвод/соедТройник/Z]:"),pt2) ;
 		switch (Astat)
 		{
 		case RTCAN:
@@ -2384,6 +2393,9 @@ static void Ventilation_ARXTVS_PIPE(void)
 		}
 
 	}
+
+
+
 
 	AcGePoint3d A1=asPnt3d(pt1);
 	AcGePoint3d A2=asPnt3d(pt2);
@@ -2416,8 +2428,8 @@ static void Ventilation_ARXTVS_PIPE(void)
 	{
 
 
-		acedInitGet(RSG_NONULL, _T("Размер Р Соеденить с h c"));
-		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер/Соеденить]:"),pt2) ;
+		acedInitGet(RSG_NONULL, _T("Размер Р h соедОтвод о j соедТройник n т Z z я"));
+		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер/соедОтвод/соедТройник/Z]:"),pt2) ;
 		switch (Astat)
 		{
 		case RTCAN:
@@ -2594,7 +2606,7 @@ static void Ventilation_ARXTVS_WYE(void)
 }
 
 // - Ventilation_ARX.TVS_CONNECT command (do not rename)
-static void Ventilation_ARXTVS_CONNECT(void)
+static void Ventilation_ARXTVS_CONNECTW(void)
 {
 	// Add your code for command Ventilation_ARX.TVS_CONNECT here
 
@@ -2694,6 +2706,108 @@ static void Ventilation_ARXTVS_CONNECT(void)
 	}
 
 	ConnectWithWye(pEnt1,pEnt2,pt1,pt2);
+}
+
+static void Ventilation_ARXTVS_CONNECTT(void)
+{
+	// Add your code for command Ventilation_ARX.TVS_CONNECT here
+
+	double Lx,Ly, startangle;
+	ads_name vozd1,vozd2, eName;
+	ACHAR handle[17];
+	ads_point pt1,pt2;
+	ads_real sise=0;
+	AcDbEntity *pEnt1,*pEnt2 = NULL;
+	AcDbObjectId id;
+	TVS_WYE wyie;
+	TVS_TAP * Tapie;
+	TVS_Pipe * Pipi1,*Pipi2;
+	double NewSiseA, NewRadius;
+	resbuf *rb = NULL;
+	bool ft=false;
+	while (ft==false)
+	{
+
+		if (acedEntSel (_T("\nВыберете 1-ый воздуховод:"), vozd1,pt1)== RTCAN)
+			return;
+
+
+
+		if (acdbGetObjectId(id,vozd1)==eOk)
+		{
+
+			acdbGetObjectId(id,vozd1);
+
+			{if (id!=AcDbObjectId::kNull)
+			{
+				if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
+				{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+				{	
+					//acutPrintf(_T("\nPipe 1...ок"));
+					ft=true;
+
+				}
+				}
+
+				else {
+					acutPrintf(_T("\nОбьект заблокирован"));
+
+					return;
+				}
+				pEnt1->close();	
+			}
+			}
+
+
+		}
+	}
+	ft=false;
+	while (ft==false)
+	{
+		if (acedEntSel (_T("\nВыберете 2-ый воздуховод:"), vozd2,pt2)== RTCAN)
+			return;
+
+		if (acdbGetObjectId(id,vozd2)==eOk)
+		{
+
+			acdbGetObjectId(id,vozd2);
+
+			{if (id!=AcDbObjectId::kNull)
+			{
+				if (acdbOpenAcDbEntity(pEnt2,id,AcDb::kForWrite)==eOk)
+				{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
+				{	
+					if (Pipi1!=Pipi2)
+					{
+						//acutPrintf(_T("\nPipe 2...ок"));
+						ft=true;
+					}
+					else
+					{
+						acutPrintf(_T("\nВыбоан тот же воздуховод"));
+
+					}
+
+				}
+				}
+
+				else {
+					acutPrintf(_T("\nОбьект заблокирован"));
+
+					return;
+				}
+
+				pEnt2->close();	
+			}
+			}
+
+
+		}
+
+
+	}
+
+	ConnectWithTap(pEnt1,pEnt2,pt1,pt2);
 }
 
 
@@ -5374,7 +5488,8 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_PIPE, TVS_PIPE, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_TRANS, TVS_TRANS, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_WYE, TVS_WYE, ACRX_CMD_TRANSPARENT, NULL)
-	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECT, TVS_CONNECT, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECTT, TVS_CONNECTT, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECTW, TVS_CONNECTW, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DUCT, TVS_DUCT, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_1D2D, TVS_1D2D, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SPEC, TVS_SPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
@@ -5384,6 +5499,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Change, TVS_Change, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ERASE, TVS_ERASE, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_LEAD, TVS_LEAD, ACRX_CMD_TRANSPARENT, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SETTINGS, TVS_SETTINGS, ACRX_CMD_TRANSPARENT, NULL)
 
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyCommand, MyCommandLocal, ACRX_CMD_MODAL, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyPickFirst, MyPickFirstLocal, ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET, NULL)
