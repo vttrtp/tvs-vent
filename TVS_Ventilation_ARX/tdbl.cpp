@@ -66,10 +66,39 @@ void tdbl::startEdit(AcDbEntity *pEnt, AcGePoint3d pt)
 
 	if(pEnt->isKindOf(TVS_Entity::desc()) == Adesk::kTrue)
 	{
+
+
+		//from object id to selection set
+		ads_name ss, ename, eName, eName2;
+
+		//create a selection set
+		acedSSAdd( NULL, NULL, ss );
+
+		//get the ads name from objectID
+		acdbGetAdsName( ename, pEnt->id() );
+
+		//add the selected entity ads name to selection set
+		acedSSAdd( ename, ss, ss );
+
+		acedSSName(ss,0,eName);
+		//select with grip
+		acedSSSetFirst( ss, NULL );
+
+		acedSSFree( ss );
+
+
+		AcDbObjectId id;
+			acdbGetObjectId(id,eName);
+			AcDbEntity * pEnt2;
+			acdbOpenAcDbEntity(pEnt2,id,AcDb::kForWrite);
 		AcApDocument *pDoc=acDocManager->curDocument();
 		acDocManager->lockDocument(pDoc,AcAp::kWrite);
 
-		Change(pEnt);
+
+
+
+
+		Change(ss);
 
 		acDocManager->unlockDocument(pDoc);
 	}

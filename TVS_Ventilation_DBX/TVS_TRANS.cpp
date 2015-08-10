@@ -33,14 +33,14 @@ ACRX_DXF_DEFINE_MEMBERS (
 	TVS_TRANS, TVS_Entity,
 	AcDb::kDHL_CURRENT, AcDb::kMReleaseCurrent, 
 	AcDbProxyEntity::kNoOperation, TVS_TRANS,
-TVSTVS_VENTILATION_DBXAPP
-|Product Desc:     A description for your object
-|Company:          Your company name
-|WEB Address:      Your company WEB site address
-)
+	TVSTVS_VENTILATION_DBXAPP
+	|Product Desc:     A description for your object
+	|Company:          Your company name
+	|WEB Address:      Your company WEB site address
+	)
 
-//-----------------------------------------------------------------------------
-TVS_TRANS::TVS_TRANS () : TVS_Entity () {
+	//-----------------------------------------------------------------------------
+	TVS_TRANS::TVS_TRANS () : TVS_Entity () {
 }
 
 TVS_TRANS::~TVS_TRANS () {
@@ -206,6 +206,8 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 	bool tt=false;
 	AcGeVector3d vec=AcGeVector3d(VectTr.y,-VectTr.x,VectTr.z);
 	vec.normalize();
+	double prirost=200;
+	LengthTr=VectTr.length();
 	LastPoint=AcGePoint3d(FirstPoint.x+VectTr.x,
 		FirstPoint.y+VectTr.y,
 		FirstPoint.z);	
@@ -341,33 +343,75 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 	} 
 	else
 	{
-		double check;
-		if(SizeAp2>SizeAp1)
-		{
-			check=SizeBp2;
-			SizeBp2=300;
-			Gimme4PipePoints(FirstPoint,LastPoint);
-			AcGePoint3d mass5[3];
-			mass5[0]=B;
-			mass5[1]=FirstPoint;
-			mass5[2]=C;
 
-			mode->geometry().polygon(3,mass5);
-			SizeBp2=check;
+		double  Lx=VectTr.x;
+
+		double  Ly=VectTr.y;
+
+
+		double startangle=acos((1*Lx+0)/sqrt(Lx*Lx+Ly*Ly));
+		if (Ly<0)
+		{
+			startangle=2*M_PI-startangle;
+		}
+
+
+
+
+		double check;
+		if(SizeAp2<SizeAp1)
+		{
+
+
+			AcGePoint3d pA =AcGePoint3d(FirstPoint.x,
+				prirost/2+FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pB =AcGePoint3d(FirstPoint.x+prirost,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pC =AcGePoint3d(FirstPoint.x,
+				FirstPoint.y-prirost/2,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+
+			AcGePoint3d pD =AcGePoint3d(FirstPoint.x+LengthTr,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+
+			AcGePoint3d mass5[5];
+			mass5[0]=pB;
+			mass5[1]=pC;
+			mass5[2]=pA;
+			mass5[3]=pB;
+			mass5[4]=pD;
+			mode->geometry().polygon(5,mass5);
+
 		}
 
 
 		else
 		{
-			check=SizeBp1;
-			SizeBp1=300;
-			Gimme4PipePoints(FirstPoint,LastPoint);
-			AcGePoint3d mass6[3];
-			mass6[0]=A;
-			mass6[1]=LastPoint;
-			mass6[2]=D;
-			mode->geometry().polygon(3,mass6);
-			SizeBp1=check;
+
+			AcGePoint3d pA =AcGePoint3d(FirstPoint.x+LengthTr,
+				prirost/2+FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pB =AcGePoint3d(FirstPoint.x-prirost+LengthTr,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pC =AcGePoint3d(FirstPoint.x+LengthTr,
+				FirstPoint.y-prirost/2,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pD =AcGePoint3d(FirstPoint.x,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+
+			AcGePoint3d mass5[5];
+			mass5[0]=pB;
+			mass5[1]=pC;
+			mass5[2]=pA;
+			mass5[3]=pB;
+			mass5[4]=pD;
+			mode->geometry().polygon(5,mass5);
+
 		}
 	}
 
@@ -388,7 +432,7 @@ Adesk::UInt32 TVS_TRANS::subSetAttributes (AcGiDrawableTraits *traits) {
 	return (AcDbCurve::subSetAttributes (traits)) ;
 }
 
-	//- Osnap points protocol
+//- Osnap points protocol
 Acad::ErrorStatus TVS_TRANS::subGetOsnapPoints (
 	AcDb::OsnapMode osnapMode,
 	Adesk::GsMarker gsSelectionMark,
@@ -440,16 +484,16 @@ Acad::ErrorStatus TVS_TRANS::subGetOsnapPoints (
 //- Grip points protocol
 Acad::ErrorStatus TVS_TRANS::subGetGripPoints (
 	AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds
-) const {
-	assertReadEnabled () ;
+	) const {
+		assertReadEnabled () ;
 
-	gripPoints.append(FirstPoint);
-	gripPoints.append(LastPoint);
+		gripPoints.append(FirstPoint);
+		gripPoints.append(LastPoint);
 
 
-	//----- This method is never called unless you return eNotImplemented 
-	//----- from the new getGripPoints() method below (which is the default implementation)
-	return (Acad::eOk);
+		//----- This method is never called unless you return eNotImplemented 
+		//----- from the new getGripPoints() method below (which is the default implementation)
+		return (Acad::eOk);
 }
 
 Acad::ErrorStatus TVS_TRANS::subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset) {
@@ -475,25 +519,25 @@ Acad::ErrorStatus TVS_TRANS::subMoveGripPointsAt (const AcDbIntArray &indices, c
 Acad::ErrorStatus TVS_TRANS::subGetGripPoints (
 	AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
 	const AcGeVector3d &curViewDir, const int bitflags
-) const {
-	assertReadEnabled () ;
+	) const {
+		assertReadEnabled () ;
 
-	//----- If you return eNotImplemented here, that will force AutoCAD to call
-	//----- the older getGripPoints() implementation. The call below may return
-	//----- eNotImplemented depending of your base class.
-	return (AcDbCurve::subGetGripPoints (grips, curViewUnitSize, gripSize, curViewDir, bitflags)) ;
+		//----- If you return eNotImplemented here, that will force AutoCAD to call
+		//----- the older getGripPoints() implementation. The call below may return
+		//----- eNotImplemented depending of your base class.
+		return (AcDbCurve::subGetGripPoints (grips, curViewUnitSize, gripSize, curViewDir, bitflags)) ;
 }
 
 Acad::ErrorStatus TVS_TRANS::subMoveGripPointsAt (
 	const AcDbVoidPtrArray &gripAppData, const AcGeVector3d &offset,
 	const int bitflags
-) {
-	assertWriteEnabled () ;
+	) {
+		assertWriteEnabled () ;
 
-	//----- If you return eNotImplemented here, that will force AutoCAD to call
-	//----- the older getGripPoints() implementation. The call below may return
-	//----- eNotImplemented depending of your base class.
-	return (AcDbCurve::subMoveGripPointsAt (gripAppData, offset, bitflags)) ;
+		//----- If you return eNotImplemented here, that will force AutoCAD to call
+		//----- the older getGripPoints() implementation. The call below may return
+		//----- eNotImplemented depending of your base class.
+		return (AcDbCurve::subMoveGripPointsAt (gripAppData, offset, bitflags)) ;
 }
 
 //-----------------------------------------------------------------------------
@@ -508,7 +552,7 @@ Adesk::Boolean TVS_TRANS::isPeriodic () const {
 	assertReadEnabled () ;
 	return (AcDbCurve::isPeriodic ()) ;
 }
-      
+
 //- Get planar and start/end geometric properties.
 Acad::ErrorStatus TVS_TRANS::getStartParam (double &param) const {
 	assertReadEnabled () ;
@@ -749,27 +793,47 @@ Acad::ErrorStatus TVS_TRANS::subExplode(AcDbVoidPtrArray & entitySet) const
 	} 
 	else
 	{
-		AcDbPolyline* pLine5 = new AcDbPolyline(3);
-		//float check;
-		if(SizeAp2>SizeAp1)
+
+		double prirost=200;
+		double  Lx=VectTr.x;
+
+		double  Ly=VectTr.y;
+
+
+		double startangle=acos((1*Lx+0)/sqrt(Lx*Lx+Ly*Ly));
+		if (Ly<0)
+		{
+			startangle=2*M_PI-startangle;
+		}
+
+
+
+		AcGePoint3d mass5[5];
+		double check;
+		if(SizeAp2<SizeAp1)
 		{
 
-			AcGePoint2d mass5[3];
-			mass5[0]=AcGePoint2d(B.x,B.y);
-			mass5[1]=AcGePoint2d(FirstPoint.x,FirstPoint.y);
-			mass5[2]=AcGePoint2d(C.x,C.y);
-			for (int i=0;i<3; i++)
-			{
-				pLine5->addVertexAt(i,mass5[i]);
-			}
 
-			pLine5->setLineWeight(this->lineWeight());
-			pLine5->setLayer(this->layerId());
-			pLine5->setColor(this->color());
-			pLine5->setLinetype(this->linetypeId());
-			pLine5->setClosed(true);
-			pLine5->setLinetypeScale(this->linetypeScale());
-			entitySet.append(pLine5);
+			AcGePoint3d pA =AcGePoint3d(FirstPoint.x,
+				prirost/2+FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pB =AcGePoint3d(FirstPoint.x+prirost,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pC =AcGePoint3d(FirstPoint.x,
+				FirstPoint.y-prirost/2,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+
+			AcGePoint3d pD =AcGePoint3d(FirstPoint.x+LengthTr,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+
+
+			mass5[0]=pB;
+			mass5[1]=pC;
+			mass5[2]=pA;
+			mass5[3]=pB;
+			mass5[4]=pD;
 
 
 		}
@@ -777,26 +841,47 @@ Acad::ErrorStatus TVS_TRANS::subExplode(AcDbVoidPtrArray & entitySet) const
 
 		else
 		{
-			AcDbPolyline* pLine6 = new AcDbPolyline(3);
 
-			AcGePoint2d mass6[3];
-			mass6[0]=AcGePoint2d(A.x,A.y);
-			mass6[1]=AcGePoint2d(LastPoint.x,LastPoint.y);
-			mass6[2]=AcGePoint2d(D.x,D.y);
-			for (int i=0;i<3; i++)
-			{
-				pLine6->addVertexAt(i,mass6[i]);
-			}
+			AcGePoint3d pA =AcGePoint3d(FirstPoint.x+LengthTr,
+				prirost/2+FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pB =AcGePoint3d(FirstPoint.x-prirost+LengthTr,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pC =AcGePoint3d(FirstPoint.x+LengthTr,
+				FirstPoint.y-prirost/2,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
+			AcGePoint3d pD =AcGePoint3d(FirstPoint.x,
+				FirstPoint.y,
+				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
 
-			pLine6->setLineWeight(this->lineWeight());
-			pLine6->setLayer(this->layerId());
-			pLine6->setColor(this->color());
-			pLine6->setLinetype(this->linetypeId());
-			pLine6->setClosed(true);
-			pLine6->setLinetypeScale(this->linetypeScale());
-			entitySet.append(pLine6);
+
+			mass5[0]=pB;
+			mass5[1]=pC;
+			mass5[2]=pA;
+			mass5[3]=pB;
+			mass5[4]=pD;
+
 
 		}
+
+		AcDbPolyline* pLine5=new AcDbPolyline;
+
+
+		for (int i=0;i<5; i++)
+		{
+			pLine5->addVertexAt(i,AcGePoint2d(mass5[i].x,mass5[i].y));
+		}
+
+		pLine5->setLineWeight(this->lineWeight());
+		pLine5->setLayer(this->layerId());
+		pLine5->setColor(this->color());
+		pLine5->setLinetype(this->linetypeId());
+		pLine5->setClosed(false);
+		pLine5->setLinetypeScale(this->linetypeScale());
+		entitySet.append(pLine5);
+
+
 	}
 
 
@@ -807,7 +892,10 @@ Acad::ErrorStatus TVS_TRANS::subExplode(AcDbVoidPtrArray & entitySet) const
 
 
 
-	return Acad::eOk;
+
+
+
+return Acad::eOk;
 }
 
 // -----------------------------------------------------------------------------
@@ -819,7 +907,7 @@ Acad::ErrorStatus TVS_TRANS::subTransformBy(const AcGeMatrix3d & xform)
 	VectTr.transformBy(xform);
 	return (Acad::eOk);
 }
- TVS_TRANS *TVS_TRANS::add_new(
+TVS_TRANS *TVS_TRANS::add_new(
 	double &pSizeAp1,
 	double &pSizeBp1,
 	double &pSizeAp2,

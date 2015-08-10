@@ -590,7 +590,7 @@ void func::Change (ads_name &sset)
 
 
 
-
+	
 	ads_name  eName;
 	ACHAR  resultss [512];
 	ACHAR  results1 [512]=_T("2");
@@ -610,7 +610,7 @@ void func::Change (ads_name &sset)
 	resbuf *rb = NULL;
 
 
-
+	
 
 
 	long len = 0;

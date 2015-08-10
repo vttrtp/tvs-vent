@@ -1611,7 +1611,7 @@ static bool ConnectWithWye(AcDbEntity *pEnt1,
 	int GroseStatus=whyIsGrose(pPipe1,pPipe2);
 	AcGePoint3d pointSelect1=line1.closestPointTo(asPnt3d(pnt1));
 	AcGePoint3d pointSelect2=line2.closestPointTo(asPnt3d(pnt2));
-
+	AcDbEntity * pEnt;
 #pragma region  line intersection
 	if (LineStatus==TVSisPerpendicular||LineStatus==TVSisIntersection)
 	{
@@ -1620,12 +1620,36 @@ static bool ConnectWithWye(AcDbEntity *pEnt1,
 
 		line1.intersectWith(line2,midp);
 		//find point1
-		if (line2.distanceTo(p1)<=line2.distanceTo(p2))
+		if (max(midp.distanceTo(p1),midp.distanceTo(p2))<p1.distanceTo(p2))
 		{
+			if (p2.distanceTo(pointSelect1)<p2.distanceTo(midp))
+			{
 			AcGePoint3d temp;
 			temp=p2;
 			p2=p1;
 			p1=temp;
+				acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+			pPipe1->assertWriteEnabled();
+			pPipe1->put_FirstPoint(p1);
+			pPipe1->put_Lastpoint(p2);
+			pPipe1->close();
+			}
+			
+		}
+		else
+		{
+			if (p2.distanceTo(midp)>p1.distanceTo(midp))
+			{
+				AcGePoint3d temp;
+				temp=p2;
+				p2=p1;
+				p1=temp;
+					acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+				pPipe1->assertWriteEnabled();
+				pPipe1->put_FirstPoint(p1);
+				pPipe1->put_Lastpoint(p2);
+				pPipe1->close();
+			}
 		}
 	
 		intersectpoint=line2.closestPointTo(p2);
@@ -1639,6 +1663,11 @@ if (LineStatus==TVSisIntersection)
 	SetPropertyLikePipe(pPipe1,tempPipe);
 	ads_point pt1;
 	ads_point pt2;
+
+
+
+
+
 	ConnectWithTap(pPipe1,tempPipe,asDblArray(p1),asDblArray(intersectpoint));
 	pPipe1=tempPipe;
 	p1=p2;
@@ -1658,7 +1687,7 @@ if (length2p(p3,intersectpoint)<length2p(p4,intersectpoint))
 	
 
 
-	AcDbEntity * pEnt;
+	
 	acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
 	pPipe2->assertWriteEnabled();
 	pPipe2->put_FirstPoint(p3);
@@ -1672,15 +1701,18 @@ TVS_WYE* pWye;
 	 						pPipe1->SizeB,
 	 						globalLengthW,
 	 						AcGeVector3d(-pPipe2->FirstPoint.x+pPipe2->LastPoint.x,-pPipe2->FirstPoint.y+pPipe2->LastPoint.y,-pPipe2->FirstPoint.z+pPipe2->LastPoint.z).normalize(),
-	 						AcGeVector3d(pPipe1->FirstPoint.x-pPipe1->LastPoint.x,pPipe1->FirstPoint.y-pPipe1->LastPoint.y,pPipe1->FirstPoint.z-pPipe1->LastPoint.z).normalize(),
+	 						AcGeVector3d(p1.x-p2.x,p1.y-p2.y,p1.z-p2.z).normalize(),
 	 						intersectpoint,
 	 						pPipe2->ThisRound,
 	 						pPipe1->ThisRound,
 	 						pPipe2->This1D);
 	SetGlobalProperty(pWye);
 	SetPropertyLikePipe(pPipe2,pWye);
+
+
 	acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
 	pPipe1->assertWriteEnabled();
+
 	pPipe1->put_Lastpoint(shortlength(p1,intersectpoint,pPipe2->SizeA/2+pWye->LengthPl));
 	pPipe1->close();
 	acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
@@ -2000,7 +2032,7 @@ static bool changesize ()
 	dg.Grani=globalGrani;
 	dg.D1=global1D;
 	dg.ElevMid=true;
-	dg.Elev=globalElev;
+	dg.Elev=globalElevMid;
 	dg.TapForm=globalTapForm;
 	dg.TypeRoundTap=globalTypeRoundTap;
 	dg.RadiusTypeRound=globalRadiusTypeRound;
@@ -2269,6 +2301,34 @@ static bool changeZ(TVS_Pipe* pPipe)
 	Axis=dg.Axis;
 	globalAxis=Axis;
 	globalElevMid=nextZ;
+
+
+	if (dg.nextZ!=startZ)
+	{
+		double x = pPipe->LastPoint.x-pPipe->FirstPoint.x;
+		double y = pPipe->LastPoint.y-pPipe->FirstPoint.y;
+		double z = pPipe->LastPoint.z-pPipe->FirstPoint.z;
+		Axis=M_PI*Axis/180;
+		TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,globalAxis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis,pPipe->This1D,pPipe->ThisRound);
+		SetGlobalProperty(pTap);
+		SetPropertyLikePipe(pPipe,pTap);
+
+		AcDbEntity * pEnt;
+		if (startZ>nextZ)
+		{
+						acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
+						pTap->put_Form(Form_Down);
+						pTap->close();
+		}
+		else
+		{
+			acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
+			pTap->put_Form(Form_Up);
+			pTap->close();
+		}
+	}
+
+
 return true;
 }
 static void addtrans(double &pSizeAp1,
