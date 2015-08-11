@@ -1976,13 +1976,13 @@ Acad::ErrorStatus TVS_TAP::put_Startvector(AcGeVector3d newVal)
 AcGePoint3d TVS_TAP::get_Centerpoint(void) const
 {
 	assertReadEnabled () ;
-	return (CenterPoint) ;
+	return (MiddlePoint) ;
 }
 
 Acad::ErrorStatus TVS_TAP::put_Centerpoint(AcGePoint3d newVal)
 {
 	assertWriteEnabled () ;
-	CenterPoint=newVal ;
+	MiddlePoint=newVal ;
 	return (Acad::eOk) ;
 }
 

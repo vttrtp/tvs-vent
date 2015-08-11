@@ -584,13 +584,397 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 // 
 // }
 
+//
+//void func::Change (ads_name &sset)
+//{
+//
+//
+//
+//
+//	ads_name  eName;
+//	ACHAR  resultss [512];
+//	ACHAR  results1 [512]=_T("2");
+//	ACHAR  results2 [512]=_T("2d");
+//
+//	ads_point pt1,pt2;
+//	ads_real sise=0;
+//	AcDbEntity *pEnt = NULL;
+//	AcDbObjectId id;
+//	TVS_Pipe * Pipi;
+//	TVS_TAP * Tapie;
+//	TVS_WYE* Wyeie;
+//	TVS_TRANS * Transie;
+//
+//	double NewSiseA;
+//	bool p1d;
+//	resbuf *rb = NULL;
+//
+//
+//
+//
+//
+//	long len = 0;
+//
+//	acedSSLength(sset, &len);
+//	//проверяем элементы и извлекаем данные
+//	bool firstPipe=false;
+//	bool firstTap=false;
+//	bool firstTrans=false;
+//	bool firstWye=false;
+//
+//	bool vSizeA=false;
+//	bool vSizeB=false;
+//	bool vFlow=false;
+//	bool vSizeA2=false;
+//	bool vSizeB2=false;
+//	bool vLengthTr=false;
+//	bool vLengthW=false;
+//	bool vWipe=false;
+//	bool vGrani=false;
+//	bool vD1=false;
+//	bool vElev=false;
+//
+//
+//
+//	bool fSizeA=true;
+//	bool fSizeB=true;
+//	bool fFlow=true;
+//	bool fSizeA2=true;
+//	bool fSizeB2=true;
+//	bool fLengthTr=true;
+//	bool fLengthW=true;
+//	bool fWipe=true;
+//	bool fGrani=true;
+//	bool fD1=true;
+//	bool fElev=true;
+//
+//
+//	double SizeA=0;
+//	double SizeB=0;
+//	double Flow=0;
+//	double SizeA2=0;
+//	double SizeB2=0;
+//	double LengthTr=0;
+//	double LengthW=0;
+//	bool Wipe=false;
+//	bool Grani=false;
+//	bool D1=false;
+//	double Elev=0;
+//
+//
+//	CString sSizeA;
+//	CString sSizeB;
+//	CString sFlow;
+//	CString sSizeA2;
+//	CString sSizeB2;
+//	CString sLengthTr;
+//	CString sLengthW;
+//	CString sElev;
+//
+//	BOOL sWipe;
+//	BOOL sGrani;
+//	BOOL sD1;
+//
+//
+//
+//	for (long i = 0; i < len; i++)
+//	{             
+//
+//
+//		if (NULL != (acedSSName(sset,i,eName)))
+//		{
+//
+//			//consoleprint(double(i),_T("\nd"));
+//
+//
+//			acdbGetObjectId(id,eName);
+//
+//			if (id!=AcDbObjectId::kNull)
+//			{
+//				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+//				{
+//
+//
+//
+//
+//					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+//					{	
+//
+//						if (firstPipe==false) firstPipe=true;
+//
+//						rprov(vSizeA,fSizeA,Pipi->SizeA,SizeA);
+//						rprov(vSizeB,fSizeB,Pipi->SizeB,SizeB);
+//						rprov(vFlow,fFlow,Pipi->Flow,Flow);
+//						rprov(vGrani,fGrani,Pipi->Grani,Grani);
+//						rprov(vD1,fD1,Pipi->This1D,D1);
+//						rprov(vWipe,fWipe,Pipi->Wipeout,Wipe);
+//						rprov(vElev,fElev,Pipi->Elev,Elev);
+//
+//
+//					}
+//
+//					if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+//					{	
+//						if (firstTap==false) firstTap=true;
+//
+//						rprov(vSizeA,fSizeA,Tapie->SizeA,SizeA);
+//						rprov(vSizeB,fSizeB,Tapie->SizeB,SizeB);
+//
+//						rprov(vD1,fD1,Tapie->This1D,D1);
+//						rprov(vWipe,fWipe,Tapie->Wipeout,Wipe);
+//						rprov(vElev,fElev,Tapie->Elev,Elev);
+//
+//					}
+//
+//					if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+//					{	
+//						if (firstWye==false) firstWye=true;
+//
+//						rprov(vSizeA,fSizeA,Wyeie->SizeApr,SizeA);
+//						rprov(vSizeB,fSizeB,Wyeie->SizeBpr,SizeB);
+//						rprov(vSizeA2,fSizeA2,Wyeie->SizeAotv,SizeA2);
+//						rprov(vSizeB2,fSizeB2,Wyeie->SizeBotv,SizeB2);
+//						rprov(vLengthW,fLengthW,Wyeie->LengthPl,LengthW);
+//
+//						rprov(vD1,fD1,Wyeie->This1D,D1);
+//						rprov(vWipe,fWipe,Wyeie->Wipeout,Wipe);
+//						rprov(vElev,fElev,Wyeie->Elev,Elev);
+//
+//					}
+//
+//					if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+//					{	
+//						if (firstTrans==false) firstTrans=true;
+//
+//						rprov(vSizeA,fSizeA,Transie->SizeAp1,SizeA);
+//						rprov(vSizeB,fSizeB,Transie->SizeBp1,SizeB);
+//						rprov(vSizeA2,fSizeA2,Transie->SizeAp2,SizeA2);
+//						rprov(vSizeB2,fSizeB2,Transie->SizeBp2,SizeB2);
+//						rprov(vLengthTr,fLengthTr,Transie->LengthTr,LengthTr);
+//
+//						rprov(vD1,fD1,Transie->This1D,D1);
+//						rprov(vWipe,fWipe,Transie->Wipeout,Wipe);
+//
+//						rprov(vElev,fElev,Transie->Elev,Elev);
+//
+//					}
+//
+//
+//					pEnt->close();
+//				}
+//			}
+//		}
+//
+//	}
+//
+//
+//
+//
+//
+//
+//
+//
+//	strfil(SizeA,vSizeA,sSizeA);
+//	strfil(SizeB,vSizeB,sSizeB);
+//	strfil(SizeA2,vSizeA2,sSizeA2);
+//	strfil(SizeB2,vSizeB2,sSizeB2);
+//	strfil(Flow,vFlow,sFlow);
+//	strfil(LengthTr,vLengthTr,sLengthTr);
+//	strfil(LengthW,vLengthW,sLengthW);
+//	strfil(Elev,vElev,sElev);
+//	strfil(Wipe,vWipe,sWipe);
+//	strfil(Grani,vGrani,sGrani);
+//	strfil(D1,vD1,sD1);
+//
+//	BOOL ElevationMid=1;
+//	BOOL ElevationUp=0;
+//	BOOL ElevationDown=0;
+//
+//
+//
+//
+//	dgAllEdit dg;
+//	dg.SizeA=sSizeA;
+//	dg.SizeB=sSizeB;
+//	dg.SizeA2=sSizeA2;
+//	dg.SizeB2=sSizeB2;
+//	dg.Flow=sFlow;
+//	dg.LengthTr=sLengthTr;
+//	dg.LengthW=sLengthW;
+//	dg.Tpipe=firstPipe;
+//	dg.Twye=firstWye;
+//	dg.Ttrans=firstTrans;
+//	dg.Ttap=firstTap;
+//	dg.Wipe=sWipe;
+//	dg.Grani=sGrani;
+//	dg.D1=sD1;
+//	dg.ElevMid=ElevationMid;
+//	dg.Elev=sElev;
+//
+//	if (firstPipe==false
+//		&&firstTap==false
+//		&&firstTrans==false
+//		&&firstWye==false)
+//	{
+//		acutPrintf(_T("\nНичего не выбрано"));
+//		return;
+//	}
+//	{
+//
+//		CAcModuleResourceOverride resourceOverride;
+//		dg.DoModal();
+//
+//	}
+//
+//
+//	bool cSizeA=true;
+//	bool cSizeB=true;
+//	bool cFlow=true;
+//	bool cSizeA2=true;
+//	bool cSizeB2=true;
+//	bool cLengthTr=true;
+//	bool cLengthW=true;
+//	bool cWipe=true;
+//	bool cGrani=true;
+//	bool cD1=true;
+//	bool cElev=true;
+//
+//	sequal(SizeA,sSizeA,dg.SizeA,cSizeA);
+//	sequal(SizeB,sSizeB,dg.SizeB,cSizeB);
+//	sequal(Flow,sFlow,dg.Flow,cFlow);
+//	sequal(SizeA2,sSizeA2,dg.SizeA2,cSizeA2);
+//	sequal(SizeB2,sSizeB2,dg.SizeB2,cSizeB2);
+//	sequal(LengthTr,sLengthTr,dg.LengthTr,cLengthTr);
+//	sequal(LengthW,sLengthW,dg.LengthW,cLengthW);
+//	sequal(Elev,sElev,dg.Elev,cElev);
+//	sequal(Wipe,sWipe,dg.Wipe,cWipe);
+//	sequal(Grani,sGrani,dg.Grani,cGrani);
+//	sequal(D1,sD1,dg.D1,cD1);
+//
+//
+//
+//	///определение выравнивания
+//	int Emode=0;//по центру
+//	if (dg.ElevUp==1)//по верху
+//	{
+//		Emode=1;
+//	}
+//
+//	if (dg.ElevDown==1)//по низу
+//	{
+//		Emode=2;
+//	}
+//
+//	for (long i = 0; i < len; i++)
+//	{             
+//
+//
+//		if (NULL != (acedSSName(sset,i,eName)))
+//		{
+//
+//			//consoleprint(double(i),_T("\nd"));
+//
+//
+//			acdbGetObjectId(id,eName);
+//			if (id!=AcDbObjectId::kNull)
+//			{
+//				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+//				{
+//
+//
+//
+//
+//
+//					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+//					{	
+//
+//
+//						///
+//						if (cSizeA==false) Pipi->put_SizeA(SizeA);
+//						if (cSizeB==false) Pipi->put_SizeB(SizeB);
+//						if (cFlow==false) Pipi->put_Flow(Flow);
+//						if (cGrani==false) Pipi->put_Grani(Grani);
+//						if (cD1==false) Pipi->put_This1D(D1);
+//						if (cWipe==false) Pipi->put_Wipeout(Wipe);
+//						if (cElev==false) Pipi->put_Elevation(getElev(Elev,Emode,Pipi->SizeA,Pipi->SizeB));
+//						//
+//
+//
+//					}
+//
+//					if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+//					{	
+//
+//
+//						///
+//						if (cSizeA==false) Tapie->put_SizeA(SizeA);
+//						if (cSizeB==false) Tapie->put_SizeB(SizeB);
+//						if (cFlow==false) Tapie->put_Flow(Flow);
+//
+//						if (cD1==false) Tapie->put_This1D(D1);
+//						if (cWipe==false) Tapie->put_Wipeout(Wipe);
+//						if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
+//						//
+//
+//					}
+//
+//					if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+//					{	
+//
+//
+//						///
+//						if (cSizeA==false) Wyeie->put_SizeApr(SizeA);
+//						if (cSizeB==false) Wyeie->put_SizeBpr(SizeB);
+//						if (cSizeA2==false) Wyeie->put_SizeAotv(SizeA2);
+//						if (cSizeB2==false) Wyeie->put_SizeBotv(SizeB2);
+//						if (cLengthW==false) Wyeie->put_Length(LengthW);
+//						//if (cFlow==false) Tapie->put_Flow(Flow);
+//
+//						if (cD1==false) Wyeie->put_This1D(D1);
+//						if (cWipe==false) Wyeie->put_Wipeout(Wipe);
+//						if (cElev==false) Wyeie->put_Elevation(getElev(Elev,Emode,Wyeie->SizeApr,Wyeie->SizeBpr));
+//						//
+//
+//
+//					}
+//
+//					if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+//					{	
+//						///
+//						if (cSizeA==false) Transie->put_SizeAp1(SizeA);
+//						if (cSizeB==false) Transie->put_SizeBp1(SizeB);
+//						if (cSizeA2==false) Transie->put_SizeAp2(SizeA2);
+//						if (cSizeB2==false) Transie->put_SizeBp2(SizeB2);
+//						if (cLengthTr==false) Transie->put_Length(LengthTr);
+//						//if (cFlow==false) Tapie->put_Flow(Flow);
+//
+//						if (cD1==false) Transie->put_This1D(D1);
+//						if (cWipe==false) Transie->put_Wipeout(Wipe);
+//						if (cElev==false) Transie->put_Elevation(getElev(Elev,Emode,Transie->SizeAp1,Transie->SizeBp1));
+//						//
+//
+//
+//
+//					}
+//
+//
+//					pEnt->close();
+//				}
+//			}
+//		}
+//
+//	}
+//
+//}
+//
+
 
 void func::Change (ads_name &sset)
 {
 
 
 
-	
+	AcDbEntity * pEnt;
 	ads_name  eName;
 	ACHAR  resultss [512];
 	ACHAR  results1 [512]=_T("2");
@@ -598,7 +982,7 @@ void func::Change (ads_name &sset)
 
 	ads_point pt1,pt2;
 	ads_real sise=0;
-	AcDbEntity *pEnt = NULL;
+
 	AcDbObjectId id;
 	TVS_Pipe * Pipi;
 	TVS_TAP * Tapie;
@@ -610,12 +994,12 @@ void func::Change (ads_name &sset)
 	resbuf *rb = NULL;
 
 
-	
+
 
 
 	long len = 0;
 
-	acedSSLength(sset, &len);
+
 	//проверяем элементы и извлекаем данные
 	bool firstPipe=false;
 	bool firstTap=false;
@@ -634,6 +1018,14 @@ void func::Change (ads_name &sset)
 	bool vD1=false;
 	bool vElev=false;
 
+	bool vTapForm=false;
+	bool vTypeRoundTap=false;
+	bool vRadiusTypeRound=false;
+	bool vRadiusTypeRect=false;
+	bool vTapRadiusVariableParameter=false;
+	bool vTapRadiusConst=false;
+	bool vSwectangle=false;
+
 
 
 	bool fSizeA=true;
@@ -648,6 +1040,14 @@ void func::Change (ads_name &sset)
 	bool fD1=true;
 	bool fElev=true;
 
+	bool fTapForm=true;
+	bool fTypeRoundTap=true;
+	bool fRadiusTypeRound=true;
+	bool fRadiusTypeRect=true;
+	bool fTapRadiusVariableParameter=true;
+	bool fTapRadiusConst=true;
+	bool fSwectangle=true;
+
 
 	double SizeA=0;
 	double SizeB=0;
@@ -661,6 +1061,14 @@ void func::Change (ads_name &sset)
 	bool D1=false;
 	double Elev=0;
 
+	double TapForm=0;
+	double TypeRoundTap=0;
+	double RadiusTypeRound=0;
+	double RadiusTypeRect=0;
+	double TapRadiusVariableParameter=0;
+	double TapRadiusConst=0;
+	double Swectangle=0;
+
 
 	CString sSizeA;
 	CString sSizeB;
@@ -671,12 +1079,24 @@ void func::Change (ads_name &sset)
 	CString sLengthW;
 	CString sElev;
 
+	CString sTapForm;
+	CString sTypeRoundTap;
+	CString sRadiusTypeRound;
+	CString sRadiusTypeRect;
+	CString sTapRadiusVariableParameter;
+	CString sTapRadiusConst;
+	CString  sSwectangle;
+
 	BOOL sWipe;
 	BOOL sGrani;
 	BOOL sD1;
 
 
 
+
+
+
+acedSSLength(sset, &len);
 	for (long i = 0; i < len; i++)
 	{             
 
@@ -724,6 +1144,16 @@ void func::Change (ads_name &sset)
 						rprov(vWipe,fWipe,Tapie->Wipeout,Wipe);
 						rprov(vElev,fElev,Tapie->Elev,Elev);
 
+						rprov(vTapForm,fTapForm,Tapie->Form,TapForm);
+						rprov(vTypeRoundTap,fTypeRoundTap,Tapie->TypeRoundTap,TypeRoundTap);
+						rprov(vRadiusTypeRound,fRadiusTypeRound,Tapie->RadiusTypeRound,RadiusTypeRound);
+						rprov(vRadiusTypeRect,fRadiusTypeRect,Tapie->RadiusTypeRect,RadiusTypeRect);
+						rprov(vTapRadiusVariableParameter,fTapRadiusVariableParameter,Tapie->RadiusVariableParameter,TapRadiusVariableParameter);
+						rprov(vTapRadiusConst,fTapRadiusConst,Tapie->RadiusConst,TapRadiusConst);
+						rprov(vSwectangle,fSwectangle,Tapie->Swectangle,Swectangle);
+
+
+
 					}
 
 					if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
@@ -764,8 +1194,8 @@ void func::Change (ads_name &sset)
 				}
 			}
 		}
-
 	}
+
 
 
 
@@ -785,6 +1215,18 @@ void func::Change (ads_name &sset)
 	strfil(Wipe,vWipe,sWipe);
 	strfil(Grani,vGrani,sGrani);
 	strfil(D1,vD1,sD1);
+
+	strfil(TapForm,vTapForm,sTapForm);
+	strfil(TypeRoundTap,vTypeRoundTap,sTypeRoundTap);
+	strfil(RadiusTypeRound,vRadiusTypeRound,sRadiusTypeRound);
+	strfil(RadiusTypeRect,vRadiusTypeRect,sRadiusTypeRect);
+	strfil(TapRadiusVariableParameter,vTapRadiusVariableParameter,sTapRadiusVariableParameter);
+	strfil(TapRadiusConst,vTapRadiusConst,sTapRadiusConst);
+	strfil(Swectangle,vSwectangle,sSwectangle);
+
+
+
+
 
 	BOOL ElevationMid=1;
 	BOOL ElevationUp=0;
@@ -810,6 +1252,15 @@ void func::Change (ads_name &sset)
 	dg.D1=sD1;
 	dg.ElevMid=ElevationMid;
 	dg.Elev=sElev;
+
+	dg.TapForm=sTapForm;
+	dg.TypeRoundTap=sTypeRoundTap;
+	dg.RadiusTypeRound=sRadiusTypeRound;
+	dg.RadiusTypeRect=sRadiusTypeRect;
+	dg.TapRadiusVariableParameter=sTapRadiusVariableParameter;
+	dg.TapRadiusConst=sTapRadiusConst;
+	dg.Swectangle=sSwectangle;
+
 
 	if (firstPipe==false
 		&&firstTap==false
@@ -839,6 +1290,16 @@ void func::Change (ads_name &sset)
 	bool cD1=true;
 	bool cElev=true;
 
+	bool cTapForm=true;
+	bool cTypeRoundTap=true;
+	bool cRadiusTypeRound=true;
+	bool cRadiusTypeRect=true;
+	bool cTapRadiusVariableParameter=true;
+	bool cTapRadiusConst=true;
+	bool cSwectangle=true;
+
+
+
 	sequal(SizeA,sSizeA,dg.SizeA,cSizeA);
 	sequal(SizeB,sSizeB,dg.SizeB,cSizeB);
 	sequal(Flow,sFlow,dg.Flow,cFlow);
@@ -851,7 +1312,13 @@ void func::Change (ads_name &sset)
 	sequal(Grani,sGrani,dg.Grani,cGrani);
 	sequal(D1,sD1,dg.D1,cD1);
 
-
+	sequal(TapForm,sTapForm,dg.TapForm,cTapForm);
+	sequal(TypeRoundTap,sTypeRoundTap,dg.TypeRoundTap,cTypeRoundTap);
+	sequal(RadiusTypeRound,sRadiusTypeRound,dg.RadiusTypeRound,cRadiusTypeRound);
+	sequal(RadiusTypeRect,sRadiusTypeRect,dg.RadiusTypeRect,cRadiusTypeRect);
+	sequal(TapRadiusVariableParameter,sTapRadiusVariableParameter,dg.TapRadiusVariableParameter,cTapRadiusVariableParameter);
+	sequal(TapRadiusConst,sTapRadiusConst,dg.TapRadiusConst,cTapRadiusConst);
+	sequal(Swectangle,sSwectangle,dg.Swectangle,cSwectangle);
 
 	///определение выравнивания
 	int Emode=0;//по центру
@@ -864,6 +1331,8 @@ void func::Change (ads_name &sset)
 	{
 		Emode=2;
 	}
+
+
 
 	for (long i = 0; i < len; i++)
 	{             
@@ -880,6 +1349,8 @@ void func::Change (ads_name &sset)
 			{
 				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
 				{
+
+
 
 
 
@@ -915,6 +1386,15 @@ void func::Change (ads_name &sset)
 						if (cWipe==false) Tapie->put_Wipeout(Wipe);
 						if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
 						//
+
+
+						if (cTapForm==false) Tapie->put_Form(TapForm);
+						if (cTypeRoundTap==false) Tapie->put_TypeRoundTap(TypeRoundTap);
+						if (cRadiusTypeRound==false) Tapie->put_RadiusTypeRound(RadiusTypeRound);
+						if (cRadiusTypeRect==false) Tapie->put_RadiusTypeRect(RadiusTypeRect);
+						if (cTapRadiusVariableParameter==false) Tapie->put_RadiusVariableParameter(TapRadiusVariableParameter);
+						if (cTapRadiusConst==false) Tapie->put_RadiusConst(TapRadiusConst);
+						if (cSwectangle==false) Tapie->put_Swectangle(Swectangle);
 
 					}
 
@@ -962,10 +1442,9 @@ void func::Change (ads_name &sset)
 				}
 			}
 		}
-
 	}
-
 }
+
 
 
 void func::Change (AcDbEntity *pEnt)

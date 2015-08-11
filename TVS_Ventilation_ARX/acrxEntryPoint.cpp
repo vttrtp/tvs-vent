@@ -2309,25 +2309,71 @@ static bool changeZ(TVS_Pipe* pPipe)
 		double y = pPipe->LastPoint.y-pPipe->FirstPoint.y;
 		double z = pPipe->LastPoint.z-pPipe->FirstPoint.z;
 		Axis=M_PI*Axis/180;
-		TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,globalAxis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis,pPipe->This1D,pPipe->ThisRound);
+		TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis,pPipe->This1D,pPipe->ThisRound);
 		SetGlobalProperty(pTap);
 		SetPropertyLikePipe(pPipe,pTap);
-
+		TVS_TAP* pTap2=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(-y,x,0),pPipe->LastPoint,Axis,pPipe->This1D,pPipe->ThisRound);
+		SetGlobalProperty(pTap2);
+		SetPropertyLikePipe(pPipe,pTap2);
+	
+		double plecho1=abs(length2p(pTap->MA,pTap->MiddlePoint));
+		double plecho2=abs(length2p(pTap->MC,pTap->MiddlePoint));
+		double dLx=abs(tan(pTap->Swectangle)*(nextZ-startZ));  
 		AcDbEntity * pEnt;
+		AcGePoint3d p1,p2,p3,p4,p5,p6,p7;
+		p2=pPipe->LastPoint;
+		p1=shortlength(pPipe->FirstPoint,p2,plecho1);
+		p3=shortlength(pPipe->FirstPoint,p2,-plecho2);
+		p4=shortlength(pPipe->FirstPoint,p2,plecho2-dLx);
+		p5=shortlength(pPipe->FirstPoint,p2,-dLx);
+		p6=shortlength(pPipe->FirstPoint,p2,-dLx-plecho1);
+		p7=shortlength(pPipe->FirstPoint,p2,-dLx-plecho1-300);
+
+
 		if (startZ>nextZ)
 		{
+
+						acdbOpenAcDbEntity(pEnt,pTap2->id(),AcDb::kForWrite);
+						pTap2->put_Form(Form_Up);
+						pTap2->put_Centerpoint(p5);
+						pTap2->close();
 						acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
 						pTap->put_Form(Form_Down);
 						pTap->close();
+						
 		}
 		else
 		{
 			acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
 			pTap->put_Form(Form_Up);
 			pTap->close();
-		}
-	}
 
+			acdbOpenAcDbEntity(pEnt,pTap2->id(),AcDb::kForWrite);
+			pTap2->put_Form(Form_Down);
+			pTap2->put_Centerpoint(p5);
+			pTap2->close();
+
+		}
+		
+		if(abs(M_PI/2-Axis)>=0.0001) //draw pPipe1
+		{
+			TVS_Pipe*pPipe1=pPipe1->add_new(p3,p4,globSizeA,globSizeB);
+			SetGlobalProperty(pPipe1);
+			SetPropertyLikePipe(pPipe,pPipe1);
+		}
+		//draw pPipe2
+			TVS_Pipe*pPipe2=pPipe2->add_new(p6,p7,globSizeA,globSizeB);
+			SetGlobalProperty(pPipe2);
+			SetPropertyLikePipe(pPipe,pPipe2);
+	
+			//correct PPipe
+			acdbOpenAcDbEntity(pEnt,pPipe->id(),AcDb::kForWrite);
+			pPipe->put_Lastpoint(p1);
+			pPipe->close();
+			pPipe=pPipe2;
+			
+	}
+	else return false;
 
 return true;
 }
