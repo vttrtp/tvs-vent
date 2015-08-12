@@ -35,8 +35,13 @@
 #define dCONTINUE 0
 #define dCONNECT 1
 #define dSIZE 2
+#define dZ 2
 #define dCONNECTT 3
 #define dCONNECTW 4
+#define dUP 5
+#define dDOWN 6
+
+
 #define TVSisLinear 1
 #define TVSisPerpendicular 2
 #define TVSisParallel 3
@@ -1463,26 +1468,26 @@ pPipe2->close();
 
 			line1.intersectWith(line2,midp);
 			//find point1
-			if (midp.distanceTo(p1)<=p1.distanceTo(p2)&&midp.distanceTo(p2)<=p1.distanceTo(p2))
+			if (midp.distanceTo(p1)<=p1.distanceTo(p2)&&midp.distanceTo(p2)<=p1.distanceTo(p2))// midp check between p3 p4
 			{
 				if (midp.distanceTo(p1)<=pointSelect1.distanceTo(p1)) point1=p2;
 				else point1=p1;	
 			}
 			else
 			{
-				if (midp.distanceTo(p1)>=pointSelect1.distanceTo(p2)) point1=p1;
+				if (midp.distanceTo(p1)>=midp.distanceTo(p2)) point1=p1;
 				else point1=p2;	
 			}//end findpoint1
 
 			//find point2
-			if (midp.distanceTo(p3)<=p3.distanceTo(p4)&&midp.distanceTo(p4)<=p3.distanceTo(p4))
+			if (midp.distanceTo(p3)<=p3.distanceTo(p4)&&midp.distanceTo(p4)<=p3.distanceTo(p4)) // midp check between p3 p4
 			{
 				if (midp.distanceTo(p3)<=pointSelect2.distanceTo(p3)) point2=p4;
 				else point2=p3;	
 			}
 			else
 			{
-				if (midp.distanceTo(p3)>=pointSelect2.distanceTo(p4)) point2=p3;
+				if (midp.distanceTo(p3)>=midp.distanceTo(p4)) point2=p3;
 				else point2=p4;	
 			}//end findpoint2
 			///Tap with point1 midp point2;
@@ -2284,9 +2289,9 @@ static void connect2(
 }
 
 
-static bool changeZ(TVS_Pipe* pPipe)
+static bool changeZ(TVS_Pipe* &pPipe)
 {
-
+		AcDbEntity * pEnt;
 	double startZ, nextZ, Axis;
 	changeZdg dg;
 	startZ=globalElevMid;
@@ -2309,17 +2314,26 @@ static bool changeZ(TVS_Pipe* pPipe)
 		double y = pPipe->LastPoint.y-pPipe->FirstPoint.y;
 		double z = pPipe->LastPoint.z-pPipe->FirstPoint.z;
 		Axis=M_PI*Axis/180;
-		TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis,pPipe->This1D,pPipe->ThisRound);
+		double Axis2=Axis; //correct axis while correct view tap
+		if (abs(M_PI/2-Axis2)<0.0001) Axis2=M_PI*89.4/180;
+		
+		TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis2,pPipe->This1D,pPipe->ThisRound);
 		SetGlobalProperty(pTap);
 		SetPropertyLikePipe(pPipe,pTap);
-		TVS_TAP* pTap2=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(-y,x,0),pPipe->LastPoint,Axis,pPipe->This1D,pPipe->ThisRound);
+
+		acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
+		pTap->put_Form(Form_Up);
+		pTap->close();
+		pTap->draw();
+		TVS_TAP* pTap2=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(-y,x,0),pPipe->LastPoint,Axis2,pPipe->This1D,pPipe->ThisRound);
 		SetGlobalProperty(pTap2);
 		SetPropertyLikePipe(pPipe,pTap2);
 	
 		double plecho1=abs(length2p(pTap->MA,pTap->MiddlePoint));
 		double plecho2=abs(length2p(pTap->MC,pTap->MiddlePoint));
-		double dLx=abs(tan(pTap->Swectangle)*(nextZ-startZ));  
-		AcDbEntity * pEnt;
+		double dLx;  
+		if(abs(M_PI/2-Axis)>=0.0001)  dLx=abs(tan(pTap->Swectangle)*(nextZ-startZ));  	
+		else dLx=0;
 		AcGePoint3d p1,p2,p3,p4,p5,p6,p7;
 		p2=pPipe->LastPoint;
 		p1=shortlength(pPipe->FirstPoint,p2,plecho1);
@@ -2346,11 +2360,13 @@ static bool changeZ(TVS_Pipe* pPipe)
 		{
 			acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
 			pTap->put_Form(Form_Up);
+			pTap->put_Elevation(startZ);
 			pTap->close();
 
 			acdbOpenAcDbEntity(pEnt,pTap2->id(),AcDb::kForWrite);
 			pTap2->put_Form(Form_Down);
 			pTap2->put_Centerpoint(p5);
+			pTap2->put_Elevation(nextZ);
 			pTap2->close();
 
 		}
@@ -2360,12 +2376,19 @@ static bool changeZ(TVS_Pipe* pPipe)
 			TVS_Pipe*pPipe1=pPipe1->add_new(p3,p4,globSizeA,globSizeB);
 			SetGlobalProperty(pPipe1);
 			SetPropertyLikePipe(pPipe,pPipe1);
+			acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+
+			pPipe1->put_Elevation(startZ);
+			pPipe1->close();
 		}
 		//draw pPipe2
 			TVS_Pipe*pPipe2=pPipe2->add_new(p6,p7,globSizeA,globSizeB);
 			SetGlobalProperty(pPipe2);
 			SetPropertyLikePipe(pPipe,pPipe2);
-	
+			acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
+
+			pPipe2->put_Elevation(nextZ);
+			pPipe2->close();
 			//correct PPipe
 			acdbOpenAcDbEntity(pEnt,pPipe->id(),AcDb::kForWrite);
 			pPipe->put_Lastpoint(p1);
@@ -2554,8 +2577,8 @@ static void Ventilation_ARXTVS_PIPE(void)
 	{
 
 
-		acedInitGet(RSG_NONULL, _T("–азмер – h соедќтвод о j соед“ройник n т Z z €"));
-		Astat=acedGetPoint(pt1,_T("\n”кажите следующую точку или [–азмер/соедќтвод/соед“ройник/Z]:"),pt2) ;
+		acedInitGet(RSG_NONULL, _T("–азмер – h соедќтвод о j соед“ройник n т Z z € в¬ерх d в вЌиз н y"));
+		Astat=acedGetPoint(pt1,_T("\n”кажите следующую точку или [–азмер/соедќтвод/соед“ройник/Z/в¬ерх/вЌиз]:"),pt2) ;
 		switch (Astat)
 		{
 		case RTCAN:
@@ -2584,7 +2607,7 @@ static void Ventilation_ARXTVS_PIPE(void)
 			Astat2=false;
 			acdbRToS(0,2,2,resultss);
 		}
-		if ((wcscmp(resultss,_T("соедќтвод "))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("о"))==0))
+		if ((wcscmp(resultss,_T("соедќтвод"))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("о"))==0))
 		{
 			reg=dCONNECTT;
 			connect2(pipi,reg);
@@ -2601,11 +2624,29 @@ static void Ventilation_ARXTVS_PIPE(void)
 
 		if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("z"))==0)||(wcscmp(resultss,_T("€"))==0))
 		{
-			reg=dCONNECT;
+			reg=dZ;
 			changeZ(pipi);
+			A1=A2;
+			A2=pipi->LastPoint;
+			pt1[0]=A2.x;
+			pt1[1]=A2.y;
+			pt1[2]=A2.z;
+			acdbRToS(0,2,2,resultss);
+		}
+
+		if ((wcscmp(resultss,_T("в¬ерх"))==0)||(wcscmp(resultss,_T("в"))==0)||(wcscmp(resultss,_T("d"))==0))
+		{
+			reg=dUP;
+			UpDown(pipi,Form_Up);
 			return;
 		}
 
+		if ((wcscmp(resultss,_T("вЌиз"))==0)||(wcscmp(resultss,_T("н"))==0)||(wcscmp(resultss,_T("y"))==0))
+		{
+			reg=dDOWN;
+			UpDown(pipi,Form_Down);
+			return;
+		}
 
 	}
 
@@ -5614,6 +5655,44 @@ static void setZ()
 {
 	throw std::logic_error("The method or operation is not implemented.");
 }
+
+static void UpDown( TVS_Pipe * pPipe, int stat )
+{
+	AcDbEntity * pEnt;
+	double startZ, nextZ, Axis;
+
+
+		double x = pPipe->LastPoint.x-pPipe->FirstPoint.x;
+		double y = pPipe->LastPoint.y-pPipe->FirstPoint.y;
+		double z = pPipe->LastPoint.z-pPipe->FirstPoint.z;
+		Axis=M_PI/2;
+
+		TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis,pPipe->This1D,pPipe->ThisRound);
+		SetGlobalProperty(pTap);
+		SetPropertyLikePipe(pPipe,pTap);
+		acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
+		pTap->put_Form(stat);
+		pTap->close();
+		pTap->draw();
+		
+
+		double plecho1=abs(length2p(pTap->MA,pTap->MiddlePoint));
+		double plecho2=abs(length2p(pTap->MC,pTap->MiddlePoint));
+		double dLx;  
+
+		AcGePoint3d p1,p2,p3,p4,p5,p6,p7;
+		p2=pPipe->LastPoint;
+		p1=shortlength(pPipe->FirstPoint,p2,plecho1);
+		
+
+		acdbOpenAcDbEntity(pEnt,pPipe->id(),AcDb::kForWrite);
+		pPipe->put_Lastpoint(p1);
+		pPipe->close();
+
+
+	
+}
+
 
 
 

@@ -524,7 +524,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 
 
-						double l1=(double) 85*M_PI/180, l2=95*(double)M_PI/180;
+						double l1=(double) 89.5*M_PI/180, l2=90.5*(double)M_PI/180;
 						if (Form==Form_Up)
 						{
 
@@ -1064,7 +1064,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 					else 
 					{
-						double l1=(double) 85*M_PI/180, l2=95*(double)M_PI/180;
+						double l1=(double) 89.5*M_PI/180, l2=90.5*(double)M_PI/180;
 					if (Form==Form_Up)
 					{
 						
@@ -1357,7 +1357,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 					else 
 					{
-						double l1=(double) 85*M_PI/180, l2=95*(double)M_PI/180;
+						double l1=(double) 89.5*M_PI/180, l2=90.5*(double)M_PI/180;
 						if (Form==Form_Up)
 						{
 							
