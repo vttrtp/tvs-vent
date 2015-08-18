@@ -225,8 +225,12 @@ if (Ttap==true)
 	iRadiusTypeRound=_wtoi(RadiusTypeRound);
 	iRadiusTypeRect=_wtoi(RadiusTypeRect);
 	CString var;
-	var.Format(L"%g", _wtof(Swectangle)/M_PI*180);
-   fSwectangle.SetWindowTextW(var);
+	if ((_wtof(Swectangle)/M_PI*180)!=0)
+	{
+		var.Format(L"%g", _wtof(Swectangle)/M_PI*180);
+	fSwectangle.SetWindowTextW(var);
+	}
+ 
 
 	switch (iTapForm)
 	{
@@ -572,8 +576,16 @@ void dgAllEdit::OnBnClickedOk()
 	
 	CString var;
 	fSwectangle.GetWindowTextW(var);
-	var.Format(L"%g", M_PI*_wtof(var)/180);
-	fSwectangle.SetWindowTextW(var);
+
+	if (( M_PI*_wtof(var)/180)!=0)
+	{
+		var.Format(L"%g", M_PI*_wtof(var)/180);
+		fSwectangle.SetWindowTextW(var);
+	}
+	
+
+
+
 
 
 	this->OnOK();

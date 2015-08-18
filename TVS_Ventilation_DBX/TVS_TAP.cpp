@@ -1490,19 +1490,32 @@ Acad::ErrorStatus TVS_TAP::subGetOsnapPoints (
 {
 	assertReadEnabled () ;
 
-	AcGeLine3d line1,line2;
-	line1.set(B,C); 
-	line2.set(D,A); 
+	//AcGeLine3d line1,line2;
+	//line1.set(B,C); 
+	//line2.set(D,A); 
 
 	switch (osnapMode) {
 
 	case AcDb::kOsModeEnd:
-		snapPoints.append(MA);
-		snapPoints.append(A);
-		snapPoints.append(B);
-		snapPoints.append(MC);
-		snapPoints.append(C);
-		snapPoints.append(D);
+		int ind;
+		AcDbPolyline * pLn;
+		for each (AcDbEntity * var in ListOfEntity)
+		{
+			if ( (pLn = AcDbPolyline::cast(var)) != NULL )
+			{
+				ind=pLn->numVerts();
+				for (int i=0;i<ind;i++)
+				{
+					AcGePoint2d curpnt;
+					pLn->getPointAt(i,curpnt);
+					snapPoints.append(AcGePoint3d(curpnt.x,curpnt.y,0));
+				}
+			}
+		}
+snapPoints.append(MA);
+
+snapPoints.append(MC);
+snapPoints.append(MiddlePoint);
 
 		break;
 		/*
@@ -1517,8 +1530,8 @@ Acad::ErrorStatus TVS_TAP::subGetOsnapPoints (
 
 	case AcDb::kOsModePerp: 
 
-		snapPoints.append(line1.closestPointTo(lastPoint));
-		snapPoints.append(line2.closestPointTo(lastPoint));
+// 		snapPoints.append(line1.closestPointTo(lastPoint));
+// 		snapPoints.append(line2.closestPointTo(lastPoint));
 		break;
 	}
 	return (Acad::eOk);

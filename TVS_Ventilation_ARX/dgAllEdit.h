@@ -56,7 +56,7 @@
 #define IDC_LevelUp 1013
 #define IDC_LevelCenter 1014
 #define IDC_LevelDown 1015
-#define IDC_LengthWye 1017
+#define IDC_LengthWye 1016
 #define IDC_TransLength 1023
 #define IDC_Wipeout 1020
 #define IDC_Grani 1021
