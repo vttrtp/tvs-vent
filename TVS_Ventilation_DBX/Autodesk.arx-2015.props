@@ -7,29 +7,7 @@
 		<_PropertySheetDisplayName>ObjectARX 2015</_PropertySheetDisplayName>
 	</PropertyGroup>
 	
-	<PropertyGroup>
-		<AcadDir Condition="'$(Platform)'=='x64'">E:\Cash\acad 2016\AutoCAD 2016\</AcadDir>
-		<AcadDir Condition="'$(Platform)'=='Win32'">E:\Cash\acad 2016\AutoCAD 2016\</AcadDir>
-		<AcadExe Condition="'$(ArxAppType)'=='dbx' or '$(ArxAppType)'=='dbxnet' or '$(ArxAppType)'=='arx' or '$(ArxAppType)'=='arxnet'">acad.exe</AcadExe>
-		<AcadExe Condition="'$(ArxAppType)'=='crx' or '$(ArxAppType)'=='crxnet'">accoreconsole.exe</AcadExe>
-		<ArxSdkDir>E:\Cash\ObjectARX 2015\</ArxSdkDir>
-
-		<ArxSdkIncs Condition="'$(Platform)'=='Win32'">$(ArxSdkDir)\inc;$(ArxSdkDir)\inc-win32</ArxSdkIncs>
-		<ArxSdkIncs Condition="'$(Platform)'=='x64'">$(ArxSdkDir)\inc;$(ArxSdkDir)\inc-x64</ArxSdkIncs>
-		<ArxHlrIncs>$(ArxSdkDir)\utils\HlrApi\inc</ArxHlrIncs>
-		<ArxAmodelerIncs>$(ArxSdkDir)\utils\amodeler\inc</ArxAmodelerIncs>
-		<ArxBrepIncs>$(ArxSdkDir)\utils\brep\inc</ArxBrepIncs>
-		<ArxAtilIncs>$(ArxSdkDir)\utils\Atil\Inc</ArxAtilIncs>
-
-		<ArxSdkLibs Condition="'$(Platform)'=='Win32'">$(ArxSdkDir)\lib-win32</ArxSdkLibs>
-		<ArxSdkLibs Condition="'$(Platform)'=='x64'">$(ArxSdkDir)\lib-x64</ArxSdkLibs>
-		<ArxHlrLibs>$(ArxSdkDir)\utils\HlrApi\lib-$(Platform)</ArxHlrLibs>
-		<ArxAmodelerLibs>$(ArxSdkDir)\utils\amodeler\lib-$(Platform)</ArxAmodelerLibs>
-		<ArxBrepLibs>$(ArxSdkDir)\utils\brep\lib-$(Platform)</ArxBrepLibs>
-		<ArxAtilLibs>$(ArxSdkDir)\utils\Atil\Lib-$(Platform)</ArxAtilLibs>
-		<ArxSDKVersion>20.0</ArxSDKVersion>
-		<ArxSDKPlatform>v110</ArxSDKPlatform>
-	</PropertyGroup>
+<Import Project="..\Configurations.targets" />
 
 	<ImportGroup Label="PropertySheets">
 		<Import Condition="'$(ArxAppType)'=='dbx' or '$(ArxAppType)'=='dbxnet'" Project="$(ArxSdkDir)\inc\dbx.props" />
