@@ -163,27 +163,27 @@ void PipeSizeDiallog::OnBnClickedOk()
 {
 
 
-	if (TapRadiusRoundConst==true)
+	if (TapRadiusRoundConst==TRUE)
 	{
 		RadiusTypeRound= RadiusTypeRound_RadiusConstant;
 	}
 
-	if (TapRadiusRoundVariable==true)
+	if (TapRadiusRoundVariable==TRUE)
 	{
 		RadiusTypeRound= RadiusTypeRound_RadiusVariable;
 	}
 
-	if (TapRadiusRoundSpecific==true)
+	if (TapRadiusRoundSpecific==TRUE)
 	{
 		RadiusTypeRound=RadiusTypeRound_RadiusSpecific;
 	}
 
-	if (TapRadiusRectConst==true)
+	if (TapRadiusRectConst==TRUE)
 	{
 		RadiusTypeRect= RadiusTypeRect_RadiusConstant;
 	}
 
-	if (TapRadiusRectVariable==true)
+	if (TapRadiusRectVariable==TRUE)
 	{
 		RadiusTypeRect=RadiusTypeRect_RadiusVariable;
 	}

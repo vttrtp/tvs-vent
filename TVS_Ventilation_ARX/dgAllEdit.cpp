@@ -534,42 +534,42 @@ void dgAllEdit::OnBnClickedOk()
 {
 	
 
-	if (TapMid==true)
+	if (TapMid==TRUE)
 	{
 		TapForm.Format(L"%i", Form_Direct);
 	}
 
-	if (TapDown==true)
+	if (TapDown==TRUE)
 	{
 		TapForm.Format(L"%i", Form_Down);
 	}
 
-	if (TapUp==true)
+	if (TapUp==TRUE)
 	{
 		TapForm.Format(L"%i", Form_Up);
 	}
 
-	if (TapRadiusRoundConst==true)
+	if (TapRadiusRoundConst==TRUE)
 	{
 		RadiusTypeRound.Format(L"%i", RadiusTypeRound_RadiusConstant);
 	}
 
-	if (TapRadiusRoundVariable==true)
+	if (TapRadiusRoundVariable==TRUE)
 	{
 		RadiusTypeRound.Format(L"%i", RadiusTypeRound_RadiusVariable);
 	}
 
-	if (TapRadiusRoundSpecific==true)
+	if (TapRadiusRoundSpecific==TRUE)
 	{
 		RadiusTypeRound.Format(L"%i", RadiusTypeRound_RadiusSpecific);
 	}
 
-	if (TapRadiusRectConst==true)
+	if (TapRadiusRectConst==TRUE)
 	{
 		RadiusTypeRect.Format(L"%i", RadiusTypeRect_RadiusConstant);
 	}
 
-	if (TapRadiusRectVariable==true)
+	if (TapRadiusRectVariable==TRUE)
 	{
 		RadiusTypeRect.Format(L"%i", RadiusTypeRect_RadiusVariable);
 	}
