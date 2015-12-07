@@ -4628,7 +4628,7 @@ static void Ventilation_ARXTVS_SPEC(void)
 
 	}
 
-
+	
 
 	//отрисовка тройника  кругл прям
 	if (WPRndORct.logicalLength()!=0)
