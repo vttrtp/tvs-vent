@@ -39,6 +39,10 @@ double pSizeA3=0
 bool add (AcDbEntity * pEnt);
 void setName (const ACHAR * pName);
 void setLable (const ACHAR * pAchar);
+void appendLable (const ACHAR * pAchar);
+void appendLable (double par);
 void setUnit (const ACHAR * pAchar);
 void setUnit2 (const ACHAR * pAchar);
+int toInt(const ACHAR * pAchar);
+ const ACHAR * toChar(double val);
 };

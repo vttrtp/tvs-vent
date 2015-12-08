@@ -5694,7 +5694,47 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 }
 
 
+static void Ventilation_ARXTVS_Specification(void)
+{
 
+
+	AcDbEntity *pEnt = NULL;
+		ads_name sset, eName;
+			AcDbObjectId id;
+	if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+		return;
+	ads_point pt1;
+	AcGePoint3d pb=AcGePoint3d(0,0,0);
+	if(acedGetPoint(NULL,_T("\nУкажите точку вставки спецификации:"),pt1)!=RTNORM )
+		return;
+	pb=asPnt3d(pt1);
+	long len = 0;
+
+	acedSSLength(sset, &len);
+	//consoleprint(double(len),_T("\nL: "));
+	for (long i = 0; i < len; i++)
+	{             
+
+
+		if (NULL != (acedSSName(sset,i,eName)))
+		{
+
+			//consoleprint(double(i),_T("\nd"));
+
+
+			acdbGetObjectId(id,eName);
+			if (id!=AcDbObjectId::kNull)
+			{
+				acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead);
+				pEnt->close();
+				SPEC spec;
+				spec.add(pEnt);
+			}
+		}
+	}
+
+
+}
 
 } ;
 
@@ -5708,6 +5748,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DUCT, TVS_DUCT, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_1D2D, TVS_1D2D, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SPEC, TVS_SPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Specification, TVS_Specification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Show, TVS_Show, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CUT, TVS_CUT, ACRX_CMD_TRANSPARENT, NULL)
