@@ -5697,7 +5697,7 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 static void Ventilation_ARXTVS_Specification(void)
 {
 
-
+	TVS_Entity * Ent;
 	AcDbEntity *pEnt = NULL;
 		ads_name sset, eName;
 			AcDbObjectId id;
@@ -5709,7 +5709,7 @@ static void Ventilation_ARXTVS_Specification(void)
 		return;
 	pb=asPnt3d(pt1);
 	long len = 0;
-
+	SPEClist speclist;
 	acedSSLength(sset, &len);
 	//consoleprint(double(len),_T("\nL: "));
 	for (long i = 0; i < len; i++)
@@ -5721,17 +5721,28 @@ static void Ventilation_ARXTVS_Specification(void)
 
 			//consoleprint(double(i),_T("\nd"));
 
-
+			
 			acdbGetObjectId(id,eName);
 			if (id!=AcDbObjectId::kNull)
 			{
-				acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead);
+				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
+				{
+				
+				
 				pEnt->close();
 				SPEC spec;
-				spec.add(pEnt);
-			}
+				if(spec.add(pEnt)==true)
+				{
+					speclist.append(spec);
+				}
+				}
 		}
 	}
+	}
+		if (speclist.specList.physicalLength()!=0)
+		{
+				speclist.print();
+		}
 
 
 }

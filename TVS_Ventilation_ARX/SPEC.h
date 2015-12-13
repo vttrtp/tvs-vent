@@ -78,5 +78,6 @@ class SPEClist
 		void append (SPEC line);
 		int length;
 		int checkRelevations(SPEC param1, SPEC param2);
+		void print();
 
 };

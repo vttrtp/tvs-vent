@@ -6,10 +6,12 @@
 using namespace std;
 #define d "%%c"
 #define None 0
-#define Pipe 1
-#define Tap 2
-#define Trans 3
-#define Wye 4
+#define PipeRound 1
+#define PipeRect 2
+#define TapRound 3
+#define TapRect 4
+#define Trans 5
+#define Wye 6
 #define TypeInt 0
 #define TypeDouble1 1
 #define TypeDouble2 2
@@ -60,20 +62,28 @@ bool SPEC::add(AcDbEntity * pEnt)
 	TVS_TAP * pTap;
 	TVS_WYE * pWye;
 	TVS_TRANS * pTrans;
+	TVS_Entity *Ent;
 	status=None;
 	SizeA=0;
 	SizeB=0;
 	SizeA2=0;
 	SizeA3=0;
 	Swectangle=0;
+	Length=0;
+	Area=0;
 	
 	
-		#pragma region Pipe
+		
 	if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForRead)==eOk)
 	{
+		if(Ent = TVS_Entity::cast(pEnt))
+		{
+
+		
+		#pragma region Pipe
 		if(pPipe = TVS_Pipe::cast(pEnt))
 		{
-			status=Pipe;
+		
 			SizeA=pPipe->get_SizeA();
 			SizeB=pPipe->get_SizeB();
 			Length=pPipe->get_Length();
@@ -82,6 +92,7 @@ bool SPEC::add(AcDbEntity * pEnt)
 
 		if (SizeB==0) 
 			{
+					status=PipeRound;
 				setName(_T("Воздуховод круглый"));
 				setLable(_T(d));
 				appendLable(SizeA);
@@ -90,7 +101,13 @@ bool SPEC::add(AcDbEntity * pEnt)
 			}
 		else 
 			{ 
+				status=PipeRect;
 			setName(_T("Воздуховод прямоугольный"));
+			if (SizeB>SizeA)
+			{
+				SizeB=pPipe->SizeA;
+				SizeA=pPipe->SizeB;
+			}
 			setLable(max(SizeA,SizeB));
 			appendLable(_T("x"));
 			appendLable(min(SizeA,SizeB));
@@ -100,6 +117,50 @@ bool SPEC::add(AcDbEntity * pEnt)
 		setParam2(Area, TypeDouble2);
 		}
 	#pragma endregion
+
+		#pragma region Tap
+		if(pTap = TVS_TAP::cast(pEnt))
+		{
+			
+			SizeA=pTap->get_SizeA();
+			SizeB=pTap->get_SizeB();
+
+			setUnit1(_T("шт"));
+			setUnit2(_T("м2"));
+			Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
+			if (SizeB==0) 
+			{
+				status=TapRound;
+				setName(_T("Отвод круглый"));
+				setLable(_T(d));
+				appendLable(SizeA);
+				Area=M_PI*2*SizeA*pTap->Radius/1000000*pTap->Swectangle;
+				if ((pTap->RadiusTypeRound==TypeRoundTap_TapSection)&&(SizeA<=355))
+				{
+					Area=Area+M_PI*SizeA*2/10000;
+				}
+
+			}
+			else 
+			{ 
+					status=TapRect;
+				setName(_T("Отвод прямоугольный"));
+				setLable(SizeA);
+				appendLable(_T("x"));
+				appendLable(SizeB);
+				Area=(pTap->Swectangle)/(2*M_PI) 
+					*(2*(M_PI*(pTap->Radius+pTap->SizeA)*(pTap->Radius+pTap->SizeA)/1000000
+					-M_PI*(pTap->Radius)*(pTap->Radius)/1000000) 
+					+2*M_PI*(pTap->SizeA+pTap->Radius)/1000*pTap->SizeB/1000
+					+2*M_PI*(pTap->Radius)/1000*pTap->SizeB/1000);
+			}
+			appendLable(_T("("));
+			appendLable(Swectangle);
+			appendLable(_T("%%d)"));
+			setParam1(1, TypeDouble1);
+			setParam2(Area, TypeDouble2);
+		}
+		#pragma endregion
 		#pragma region Wye
 		if(pWye = TVS_WYE::cast(pEnt))
 		{
@@ -229,9 +290,11 @@ bool SPEC::add(AcDbEntity * pEnt)
 			setParam2(Area, TypeDouble2);
 		}
 #pragma endregion
-		if (status!=None) printResult();
-		pEnt->close();
+		//if (status!=None) printResult();
+	
 		return true;
+		}
+			pEnt->close();
 	}
 	else return false;
 }
@@ -357,34 +420,81 @@ SPEClist::~SPEClist(void)
 
 void SPEClist::append(SPEC line)
 {
-	if (specList.length()==0)
+// 	acutPrintf(_T("\n123"));
+// 	print();
+	if (specList.logicalLength()==0)
 	{
 		specList.append(line);
+		return;
 	}
-	for (int i=0; i<specList.length();i++)
+
+	length=specList.logicalLength();
+	int i = 0;
+	while (i<length)
 	{
-		if (line.status,specList[i].status)
+		int currentStatus=checkRelevations(specList[i],line);
+		if (currentStatus==Equal)
+		{
+			specList[i].param1=specList[i].param1+line.param1;
+			specList[i].param2=specList[i].param2+line.param2;
+			return;
+		}
+
+		if (currentStatus==Larger)
+		{
+			specList.insertAt(i,line);
+			return;
+		}
+		i++;
 	}
-	
+	specList.append(line);
 }
 
 int SPEClist::checkRelevations(SPEC param1, SPEC param2)
 {
-	if (param1.status==param2.status)
-	{
-		if (param1.SizeA==param2.SizeA)
-		{
-			if (param1.SizeB==param2.SizeB)
-			{
+	double parameters1[6],parameters2[6];;
+	parameters1[0]=param1.status;
+	parameters2[0]=param2.status;
 
-			}
-		}
+	parameters1[1]=param1.SizeA;
+	parameters2[1]=param2.SizeA;
+
+	parameters1[2]=param1.SizeB;
+	parameters2[2]=param2.SizeB;
+
+	parameters1[3]=param1.SizeA2;
+	parameters2[3]=param2.SizeA2;
+
+	parameters1[4]=param1.SizeA3;
+	parameters2[4]=param2.SizeA3;
+
+	parameters1[5]=param1.Swectangle;
+	parameters2[5]=param2.Swectangle;
+	int i=0;
+
+while (i<6)
+{
+	if (parameters1[i]<parameters2[i])
+	{
+		return Less;
 	}
-	if (param1>param2)
+	if (parameters1[i]>parameters2[i])
 	{
 		return Larger;
 	}
+	i++;
+}
+
+
+return Equal;
 	
-		return Less;
-	
+}
+
+void SPEClist::print()
+{
+	length=specList.logicalLength();
+	for (int i=0; i<length;i++)
+	{
+		specList[i].printResult();
+	}
 }
