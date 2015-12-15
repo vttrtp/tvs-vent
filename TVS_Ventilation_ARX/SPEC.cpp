@@ -498,3 +498,148 @@ void SPEClist::print()
 		specList[i].printResult();
 	}
 }
+
+void SPEClist::printSPDSForm(AcGePoint3d cent)
+{
+	//int columnswidth[9]={2000,13000,6000,3500,4500,2000,2000,2500,4000};
+	int columnswidth[10]={0, 2000,15000,21000,24500,29000,31000,33000,35500,39500};
+	int columndistanse[6]={2000,15000,29000,31000,33000,35500};
+	int rowhight=800;
+	int otstupX=100;
+	int otstupY=150;
+	int length = specList.logicalLength();
+		AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7;
+curcnt=cent;
+
+
+
+//zagolovok
+pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+printText(pos1,_T("Наименование"));
+printText(pos2,_T("Размер"));
+printText(pos3,_T("Еденица"));
+printText(pos4,_T("Кол-во"));
+printText(pos5,_T("Еденица2"));
+printText(pos6,_T("Кол-во"));
+curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
+
+//print all table text
+	for (int i =0; i<length;i++)
+	{
+	pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+	specList[i].setParamChars();
+	printText(pos1,specList[i].name);
+	printText(pos2,specList[i].lable);
+	printText(pos3,specList[i].unit1);
+	printText(pos4,specList[i].param1char);
+	printText(pos5,specList[i].unit2);
+	printText(pos6,specList[i].param2char);
+	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
+}
+
+/// total
+	double summlenght=0, summArea=0;
+	ACHAR  sA[512];
+
+	for (int i =0; i<length;i++)
+	{
+		//summlenght+=specList[i].param1;
+		summArea+=specList[i].param2;
+	}
+		acdbRToS(summArea,2,2,sA);
+	//pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+	//pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+	//pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+	//pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+	printText(pos5,_T("Итого:"));
+	//printText(pos2,_T("Размер"));
+	//printText(pos3,_T("Еденица"));
+	//printText(pos4,_T("Кол-во"));
+	//printText(pos5,_T("Еденица2"));
+	printText(pos6,sA);
+	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
+
+	///print table
+
+	double TableLenght=39500;
+	double Hight=length*800;
+	//vertical Lines
+	
+AcGePoint3d start,end;
+for each (int c in columnswidth)
+{
+		start=AcGePoint3d(cent.x+c,cent.y+rowhight,cent.z);
+		end=AcGePoint3d(cent.x+c,cent.y-rowhight*(length+1),cent.z);
+		printLine(start,end);
+}
+	//horizontal Lines
+
+for (int i =-1; i<length+2;i++)
+{
+	start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
+	end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
+	printLine(start,end);
+}
+print();
+acutPrintf(_T("\nИтого м2: %s"),sA);
+}
+
+void SPEClist::printText( AcGePoint3d cent, const ACHAR * pAchar )
+{
+	AcDbDatabase *db=acdbHostApplicationServices()->workingDatabase();
+
+	AcDbObjectId tId=db->textstyle();
+	///
+	AcDbText *text1 = new AcDbText (cent, pAchar,tId,250,0 );
+
+	AcDbBlockTable *pBlockTable;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
+		AcDb::kForRead);
+
+	AcDbBlockTableRecord *pBlockTableRecord;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,AcDb::kForWrite);
+	pBlockTable->close();
+
+	AcDbObjectId retId = AcDbObjectId::kNull;
+	pBlockTableRecord->appendAcDbEntity(retId, text1);
+	pBlockTableRecord->close();
+	text1->close();
+	//
+
+}
+
+void SPEClist::printLine( AcGePoint3d start, AcGePoint3d end )
+{
+	AcDbDatabase *db=acdbHostApplicationServices()->workingDatabase();
+
+	AcDbObjectId tId=db->textstyle();
+	///
+	AcDbLine *pEnt = new AcDbLine (start,end);
+
+	AcDbBlockTable *pBlockTable;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
+		AcDb::kForRead);
+
+	AcDbBlockTableRecord *pBlockTableRecord;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,AcDb::kForWrite);
+	pBlockTable->close();
+	pEnt->setLineWeight(AcDb::kLnWt015);
+	AcDbObjectId retId = AcDbObjectId::kNull;
+	pBlockTableRecord->appendAcDbEntity(retId, pEnt);
+	pBlockTableRecord->close();
+	pEnt->close();
+	//
+}
+

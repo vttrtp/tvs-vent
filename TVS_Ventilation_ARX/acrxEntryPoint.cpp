@@ -3207,7 +3207,7 @@ static void Ventilation_ARXTVS_1D2D(void)
 }
 
 // - Ventilation_ARX.TVS_SPEC command (do not rename)
-static void Ventilation_ARXTVS_SPEC(void)
+static void Ventilation_ARXTVS_Specification(void)
 {
 	ads_name sset, eName;
 	AcGeDoubleArray PipPar;
@@ -5694,7 +5694,7 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 }
 
 
-static void Ventilation_ARXTVS_Specification(void)
+static void Ventilation_ARXTVS_SPEC(void)
 {
 
 	TVS_Entity * Ent;
@@ -5741,7 +5741,8 @@ static void Ventilation_ARXTVS_Specification(void)
 	}
 		if (speclist.specList.physicalLength()!=0)
 		{
-				speclist.print();
+				//speclist.print();
+			speclist.printSPDSForm(pb);
 		}
 
 

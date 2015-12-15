@@ -79,5 +79,33 @@ class SPEClist
 		int length;
 		int checkRelevations(SPEC param1, SPEC param2);
 		void print();
-
+		
+		void printSPDSForm(AcGePoint3d cent);
+		void printText(AcGePoint3d cent, const ACHAR * pAchar);
+		void printLine(AcGePoint3d start, AcGePoint3d end);
 };
+
+// class TVSForm
+// {
+// public:
+// 	TVSForm(void);
+// 	~TVSForm(void);
+// 	int columnsQuantity;
+// 	int rowsQuantity;
+// 	AcArray <int> columnsWidth;
+// 	AcArray <ACHAR> Headlines;
+// 	AcArray <TVSRow> Rows;
+// 	int HeadlineHight;
+// 	int RowHight;
+// 	//double columnswidth[9]={2000,13000,6000,3500,4500,2000,2000,2500,4000};
+	
+// };
+// 
+// class TVSRow
+// {
+// public:
+// 	TVSRow(void);
+// 	~TVSRow(void);
+// 	AcArray <ACHAR> cells;
+
+// };
