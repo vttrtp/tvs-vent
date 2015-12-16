@@ -292,10 +292,13 @@ bool SPEC::add(AcDbEntity * pEnt)
 #pragma endregion
 		//if (status!=None) printResult();
 	
+		
+		pEnt->close();
 		return true;
 		}
-			pEnt->close();
+		pEnt->close();	
 	}
+
 	else return false;
 }
 

@@ -5321,6 +5321,58 @@ static void Ventilation_ARXTVS_ERASE(void)
 	// Add your code for command Ventilation_ARX.TVS_ERASE here
 }
 
+static void Ventilation_ARXTVSSomeParts(void)
+{
+	ads_name ent;
+	bool  Astat=false, status=false;
+	//acedInitGet(RSG_NONULL);
+	ads_point pt1,pt2;
+	AcDbObjectId id;
+	AcDbEntity *pEnt;
+	AcDbLine*pLine;
+	AcGePoint3d pstart,pend;
+	while (status==false)
+	{
+
+	Astat=acedEntSel (_T("\nВыберете линию: "), ent,pt1) ;
+	if (Astat==true)
+	{
+
+	
+	if (acdbGetObjectId(id,ent)==eOk)
+	{
+		{if (id!=AcDbObjectId::kNull)
+		{
+			if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
+
+			{
+				if ( (pLine = AcDbLine::cast(pEnt)) != NULL )
+				{	
+					status=true;
+					pLine->getStartPoint(pstart);
+					pLine->getEndPoint(pend);
+				}
+			pLine->close();
+			}
+		}
+		}
+	}
+	}
+	}
+	int * quantity=new int;
+	if (acedGetInt (_T("\nКоличество сегментов: "), quantity)!= RTNORM) return ;
+	double pDist=pstart.distanceTo(pend);
+	for (int i = 1; i < *quantity+1; i++)
+	{
+	//AcGePoint3d base=AcGePoint3d(((*quantity-i)*pstart.x+i*pend.x)/(*quantity),((*quantity-i)*pstart.y+i*pend.y)/(*quantity),((*quantity-i)*pstart.z+i*pend.z)/(*quantity));
+	AcGePoint3d base=AcGePoint3d(((*quantity*2-2*i+1)*pstart.x+(2*i-1)*pend.x)/(*quantity*2),((*quantity*2-2*i+1)*pstart.y+(2*i-1)*pend.y)/(*quantity*2),((*quantity*2-2*i+1)*pstart.z+(2*i-1)*pend.z)/(*quantity*2));
+	SPEClist::printLine(AcGePoint3d(base.x-200,base.y,base.z),AcGePoint3d(base.x+200,base.y,base.z));
+	SPEClist::printLine(AcGePoint3d(base.x,base.y+200,base.z),AcGePoint3d(base.x,base.y-200,base.z));
+	}
+	
+}
+
+
 static void Ventilation_ARXTVS_LEAD(void)
 {
 
@@ -5767,7 +5819,8 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Change, TVS_Change, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ERASE, TVS_ERASE, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_LEAD, TVS_LEAD, ACRX_CMD_TRANSPARENT, NULL)
-	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SETTINGS, TVS_SETTINGS, ACRX_CMD_TRANSPARENT, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVSSomeParts, TVSSomeParts, ACRX_CMD_TRANSPARENT, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SETTINGS, TVS_SETTINGS, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyCommand, MyCommandLocal, ACRX_CMD_MODAL, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyPickFirst, MyPickFirstLocal, ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET, NULL)

@@ -82,7 +82,7 @@ class SPEClist
 		
 		void printSPDSForm(AcGePoint3d cent);
 		void printText(AcGePoint3d cent, const ACHAR * pAchar);
-		void printLine(AcGePoint3d start, AcGePoint3d end);
+	static	void printLine(AcGePoint3d start, AcGePoint3d end);
 };
 
 // class TVSForm
