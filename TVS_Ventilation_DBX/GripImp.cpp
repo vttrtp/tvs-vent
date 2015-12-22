@@ -54,12 +54,12 @@ GripCback::hotGripfunc(AcDbGripData			*pthis,
 	AcDbGripOperations::ReturnValue gripStat(AcDbGripOperations::eOk);
 
 	TSTDSTRING *psApppData = static_cast<TSTDSTRING *>(pthis->appData());
-		
+		acutPrintf(_T("\nTVS_Pipe"));
 	if(psApppData)
 	{
-		if(*psApppData == _T("First")){
+		
 		gripStat=AcDbGripOperations::eGripHotToWarm;
-		}
+		
 	}
 	
 	else
@@ -204,14 +204,48 @@ GripCback::WorldDrawfunc(AcDbGripData		 *pThis,
 			  AcGePoint3d					 *cursor,
 			  double						  dGripSize)
 {
-	static const Adesk::UInt16 kYellow =50;
+	static const Adesk::UInt16 kRed =10;
 	AcGePoint3d			point = pThis->gripPoint();
 	AcGeVector3d		normal(0,0,1);
-
+	double a =dGripSize/3;
 	pWd->subEntityTraits().setFillType(kAcGiFillAlways);
 	pWd->subEntityTraits().setThickness(3);
-	pWd->subEntityTraits().setColor(kYellow);
-	pWd->geometry().circle(point,0.2,normal);
+	pWd->subEntityTraits().setColor(kRed);
+
+
+	AcGePoint2dArray verticles; verticles.removeAll();  AcGeDoubleArray bulges; bulges.removeAll();
+	verticles.append(AcGePoint2d(point.x - 3*a,point.y+a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x - a,point.y+a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x - a,point.y+3*a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x +a,point.y+3*a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x +a,point.y+a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x + 3*a,point.y+a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x + 3*a,point.y-a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x + a,point.y-a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x +a,point.y-3*a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x - a,point.y-3*a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x - a,point.y-a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x - 3*a,point.y-a));  bulges.append(0.0);
+	verticles.append(AcGePoint2d(point.x - 3*a,point.y+a));  bulges.append(0.0);
+	   AcDbPolyline* pCoolGrips = new AcDbPolyline;
+	  
+	for (int i = 0; i < verticles.length(); i++)
+		pCoolGrips->addVertexAt(i,verticles.at(i));
+
+	pWd->subEntityTraits().setColor(10);
+	 AcDbPolyline* pPoly1 = new AcDbPolyline;
+	 pPoly1->addVertexAt(0,AcGePoint2d(point.x - 3*a,point.y),0.0,2*a,2*a);
+	 pPoly1->addVertexAt(0,AcGePoint2d(point.x + 3*a,point.y),0.0,2*a,2*a);
+	 pWd->geometry().pline(*pPoly1);
+
+	 AcDbPolyline* pPoly2 = new AcDbPolyline;
+	 pPoly2->addVertexAt(0,AcGePoint2d(point.x,point.y-3*a),0.0,2*a,2*a);
+	 pPoly2->addVertexAt(0,AcGePoint2d(point.x,point.y+3*a),0.0,2*a,2*a);
+	 pWd->geometry().pline(*pPoly2);
+
+	 pWd->subEntityTraits().setColor(7);
+	 pWd->geometry().pline(*pCoolGrips);
+	//pWd->geometry().circle(point,dGripSize,normal);
 	return true;
 }
 
