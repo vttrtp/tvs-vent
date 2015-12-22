@@ -242,7 +242,7 @@ private:
 	AcGeVector3d				   mNormal;
 	double						   mRadius;
 	static bool						mbHover;
-	static appDataTypeg			   msAppData; //Stores the AppData
+	static appDataType			   msAppData; //Stores the AppData
 	static AcDbObjectId			 mentId;
 
 	//Static method
