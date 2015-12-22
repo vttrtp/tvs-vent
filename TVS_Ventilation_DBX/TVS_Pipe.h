@@ -47,9 +47,11 @@
 //-----------------------------------------------------------------------------
 
 #include "TVS_Entity.h"
+#include "GripImp.h"
 //-----------------------------------------------------------------------------
 class DLLIMPEXP TVS_Pipe : public TVS_Entity {
-
+	enum 
+	{ GripCount=1};
 public:
 	ACRX_DECLARE_MEMBERS(TVS_Pipe) ;
 
@@ -117,6 +119,8 @@ public:
 	//- Grip points protocol
 	virtual Acad::ErrorStatus subGetGripPoints (AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds) const ;
 	virtual Acad::ErrorStatus subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset) ;
+	
+	bool WorldDrawfunc(AcDbGripData *pThis, AcGiWorldDraw *pWd, const AcDbObjectId& entId, AcDbGripOperations::DrawType type, AcGePoint3d *cursor, double dGripSize);
 	virtual Acad::ErrorStatus subGetGripPoints (
 		AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
 		const AcGeVector3d &curViewDir, const int bitflags) const ;
@@ -233,7 +237,16 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 
 
 
+private:
+	AcGePoint3d					   mCenter;
+	AcGeVector3d				   mNormal;
+	double						   mRadius;
+	static bool						mbHover;
+	static appDataType			   msAppData; //Stores the AppData
+	static AcDbObjectId			 mentId;
 
+	//Static method
+	static appDataType::iterator	putAppData();
 
 
 } ;

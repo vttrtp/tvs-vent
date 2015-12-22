@@ -25,6 +25,7 @@
 #include "StdAfx.h"
 #include "TVS_Pipe.h"
 #include "TVS_Ventilation_DBX_i.h"
+
 //-----------------------------------------------------------------------------
 Adesk::UInt32 TVS_Pipe::kCurrentVersionNumber =TVS_Version ;
 
@@ -38,6 +39,14 @@ TVSTVS_VENTILATION_DBXAPP
 |Company:          Your company name
 |WEB Address:      Your company WEB site address
 )
+
+
+
+appDataType TVS_Pipe::msAppData;
+bool		TVS_Pipe::mbHover;
+AcDbObjectId TVS_Pipe::mentId;
+
+
 
 //-----------------------------------------------------------------------------
 TVS_Pipe::TVS_Pipe () : TVS_Entity () {
@@ -533,10 +542,18 @@ Acad::ErrorStatus TVS_Pipe::subGetGripPoints (
 ) const {
 	assertReadEnabled () ;
 
-	gripPoints.append(FirstPoint);
-	gripPoints.append(LastPoint);
-	gripPoints.append((AcGePoint3d (FirstPoint.x+LastPoint.x, 
-		FirstPoint.y+LastPoint.y,FirstPoint.z+LastPoint.z))/2);
+// 	gripPoints.append(FirstPoint);
+// 	gripPoints.append(LastPoint);
+// 	gripPoints.append((AcGePoint3d (FirstPoint.x+LastPoint.x, 
+// 		FirstPoint.y+LastPoint.y,FirstPoint.z+LastPoint.z))/2);
+// 
+// 
+// 
+// 	
+
+
+	
+
 
 	//----- This method is never called unless you return eNotImplemented 
 	//----- from the new getGripPoints() method below (which is the default implementation)
@@ -548,30 +565,88 @@ Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (const AcDbIntArray &indices, co
 	assertWriteEnabled () ;
 	//----- This method is never called unless you return eNotImplemented 
 	//----- from the new moveGripPointsAt() method below (which is the default implementation)
-	for(int i=0; i<indices.length(); i++)
-	{
-		int idx = indices.at(i);
-		// For FP and center point
-
-		if (idx==0 || idx==2) FirstPoint += offset;
-		// For LP and center point
-		if (idx==1 || idx==2) LastPoint += offset;
-
-	}
+// 	for(int i=0; i<indices.length(); i++)
+// 	{
+// 		int idx = indices.at(i);
+// 		// For FP and center point
+// 
+// 		if (idx==0 || idx==2) FirstPoint += offset;
+// 		// For LP and center point
+// 		if (idx==1 || idx==2) LastPoint += offset;
+// 
+// 	}
 	return (Acad::eOk);
 	return (AcDbCurve::subMoveGripPointsAt (indices, offset)) ;
+}
+
+
+
+bool TVS_Pipe::WorldDrawfunc(AcDbGripData		 *pThis,
+						 AcGiWorldDraw					 *pWd,
+						 const AcDbObjectId&			 entId, 
+						 AcDbGripOperations::DrawType	 type, 
+						 AcGePoint3d					 *cursor,
+						 double						  dGripSize)
+{
+	static const Adesk::UInt16 kYellow =50;
+	AcGePoint3d			point = pThis->gripPoint();
+	AcGeVector3d		normal(0,0,1);
+
+	pWd->subEntityTraits().setFillType(kAcGiFillAlways);
+	pWd->subEntityTraits().setThickness(3);
+	pWd->subEntityTraits().setColor(kYellow);
+	pWd->geometry().circle(point,0.2,normal);
+	return true;
+}
+
+appDataType::iterator 
+	TVS_Pipe::putAppData()
+{
+	if(msAppData.empty())
+	{
+		msAppData.reserve(GripCount);
+		TSTDSTRING sAppData[GripCount]=
+		{
+			_T("Center")
+		};
+
+		for(int i=0;i<GripCount;i++)
+		{
+			msAppData.push_back(sAppData[i]);
+		}
+	}
+	return msAppData.begin();
+
 }
 
 Acad::ErrorStatus TVS_Pipe::subGetGripPoints (
 	AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
 	const AcGeVector3d &curViewDir, const int bitflags
 ) const {
-	assertReadEnabled () ;
+	//assertReadEnabled () ;
 
+	appDataType::iterator appIter = putAppData();
+
+	//appDataType appIter;
+	//All the GripData pointer are deallocated automatically
+	AcDbGripData *pCenterCoordGrip = new AcDbGripData();
+	pCenterCoordGrip->setGripPoint((AcGePoint3d (FirstPoint.x+LastPoint.x, 
+		FirstPoint.y+LastPoint.y,FirstPoint.z+LastPoint.z)));
+	pCenterCoordGrip->setAppData((void*)&(*appIter));
+ 	pCenterCoordGrip->setToolTipFunc(GripCback::GripToolTipFunc);
+  	pCenterCoordGrip->setHotGripFunc(GripCback::hotGripfunc);
+  	pCenterCoordGrip->setHoverFunc(GripCback::hoverGripfunc);
+  	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
+ 	pCenterCoordGrip->setWorldDraw(GripCback::WorldDrawfunc);
+ 	pCenterCoordGrip->setRtClk(GripCback::Rtclkfunc);
+  	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
+	grips.append(pCenterCoordGrip);	
+
+	return Acad::eOk;
 	//----- If you return eNotImplemented here, that will force AutoCAD to call
 	//----- the older getGripPoints() implementation. The call below may return
 	//----- eNotImplemented depending of your base class.
-	return (AcDbCurve::subGetGripPoints (grips, curViewUnitSize, gripSize, curViewDir, bitflags)) ;
+	//return (AcDbCurve::subGetGripPoints (grips, curViewUnitSize, gripSize, curViewDir, bitflags)) ;
 }
 
 Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (

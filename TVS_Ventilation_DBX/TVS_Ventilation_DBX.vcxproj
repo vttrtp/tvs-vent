@@ -88,6 +88,7 @@
     <ClCompile Include="ComTrans.cpp" />
     <ClCompile Include="ComWye.cpp" />
     <ClCompile Include="Com_TAP.cpp" />
+    <ClCompile Include="GripImp.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -107,6 +108,7 @@
     <ClInclude Include="ComTrans.h" />
     <ClInclude Include="ComWye.h" />
     <ClInclude Include="Com_TAP.h" />
+    <ClInclude Include="GripImp.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="TVS_ComEntity.h" />
