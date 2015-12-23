@@ -588,7 +588,7 @@ bool TVS_Pipe::WorldDrawfunc(AcDbGripData		 *pThis,
 						 AcGePoint3d					 *cursor,
 						 double						  dGripSize)
 {
-	static const Adesk::UInt16 kYellow =50;
+	static const Adesk::UInt16 kYellow =7;
 	AcGePoint3d			point = pThis->gripPoint();
 	AcGeVector3d		normal(0,0,1);
 
