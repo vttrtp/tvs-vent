@@ -84,7 +84,10 @@ getCurrentEntity(AcDbEntity *&pEntity);
 //========================================================================
 namespace GripCback
 {
-
+	static int gripNumber;
+	static AcDbObjectId * entId;
+	static bool GetParamsForDraw(AcDbObjectId * pEntId, int &pGripNumber);
+	bool SetParamsForDraw(AcDbObjectId * pEntId, int &pGripNumber);
 	AcDbGripOperations::ReturnValue
 	hotGripfunc(					AcDbGripData			*pthis,
 									const AcDbObjectId&		entId,

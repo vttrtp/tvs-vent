@@ -69,23 +69,50 @@ if ( isOperationActive() )
 static void MyGroupTesta(void)
 {
 	ads_point pt1 = {75.0, 22.9, 0.0}, pt2 = {202.5, 87.1, 0.0};
-acDocManager->sendStringToExecute(acDocManager->document(acdbHostApplicationServices()->workingDatabase()), _T("TVS_Pipe\n"), TRUE, FALSE, FALSE);
-	AcApDocument* pDoc = acDocManager->curDocument();
-	Acad::ErrorStatus es = acDocManager->lockDocument(pDoc); 
-	if(es == Acad::eOk) { if (acedCommandS(RTSTR,_T("_LINE"),
-		RTSTR, _T("0,0,0"),
-		RTSTR,_T("10,10,0"),
-		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nŒ¯Ë·Í‡"));}
-	int t=acedCommandS(RTSTR,_T("_LINE"),
-		RTSTR, _T("0,0,0"),
-		RTSTR,_T("10,10,0"),
-		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE);
-	if (acedCommandS(RTSTR,_T("_LINE"),
-		RTSTR, _T("0,0,0"),
-		RTSTR,_T("10,10,0"),
-		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nŒ¯Ë·Í‡"));
+
+
+
+
+
+acDocManager->sendStringToExecute(acDocManager->document(acdbHostApplicationServices()->workingDatabase()),
+								  _T("TVS_Draw\n"), TRUE, FALSE, FALSE);
+
+
+// 	AcApDocument* pDoc = acDocManager->curDocument();
+// 	Acad::ErrorStatus es = acDocManager->lockDocument(pDoc); 
+// 	if(es == Acad::eOk) { if (acedCommandS(RTSTR,_T("_LINE"),
+// 		RTSTR, _T("0,0,0"),
+// 		RTSTR,_T("10,10,0"),
+// 		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nŒ¯Ë·Í‡"));}
+// 	int t=acedCommandS(RTSTR,_T("_LINE"),
+// 		RTSTR, _T("0,0,0"),
+// 		RTSTR,_T("10,10,0"),
+// 		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE);
+// 	if (acedCommandS(RTSTR,_T("_LINE"),
+// 		RTSTR, _T("0,0,0"),
+// 		RTSTR,_T("10,10,0"),
+// 		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nŒ¯Ë·Í‡"));
 	//acutPrintf(ACRX_T("\nAfter acedCommandC call. acedCommandC is asynchronous..."));
 }
+
+
+
+bool GripCback::GetParamsForDraw(AcDbObjectId * pEntId, int &pGripNumber)
+{
+	pEntId=entId;
+	pGripNumber=gripNumber;
+	return true;
+}
+
+
+
+bool GripCback::SetParamsForDraw(AcDbObjectId * pEntId, int &pGripNumber)
+{
+	entId=pEntId;
+	gripNumber=pGripNumber;
+	return true;
+}
+
 //Hot grip Call back function Implementation
 AcDbGripOperations::ReturnValue
 GripCback::hotGripfunc(AcDbGripData			*pthis,
@@ -93,7 +120,7 @@ GripCback::hotGripfunc(AcDbGripData			*pthis,
 						int					 contextFlags)
 {
 	AcDbGripOperations::ReturnValue gripStat(AcDbGripOperations::eOk);
-
+	SetParamsForDraw(entId,(int) *pthis);
 	TSTDSTRING *psApppData = static_cast<TSTDSTRING *>(pthis->appData());
 		acutPrintf(_T("\nTVS_Pipe"));
 		MyGroupTesta();

@@ -622,21 +622,37 @@ Acad::ErrorStatus TVS_Pipe::subGetGripPoints (
 
 	double k=1+10*curViewUnitSize / Length;
 
-	AcDbGripData *pCenterCoordGrip = new AcDbGripData();
-	
-	pCenterCoordGrip->setGripPoint((AcGePoint3d ((1-k)*FirstPoint.x+k*LastPoint.x, 
-		(1-k)*FirstPoint.y+k*LastPoint.y,(1-k)*FirstPoint.z+k*LastPoint.z)));
-	pCenterCoordGrip->setAppData((void*)101);
+
 
  //	pCenterCoordGrip->setToolTipFunc(GripCback::GripToolTipFunc);
-  	pCenterCoordGrip->setHotGripFunc(GripCback::hotGripfunc);
+	
+  	//pCenterCoordGrip->setHotGripFunc(GripCback::hotGripfunc);
+
  // 	pCenterCoordGrip->setHoverFunc(GripCback::hoverGripfunc);
  // 	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
- 	pCenterCoordGrip->setWorldDraw(GripCback::WorldDrawfunc);
+ 	//pCenterCoordGrip->setWorldDraw(GripCback::WorldDrawfunc);
  //	pCenterCoordGrip->setRtClk(GripCback::Rtclkfunc);
   //	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
-	
-	grips.append(pCenterCoordGrip);	
+
+
+	AcDbGripData *pFirstGrip = new AcDbGripData();
+
+	pFirstGrip->setGripPoint((AcGePoint3d ((1-k)*FirstPoint.x+k*LastPoint.x, 
+		(1-k)*FirstPoint.y+k*LastPoint.y,(1-k)*FirstPoint.z+k*LastPoint.z)));
+	pFirstGrip->setAppData((void*)101);
+	pFirstGrip->setHotGripFunc(GripCback::hotGripfunc);
+	pFirstGrip->setWorldDraw(GripCback::WorldDrawfunc);
+	grips.append(pFirstGrip);	
+
+	AcDbGripData *pLastGrip = new AcDbGripData();
+
+	pLastGrip->setGripPoint((AcGePoint3d ((1-k)*LastPoint.x+k*FirstPoint.x, 
+		(1-k)*LastPoint.y+k*FirstPoint.y,(1-k)*LastPoint.z+k*FirstPoint.z)));
+	pLastGrip->setAppData((void*)102);
+	pLastGrip->setHotGripFunc(GripCback::hotGripfunc);
+	pLastGrip->setWorldDraw(GripCback::WorldDrawfunc);
+	grips.append(pLastGrip);	
+
 
 	pFirst->setGripPoint(FirstPoint);
 	pFirst->setAppData((void*)appIter);
