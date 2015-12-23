@@ -71,6 +71,9 @@ typedef std::map<AcDbGripOperations::GripStatus,const TCHAR*>::value_type GripSt
 typedef  std::vector<TSTDSTRING>  appDataType;
 
 
+static bool isOperationActive();
+static int myCallbackFn(void * pData);
+static void MyGroupTesta(void);
 Acad::ErrorStatus 
 getCurrentEntity(AcDbEntity *&pEntity);
 

@@ -47,11 +47,12 @@
 //-----------------------------------------------------------------------------
 
 #include "TVS_Entity.h"
+
 #include "GripImp.h"
 //-----------------------------------------------------------------------------
 class DLLIMPEXP TVS_Pipe : public TVS_Entity {
 	enum 
-	{ GripCount=1};
+	{ GripCount=4};
 public:
 	ACRX_DECLARE_MEMBERS(TVS_Pipe) ;
 
@@ -246,7 +247,7 @@ private:
 	static AcDbObjectId			 mentId;
 
 	//Static method
-	static appDataType::iterator	putAppData();
+	//static appDataType::iterator	putAppData();
 
 
 } ;

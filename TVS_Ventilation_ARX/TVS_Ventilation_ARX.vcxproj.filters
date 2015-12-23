@@ -48,6 +48,9 @@
     <ClCompile Include="hangeZdg.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="GripPoints.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -81,6 +84,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="hangeZdg.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="GripPoints.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

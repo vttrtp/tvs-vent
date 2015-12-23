@@ -45,6 +45,8 @@
 #endif
 
 //-----------------------------------------------------------------------------
+#include <acedads.h>
+#include <acedCmdNF.h>
 #include "dbcurve.h"
 #define TVS_Version 22
 #define M_PI 3.14159265358979323846
