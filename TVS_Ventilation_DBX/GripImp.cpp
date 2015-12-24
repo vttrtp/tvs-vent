@@ -69,6 +69,7 @@ if ( isOperationActive() )
 static void MyGroupTesta(void)
 {
 	ads_point pt1 = {75.0, 22.9, 0.0}, pt2 = {202.5, 87.1, 0.0};
+	
 acDocManager->sendStringToExecute(acDocManager->document(acdbHostApplicationServices()->workingDatabase()), _T("TVS_Pipe\n"), TRUE, FALSE, FALSE);
 	AcApDocument* pDoc = acDocManager->curDocument();
 	Acad::ErrorStatus es = acDocManager->lockDocument(pDoc); 

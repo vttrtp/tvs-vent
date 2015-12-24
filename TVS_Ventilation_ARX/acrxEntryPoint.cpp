@@ -1358,7 +1358,7 @@ pPipe2->close();
 		TVS_Pipe* GPipe=pPipe1;
 		TVS_Pipe* SPipe=pPipe2;
 
-
+		
 		pTrans=pTrans->add_new(GPipe->SizeA,
 			GPipe->SizeB,
 			SPipe->SizeA,
@@ -5748,11 +5748,7 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 
 static void Ventilation_ARXTVS_SPEC(void)
 {
-	if (acedCommandS(RTSTR,_T("_LINE"),
-		RTSTR, _T("0,0,0"),
-		RTSTR,_T("10,10,0"),
-		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nÎרטבךא"));
-
+	
 	TVS_Entity * Ent;
 	AcDbEntity *pEnt = NULL;
 		ads_name sset, eName;
