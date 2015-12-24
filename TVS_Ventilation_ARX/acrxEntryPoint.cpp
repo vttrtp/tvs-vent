@@ -1879,6 +1879,35 @@ static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
 		acutPrintf(_T("\n Обьект блокирован: невозможно копировать свойства"));
 	}
 }
+ static void InstallGlobalProperty( TVS_Entity *pEnt )
+{
+	TVS_Pipe * Pipi;
+	TVS_TAP * Tapie;
+	TVS_WYE* Wyeie;
+	TVS_TRANS * Transie;
+	AcDbObjectId	id=pEnt->id();
+	ads_name eName;
+
+
+	acdbGetAdsName(eName,id);
+	acdbGetObjectId(id,eName);
+	AcDbEntity* pnt;
+
+
+	acdbOpenAcDbEntity(pnt,id,AcDb::kForRead);
+
+
+
+
+	globSizeA=pEnt->get_SizeA();
+	globSizeB=pEnt->get_SizeB();
+	globalWipeout=pEnt->get_Wipeout();
+	globalGrani=pEnt->get_Grani();
+	global1D=pEnt->get_This1D();
+	globalFlow=pEnt->get_Flow();
+	globalElevMid=pEnt->get_Elevation();
+	pEnt->close();
+ }
 static void SetGlobalProperty( TVS_Entity *pEnt )
 {
 
@@ -2475,6 +2504,246 @@ static void Ventilation_ARXTVS_SETTINGS(void)
 changesize();
 }
 
+static void Ventilation_ARXTVS_DRAW(void)
+{
+	int index;
+	AcDbObjectId id;
+	TVS_Pipe::GetParamsForDraw(id,index);
+	
+
+		ads_point pt1,pt2;
+		AcDbEntity *pEnt;
+		TVS_Pipe *pipi;
+		
+
+		AcGePoint3d p1, p2;
+
+	if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+	{
+
+		if ( (pipi = TVS_Pipe::cast(pEnt)) != NULL )
+		{
+			InstallGlobalProperty(pipi);
+			
+				pt1[0]=pipi->get_FirstPoint().x;
+				pt1[1]=pipi->get_FirstPoint().y;
+				pt1[2]=pipi->get_FirstPoint().z;
+				pt2[0]=pipi->get_Lastpoint().x;
+				pt2[1]=pipi->get_Lastpoint().y;
+				pt2[2]=pipi->get_Lastpoint().z;
+			
+			if(drawStep3(pt1,pt2,pipi)==false);
+		}
+		pEnt->close();
+	}
+
+		//TVS_Pipe pipie;
+
+
+		//pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
+		
+		//if(drawStep1(pt1,pt2,pipi)==false)return;
+		//if(drawStep2(pt1,pt2,pipi)==false)return;
+		
+}
+static bool drawStep1(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
+{
+
+	int reg;
+	int Astat;
+	int Astat2=false;
+	ACHAR  resultss [512];
+	ACHAR  resultnil [512];
+
+
+	while (Astat2==false)
+	{
+		Astat2=true;
+		acedInitGet(RSG_NONULL, _T("Размер Р h"));
+		Astat=acedGetPoint(NULL,_T("\nУкажите первую точку или [Размер]:"),pt1) ;
+		switch (Astat)
+		{
+		case RTCAN:
+			return false;
+			break;
+		case RTKWORD:
+			acedGetInput(resultss);
+			break;
+		}
+
+		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
+		{
+			reg=dSIZE;
+			changesize();
+			Astat2=false;
+			acdbRToS(0,2,2,resultss);
+		}
+
+	}
+	return true;
+}
+
+
+static bool drawStep2(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
+{
+
+
+	int reg;
+	int Astat;
+	int Astat2=false;
+	ACHAR  resultss [512];
+	ACHAR  resultnil [512];
+	AcDbEntity * pEnt;
+	while (Astat2==false)
+	{
+		Astat2=true;
+		acedInitGet(RSG_NONULL, _T("Размер Р "));
+		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер]:"),pt2) ;
+		switch (Astat)
+		{
+		case RTCAN:
+			return false;
+			break;
+		case RTKWORD:
+			acedGetInput(resultss);
+			break;
+		}
+
+		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
+		{
+			reg=dSIZE;
+			changesize();
+			Astat2=false;
+			acdbRToS(0,2,2,resultss);
+		}
+
+
+
+	}
+
+
+
+
+	AcGePoint3d A1=asPnt3d(pt1);
+	AcGePoint3d A2=asPnt3d(pt2);
+	
+	TVS_Pipe pipie;
+
+
+	pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
+
+	if (acdbOpenAcDbEntity(pEnt,pipi->id(),AcDb::kForWrite)==eOk)
+	{		
+		pipi->close();
+	}
+	else
+	{
+		acutPrintf(_T("\nСлой блокирован"));
+		return false;
+	}
+
+
+
+	
+	return true;
+}
+
+static bool drawStep3(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
+{
+
+	int reg;
+	int Astat;
+	int Astat2=false;
+	ACHAR  resultss [512];
+	ACHAR  resultnil [512];
+	AcDbEntity * pEnt;
+	
+	AcGePoint3d A1=asPnt3d(pt1);
+	AcGePoint3d A2=asPnt3d(pt2);
+	AcGePoint3d A3;
+	AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
+	pt1[0]=A2.x;
+	pt1[1]=A2.y;
+	pt1[2]=A2.z;
+	double oldsizeA, oldsizeB, oldRound;
+	for (; ;)
+	{
+
+
+		acedInitGet(RSG_NONULL, _T("Размер Р h соедОтвод о j соедТройник n т Z z я вВерх d в вНиз н y"));
+		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер/соедОтвод/соедТройник/Z/вВерх/вНиз]:"),pt2) ;
+		switch (Astat)
+		{
+		case RTCAN:
+			return false;
+			break;
+		case RTKWORD:
+			acedGetInput(resultss);
+			break;
+		case RTNORM:
+			A3=asPnt3d(pt2);
+			nextpipe(A1,A2,A3,pipi,pt1);
+
+		}
+
+
+		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
+		{
+			reg=dSIZE;
+			oldsizeA=globSizeA;
+			oldsizeB=globSizeB;
+			oldRound=globRound;
+			if (changesize()==true)
+			{
+				addtrans(oldsizeA,oldsizeB,globSizeA,globSizeB,A1,A2,A3,pipi,pt1);
+			}
+			Astat2=false;
+			acdbRToS(0,2,2,resultss);
+		}
+		if ((wcscmp(resultss,_T("соедОтвод"))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("о"))==0))
+		{
+			reg=dCONNECTT;
+			connect2(pipi,reg);
+			return false;
+		}
+
+
+		if ((wcscmp(resultss,_T("соедТройник"))==0)||(wcscmp(resultss,_T("т"))==0)||(wcscmp(resultss,_T("n"))==0))
+		{
+			reg=dCONNECTW;
+			connect2(pipi,reg);
+			return false;
+		}
+
+		if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("z"))==0)||(wcscmp(resultss,_T("я"))==0))
+		{
+			reg=dZ;
+			changeZ(pipi);
+			A1=A2;
+			A2=pipi->LastPoint;
+			pt1[0]=A2.x;
+			pt1[1]=A2.y;
+			pt1[2]=A2.z;
+			acdbRToS(0,2,2,resultss);
+		}
+
+		if ((wcscmp(resultss,_T("вВерх"))==0)||(wcscmp(resultss,_T("в"))==0)||(wcscmp(resultss,_T("d"))==0))
+		{
+			reg=dUP;
+			UpDown(pipi,Form_Up);
+			return false;
+		}
+
+		if ((wcscmp(resultss,_T("вНиз"))==0)||(wcscmp(resultss,_T("н"))==0)||(wcscmp(resultss,_T("y"))==0))
+		{
+			reg=dDOWN;
+			UpDown(pipi,Form_Down);
+			return false;
+		}
+
+	}
+
+}
 // ----- Ventilation_ARX.TVS_PIPE command
 static void Ventilation_ARXTVS_PIPE(void)
 {
@@ -5372,7 +5641,6 @@ static void Ventilation_ARXTVSSomeParts(void)
 	
 }
 
-
 static void Ventilation_ARXTVS_LEAD(void)
 {
 
@@ -5805,6 +6073,7 @@ static void Ventilation_ARXTVS_SPEC(void)
 //-----------------------------------------------------------------------------
 IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_PIPE, TVS_PIPE, ACRX_CMD_TRANSPARENT, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DRAW, TVS_DRAW, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_TRANS, TVS_TRANS, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_WYE, TVS_WYE, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECTT, TVS_CONNECTT, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)

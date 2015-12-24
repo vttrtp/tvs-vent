@@ -48,7 +48,7 @@
 
 #include "TVS_Entity.h"
 
-#include "GripImp.h"
+
 //-----------------------------------------------------------------------------
 class DLLIMPEXP TVS_Pipe : public TVS_Entity {
 	enum 
@@ -63,6 +63,21 @@ public:
 	TVS_Pipe () ;
 	virtual ~TVS_Pipe () ;
 
+
+
+	static int gripNumber;
+
+	static AcDbObjectId entId;
+
+	static void GetParamsForDraw(AcDbObjectId &pEntId, int &pGripNumber);
+	static void SetParamsForDraw(AcDbObjectId pEntId, int pGripNumber);
+// 	{
+// // 
+// //  //		pEntId=entId;
+// 		pGripNumber=TVS_Pipe::gripNumber;
+// // 
+// // 
+//  	};
 	//----- AcDbObject protocols
 	//- Dwg Filing protocol
 	virtual Acad::ErrorStatus dwgOutFields (AcDbDwgFiler *pFiler) const ;
@@ -119,6 +134,7 @@ public:
 
 	//- Grip points protocol
 	virtual Acad::ErrorStatus subGetGripPoints (AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds) const ;
+	
 	virtual Acad::ErrorStatus subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset) ;
 	
 	bool WorldDrawfunc(AcDbGripData *pThis, AcGiWorldDraw *pWd, const AcDbObjectId& entId, AcDbGripOperations::DrawType type, AcGePoint3d *cursor, double dGripSize);

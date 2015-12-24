@@ -55,6 +55,7 @@
 #include "dbmain.h"
 #include "rxmfcapi.h"
 #include <vector>
+#include "GripImp.h"
 using namespace std;
 
 
