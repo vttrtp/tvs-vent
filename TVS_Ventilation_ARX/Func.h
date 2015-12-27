@@ -29,7 +29,36 @@
 #define TVSEnt1isGrose 0
 #define TVSEnt2isGrose 1
 #define TVSEntitiesisSame 2
+
+
+
 namespace func {
+
+
+	template <typename T>
+	class FormParameter 
+
+	{
+			public:
+FormParameter<T>();
+
+		T parameter;
+		int quantity;
+		bool isSame;
+		CString stringValue;
+void		addParameter(const T &pVal);
+bool	isCompare	(const T &pVal);
+	T getParameter ();
+
+	};
+
+
+
+
+
+
+
+
 
 
 	void consoleprint(double It=0,const ACHAR*format=_T("") );
@@ -126,6 +155,8 @@ static double globalLengthW=50;
 static double globalElevMid=0;
 static double globalElev=globalElevdown;
 static double globalAxis=90;
+
+static double globalWipeoutLength=50;
 
 void TVS_CS (AcDbEntity *pEnt);
 void TVS_PEdit (AcDbEntity *pEnt);

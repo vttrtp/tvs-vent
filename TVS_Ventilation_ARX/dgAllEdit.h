@@ -59,6 +59,7 @@
 #define IDC_LengthWye 1016
 #define IDC_TransLength 1023
 #define IDC_Wipeout 1020
+#define IDC_WipeoutLength 10020
 #define IDC_Grani 1021
 #define IDC_1D 1022
 #define IDC_ElevVal 1014
@@ -108,7 +109,7 @@ public:
 	CEdit fTapRadiusConst;
 	CEdit fSwectangle;
 
-	CButton fWipeout;;
+	CButton fWipeout;
 	CButton fGrani;
 	CButton fD1;
 	CButton fElevUp;
@@ -183,6 +184,12 @@ CButton fTapDown;
 	BOOL bGrani;
 	BOOL bD1;
 
+
+	///wipeoutlength
+	CEdit fWipeoutLength;
+	CString WipeoutLength;
+	BOOL bWipeoutLength;
+	//////////////////////////////////////////////////////////////////////////
 
 	bool Tpipe;
 	bool Twye;

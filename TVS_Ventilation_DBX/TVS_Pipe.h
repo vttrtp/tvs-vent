@@ -209,11 +209,7 @@ public:
 	AcGePoint2d BW;
 	AcGePoint2d CW;
 	AcGePoint2d DW;
-	AcDbLine *Line1;
-	AcDbLine *Line2;
-	AcDbLine *cLine;
-	AcDbPolyline *gPline;
-	AcDbPolyline *wPline;
+
 
 	
 	void Gimme4PipePoints ();

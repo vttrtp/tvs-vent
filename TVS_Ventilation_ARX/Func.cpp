@@ -1093,7 +1093,12 @@ void func::Change (ads_name &sset)
 
 
 
+bool vWipeoutLength=false;
+bool fWipeoutLength=true;
+double WipeoutLength=0;
+CString  sWipeoutLength;
 
+TVS_Entity* tvsEnt;
 
 
 acedSSLength(sset, &len);
@@ -1115,7 +1120,16 @@ acedSSLength(sset, &len);
 				{
 
 
+					if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+					{	
 
+						
+
+						rprov(vWipeoutLength,fWipeoutLength,tvsEnt->WipeoutLength,WipeoutLength);
+					
+
+
+					}
 
 					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
 					{	
@@ -1200,7 +1214,7 @@ acedSSLength(sset, &len);
 
 
 
-
+	dgAllEdit dg;
 
 
 
@@ -1235,7 +1249,7 @@ acedSSLength(sset, &len);
 
 
 
-	dgAllEdit dg;
+	
 	dg.SizeA=sSizeA;
 	dg.SizeB=sSizeB;
 	dg.SizeA2=sSizeA2;
@@ -1261,6 +1275,9 @@ acedSSLength(sset, &len);
 	dg.TapRadiusConst=sTapRadiusConst;
 	dg.Swectangle=sSwectangle;
 
+
+	strfil(WipeoutLength,vWipeoutLength,sWipeoutLength);
+	dg.WipeoutLength=sWipeoutLength;
 
 	if (firstPipe==false
 		&&firstTap==false
@@ -1320,6 +1337,10 @@ acedSSLength(sset, &len);
 	sequal(TapRadiusConst,sTapRadiusConst,dg.TapRadiusConst,cTapRadiusConst);
 	sequal(Swectangle,sSwectangle,dg.Swectangle,cSwectangle);
 
+
+	bool cWipeoutLength=true;
+	sequal(WipeoutLength,sWipeoutLength,dg.WipeoutLength,cWipeoutLength);
+
 	///определение выравнивания
 	int Emode=0;//по центру
 	if (dg.ElevUp==1)//по верху
@@ -1353,7 +1374,16 @@ acedSSLength(sset, &len);
 
 
 
+					if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+					{	
 
+
+
+						if (cWipeoutLength==false) tvsEnt->put_WipeoutLength(WipeoutLength);
+
+
+
+					}
 
 
 					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
@@ -1573,9 +1603,23 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
+	bool vWipeoutLength=false;
+	bool fWipeoutLength=true;
+	double WipeoutLength=0;
+	CString  sWipeoutLength;
+
+	TVS_Entity* tvsEnt;
+
+	if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+	{	
 
 
 
+		rprov(vWipeoutLength,fWipeoutLength,tvsEnt->WipeoutLength,WipeoutLength);
+
+
+
+	}
 
 
 
@@ -1660,7 +1704,7 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
-
+	dgAllEdit dg;
 
 
 	strfil(SizeA,vSizeA,sSizeA);
@@ -1694,7 +1738,7 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
-	dgAllEdit dg;
+	
 	dg.SizeA=sSizeA;
 	dg.SizeB=sSizeB;
 	dg.SizeA2=sSizeA2;
@@ -1720,6 +1764,8 @@ void func::Change (AcDbEntity *pEnt)
 	dg.TapRadiusConst=sTapRadiusConst;
 	dg.Swectangle=sSwectangle;
 
+	strfil(WipeoutLength,vWipeoutLength,sWipeoutLength);
+	dg.WipeoutLength=sWipeoutLength;
 
 	if (firstPipe==false
 		&&firstTap==false
@@ -1793,12 +1839,26 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
+	bool cWipeoutLength=true;
+	sequal(WipeoutLength,sWipeoutLength,dg.WipeoutLength,cWipeoutLength);
+
+
+
 	if(pEnt->upgradeOpen()==Acad::eOk)
 	{
 
 
 
+		if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+		{	
 
+
+
+			if (cWipeoutLength==false) tvsEnt->put_WipeoutLength(WipeoutLength);
+
+
+
+		}
 
 
 

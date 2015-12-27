@@ -194,6 +194,16 @@ Acad::ErrorStatus TVS_Entity::subGetOsnapPoints (
 	AcDbIntArray &geomIds) const
 {
 	assertReadEnabled () ;
+
+	Acad::ErrorStatus er;
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+	
+		er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+			lastPoint,viewXform,snapPoints,geomIds);
+		if (er!=Acad::eOk)
+			return er;
+	}
 	return (AcDbCurve::subGetOsnapPoints (osnapMode, gsSelectionMark, pickPoint, lastPoint, viewXform, snapPoints, geomIds)) ;
 }
 
@@ -738,7 +748,7 @@ void TVS_Entity::setMainProperty(AcDbEntity *pEnt)
 	ListOfEntity.append(pEnt);
 }
 
-void TVS_Entity::setAxisProperty(AcDbEntity *pEnt)
+void TVS_Entity::setCenterProperty(AcDbEntity *pEnt)
 {
 	AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
 	AcDbLinetypeTable *pLtTable;
@@ -770,38 +780,54 @@ void TVS_Entity::setHideProperty(AcDbEntity *pEnt)
 	ListOfEntity.append(pEnt);
 }
 
+double TVS_Entity::get_WipeoutLength(void) const
+{
+	assertReadEnabled () ;
+	return WipeoutLength;
+}
+
+Acad::ErrorStatus TVS_Entity::put_WipeoutLength(double newVal)
+{
+	assertWriteEnabled () ;
+	WipeoutLength=newVal;
+	return Acad::eOk;
+}
+
 void TVS_Entity::setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt)
 {
 
 	//////
+
+
 	AcColorSettings pAcadColors;   
 	acedGetCurrentColors(&pAcadColors);   
-	UINT32 backcolorDW= pAcadColors.dwGfxModelBkColor;   
-
-
-
+  
+	
 
 	///////
 
-	AcCmColor backcolor;
-
+	AcCmEntityColor backcolor;
+	COLORREF rgbColor;
+	
 	if(!mode->context()->isPlotGeneration()){ 
 
-		backcolor.setColorMethod(AcCmEntityColor::kByColor);
-		backcolor.setRGB( GetRValue(backcolorDW),(backcolorDW & 0x00FF0000) >> 16,GetBValue(backcolorDW) ); 
+		rgbColor = (COLORREF)pAcadColors.dwGfxModelBkColor; 
 
 	}else{ 
 
-		backcolor.setColorMethod(AcCmEntityColor::kByColor);   
-		backcolor.setRGB( GetRValue(backcolorDW),(backcolorDW & 0x00FF0000) >> 16,GetBValue(backcolorDW) ); 
+		    rgbColor = (COLORREF)pAcadColors.dwGfxLayoutBkColor; 
 	} 
-
+	backcolor.setTrueColor();
+	backcolor.setRed( (UInt8)GetRValue(rgbColor));
+	backcolor.setGreen (rgbColor & 0x00FF0000 >> 16) ;
+		backcolor.setBlue ((UInt8)GetBValue(rgbColor));
 	
-	
-	pEnt->setColor(backcolor);
+	AcCmColor bgcolor;
+	bgcolor.setColor(backcolor.color());
+	pEnt->setColor(bgcolor);
 	if (This1D==false) pEnt->setConstantWidth(SizeA+WipeoutLength*2);
 	else pEnt->setConstantWidth(WipeoutLength*2);
-	ListOfEntity.append(pEnt);
+	ListOfWipeout.append(pEnt);
 }
 
 

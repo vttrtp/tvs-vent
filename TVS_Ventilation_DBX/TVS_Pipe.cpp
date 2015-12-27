@@ -99,6 +99,7 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (ElevDown) ;
 	pFiler->writeItem (IsPipe) ;
 	pFiler->writeItem (Form) ;
+	pFiler->writeItem (WipeoutLength) ;
 	//pFiler->writeString (Tag1) ;
 	//pFiler->writeString (Tag2) ;
 	return (pFiler->filerStatus ()) ;
@@ -138,10 +139,12 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 4 /*&& version <= endVersion*/ ) pFiler->readItem (&ElevDown) ;
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
+	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 	//acutDelString(Tag1);
 	//acutDelString(Tag2);
 	//if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readString(&Tag1) ;
 	//if ( version >= 6 /*&& version <= endVersion*/ ) pFiler->readString(&Tag2) ;
+	
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -241,6 +244,8 @@ Acad::ErrorStatus TVS_Pipe::subGetClassID (CLSID *pClsid) const {
 //----- AcDbEntity protocols
 Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 	assertReadEnabled () ;
+	ListOfEntity.removeAll();
+	ListOfWipeout.removeAll();
 	Length=(sqrt((FirstPoint.x-LastPoint.x)*(FirstPoint.x-LastPoint.x)+
 		(FirstPoint.y-LastPoint.y)*
 		(FirstPoint.y-LastPoint.y)));
@@ -250,71 +255,22 @@ Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 	if (Wipeout==true)
 	{
 
-	 
-		AcCmColor backcolor;
-	get_WipeoutColor(mode,backcolor);
-
-		
-
 		AcGePoint2d p[2];
 		p[0]=AcGePoint2d(FirstPoint.x,FirstPoint.y);
 		p[1]=AcGePoint2d(LastPoint.x,LastPoint.y);
 
 
-		wPline=new AcDbPolyline(2);
+		AcDbPolyline*wPline=new AcDbPolyline(2);
 
 		wPline->addVertexAt(0,p[0]);
 		wPline->addVertexAt(1,p[1]);
-		wPline->setColor(backcolor);
-		if (This1D==false) wPline->setConstantWidth(SizeA+200);
-		else wPline->setConstantWidth(200);
 
-
-		mode->geometry().draw(wPline);	
-		delete wPline;
-		AcCmEntityColor col;
-		col=color().entityColor();
-		mode->subEntityTraits().setTrueColor(col);
+setWipeoutProperty(mode,wPline);
 
 	}
 
 	if (This1D==false)
 	{
-
-
-		//if (ShowText==true)
-		//{
-		//
-		//	ACHAR buffer[25], buffer1[25], buffer2[25] ;
-		//	if (ThisRound==true)
-		//	{
-		//	
-		//	wcscpy_s(tSise,_T("%%C"));
-		//acdbRToS(SizeA,2,2,buffer);
-		//wcscat_s(tSise,buffer);
-		//}
-		//	else
-		//	{
-		//		acdbRToS(SizeA,2,2,tSise);
-		//		wcscat_s(tSise,_T("x"));
-		//		acdbRToS(SizeB,2,2,buffer);
-		//		wcscat_s(tSise,buffer);
-		//	}
-		//
-		//
-		//
-		//
-		//	AcDbDatabase *db=acdbHostApplicationServices()->workingDatabase();
-		//
-		//	AcDbObjectId tId=db->textstyle();
-		//	///
-		//	AcDbText *text1 = new AcDbText (FirstPoint, tSise,tId,SizeA/2,0 );
-		//
-		//	
-		//	//
-		//	text1->worldDraw(mode);
-		//}
-
 
 		Gimme4PipePoints();
 
@@ -326,48 +282,24 @@ Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 			garray[2]=AcGePoint2d(C.x,C.y);
 			garray[3]=AcGePoint2d(D.x,D.y);
 
-			gPline=new AcDbPolyline(4);
+		AcDbPolyline*gPline=new AcDbPolyline(4);
 			for (int i=0;i<4; i++)
 			{
 				gPline->addVertexAt(i,garray[i]);
 			}
-
-			gPline->setLineWeight(this->lineWeight());
-			gPline->setLinetypeScale(this->linetypeScale());
-			gPline->setLayer(this->layerId());
-			gPline->setColor(this->color());
 			gPline->setClosed(true);
-			gPline->setLinetype(this->linetypeId());
-
-
-			mode->geometry().draw(gPline);
-
-
-			delete gPline;
+			setMainProperty(gPline);
+		
 		}
 		else
 
 
 		{
-			Line1 = new AcDbLine(A,B);
-			Line2 = new AcDbLine(D,C);
-			Line1->setLineWeight(this->lineWeight());
-			Line1->setLinetypeScale(this->linetypeScale());
-			Line1->setLayer(this->layerId());
-			Line1->setColor(this->color());
-			Line1->setLinetype(this->linetypeId());
-
-			Line2->setLineWeight(this->lineWeight());
-			Line2->setLinetypeScale(this->linetypeScale());
-			Line2->setLayer(this->layerId());
-			Line2->setColor(this->color());
-			Line2->setLinetype(this->linetypeId());
-
-
-			mode->geometry().draw(Line1);
-			mode->geometry().draw(Line2);
-			delete Line1;
-			delete Line2;
+		AcDbLine	*Line1 = new AcDbLine(A,B);
+		AcDbLine	*Line2 = new AcDbLine(D,C);
+setMainProperty(Line1);
+setMainProperty(Line2);
+		
 
 		}
 
@@ -375,22 +307,9 @@ Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 		if (ThisRound==true)
 		{
 
-			cLine = new AcDbLine(FirstPoint,LastPoint);
-			AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
-			AcDbLinetypeTable *pLtTable;
-			AcDbObjectId ltId;
-			pDb->getSymbolTable(pLtTable, AcDb::kForRead);
-			pLtTable->getAt(_T("tvs_centerline"), ltId);
-			pLtTable->close();
-
-
-			cLine->setLineWeight(AcDb::LineWeight(15));
-			cLine->setLayer(this->layerId());
-			cLine->setLinetype(ltId);
-			cLine->setColor(this->color());
-
-			mode->geometry().draw(cLine);
-			delete cLine;
+			AcDbLine*cLine = new AcDbLine(FirstPoint,LastPoint);
+			setCenterProperty(cLine);
+			
 		}
 
 	}
@@ -401,14 +320,22 @@ Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 		AcGePoint3d L1[2];
 		L1[0]=FirstPoint;
 		L1[1]=LastPoint;
-		mode->geometry().polyline(2,L1);
+		AcDbLine * pLine=new AcDbLine(FirstPoint,LastPoint);
+		setMainProperty(pLine);
+		
 	}
 
 
+	for each (AcDbEntity * var in ListOfWipeout)
+	{
+		mode->geometry().draw(var);
+	}
 
 
-
-
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+		mode->geometry().draw(var);
+	}
 
 
 	return Adesk::kTrue;
@@ -432,106 +359,126 @@ Acad::ErrorStatus TVS_Pipe::subGetOsnapPoints (
 {
 	assertReadEnabled () ;
 
-	AcGeLine3d line1, line2, line3; 
-	line1.set(A,B); 
-	line2.set(C,D); 
-	line3.set(FirstPoint,LastPoint); 
+// 	AcGeLine3d line1, line2, line3; 
+// 	line1.set(A,B); 
+// 	line2.set(C,D); 
+// 	line3.set(FirstPoint,LastPoint); 
+// 
+// 	switch (osnapMode) {
+// 
+// 	case AcDb::kOsModeEnd:
+// 		snapPoints.append(FirstPoint);
+// 		snapPoints.append(LastPoint);
+// 		if (This1D==false)
+// 		{
+// 
+// 			snapPoints.append(A);
+// 			snapPoints.append(B);
+// 			snapPoints.append(C);
+// 			snapPoints.append(D);
+// 		}
+// 		break;
+// 
+// 	case AcDb::kOsModeMid:
+// 		//	snapPoints.append(FirstPoint);
+// 
+// 		snapPoints.append(AcGePoint3d((FirstPoint.x+LastPoint.x)/2,
+// 			(FirstPoint.y+LastPoint.y)/2,
+// 			(FirstPoint.z+LastPoint.z)/2));
+// 		if (This1D==false)
+// 		{
+// 			snapPoints.append(AcGePoint3d((A.x+B.x)/2,
+// 				(A.y+B.y)/2,
+// 				(A.z+B.z)/2));
+// 			snapPoints.append(AcGePoint3d((C.x+D.x)/2,
+// 				(C.y+D.y)/2,
+// 				(C.z+D.z)/2));
+// 
+// 		}
+// 
+// 		break;
+// 		//case AcDb::kOsModeEnd: 
+// 		//	AcGeLine3d line1, line2; 
+// 		//	line1.set(A,B); 
+// 		//	line2.set(C,D); 
+// 		//	snapPoints.append(line1.closestPointTo(pickPoint)); 
+// 		//	snapPoints.append(line2.closestPointTo(pickPoint)); 
+// 		//	break; 
+// 
+// 	case AcDb::kOsModeNear: 
+// 		snapPoints.append(line3.closestPointTo(pickPoint));
+// 		if (This1D==false)
+// 		{
+// 			snapPoints.append(line1.closestPointTo(pickPoint)); 
+// 			snapPoints.append(line2.closestPointTo(pickPoint));
+// 
+// 		}
+// 		break; 
+// 
+// 	case AcDb::kOsModePerp: 
+// 
+// 		snapPoints.append(line3.closestPointTo(lastPoint));
+// 
+// 		if (This1D==false)
+// 		{
+// 			snapPoints.append(line1.closestPointTo(lastPoint));
+// 			snapPoints.append(line2.closestPointTo(lastPoint));
+// 		}
+// 		break; 
+// 
+// 		//case AcDb::kOsModeCen:
+// 		//snapPoints.append(AcGePoint3d(LastPoint.x+(FirstPoint.x-LastPoint.x)/2,
+// 		//	LastPoint.y+(FirstPoint.y-LastPoint.y)/2,0));
+// 
+// 		//snapPoints.append(A);
+// 		//snapPoints.append(B);
+// 		//snapPoints.append(C);
+// 		//snapPoints.append(D);
+// 
+// 		//break;
+// 		//case AcDb::kOsModeTan:
+// 		//snapPoints.append(FirstPoint);
+// 		//snapPoints.append(LastPoint);
+// 		//snapPoints.append(A);
+// 		//snapPoints.append(B);
+// 		//snapPoints.append(C);
+// 		//snapPoints.append(D);
+// 
+// 		//break;
+// 
+// 		//case AcDb::kOsModeMid:
+// 		//	snapPoints.append(m_PtA+((m_PtAB-m_PtA).length()/2.0)*((m_PtAB-m_PtA).normalize()));
+// 		//snapPoints.append(m_PtAB+((m_PtB-m_PtAB).length()/2.0)*((m_PtB-m_PtAB).normalize()));
+// 		//snapPoints.append(m_PtB+((m_PtBA-m_PtB).length()/2.0)*((m_PtBA-m_PtB).normalize()));
+// 		//snapPoints.append(m_PtBA+((m_PtA-m_PtBA).length()/2.0)*((m_PtA-m_PtBA).normalize()));
+// 		//break;
+// 
+// 		//case AcDb::kOsModeCen:
+// 		//snapPoints.append(AcGePoint3d((m_PtB.x+m_PtA.x)/2.0,
+// 		//(m_PtB.y+m_PtA.y)/2.0, m_PtA.z));
+// 		//break;
+// 
+// 	}
 
-	switch (osnapMode) {
 
-	case AcDb::kOsModeEnd:
-		snapPoints.append(FirstPoint);
-		snapPoints.append(LastPoint);
-		if (This1D==false)
-		{
 
-			snapPoints.append(A);
-			snapPoints.append(B);
-			snapPoints.append(C);
-			snapPoints.append(D);
-		}
-		break;
+Acad::ErrorStatus er;
+for each (AcDbEntity * var in ListOfEntity)
+{
 
-	case AcDb::kOsModeMid:
-		//	snapPoints.append(FirstPoint);
+	er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+		lastPoint,viewXform,snapPoints,geomIds);
+	if (er!=Acad::eOk)
+		return er;
+}
+switch (osnapMode) {
 
-		snapPoints.append(AcGePoint3d((FirstPoint.x+LastPoint.x)/2,
-			(FirstPoint.y+LastPoint.y)/2,
-			(FirstPoint.z+LastPoint.z)/2));
-		if (This1D==false)
-		{
-			snapPoints.append(AcGePoint3d((A.x+B.x)/2,
-				(A.y+B.y)/2,
-				(A.z+B.z)/2));
-			snapPoints.append(AcGePoint3d((C.x+D.x)/2,
-				(C.y+D.y)/2,
-				(C.z+D.z)/2));
-
-		}
-
-		break;
-		//case AcDb::kOsModeEnd: 
-		//	AcGeLine3d line1, line2; 
-		//	line1.set(A,B); 
-		//	line2.set(C,D); 
-		//	snapPoints.append(line1.closestPointTo(pickPoint)); 
-		//	snapPoints.append(line2.closestPointTo(pickPoint)); 
-		//	break; 
-
-	case AcDb::kOsModeNear: 
-		snapPoints.append(line3.closestPointTo(pickPoint));
-		if (This1D==false)
-		{
-			snapPoints.append(line1.closestPointTo(pickPoint)); 
-			snapPoints.append(line2.closestPointTo(pickPoint));
-
-		}
-		break; 
-
-	case AcDb::kOsModePerp: 
-
-		snapPoints.append(line3.closestPointTo(lastPoint));
-
-		if (This1D==false)
-		{
-			snapPoints.append(line1.closestPointTo(lastPoint));
-			snapPoints.append(line2.closestPointTo(lastPoint));
-		}
-		break; 
-
-		//case AcDb::kOsModeCen:
-		//snapPoints.append(AcGePoint3d(LastPoint.x+(FirstPoint.x-LastPoint.x)/2,
-		//	LastPoint.y+(FirstPoint.y-LastPoint.y)/2,0));
-
-		//snapPoints.append(A);
-		//snapPoints.append(B);
-		//snapPoints.append(C);
-		//snapPoints.append(D);
-
-		//break;
-		//case AcDb::kOsModeTan:
-		//snapPoints.append(FirstPoint);
-		//snapPoints.append(LastPoint);
-		//snapPoints.append(A);
-		//snapPoints.append(B);
-		//snapPoints.append(C);
-		//snapPoints.append(D);
-
-		//break;
-
-		//case AcDb::kOsModeMid:
-		//	snapPoints.append(m_PtA+((m_PtAB-m_PtA).length()/2.0)*((m_PtAB-m_PtA).normalize()));
-		//snapPoints.append(m_PtAB+((m_PtB-m_PtAB).length()/2.0)*((m_PtB-m_PtAB).normalize()));
-		//snapPoints.append(m_PtB+((m_PtBA-m_PtB).length()/2.0)*((m_PtBA-m_PtB).normalize()));
-		//snapPoints.append(m_PtBA+((m_PtA-m_PtBA).length()/2.0)*((m_PtA-m_PtBA).normalize()));
-		//break;
-
-		//case AcDb::kOsModeCen:
-		//snapPoints.append(AcGePoint3d((m_PtB.x+m_PtA.x)/2.0,
-		//(m_PtB.y+m_PtA.y)/2.0, m_PtA.z));
-		//break;
-
-	}
+case AcDb::kOsModeEnd:
+	snapPoints.append(FirstPoint);
+	snapPoints.append(LastPoint);
+	break;
+default:break;
+}
 	return (Acad::eOk);
 }
 

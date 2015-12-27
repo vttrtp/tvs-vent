@@ -163,8 +163,8 @@ void dgAllEdit::DoDataExchange (CDataExchange *pDX) {
 
 
 
-
-
+		DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
+		DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
 }
 
 //-----------------------------------------------------------------------------

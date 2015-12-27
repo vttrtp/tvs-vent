@@ -143,6 +143,10 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Check(pDX, IDC_TapRadiusRoundVariable, TapRadiusRoundVariable);
 	DDX_Check(pDX, IDC_TapRadiusRoundConst, TapRadiusRoundConst);
 	DDX_Check(pDX, IDC_TapRadiusRoundSpecific, TapRadiusRoundSpecific);
+
+
+	DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
+	DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
 	//DDX_Check(pDX, IDC_TapUp, TapUp);
 	//DDX_Check(pDX, IDC_TapMid, TapMid);
 	//DDX_Check(pDX, IDC_TapDown, TapDown);

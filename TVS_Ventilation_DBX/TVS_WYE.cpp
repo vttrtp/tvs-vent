@@ -83,6 +83,7 @@ Acad::ErrorStatus TVS_WYE::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (Param) ;
 	pFiler->writeItem (IsPipe) ;
 	pFiler->writeItem (Form) ;
+	pFiler->writeItem (WipeoutLength) ;
 	//	pFiler->writeString (Tag1) ;
 	//	pFiler->writeString (Tag2) ;
 	return (pFiler->filerStatus ()) ;
@@ -124,10 +125,13 @@ Acad::ErrorStatus TVS_WYE::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Param) ;
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
+	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
+		
 	//acutDelString(Tag1);
 	//acutDelString(Tag2);
 	//if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readString(&Tag1) ;
 	//if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readString(&Tag2) ;
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -201,8 +205,8 @@ void TVS_WYE::unappended (const AcDbObject *pDbObj) {
 //----- AcDbEntity protocols
 Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 	assertReadEnabled () ;
-
-
+		ListOfEntity.removeAll();
+		ListOfWipeout.removeAll();
 	AcGePoint3d massforarray[2];
 	AcGePoint3d massforarray2[8];
 
@@ -211,8 +215,7 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 	Gimme7Points();
 	if (Wipeout==true) //wipe
 	{
-		AcCmColor backcolor;
-		get_WipeoutColor(mode,backcolor);
+	
 
 
 
@@ -233,41 +236,32 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 		pLn->addVertexAt(0,p[0]);
 		pLn->addVertexAt(1,p[1]);
 
-		pLn->setColor(backcolor);
-		if (This1D==false) pLn->setConstantWidth(SizeApr+200);
-		else pLn->setConstantWidth(200);
-		mode->geometry().draw(pLn);	
-		delete pLn;
+		setWipeoutProperty(mode,pLn);
+	if (This1D==false) pLn->setConstantWidth(SizeApr+WipeoutLength*2);
 
-
-		AcGePoint2d p2[2];
-		p2[0]=AcGePoint2d(pMa.x,pMa.y);
-		p2[1]=AcGePoint2d(pA5.x,pA5.y);
 
 
 
 
 		AcDbPolyline *pLn2=new AcDbPolyline(2);
 
+	
 
-
-
+		AcGePoint2d p2[2];
+		p2[0]=AcGePoint2d(pMa.x,pMa.y);
+		p2[1]=AcGePoint2d(pA5.x,pA5.y);
 
 		pLn2->addVertexAt(0,p2[0]);
 		pLn2->addVertexAt(1,p2[1]);
 
-		pLn2->setColor(backcolor);
-		if (This1D==false) pLn2->setConstantWidth(SizeAotv+200);
-		else pLn2->setConstantWidth(200);
-		mode->geometry().draw(pLn2);	
-		delete pLn2;
+	setWipeoutProperty(mode,pLn2);
+		if (This1D==false) pLn2->setConstantWidth(SizeAotv+WipeoutLength*2);
 
 
 
 
-		AcCmEntityColor col;
-		col=color().entityColor();
-		mode->subEntityTraits().setTrueColor(col);
+
+		
 
 	}//wipe
 
@@ -298,7 +292,13 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 		massforarray2[6]=pG;
 		massforarray2[7]=pH;
 
-		mode->geometry().polygon(8,massforarray2);
+		AcDbPolyline*pLn=new AcDbPolyline;
+		for (int i=0;i<8; i++)
+		{
+			pLn->addVertexAt(i,AcGePoint2d(massforarray2[i].x,massforarray2[i].y));
+		}
+		pLn->setClosed(true);
+		setMainProperty(pLn);
 		if (ThisRoundpr==true)//начало dпр-круглый
 		{
 
@@ -312,54 +312,62 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 					mass33[0]=pG;
 					mass33[1]=Basepoint;
 					mass33[2]=pD;
-
-					mode->geometry().polyline(3,mass33);
+					AcDbPolyline*pLn2=new AcDbPolyline;
+					for (int i=0;i<3; i++)
+					{
+						pLn2->addVertexAt(i,AcGePoint2d(mass33[i].x,mass33[i].y));
+					}
+					setMainProperty(pLn2);
 
 				}
 				else
 				{
-					if (Vectotv.y>=0)
+					double angle3;
+					if (Vectpr.y>=0)
 					{
-						startangle=acos(Vectotv.x)+M_PI/2;
-						angle1=0;
-						angle2=M_PI;
+						
+						startangle=acos(Vectpr.x);
+						
 					} 
 					else
 					{
 
-						startangle=-acos(Vectotv.x)+M_PI/2;
-						angle1=0;
-						angle2=M_PI;
+						startangle=M_PI*2-acos(Vectpr.x);
+						
+					
 					}
 
+					if ((Vectotv.x*Vectpr.y-Vectotv.y*Vectpr.x)<0)
+					{
+						angle1=M_PI;
+						angle2=0;
+					}
+					else
+					{
+					angle1=0;
+					angle2=M_PI;
+					}
+					double radiusratio=(SizeApr-sqrt(SizeApr*SizeApr-SizeAotv*SizeAotv))/SizeAotv;
 
-
-
-					mode->geometry().ellipticalArc(pMa,
-						normaleleps,
-						SizeAotv/2,
-						SizeApr/2-sqrt(SizeApr*SizeApr-SizeAotv*SizeAotv)/2, 
-						angle1,
-						angle2,
-						startangle
-						);
+					AcDbEllipse* el=new AcDbEllipse(pMa,AcGeVector3d(0,0,1),AcGeVector3d(SizeAotv/2,0,0),radiusratio,angle1,angle2);
+					AcGeMatrix3d mat; 
+					
+					mat.setToRotation(startangle,AcGeVector3d(0,0,1),pMa); 
+					el->transformBy(mat);
+					setMainProperty(el);
+	
 				}
-				AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
-				AcDbLinetypeTable *pLtTable;
-				AcDbObjectId ltId;
-				pDb->getSymbolTable(pLtTable, AcDb::kForRead);
-				pLtTable->getAt(_T("tvs_centerline"), ltId);
-				mode->subEntityTraits().setLineType(ltId);
-				mode->subEntityTraits().setLineWeight(AcDb::LineWeight(15));
-				pLtTable->close();
-
+			
+		
 				massforarray[0]=pA1;
 				massforarray[1]=pA3;
-				mode->geometry().polyline(2,massforarray);
+				AcDbLine *pLn1=new AcDbLine (massforarray[0],massforarray[1]);
+				setCenterProperty(pLn1);
+
 				massforarray[0]=Basepoint;
 				massforarray[1]=pA5;
-				mode->geometry().polyline(2,massforarray);
-
+				AcDbLine * pLn2=new AcDbLine (massforarray[0],massforarray[1]);
+				setCenterProperty(pLn2);
 			} //конец отв-круглый
 			else//начало пр-кругл отв-прямоуг
 			{
@@ -368,21 +376,20 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 				mass4[1]=pB1;
 				mass4[2]=pB2;
 				mass4[3]=pD;
-				mode->geometry().polyline(4,mass4);
 
-				AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
-				AcDbLinetypeTable *pLtTable;
-				AcDbObjectId ltId;
-				pDb->getSymbolTable(pLtTable, AcDb::kForRead);
-				pLtTable->getAt(_T("tvs_centerline"), ltId);
-				mode->subEntityTraits().setLineType(ltId);
-				mode->subEntityTraits().setLineWeight(AcDb::LineWeight(15));
-				pLtTable->close();
+				AcDbPolyline*pLn2=new AcDbPolyline;
+				for (int i=0;i<4; i++)
+				{
+					pLn2->addVertexAt(i,AcGePoint2d(mass4[i].x,mass4[i].y));
+				}
+				setMainProperty(pLn2);
+
+				
 
 				massforarray[0]=pA1;
 				massforarray[1]=pA3;
-				mode->geometry().polyline(2,massforarray);
-
+				AcDbLine * pLn3=new AcDbLine (massforarray[0],massforarray[1]);
+				setCenterProperty(pLn3);
 			}//конец пр-кругл отв-прямоуг
 
 
@@ -391,23 +398,19 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 		{
 			massforarray[0]=pG;
 			massforarray[1]=pD;
-			mode->geometry().polyline(2,massforarray);
+			AcDbLine * pLn2=new AcDbLine (massforarray[0],massforarray[1]);
+			setCenterProperty(pLn2);
 			if (ThisRoundotv==true)
 			{
 
 
-				AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
-				AcDbLinetypeTable *pLtTable;
-				AcDbObjectId ltId;
-				pDb->getSymbolTable(pLtTable, AcDb::kForRead);
-				pLtTable->getAt(_T("tvs_centerline"), ltId);
-				mode->subEntityTraits().setLineType(ltId);
-				mode->subEntityTraits().setLineWeight(AcDb::LineWeight(15));
-				pLtTable->close();
+				
+				
 
 				massforarray[0]=pMa;
 				massforarray[1]=pA5;
-				mode->geometry().polyline(2,massforarray);
+				AcDbLine * pLn3=new AcDbLine (massforarray[0],massforarray[1]);
+				setCenterProperty(pLn3);;
 			}//конец пр-пр отв-кругл
 
 		}//конец пр-прямоуг
@@ -416,16 +419,27 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 	} //конец 2d
 	else
 	{
+
 		massforarray[0]=pA1;
 		massforarray[1]=pA3;
-		mode->geometry().polyline(2,massforarray);
+		AcDbLine * pLn4=new AcDbLine (massforarray[0],massforarray[1]);
+		setMainProperty(pLn4);
 		massforarray[0]=Basepoint;
 		massforarray[1]=pA5;
-		mode->geometry().polyline(2,massforarray);
+		AcDbLine * pLn5=new AcDbLine (massforarray[0],massforarray[1]);
+		setMainProperty(pLn5);
 
 	}
 
+	for each (AcDbEntity * var in ListOfWipeout)
+	{
+		mode->geometry().draw(var);
+	}
 
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+		mode->geometry().draw(var);
+	}
 
 
 	return Adesk::kTrue;
@@ -448,36 +462,46 @@ Acad::ErrorStatus TVS_WYE::subGetOsnapPoints (
 	AcDbIntArray &geomIds) const
 {
 	assertReadEnabled () ;
-	AcGeLine3d line1,line2, line3;
-	line1.set(pA,pH); 
-	line2.set(pB,pC); 
-	line3.set(pE,pF); 
+// 	AcGeLine3d line1,line2, line3;
+// 	line1.set(pA,pH); 
+// 	line2.set(pB,pC); 
+// 	line3.set(pE,pF); 
+// 
+// 	switch (osnapMode) {
+// 
+// 	case AcDb::kOsModeEnd:
+// 		snapPoints.append(pA);
+// 		snapPoints.append(pB);
+// 		snapPoints.append(pC);
+// 		snapPoints.append(pE);
+// 		snapPoints.append(pF);
+// 		snapPoints.append(pH);
+// 		snapPoints.append(pA1);
+// 		snapPoints.append(pA2);
+// 		snapPoints.append(pA3);
+// 		snapPoints.append(pA5);
+// 
+// 
+// 		break;
+// 
+// 	case AcDb::kOsModePerp: 
+// 
+// 		snapPoints.append(line1.closestPointTo(lastPoint));
+// 		snapPoints.append(line2.closestPointTo(lastPoint));
+// 		snapPoints.append(line3.closestPointTo(lastPoint));
+// 
+// 		break;
+// 
+// 	}
 
-	switch (osnapMode) {
+	Acad::ErrorStatus er;
+	for each (AcDbEntity * var in ListOfEntity)
+	{
 
-	case AcDb::kOsModeEnd:
-		snapPoints.append(pA);
-		snapPoints.append(pB);
-		snapPoints.append(pC);
-		snapPoints.append(pE);
-		snapPoints.append(pF);
-		snapPoints.append(pH);
-		snapPoints.append(pA1);
-		snapPoints.append(pA2);
-		snapPoints.append(pA3);
-		snapPoints.append(pA5);
-
-
-		break;
-
-	case AcDb::kOsModePerp: 
-
-		snapPoints.append(line1.closestPointTo(lastPoint));
-		snapPoints.append(line2.closestPointTo(lastPoint));
-		snapPoints.append(line3.closestPointTo(lastPoint));
-
-		break;
-
+		er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+			lastPoint,viewXform,snapPoints,geomIds);
+		if (er!=Acad::eOk)
+			return er;
 	}
 	return (Acad::eOk);
 }

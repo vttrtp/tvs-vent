@@ -1894,7 +1894,7 @@ static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
 	AcDbEntity* pnt;
 
 
-	acdbOpenAcDbEntity(pnt,id,AcDb::kForRead);
+	//acdbOpenAcDbEntity(pnt,id,AcDb::kForRead);
 
 
 
@@ -1906,7 +1906,7 @@ static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
 	global1D=pEnt->get_This1D();
 	globalFlow=pEnt->get_Flow();
 	globalElevMid=pEnt->get_Elevation();
-	pEnt->close();
+//	pEnt->close();
  }
 static void SetGlobalProperty( TVS_Entity *pEnt )
 {
@@ -1919,19 +1919,22 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 	ads_name eName;
 
 
-	acdbGetAdsName(eName,id);
-	acdbGetObjectId(id,eName);
+// 	acdbGetAdsName(eName,id);
+// 	acdbGetObjectId(id,eName);
 	AcDbEntity* pnt;
 
 
-	acdbOpenAcDbEntity(pnt,id,AcDb::kForWrite);
+	if (acdbOpenAcDbEntity(pnt,pEnt->id(),AcDb::kForWrite)==eOk)
 
 
+	{
 
+	
 
 	pEnt->put_SizeA(globSizeA);
 	pEnt->put_SizeB(globSizeB);
 	pEnt->put_Wipeout(globalWipeout);
+	pEnt->put_WipeoutLength(globalWipeoutLength);
 	pEnt->put_Grani(globalGrani);
 	pEnt->put_This1D(global1D);
 	pEnt->put_Flow(globalFlow);
@@ -2023,7 +2026,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 
 	pEnt->draw();
 	pEnt->close();
-
+	}
 
 
 
@@ -2074,6 +2077,7 @@ static bool changesize ()
 	dg.TapRadiusVariableParameter=globalTapRadiusVariableParameter;
 	dg.TapRadiusConst=globalTapRadiusConst;
 
+	dg.WipeoutLength=globalWipeoutLength;
 	//AcApDocument *pDoc=acDocManager->curDocument();
 	//acDocManager->lockDocument(pDoc,AcAp::kWrite);
 
@@ -2100,6 +2104,8 @@ static bool changesize ()
 	globalRadiusTypeRect=dg.RadiusTypeRect;
 	globalTapRadiusVariableParameter=dg.TapRadiusVariableParameter;
 	globalTapRadiusConst=dg.TapRadiusConst;
+
+	globalWipeoutLength=dg.WipeoutLength;
 
 	if (globSizeB==0) globRound=true;
 	else globRound=false;
@@ -2524,7 +2530,13 @@ static void Ventilation_ARXTVS_DRAW(void)
 		if ( (pipi = TVS_Pipe::cast(pEnt)) != NULL )
 		{
 			InstallGlobalProperty(pipi);
-			
+			if (index==102)
+			{
+		
+			AcGePoint3d buf=pipi->get_FirstPoint();
+			pipi->put_FirstPoint(pipi->LastPoint);
+			pipi->put_Lastpoint(buf);
+			}
 				pt1[0]=pipi->get_FirstPoint().x;
 				pt1[1]=pipi->get_FirstPoint().y;
 				pt1[2]=pipi->get_FirstPoint().z;
@@ -2822,7 +2834,7 @@ static void Ventilation_ARXTVS_PIPE(void)
 
 
 	pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
-
+	SetGlobalProperty(pipi);
 	if (acdbOpenAcDbEntity(pEnt,pipi->id(),AcDb::kForWrite)==eOk)
 	{		
 		pipi->close();

@@ -92,6 +92,7 @@ Acad::ErrorStatus TVS_TAP::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (RadiusVariableParameter) ;
 	pFiler->writeItem (RadiusConst) ;
 	pFiler->writeItem (MiddlePoint) ;
+	pFiler->writeItem (WipeoutLength) ;
 	//pFiler->writeString (Tag1) ;
 	//pFiler->writeString (Tag2) ;
 	return (pFiler->filerStatus ()) ;
@@ -140,6 +141,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&RadiusVariableParameter) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&RadiusConst) ;
 	if ( version >= 22 /*&& version <= endVersion*/ ) pFiler->readItem (&MiddlePoint) ;
+	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 	if ( version < 22 /*&& version <= endVersion*/ )
 	{
 		checkRadiusTypeRect();
@@ -150,7 +152,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 
 		ListOfEntity.removeAll();
 		double  Lx, Ly,Nx, Ny;
-		WipeoutLength=100; //change in future
+		 //change in future
 		Nx=Startvector.x;
 		Ny=Startvector.y;
 		Lx=Nx;
@@ -165,7 +167,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 
 		chekMiddlePoint();
 	}
-
+	
 
 	//acutDelString(Tag1);
 	//acutDelString(Tag2);
@@ -248,9 +250,10 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 	setRadius();
 
+	ListOfWipeout.removeAll();
 	ListOfEntity.removeAll();
 	double  Lx, Ly,Nx, Ny;
-	WipeoutLength=100; //change in future
+	
 	Nx=Startvector.x;
 	Ny=Startvector.y;
 	Lx=Nx;
@@ -764,7 +767,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 
 						setMainProperty(pLine1);
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine2);
 						setMainProperty(pLine3);
 						setMainProperty(pLine4);
 
@@ -908,7 +911,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 						AcDbLine* pLine3 = new AcDbLine(this->pMass45[1],this->pMass45[4]);
 						setMainProperty(pLine1);	
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine2);
 						setMainProperty(pLine3);
 
 				
@@ -1074,8 +1077,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						setMainProperty(el);
 						setMainProperty(el2);
 						setMainProperty(el3);
-						setAxisProperty(pLine1);
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine1);
+						setCenterProperty(pLine2);
 						setMainProperty(pLn);
 						}
 						else
@@ -1083,8 +1086,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 							setHideProperty(el);
 							setMainProperty(el2);
 							//setMainProperty(el3);
-							setAxisProperty(pLine1);
-							setAxisProperty(pLine2);
+							setCenterProperty(pLine1);
+							setCenterProperty(pLine2);
 							setMainProperty(pLn);
 						}
 					}
@@ -1095,8 +1098,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						setMainProperty(el);
 						setHideProperty(el2);
 						setHideProperty(el3);
-						setAxisProperty(pLine1);
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine1);
+						setCenterProperty(pLine2);
 						setMainProperty(pLn);
 						}
 						else
@@ -1104,8 +1107,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 							setMainProperty(el);
 							setHideProperty(el2);
 							//setHideProperty(el3);
-							setAxisProperty(pLine1);
-							setAxisProperty(pLine2);
+							setCenterProperty(pLine1);
+							setCenterProperty(pLine2);
 							setMainProperty(pLn);
 						}
 					}
@@ -1218,7 +1221,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						setMainProperty(pLine2);
 						setMainProperty(arcie1);
 						setMainProperty(arcie2);
-						setAxisProperty(arcie3);
+						setCenterProperty(arcie3);
 						
 
 					
@@ -1367,8 +1370,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 								setMainProperty(el);
 								setMainProperty(el2);
 								setMainProperty(el3);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 							
@@ -1378,8 +1381,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 								setHideProperty(el);
 								setMainProperty(el2);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 							}
@@ -1391,9 +1394,9 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 								setMainProperty(el);
 								setHideProperty(el2);
-								setAxisProperty(el3);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(el3);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 
@@ -1403,8 +1406,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 								setMainProperty(el);
 								setHideProperty(el2);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 							}
@@ -1464,6 +1467,10 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 }
 	
+for each (AcDbEntity * var in ListOfWipeout)
+{
+	mode->geometry().draw(var);
+}
 
 	for each (AcDbEntity * var in ListOfEntity)
 	{
@@ -1493,46 +1500,72 @@ Acad::ErrorStatus TVS_TAP::subGetOsnapPoints (
 	//AcGeLine3d line1,line2;
 	//line1.set(B,C); 
 	//line2.set(D,A); 
+			Acad::ErrorStatus er;
+// 	switch (osnapMode) {
+// 
+// 	case AcDb::kOsModeEnd:
+// 		int ind;
+// 		AcDbPolyline * pLn;
+// 		Acad::ErrorStatus er;
+// 		for each (AcDbEntity * var in ListOfEntity)
+// 		{
+// // 			if ( (pLn = AcDbPolyline::cast(var)) != NULL )
+// // 			{
+// // 				ind=pLn->numVerts();
+// // 				for (int i=0;i<ind;i++)
+// // 				{
+// // 					AcGePoint2d curpnt;
+// // 					pLn->getPointAt(i,curpnt);
+// // 					snapPoints.append(AcGePoint3d(curpnt.x,curpnt.y,0));
+// // 				}
+// // 			}
+// 
+// 			er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+// 				lastPoint,viewXform,snapPoints,geomIds);
+// 			if (er!=Acad::eOk)
+// 				return er;
+// 		}
+// // snapPoints.append(MA);
+// // 
+// // snapPoints.append(MC);
+// // snapPoints.append(MiddlePoint);
+// 
+// 		break;
+// 		/*
+// 		case AcDb::kOsModeCen:
+// 		snapPoints.append(MA);
+// 
+// 		snapPoints.append(MC);
+// 
+// 
+// 		break;
+// 		*/
+// 
+// 	case AcDb::kOsModePerp: 
+// 
+// // 		snapPoints.append(line1.closestPointTo(lastPoint));
+// // 		snapPoints.append(line2.closestPointTo(lastPoint));
+// 		break;
+// 	}
 
-	switch (osnapMode) {
 
-	case AcDb::kOsModeEnd:
-		int ind;
-		AcDbPolyline * pLn;
-		for each (AcDbEntity * var in ListOfEntity)
-		{
-			if ( (pLn = AcDbPolyline::cast(var)) != NULL )
-			{
-				ind=pLn->numVerts();
-				for (int i=0;i<ind;i++)
-				{
-					AcGePoint2d curpnt;
-					pLn->getPointAt(i,curpnt);
-					snapPoints.append(AcGePoint3d(curpnt.x,curpnt.y,0));
-				}
-			}
-		}
-snapPoints.append(MA);
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+		// 			if ( (pLn = AcDbPolyline::cast(var)) != NULL )
+		// 			{
+		// 				ind=pLn->numVerts();
+		// 				for (int i=0;i<ind;i++)
+		// 				{
+		// 					AcGePoint2d curpnt;
+		// 					pLn->getPointAt(i,curpnt);
+		// 					snapPoints.append(AcGePoint3d(curpnt.x,curpnt.y,0));
+		// 				}
+		// 			}
 
-snapPoints.append(MC);
-snapPoints.append(MiddlePoint);
-
-		break;
-		/*
-		case AcDb::kOsModeCen:
-		snapPoints.append(MA);
-
-		snapPoints.append(MC);
-
-
-		break;
-		*/
-
-	case AcDb::kOsModePerp: 
-
-// 		snapPoints.append(line1.closestPointTo(lastPoint));
-// 		snapPoints.append(line2.closestPointTo(lastPoint));
-		break;
+		er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+			lastPoint,viewXform,snapPoints,geomIds);
+		if (er!=Acad::eOk)
+			return er;
 	}
 	return (Acad::eOk);
 }

@@ -48,7 +48,7 @@
 #include <acedads.h>
 #include <acedCmdNF.h>
 #include "dbcurve.h"
-#define TVS_Version 22
+#define TVS_Version 23
 #define M_PI 3.14159265358979323846
 #include <ObjBase.h>
 #include <InitGuid.h>
@@ -195,6 +195,7 @@ public:
 	vector <AcDbEntity> ListOfEntityAxis;
 	vector <AcDbEntity> ListOfEntityBody;
 	AcDbVoidPtrArray ListOfEntity;
+	AcDbVoidPtrArray ListOfWipeout;
 	double WipeoutLength;
 	int Type1;
 	int Type2;
@@ -245,9 +246,12 @@ public:
 	Acad::ErrorStatus put_Type2(int newVal);
 	
 	void setMainProperty(AcDbEntity *pEnt);
-	void setAxisProperty(AcDbEntity *pEnt);
+	void setCenterProperty(AcDbEntity *pEnt);
 	void setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt);
 	void setHideProperty(AcDbEntity *pEnt);
+
+	double get_WipeoutLength(void) const;
+	Acad::ErrorStatus put_WipeoutLength(double newVal);
 
 } ;
 

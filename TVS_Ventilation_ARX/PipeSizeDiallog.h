@@ -59,6 +59,7 @@
 #define IDC_LengthWye 1016
 #define IDC_TransLength 1023
 #define IDC_Wipeout 1020
+#define IDC_WipeoutLength 10020
 #define IDC_Grani 1021
 #define IDC_1D 1022
 #define IDC_ElevVal 1014
@@ -200,7 +201,8 @@ public:
 	int iRadiusTypeRect;
 
 
-
+	CEdit fWipeoutLength;
+	double WipeoutLength;
 //	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 
 	afx_msg void OnBnClickedOk();
