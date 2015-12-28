@@ -366,7 +366,7 @@ void SPEC::printResult()
 const ACHAR * SPEC::toChar( double val )
 {
 	const ACHAR* str=new ACHAR[512];
-	 ACHAR buffer[512];
+	 ACHAR  buffer[512];
 acdbRToS(val,2,2,buffer);
 str=buffer;
 return buffer;

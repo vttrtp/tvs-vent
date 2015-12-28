@@ -2543,10 +2543,10 @@ static void Ventilation_ARXTVS_DRAW(void)
 				pt2[0]=pipi->get_Lastpoint().x;
 				pt2[1]=pipi->get_Lastpoint().y;
 				pt2[2]=pipi->get_Lastpoint().z;
-			
+			pEnt->close();
 			if(drawStep3(pt1,pt2,pipi)==false);
 		}
-		pEnt->close();
+		
 	}
 
 		//TVS_Pipe pipie;

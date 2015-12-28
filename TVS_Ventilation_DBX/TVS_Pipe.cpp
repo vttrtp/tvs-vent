@@ -471,14 +471,18 @@ for each (AcDbEntity * var in ListOfEntity)
 	if (er!=Acad::eOk)
 		return er;
 }
-switch (osnapMode) {
+// switch (osnapMode) {
+// 
+// case AcDb::kOsModeEnd:
+// 	snapPoints.append(FirstPoint);
+// 	snapPoints.append(LastPoint);
+// 	break;
+// default:break;
+// }
 
-case AcDb::kOsModeEnd:
-	snapPoints.append(FirstPoint);
-	snapPoints.append(LastPoint);
-	break;
-default:break;
-}
+AcDbLine * pLine=new AcDbLine(FirstPoint,LastPoint);
+	er=pLine->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+	lastPoint,viewXform,snapPoints,geomIds);
 	return (Acad::eOk);
 }
 
