@@ -2521,10 +2521,18 @@ static void Ventilation_ARXTVS_DRAW(void)
 		AcDbEntity *pEnt;
 		TVS_Pipe *pipi;
 		
-
+		bool stat=true;
 		AcGePoint3d p1, p2;
+		if (index==0)
+		{
+			stat=drawStep1(pt1,pt2,pipi);
+			if (stat==true) stat=drawStep2(pt1,pt2,pipi);
+			if (stat==true) stat=drawStep3(pt1,pt2,pipi);
+		}
+		else
+		{
 
-	if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+			if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
 	{
 
 		if ( (pipi = TVS_Pipe::cast(pEnt)) != NULL )
@@ -2548,7 +2556,8 @@ static void Ventilation_ARXTVS_DRAW(void)
 		}
 		
 	}
-
+		}
+	TVS_Pipe::SetParamsForDraw(id,0);
 		//TVS_Pipe pipie;
 
 

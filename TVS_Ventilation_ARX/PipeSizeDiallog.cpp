@@ -156,6 +156,7 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 //----- Needed for modeless dialogs to keep focus.
 //----- Return FALSE to not keep the focus, return TRUE to keep the focus
 LRESULT PipeSizeDiallog::OnAcadKeepFocus (WPARAM, LPARAM) {
+
 	return (TRUE) ;
 }
 
@@ -402,7 +403,9 @@ void PipeSizeDiallog::OnShowWindow(BOOL bShow, UINT nStatus)
 	CAdUiBaseDialog::OnShowWindow(bShow, nStatus);
 
 
-	
+	fSizeA.SetFocus();
+
+	SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
 
 
 	

@@ -495,13 +495,14 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 				{
 
 					AcDbPolyline *pLn = new AcDbPolyline(2);
-
-
+				
 
 					pLn->addVertexAt(0,AcGePoint2d(MA.x,MA.y));
 					pLn->addVertexAt(1,AcGePoint2d(MC.x,MC.y));
+
 					setMainProperty(pLn);
-					
+					AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+					setMainProperty(crcl);
 
 				}
 				else
@@ -932,7 +933,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						}
 
 						setMainProperty(pLine2)		;
-						
+
 
 
 					}
@@ -1062,7 +1063,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 					{
 						AcDbLine*pLine1 = new AcDbLine(MA,mm.rotateBy(startangle,vectr,CenterPoint));
 						setMainProperty(pLine1);
-					
+						AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+						setMainProperty(crcl);
 					}
 
 					else 
@@ -1355,7 +1357,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 					{
 						AcDbLine*pLine1 = new AcDbLine(MA,mm.rotateBy(startangle,vectr,CenterPoint));
 						setMainProperty(pLine1);
-						
+						AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+						setMainProperty(crcl);
 					}
 
 					else 

@@ -179,7 +179,10 @@ void dgAllEdit::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CAdUiBaseDialog::OnShowWindow(bShow, nStatus);
 
-	
+	fSizeA.SetFocus();
+
+  SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
+
 	if(Tpipe==false)
 	{
 		
