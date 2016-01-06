@@ -399,7 +399,7 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 			massforarray[0]=pG;
 			massforarray[1]=pD;
 			AcDbLine * pLn2=new AcDbLine (massforarray[0],massforarray[1]);
-			setCenterProperty(pLn2);
+			setMainProperty(pLn2);
 			if (ThisRoundotv==true)
 			{
 
