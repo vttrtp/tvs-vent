@@ -172,6 +172,25 @@ public:
 	//- Area calculation.
 	virtual Acad::ErrorStatus getArea (double &area) const ;
 
+
+	virtual Acad::ErrorStatus   subIntersectWith(
+		const AcDbEntity*   ent,
+		AcDb::Intersect     intType,
+		AcGePoint3dArray&      points,
+		int                 thisGsMarker  = 0,
+		int                 otherGsMarker = 0)
+		const;
+
+	virtual Acad::ErrorStatus   subIntersectWith(
+		const AcDbEntity*   ent,
+		AcDb::Intersect     intType,
+		const AcGePlane&    projPlane,
+		AcGePoint3dArray&      points,
+		int                 thisGsMarker  = 0,
+		int                 otherGsMarker = 0)
+		const;
+
+
 	//////TVS
 	public:
 	double SizeA;
