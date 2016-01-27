@@ -1116,5 +1116,17 @@ Acad::ErrorStatus TVS_Pipe::put_Lastpoint(AcGePoint3d newVal)
 
 
 
+Adesk::Boolean TVS_FlexDuct::subWorldDraw (AcGiWorldDraw *mode) {
+		assertReadEnabled () ;
+		return Adesk::kTrue;
+}
 
+TVS_FlexDuct::TVS_FlexDuct()
+{
 
+}
+
+TVS_FlexDuct::~TVS_FlexDuct()
+{
+
+}

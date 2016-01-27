@@ -6034,6 +6034,50 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 	
 }
 
+static void Ventilation_ARXTVS_Flex(void)
+{
+	TVS_FlexDuct* pEnt=new TVS_FlexDuct();
+	
+	pEnt->FirstPoint=AcGePoint3d(0,0,0);
+	pEnt->LastPoint=AcGePoint3d(3000,0,0);
+	pEnt->SizeA=100;
+	pEnt->SizeB=200;
+	pEnt->This1D=false;
+	pEnt->ThisRound=false;
+	pEnt->Flow=0;
+	pEnt->Direct=0;
+	pEnt->Elev=0;
+	pEnt->Wipeout=false;
+	pEnt->Param=0;
+	pEnt->Grani=false;
+	pEnt->ElevDown=0;
+	pEnt->ElevUp=0;
+	pEnt->IsPipe=false;
+	pEnt->Form=0;
+
+	//TCHAR * pPipe->Tag2=new TCHAR
+
+	//pPipe->Tag2=ACRX_T("");
+	pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
+	//pPipe->ShowText=pShowText;
+	//pPipe->SetText();
+	// Post to Database
+	AcDbBlockTable *pBlockTable;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
+		AcDb::kForRead);
+
+	AcDbBlockTableRecord *pBlockTableRecord;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,AcDb::kForWrite);
+	pBlockTable->close();
+
+	AcDbObjectId retId = AcDbObjectId::kNull;
+	pBlockTableRecord->appendAcDbEntity(retId, pEnt);
+	pBlockTableRecord->close();
+	pEnt->close();
+
+
+}
+
 
 static void Ventilation_ARXTVS_SPEC(void)
 {
@@ -6104,6 +6148,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SPEC, TVS_SPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Specification, TVS_Specification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Flex, TVS_Flex, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Show, TVS_Show, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CUT, TVS_CUT, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Change, TVS_Change, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)

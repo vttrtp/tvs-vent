@@ -267,4 +267,22 @@ private:
 #ifdef TVS_VENTILATION_DBX_MODULE
 ACDB_REGISTER_OBJECT_ENTRY_AUTO(TVS_Pipe)
 #endif
-	 
+	
+
+class DLLIMPEXP  TVS_FlexDuct : public TVS_Pipe {
+
+// public:
+// 	ACRX_DECLARE_MEMBERS(TVS_FlexDuct) ;
+
+protected:
+	static Adesk::UInt32 kCurrentVersionNumber ;
+
+public:
+	Adesk::Boolean subWorldDraw (AcGiWorldDraw *mode);
+	TVS_FlexDuct  () ;
+	virtual ~TVS_FlexDuct  () ;
+};
+
+#ifdef TVS_VENTILATION_DBX_MODULE
+ACDB_REGISTER_OBJECT_ENTRY_AUTO(TVS_FlexDuct)
+#endif
