@@ -160,8 +160,8 @@ public:
 	virtual Acad::ErrorStatus getDistAtPoint (const AcGePoint3d &point , double &dist) const ;
 	virtual Acad::ErrorStatus getPointAtDist (double dist, AcGePoint3d &point) const ;
 	//- Derivative information.
-	virtual Acad::ErrorStatus getFirstDeriv (double param, AcGeVector3d &firstDeriv) const ;
-	virtual Acad::ErrorStatus getFirstDeriv  (const AcGePoint3d &point, AcGeVector3d &firstDeriv) const ;
+// 	virtual Acad::ErrorStatus getFirstDeriv (double param, AcGeVector3d &firstDeriv) const ;
+// 	virtual Acad::ErrorStatus getFirstDeriv  (const AcGePoint3d &point, AcGeVector3d &firstDeriv) const ;
 	virtual Acad::ErrorStatus getSecondDeriv (double param, AcGeVector3d &secDeriv) const ;
 	virtual Acad::ErrorStatus getSecondDeriv (const AcGePoint3d &point, AcGeVector3d &secDeriv) const ;
 	//- Closest point on curve.
@@ -241,13 +241,13 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 	Acad::ErrorStatus put_TVS_Point(AcGePoint3d newVal);
 		void setLastpoint (AcGePoint3d pLastpoint);
 
+	virtual void	addfilerparam(AcDbDwgFiler *pFiler);
 
+	virtual void	getfilerparam(AcDbDwgFiler *pFiler);
 
+	AcGePoint3d getPointForSpline(AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist);
 
-
-
-
-
+		AcGePoint3dArray getPointsForSpline(const int &quantity,  AcDbSpline * const &pspline, double const &dist);
 
 
 private:
@@ -279,6 +279,27 @@ protected:
 
 public:
 	Adesk::Boolean subWorldDraw (AcGiWorldDraw *mode);
+	AcGePoint3d flexmidpoint;
+	Acad::ErrorStatus subGetGripPoints (
+		AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds
+		) const;
+
+	Acad::ErrorStatus subGetGripPoints (
+		AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
+		const AcGeVector3d &curViewDir, const int bitflags
+		) const ;
+
+	Acad::ErrorStatus subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset);
+
+
+	void	addfilerparam(AcDbDwgFiler *pFiler);
+
+	void	getfilerparam(AcDbDwgFiler *pFiler);
+
+	Acad::ErrorStatus subMoveGripPointsAt (
+		const AcDbVoidPtrArray &gripAppData, const AcGeVector3d &offset,
+		const int bitflags
+		) ;
 	TVS_FlexDuct  () ;
 	virtual ~TVS_FlexDuct  () ;
 };
