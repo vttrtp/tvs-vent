@@ -780,6 +780,8 @@ void TVS_Entity::setHideProperty(AcDbEntity *pEnt)
 	ListOfEntity.append(pEnt);
 }
 
+
+
 double TVS_Entity::get_WipeoutLength(void) const
 {
 	assertReadEnabled () ;

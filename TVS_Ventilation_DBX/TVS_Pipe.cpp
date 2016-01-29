@@ -100,9 +100,8 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (IsPipe) ;
 	pFiler->writeItem (Form) ;
 	pFiler->writeItem (WipeoutLength) ;
-	//pFiler->writeString (Tag1) ;
-	//pFiler->writeString (Tag2) ;
-	void	addfilerparam(AcDbDwgFiler &pFiler);
+	pFiler->writeItem (DuctType) ;
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -141,11 +140,9 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
-	//acutDelString(Tag1);
-	//acutDelString(Tag2);
-	//if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readString(&Tag1) ;
-	//if ( version >= 6 /*&& version <= endVersion*/ ) pFiler->readString(&Tag2) ;
-	void	getfilerparam(AcDbDwgFiler &pFiler);
+	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+	
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -943,15 +940,7 @@ void TVS_Pipe::setLastpoint (AcGePoint3d pLastpoint)
 	LastPoint=pLastpoint;
 }
 
-void TVS_Pipe::addfilerparam( AcDbDwgFiler *pFiler )
-{
 
-}
-
-void TVS_Pipe::getfilerparam( AcDbDwgFiler *pFiler )
-{
-
-}
 
 AcGePoint3d TVS_Pipe::getPointForSpline( AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist )
 {

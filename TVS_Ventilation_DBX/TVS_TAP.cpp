@@ -93,8 +93,7 @@ Acad::ErrorStatus TVS_TAP::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (RadiusConst) ;
 	pFiler->writeItem (MiddlePoint) ;
 	pFiler->writeItem (WipeoutLength) ;
-	//pFiler->writeString (Tag1) ;
-	//pFiler->writeString (Tag2) ;
+	pFiler->writeItem (DuctType) ;
 	return (pFiler->filerStatus ()) ;
 
 }
@@ -167,7 +166,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 
 		chekMiddlePoint();
 	}
-	
+	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
 
 	//acutDelString(Tag1);
 	//acutDelString(Tag2);

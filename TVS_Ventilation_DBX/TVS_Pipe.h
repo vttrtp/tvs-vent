@@ -241,9 +241,7 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 	Acad::ErrorStatus put_TVS_Point(AcGePoint3d newVal);
 		void setLastpoint (AcGePoint3d pLastpoint);
 
-	virtual void	addfilerparam(AcDbDwgFiler *pFiler);
 
-	virtual void	getfilerparam(AcDbDwgFiler *pFiler);
 
 	AcGePoint3d getPointForSpline(AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist);
 
