@@ -274,32 +274,20 @@ setWipeoutProperty(mode,wPline);
 
 		if (Grani==true)
 		{
-			AcGePoint2d garray[4];
-			garray[0]=AcGePoint2d(A.x,A.y);
-			garray[1]=AcGePoint2d(B.x,B.y);
-			garray[2]=AcGePoint2d(C.x,C.y);
-			garray[3]=AcGePoint2d(D.x,D.y);
-
-		AcDbPolyline*gPline=new AcDbPolyline(4);
-			for (int i=0;i<4; i++)
-			{
-				gPline->addVertexAt(i,garray[i]);
-			}
-			gPline->setClosed(true);
-			setMainProperty(gPline);
-		
+			AcDbLine	*Line1 = new AcDbLine(A,D);
+			AcDbLine	*Line2 = new AcDbLine(B,C);
+			setMainProperty(Line1); setMainProperty(Line2);
 		}
-		else
+	
 
-
-		{
+		
 		AcDbLine	*Line1 = new AcDbLine(A,B);
 		AcDbLine	*Line2 = new AcDbLine(D,C);
-setMainProperty(Line1);
-setMainProperty(Line2);
+		if (DuctType==DuctTypeStill) {setMainProperty(Line1); setMainProperty(Line2);}
+		if (DuctType==DuctTypeFlex) {setZigzagProperty(Line1); setZigzagProperty(Line2);}
 		
 
-		}
+		
 
 
 		if (ThisRound==true)
@@ -319,7 +307,8 @@ setMainProperty(Line2);
 		L1[0]=FirstPoint;
 		L1[1]=LastPoint;
 		AcDbLine * pLine=new AcDbLine(FirstPoint,LastPoint);
-		setMainProperty(pLine);
+		if (DuctType==DuctTypeStill) {setMainProperty(pLine); }
+		if (DuctType==DuctTypeFlex) {setZigzagProperty(pLine); }
 		
 	}
 
@@ -899,7 +888,7 @@ TVS_Pipe* TVS_Pipe::add_new(AcGePoint3d &pFirstPoint,
 	pEnt->ElevUp=0;
 	pEnt->IsPipe=false;
 	pEnt->Form=0;
-
+	pEnt->setNewParameters();
 	//TCHAR * pPipe->Tag2=new TCHAR
 
 	//pPipe->Tag2=ACRX_T("");
@@ -941,6 +930,12 @@ void TVS_Pipe::setLastpoint (AcGePoint3d pLastpoint)
 }
 
 
+
+void TVS_Pipe::setDuctType(int pDuctType)
+{
+	assertWriteEnabled();
+	DuctType=pDuctType;
+}
 
 AcGePoint3d TVS_Pipe::getPointForSpline( AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist )
 {

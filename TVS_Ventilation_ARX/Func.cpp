@@ -1098,6 +1098,12 @@ bool fWipeoutLength=true;
 double WipeoutLength=0;
 CString  sWipeoutLength;
 
+
+bool vDuctType=false;
+bool fDuctType=true;
+int DuctType=0;
+CString  sDuctType;
+
 TVS_Entity* tvsEnt;
 
 
@@ -1126,7 +1132,7 @@ acedSSLength(sset, &len);
 						
 
 						rprov(vWipeoutLength,fWipeoutLength,tvsEnt->WipeoutLength,WipeoutLength);
-					
+					rprov(vDuctType,fDuctType,tvsEnt->DuctType,DuctType);
 
 
 					}
@@ -1278,6 +1284,9 @@ acedSSLength(sset, &len);
 
 	strfil(WipeoutLength,vWipeoutLength,sWipeoutLength);
 	dg.WipeoutLength=sWipeoutLength;
+
+		strfil(DuctType,vDuctType,sDuctType);
+	dg.DuctType=sDuctType;
 
 	if (firstPipe==false
 		&&firstTap==false

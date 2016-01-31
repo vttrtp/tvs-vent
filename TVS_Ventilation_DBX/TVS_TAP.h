@@ -274,6 +274,7 @@ protected:
 	void DrawDirect();
 	void checkForm();
 	void chekMiddlePoint();
+		void setDuctType(int pDuctType);	
 
 } ;
 

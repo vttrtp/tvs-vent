@@ -59,6 +59,8 @@ BEGIN_MESSAGE_MAP(dgAllEdit, CAdUiBaseDialog)
 
 
 	ON_BN_CLICKED(IDOK, &dgAllEdit::OnBnClickedOk)
+	ON_BN_CLICKED(65535, &dgAllEdit::OnBnClicked65535)
+	ON_BN_CLICKED(10018, &dgAllEdit::OnBnClicked10018)
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
@@ -165,6 +167,9 @@ void dgAllEdit::DoDataExchange (CDataExchange *pDX) {
 
 		DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
 		DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
+
+		DDX_Control(pDX, IDC_DuctTypeFlex, fDuctType);
+		DDX_Check(pDX, IDC_DuctTypeFlex, iDuctType);
 }
 
 //-----------------------------------------------------------------------------
@@ -286,7 +291,10 @@ if (Ttap==true)
 		break;
 	}
 
-
+	if (DuctType==DuctTypeFlex)
+	{
+		fDuctType.SetCheck(1);
+	}
 }
 
 
@@ -415,6 +423,15 @@ void dgAllEdit::ChangeGrani()
 void dgAllEdit::ChangeD1()
 {
 	change_BOOL(D1,fD1);
+}
+
+
+void dgAllEdit::ChangeDuctType()
+{
+		change_BOOL(DuctType,fDuctType);
+
+		var=1;
+		but.SetCheck(1);
 }
 
 void dgAllEdit::SetForm_Up()
@@ -594,3 +611,7 @@ void dgAllEdit::OnBnClickedOk()
 	this->OnOK();
 	// TODO: добавьте свой код обработчика уведомлений
 }
+
+
+
+

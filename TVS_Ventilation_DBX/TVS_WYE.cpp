@@ -1037,7 +1037,7 @@ TVS_WYE *TVS_WYE::add_new(
 	pEnt->Param=0;
 	pEnt->IsPipe=false;
 	pEnt->Form=0;
-
+	pEnt->setNewParameters();
 	pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
 
 	AcDbBlockTable *pBlockTable;

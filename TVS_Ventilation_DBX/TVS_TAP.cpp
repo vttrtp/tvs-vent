@@ -273,7 +273,118 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 		MiddlePoint.z
 		);
 
-	//TypeRoundTap==TypeRoundTap_TapRect
+
+
+#pragma region FlexDuct
+if (DuctType==DuctTypeFlex)
+{
+	if (Form==Form_Direct)
+	{
+		
+		A=AcGePoint3d((Radius+SizeA)*cos(startangle)+CenterPoint.x,
+			(Radius+SizeA)*sin(startangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+		B=AcGePoint3d((Radius+SizeA)*cos(startangle+Swectangle)+CenterPoint.x,
+			(Radius+SizeA)*sin(startangle+Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+		C=AcGePoint3d((Radius)*cos(startangle+Swectangle)+CenterPoint.x,
+			(Radius)*sin(startangle+Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+		D=AcGePoint3d((Radius)*cos(startangle)+CenterPoint.x,
+			(Radius)*sin(startangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+
+		MA=AcGePoint3d((Radius+SizeA/2)*cos(startangle)+CenterPoint.x,
+			(Radius+SizeA/2)*sin(startangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+		MC=AcGePoint3d((Radius+SizeA/2)*cos(startangle+Swectangle)+CenterPoint.x,
+			(Radius+SizeA/2)*sin(startangle+Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+		L1[0]=A;
+		L1[1]=D;
+		L2[0]=B;
+		L2[1]=C;
+
+		if (Wipeout==true)
+		{
+
+
+
+
+
+			AcGePoint2d p[2];
+			p[0]=AcGePoint2d(MA.x,MA.y);
+			p[1]=AcGePoint2d(MC.x,MC.y);
+
+			AcDbPolyline *pLn = new AcDbPolyline(2);
+
+
+
+			pLn->addVertexAt(0,p[0],tan(Swectangle/4));
+			pLn->addVertexAt(1,p[1],tan(Swectangle/4));
+
+			setWipeoutProperty(mode,pLn);
+
+
+
+		}///////
+
+		if (This1D==true)
+		{
+
+			AcDbArc *arcie1=new AcDbArc(CenterPoint,Normvector,Radius+SizeA/2,startangle,startangle+Swectangle);
+			setZigzagProperty(arcie1);
+
+
+		}
+		else
+		{
+
+
+
+			AcDbArc *arcie1= new AcDbArc(CenterPoint,Normvector,Radius+SizeA,startangle,startangle+Swectangle);
+			AcDbArc *arcie2= new AcDbArc(CenterPoint,Normvector,Radius,startangle,startangle+Swectangle);
+				AcDbArc *arcie3= new AcDbArc(CenterPoint,Normvector,Radius+SizeA/2,startangle,startangle+Swectangle);
+			AcDbLine*pLine1 = new AcDbLine(this->A,this->D);
+			AcDbLine*pLine2 = new AcDbLine(this->B,this->C);
+
+
+
+
+			setZigzagProperty(arcie1);
+			setZigzagProperty(arcie2);
+			setCenterProperty(arcie3);
+// 			setMainProperty(pLine1);
+// 			setMainProperty(pLine2);
+
+
+
+
+
+
+
+
+		}
+	}
+
+}
+
+#pragma endregion Flexduct
+
+#pragma region Duct Type Still
+
+if (DuctType==DuctTypeStill)
+{
+
 
 	if (ThisRound==false)
 
@@ -365,10 +476,14 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 				AcDbLine*pLine2 = new AcDbLine(this->B,this->C);
 
 
-				setMainProperty(arcie1);
-				setMainProperty(arcie2);
-				setMainProperty(pLine1);
-				setMainProperty(pLine2);
+
+
+					setMainProperty(arcie1);
+					setMainProperty(arcie2);
+					setMainProperty(pLine1);
+					setMainProperty(pLine2);
+
+
 
 
 			
@@ -1468,7 +1583,11 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 
 }
-	
+	}
+
+#pragma endregion Duct type still
+
+
 for each (AcDbEntity * var in ListOfWipeout)
 {
 	mode->geometry().draw(var);
@@ -1874,7 +1993,7 @@ TVS_TAP *TVS_TAP::add_new( double &pSizeA,
 	pEnt->RadiusVariableParameter=1;
 	pEnt->RadiusConst=150;
 	pEnt->Form=Form_Direct;
-
+	pEnt->setNewParameters();
 
 	if (pThisRound==true)
 	{
@@ -2510,7 +2629,11 @@ double TVS_TAP::get_radius(void) const
 
 void TVS_TAP::setRadius()
 {
-
+	if (DuctType==DuctTypeFlex)
+	{
+		Radius=SizeA*RadiusVariableParameter;
+		return;
+	}
 	if (ThisRound==true)
 	{
 		switch ((int)RadiusTypeRound)
@@ -2696,4 +2819,9 @@ void TVS_TAP::chekMiddlePoint()
 	return;
 }
 
+void TVS_TAP::setDuctType(int pDuctType)
+{
+	assertWriteEnabled();
+	DuctType=pDuctType;
+}
 

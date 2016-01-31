@@ -777,10 +777,28 @@ void TVS_Entity::setHideProperty(AcDbEntity *pEnt)
 	pEnt->setLayer(this->layerId());
 	pEnt->setLinetype(ltId);
 	pEnt->setColor(this->color());
+	pEnt->setLinetypeScale(this->linetypeScale());
 	ListOfEntity.append(pEnt);
 }
 
 
+
+void TVS_Entity::setZigzagProperty(AcDbEntity *pEnt)
+{
+	AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
+	AcDbLinetypeTable *pLtTable;
+	AcDbObjectId ltId;
+	pDb->getSymbolTable(pLtTable, AcDb::kForRead);
+	pLtTable->getAt(_T("tvs_zigzag"), ltId);
+
+	pLtTable->close();
+		pEnt->setLineWeight(this->lineWeight());
+	pEnt->setLayer(this->layerId());
+	pEnt->setLinetype(ltId);
+	pEnt->setColor(this->color());
+		pEnt->setLinetypeScale(this->linetypeScale());
+	ListOfEntity.append(pEnt);
+}
 
 double TVS_Entity::get_WipeoutLength(void) const
 {
@@ -793,6 +811,36 @@ Acad::ErrorStatus TVS_Entity::put_WipeoutLength(double newVal)
 	assertWriteEnabled () ;
 	WipeoutLength=newVal;
 	return Acad::eOk;
+}
+
+void TVS_Entity::setFlex()
+{
+	assertWriteEnabled () ;
+	DuctType=DuctTypeFlex;
+}
+
+void TVS_Entity::setStill()
+{
+	assertWriteEnabled () ;
+	DuctType=DuctTypeStill;
+}
+
+int TVS_Entity::getDuctType()
+{
+	assertReadEnabled();
+	return DuctType;
+}
+
+void TVS_Entity::setDuctType(int pDuctType)
+{
+	assertWriteEnabled();
+	DuctType=pDuctType;
+}
+
+void TVS_Entity::setNewParameters()
+{
+	assertWriteEnabled();
+	DuctType=DuctTypeStill;
 }
 
 void TVS_Entity::setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt)

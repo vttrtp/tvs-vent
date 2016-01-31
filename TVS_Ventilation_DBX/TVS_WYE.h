@@ -202,8 +202,8 @@ public:
 	AcGeVector3d get_Vectotv(void) const;
 	Acad::ErrorStatus put_Vectotv(AcGeVector3d newVal);
 
-
-
+	void setFlex();
+	void setStill();
 
 
 protected:

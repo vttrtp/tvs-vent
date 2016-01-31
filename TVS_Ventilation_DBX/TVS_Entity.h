@@ -51,7 +51,7 @@
 #define TVS_Version 24
 #define M_PI 3.14159265358979323846
 #define DuctTypeStill 0
-#define DuctTypeFlex 0
+#define DuctTypeFlex 1
 #include <ObjBase.h>
 #include <InitGuid.h>
 #include "dbmain.h"
@@ -271,10 +271,14 @@ public:
 	void setCenterProperty(AcDbEntity *pEnt);
 	void setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt);
 	void setHideProperty(AcDbEntity *pEnt);
-
+	void setZigzagProperty(AcDbEntity *pEnt);
 	double get_WipeoutLength(void) const;
 	Acad::ErrorStatus put_WipeoutLength(double newVal);
-
+	void setFlex();
+	void setStill();
+	int getDuctType();
+	void setDuctType(int pDuctType);
+	void setNewParameters();
 } ;
 
 #ifdef TVS_VENTILATION_DBX_MODULE

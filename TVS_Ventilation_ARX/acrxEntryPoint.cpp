@@ -1866,6 +1866,7 @@ static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
 		pEnt->put_This1D(pPipe->get_This1D());
 		pEnt->put_Flow(pPipe->get_Flow());
 		pEnt->put_Elevation(pPipe->get_Elevation());
+		pEnt->setDuctType(pPipe->getDuctType());
 		pEnt->setColor(pPipe->color());
 		pEnt->setLineWeight(pPipe->lineWeight());
 		pEnt->setLayer(pPipe->layer());
@@ -1905,7 +1906,10 @@ static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
 	globalGrani=pEnt->get_Grani();
 	global1D=pEnt->get_This1D();
 	globalFlow=pEnt->get_Flow();
+	globalDuctType=pEnt->getDuctType();
 	globalElevMid=pEnt->get_Elevation();
+	
+
 //	pEnt->close();
  }
 static void SetGlobalProperty( TVS_Entity *pEnt )
@@ -1939,8 +1943,7 @@ static void SetGlobalProperty( TVS_Entity *pEnt )
 	pEnt->put_This1D(global1D);
 	pEnt->put_Flow(globalFlow);
 	pEnt->put_Elevation(globalElevMid);
-
-
+	pEnt->setDuctType(globalDuctType);
 
 
 	if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
@@ -2652,9 +2655,10 @@ static bool drawStep2(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
 
 
 	pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
-
+	
 	if (acdbOpenAcDbEntity(pEnt,pipi->id(),AcDb::kForWrite)==eOk)
 	{		
+		
 		pipi->close();
 	}
 	else
@@ -6036,7 +6040,7 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 
 static void Ventilation_ARXTVS_Flex(void)
 {
-	TVS_FlexDuct* pEnt=new TVS_FlexDuct();
+	TVS_Pipe* pEnt=new TVS_Pipe();
 	
 	pEnt->FirstPoint=AcGePoint3d(0,0,0);
 	pEnt->LastPoint=AcGePoint3d(3000,0,0);
@@ -6054,7 +6058,7 @@ static void Ventilation_ARXTVS_Flex(void)
 	pEnt->ElevUp=0;
 	pEnt->IsPipe=false;
 	pEnt->Form=0;
-
+	pEnt->setFlex();
 	//TCHAR * pPipe->Tag2=new TCHAR
 
 	//pPipe->Tag2=ACRX_T("");

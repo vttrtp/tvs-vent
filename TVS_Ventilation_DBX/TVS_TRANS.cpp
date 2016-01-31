@@ -324,7 +324,7 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 			pl2->addVertexAt(i,AcGePoint2d(mass3[i].x,mass3[i].y));
 			}
 		
-	setCenterProperty(pl2);
+	setMainProperty(pl2);
 		}
 		if ((ThisRoundp1==false)&&(ThisRoundp2==true))
 		{
@@ -337,7 +337,7 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 			{
 				pl2->addVertexAt(i,AcGePoint2d(mass4[i].x,mass4[i].y));
 			}
-			setCenterProperty(pl2);
+			setMainProperty(pl2);
 		}
 
 	} 
@@ -969,7 +969,7 @@ TVS_TRANS *TVS_TRANS::add_new(
 	pEnt->Param=0;
 	pEnt->IsPipe=false;
 	pEnt->Form=0;
-
+	pEnt->setNewParameters();
 	AcDbBlockTable *pBlockTable;
 	pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
 	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,

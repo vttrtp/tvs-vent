@@ -203,6 +203,10 @@ public:
 
 	CEdit fWipeoutLength;
 	double WipeoutLength;
+
+	CButton fDuctType;
+	CString DuctType;
+	BOOL fDuctType;
 //	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 
 	afx_msg void OnBnClickedOk();

@@ -155,7 +155,7 @@ static double globalLengthW=50;
 static double globalElevMid=0;
 static double globalElev=globalElevdown;
 static double globalAxis=90;
-
+static int globalDuctType=DuctTypeStill;
 static double globalWipeoutLength=50;
 
 void TVS_CS (AcDbEntity *pEnt);
