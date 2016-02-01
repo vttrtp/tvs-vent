@@ -187,7 +187,7 @@ void dgAllEdit::OnShowWindow(BOOL bShow, UINT nStatus)
 	fSizeA.SetFocus();
 
   SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
-
+  	iDuctType=_wtoi(DuctType);
 	if(Tpipe==false)
 	{
 		
@@ -291,7 +291,7 @@ if (Ttap==true)
 		break;
 	}
 
-	if (DuctType==DuctTypeFlex)
+	if (iDuctType==DuctTypeFlex)
 	{
 		fDuctType.SetCheck(1);
 	}
@@ -428,10 +428,19 @@ void dgAllEdit::ChangeD1()
 
 void dgAllEdit::ChangeDuctType()
 {
-		change_BOOL(DuctType,fDuctType);
+		//change_BOOL(iDuctType,fDuctType);
 
-		var=1;
-		but.SetCheck(1);
+	if (iDuctType==1)
+	{
+		iDuctType=0;
+		fDuctType.SetCheck(0);
+
+	}
+	else
+	{
+		iDuctType=1;
+		fDuctType.SetCheck(1);
+	}
 }
 
 void dgAllEdit::SetForm_Up()
