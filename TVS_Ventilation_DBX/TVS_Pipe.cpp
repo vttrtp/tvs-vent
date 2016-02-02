@@ -937,6 +937,48 @@ void TVS_Pipe::setDuctType(int pDuctType)
 	DuctType=pDuctType;
 }
 
+Acad::ErrorStatus TVS_Pipe::put_SizeB(double newVal)
+{
+	assertWriteEnabled () ;
+
+
+	if (DuctType==DuctTypeStill)
+	{
+
+		if((ThisRound==true)&&(newVal!=0))
+		{
+
+			ThisRound=false;
+			SizeB=newVal;
+			return (Acad::eOk) ;
+
+		}
+
+		if((ThisRound==false)&&(newVal==0))
+		{
+
+			ThisRound=true;
+
+			SizeB=newVal;
+			return (Acad::eOk) ;
+
+		}	
+
+
+
+
+		SizeB =newVal ;
+
+	}
+	else
+	{
+		SizeB=0;
+		ThisRound=true;
+		SizeB=0;
+	}
+	return (Acad::eOk) ;
+}
+
 AcGePoint3d TVS_Pipe::getPointForSpline( AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist )
 {
 	AcGeVector3d splinetangent;

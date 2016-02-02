@@ -80,7 +80,7 @@ class SPEClist
 		int checkRelevations(SPEC param1, SPEC param2);
 		void print();
 		
-		void printSPDSForm(AcGePoint3d cent);
+		void printSPDSForm(AcGePoint3d &cent);
 		void printText(AcGePoint3d cent, const ACHAR * pAchar);
 	static	void printLine(AcGePoint3d start, AcGePoint3d end);
 };

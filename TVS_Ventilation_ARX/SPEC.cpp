@@ -89,7 +89,18 @@ bool SPEC::add(AcDbEntity * pEnt)
 			Length=pPipe->get_Length();
 			setUnit1(_T("м"));
 			setUnit2(_T("м2"));
-
+			if (pPipe->DuctType==DuctTypeFlex)
+			{
+				status=PipeRound;
+				setName(_T("Воздуховод гибкий"));
+				setLable(_T(d));
+				appendLable(SizeA);
+				Area=Length*M_PI*SizeA/1000000;
+				setParam1(Length/1000, TypeDouble1);
+				setParam2(Area, TypeDouble2);
+			}
+			else
+			{
 		if (SizeB==0) 
 			{
 					status=PipeRound;
@@ -116,18 +127,43 @@ bool SPEC::add(AcDbEntity * pEnt)
 		setParam1(Length/1000, TypeDouble1);
 		setParam2(Area, TypeDouble2);
 		}
+		}
 	#pragma endregion
 
 		#pragma region Tap
 		if(pTap = TVS_TAP::cast(pEnt))
 		{
 			
-			SizeA=pTap->get_SizeA();
-			SizeB=pTap->get_SizeB();
 
-			setUnit1(_T("шт"));
-			setUnit2(_T("м2"));
-			Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
+
+
+			if (pTap->DuctType==DuctTypeFlex)
+			{
+				SizeA=pTap->get_SizeA();
+				SizeB=pTap->get_SizeB();
+
+				setUnit1(_T("м"));
+				setUnit2(_T("м2"));
+
+				status=PipeRound;
+				setName(_T("Воздуховод гибкий"));
+				setLable(_T(d));
+				appendLable(SizeA);
+				Length=M_PI*pTap->Radius*pTap->Swectangle/2/M_PI/1000;
+				Area=Length*M_PI*SizeA/1000;
+
+				setParam1(Length, TypeDouble1);
+				setParam2(Area, TypeDouble2);
+			}
+			else
+			{
+				Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
+				SizeA=pTap->get_SizeA();
+				SizeB=pTap->get_SizeB();
+
+				setUnit1(_T("шт"));
+				setUnit2(_T("м2"));
+
 			if (SizeB==0) 
 			{
 				status=TapRound;
@@ -159,6 +195,7 @@ bool SPEC::add(AcDbEntity * pEnt)
 			appendLable(_T("%%d)"));
 			setParam1(1, TypeDouble1);
 			setParam2(Area, TypeDouble2);
+		}
 		}
 		#pragma endregion
 		#pragma region Wye
@@ -502,7 +539,9 @@ void SPEClist::print()
 	}
 }
 
-void SPEClist::printSPDSForm(AcGePoint3d cent)
+
+
+void SPEClist::printSPDSForm(AcGePoint3d &cent)
 {
 	//int columnswidth[9]={2000,13000,6000,3500,4500,2000,2000,2500,4000};
 	int columnswidth[10]={0, 2000,15000,21000,24500,29000,31000,33000,35500,39500};
@@ -595,6 +634,7 @@ for (int i =-1; i<length+2;i++)
 	end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
 	printLine(start,end);
 }
+cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
 print();
 acutPrintf(_T("\nИтого м2: %s"),sA);
 }

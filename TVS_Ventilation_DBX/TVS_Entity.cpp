@@ -796,7 +796,8 @@ void TVS_Entity::setZigzagProperty(AcDbEntity *pEnt)
 	pEnt->setLayer(this->layerId());
 	pEnt->setLinetype(ltId);
 	pEnt->setColor(this->color());
-		pEnt->setLinetypeScale(this->linetypeScale());
+		//pEnt->setLinetypeScale(this->linetypeScale());
+	pEnt->setLinetypeScale(1);
 	ListOfEntity.append(pEnt);
 }
 

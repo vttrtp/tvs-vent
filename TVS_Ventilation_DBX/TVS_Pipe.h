@@ -242,7 +242,7 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 		void setLastpoint (AcGePoint3d pLastpoint);
 
 		void setDuctType(int pDuctType);
-
+		Acad::ErrorStatus put_SizeB(double newVal);
 	AcGePoint3d getPointForSpline(AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist);
 
 		AcGePoint3dArray getPointsForSpline(const int &quantity,  AcDbSpline * const &pspline, double const &dist);

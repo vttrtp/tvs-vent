@@ -376,6 +376,198 @@ if (DuctType==DuctTypeFlex)
 		}
 	}
 
+	////Updown
+	else
+	{
+
+
+		MA=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		MC=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			(SizeA/2+Radius)*sin(Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+
+
+
+
+		AcGePoint3d t1=AcGePoint3d(Radius+SizeA+CenterPoint.x,
+			CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+
+		AcGePoint3d t2=AcGePoint3d(Radius+SizeA+CenterPoint.x,
+			CenterPoint.y+(Radius+SizeA/2)*sin(Swectangle),
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		AcGePoint3d t3=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			CenterPoint.y+(Radius+SizeA)*sin(Swectangle),
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		AcGePoint3d t4=AcGePoint3d(Radius+CenterPoint.x,
+			CenterPoint.y+(Radius+SizeA/2)*sin(Swectangle),
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		AcGePoint3d t5=AcGePoint3d(Radius+CenterPoint.x,
+			CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+
+		AcGePoint3d mm=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			(SizeA/2+Radius)*sin(Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+		AcGePoint3d p1=AcGePoint3d(mm.x+SizeA/2+Otstup,
+			mm.y,
+			mm.z
+			);
+
+		AcGePoint3d p2=AcGePoint3d(mm.x,
+			mm.y+(Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle)+Otstup,
+			mm.z
+			);
+		AcGePoint3d p3=AcGePoint3d(mm.x-SizeA/2-Otstup,
+			mm.y,
+			mm.z
+			);
+		AcGePoint3d p4=AcGePoint3d(mm.x,
+			mm.y-(Radius+SizeA)*sin(Swectangle)+(Radius+SizeA/2)*sin(Swectangle)-Otstup,
+			mm.z
+			);
+		AcGePoint3d p5=AcGePoint3d(mm.x,
+			CenterPoint.y,
+			mm.z
+			);
+
+
+
+		AcDbEllipse* el=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(SizeA/2,0,0),((Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle))/(SizeA/2),0,M_PI);
+		AcDbEllipse* el2=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(SizeA/2,0,0),((Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle))/(SizeA/2),M_PI,0);
+		AcDbEllipse* el3;
+		double radiusparam;
+		double radius2=(Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle);
+		if (radius2<=SizeA*3/8)
+		{
+			el3=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(SizeA*3/8,0,0),radius2/(SizeA*3/8),M_PI*3/2,M_PI/2);
+		}
+		else
+		{
+			el3=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(0,radius2,0),(SizeA*3/8)/radius2,M_PI,0);
+		}
+
+
+
+		AcDbLine*pLine1 = new AcDbLine(p1,p3);
+		AcDbLine*pLine2 = new AcDbLine(p2,p5);
+
+		AcDbLine*pLn1 = new AcDbLine(t2,t1);
+		AcDbLine*pLn2 = new AcDbLine(t5,t4);
+// 				AcDbPolyline*pLn = new AcDbPolyline();
+// 		pLn->addVertexAt(0,AcGePoint2d(t2.x,t2.y));
+// 		pLn->addVertexAt(1,AcGePoint2d(t1.x,t1.y));
+// 		pLn->addVertexAt(2,AcGePoint2d(t5.x,t5.y));
+// 		pLn->addVertexAt(3,AcGePoint2d(t4.x,t4.y));
+
+
+		AcGeMatrix3d mat; 
+		mat.setToRotation(startangle,AcGeVector3d(0,0,1),CenterPoint); 
+
+
+		el->transformBy(mat);
+		el2->transformBy(mat);
+		el3->transformBy(mat);
+		pLine1->transformBy(mat);
+		pLine2->transformBy(mat);
+
+		if (Wipeout==true)
+		{
+			AcDbPolyline*pLn = new AcDbPolyline();
+			pLn->addVertexAt(0,AcGePoint2d(MA.x,MA.y));
+			pLn->addVertexAt(1,AcGePoint2d(t3.x,t3.y));
+			setWipeoutProperty(mode,pLn);
+
+		}
+
+		if (This1D==true)
+		{
+			AcDbLine*pLine1 = new AcDbLine(MA,mm.rotateBy(startangle,vectr,CenterPoint));
+			setZigzagProperty(pLine1);
+			AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+			setMainProperty(crcl);
+		}
+
+		else 
+		{
+			double l1=(double) 89.5*M_PI/180, l2=90.5*(double)M_PI/180;
+			if (Form==Form_Up)
+			{
+
+				if ((Swectangle> l1) && (Swectangle< l2))
+				{
+
+					setMainProperty(el);
+					setMainProperty(el2);
+					setMainProperty(el3);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+				}
+				else
+				{
+
+					setHideProperty(el);
+					setMainProperty(el2);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+				}
+			}
+			else
+			{
+				if ((Swectangle> l1) && (Swectangle< l2))
+				{
+
+					setMainProperty(el);
+					setHideProperty(el2);
+					setCenterProperty(el3);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+
+				}
+				else
+				{
+
+					setMainProperty(el);
+					setHideProperty(el2);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+				}
+			}
+
+
+
+
+		}
+
+
+
+
+
+	}
+
 }
 
 #pragma endregion Flexduct
@@ -2088,7 +2280,9 @@ Acad::ErrorStatus TVS_TAP::put_SizeB(double newVal)
 	assertWriteEnabled () ;
 
 
-
+	if (DuctType==DuctTypeStill)
+	{
+	
 	if((ThisRound==true)&&(newVal!=0))
 	{
 
@@ -2102,7 +2296,7 @@ Acad::ErrorStatus TVS_TAP::put_SizeB(double newVal)
 	{
 
 		ThisRound=true;
-		
+
 		SizeB=newVal;
 		return (Acad::eOk) ;
 
@@ -2112,6 +2306,14 @@ Acad::ErrorStatus TVS_TAP::put_SizeB(double newVal)
 
 
 	SizeB =newVal ;
+
+	}
+	else
+	{
+		SizeB=0;
+		ThisRound=true;
+		SizeB=0;
+	}
 	return (Acad::eOk) ;
 }
 
