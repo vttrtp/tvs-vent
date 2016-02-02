@@ -1229,3 +1229,21 @@ Acad::ErrorStatus TVS_WYE::put_Vectotv(AcGeVector3d newVal)
 	return (Acad::eOk) ;
 }
 
+void TVS_WYE::setFlex( const bool &isFlex )
+{
+	assertWriteEnabled();
+	if (isFlex)
+	{
+		put_SizeB(0);
+	}
+
+}
+
+void TVS_WYE::setDuctType( int pDuctType )
+{
+	if (pDuctType==DuctTypeFlex)
+	{
+		DuctType=DuctTypeStill;
+	}
+}
+

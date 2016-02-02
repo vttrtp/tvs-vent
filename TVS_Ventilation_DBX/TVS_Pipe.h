@@ -246,7 +246,7 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 	AcGePoint3d getPointForSpline(AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist);
 
 		AcGePoint3dArray getPointsForSpline(const int &quantity,  AcDbSpline * const &pspline, double const &dist);
-
+		void setFlex(const bool &isFlex);
 
 private:
 	AcGePoint3d					   mCenter;

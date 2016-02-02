@@ -1099,10 +1099,10 @@ double WipeoutLength=0;
 CString  sWipeoutLength;
 
 
-bool vDuctType=false;
-bool fDuctType=true;
-int DuctType=0;
-CString  sDuctType;
+bool vDuctFlex=false;
+bool fDuctFlex=true;
+bool DuctFlex=0;
+BOOL  sDuctFlex;
 
 TVS_Entity* tvsEnt;
 
@@ -1132,7 +1132,7 @@ acedSSLength(sset, &len);
 						
 
 						rprov(vWipeoutLength,fWipeoutLength,tvsEnt->WipeoutLength,WipeoutLength);
-					rprov(vDuctType,fDuctType,tvsEnt->DuctType,DuctType);
+					rprov(vDuctFlex,fDuctFlex,tvsEnt->isDuctFlex(),DuctFlex);
 
 
 					}
@@ -1285,8 +1285,8 @@ acedSSLength(sset, &len);
 	strfil(WipeoutLength,vWipeoutLength,sWipeoutLength);
 	dg.WipeoutLength=sWipeoutLength;
 
-		strfil(DuctType,vDuctType,sDuctType);
-	dg.DuctType=sDuctType;
+		strfil(DuctFlex,vDuctFlex,sDuctFlex);
+	dg.DuctFlex=sDuctFlex;
 
 	if (firstPipe==false
 		&&firstTap==false
@@ -1350,6 +1350,8 @@ acedSSLength(sset, &len);
 	bool cWipeoutLength=true;
 	sequal(WipeoutLength,sWipeoutLength,dg.WipeoutLength,cWipeoutLength);
 
+	bool cDuctFlex=true;
+	sequal(DuctFlex,sDuctFlex,dg.DuctFlex,cDuctFlex);
 	///определение выравнивания
 	int Emode=0;//по центру
 	if (dg.ElevUp==1)//по верху
@@ -1389,7 +1391,7 @@ acedSSLength(sset, &len);
 
 
 						if (cWipeoutLength==false) tvsEnt->put_WipeoutLength(WipeoutLength);
-
+							if (cDuctFlex==false) tvsEnt->setFlex(DuctFlex);
 
 
 					}
@@ -1617,6 +1619,12 @@ void func::Change (AcDbEntity *pEnt)
 	double WipeoutLength=0;
 	CString  sWipeoutLength;
 
+
+	bool vDuctFlex=false;
+	bool fDuctFlex=true;
+	bool DuctFlex=0;
+	BOOL  sDuctFlex;
+
 	TVS_Entity* tvsEnt;
 
 	if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
@@ -1626,7 +1634,7 @@ void func::Change (AcDbEntity *pEnt)
 
 		rprov(vWipeoutLength,fWipeoutLength,tvsEnt->WipeoutLength,WipeoutLength);
 
-
+		rprov(vDuctFlex,fDuctFlex,tvsEnt->isDuctFlex(),DuctFlex);
 
 	}
 
@@ -1776,6 +1784,9 @@ void func::Change (AcDbEntity *pEnt)
 	strfil(WipeoutLength,vWipeoutLength,sWipeoutLength);
 	dg.WipeoutLength=sWipeoutLength;
 
+	strfil(DuctFlex,vDuctFlex,sDuctFlex);
+	dg.DuctFlex=sDuctFlex;
+
 	if (firstPipe==false
 		&&firstTap==false
 		&&firstTrans==false
@@ -1851,6 +1862,8 @@ void func::Change (AcDbEntity *pEnt)
 	bool cWipeoutLength=true;
 	sequal(WipeoutLength,sWipeoutLength,dg.WipeoutLength,cWipeoutLength);
 
+	bool cDuctFlex=true;
+	sequal(DuctFlex,sDuctFlex,dg.DuctFlex,cDuctFlex);
 
 
 	if(pEnt->upgradeOpen()==Acad::eOk)
@@ -1865,7 +1878,7 @@ void func::Change (AcDbEntity *pEnt)
 
 			if (cWipeoutLength==false) tvsEnt->put_WipeoutLength(WipeoutLength);
 
-
+			if (cDuctFlex==false) tvsEnt->setFlex(DuctFlex);
 
 		}
 
@@ -2409,7 +2422,7 @@ void func::rprov (bool &variableconst,
 
 void func::rprov (bool &variableconst, 
 				  bool &firstvariable,
-				  bool &objectvar,
+				  const bool  &objectvar,
 				  bool &myvar)
 
 {

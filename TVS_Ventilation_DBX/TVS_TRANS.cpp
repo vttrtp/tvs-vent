@@ -52,6 +52,25 @@ Acad::ErrorStatus TVS_TRANS::subGetClassID (CLSID *pClsid) const {
 
 	return (Acad::eOk) ;
 }
+
+void TVS_TRANS::setFlex( const bool &isFlex )
+{
+	assertWriteEnabled();
+	if (isFlex)
+	{
+		put_SizeB(0);
+	}
+
+}
+
+void TVS_TRANS::setDuctType( int pDuctType )
+{
+	if (pDuctType==DuctTypeFlex)
+	{
+		DuctType=DuctTypeStill;
+	}
+}
+
 //-----------------------------------------------------------------------------
 //----- AcDbObject protocols
 //- Dwg Filing protocol
@@ -324,7 +343,7 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 			pl2->addVertexAt(i,AcGePoint2d(mass3[i].x,mass3[i].y));
 			}
 		
-	setMainProperty(pl2);
+	setThinProperty(pl2);
 		}
 		if ((ThisRoundp1==false)&&(ThisRoundp2==true))
 		{
@@ -337,7 +356,7 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 			{
 				pl2->addVertexAt(i,AcGePoint2d(mass4[i].x,mass4[i].y));
 			}
-			setMainProperty(pl2);
+			setThinProperty(pl2);
 		}
 
 	} 

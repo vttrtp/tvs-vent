@@ -977,6 +977,22 @@ AcGePoint3dArray TVS_Pipe::getPointsForSpline( const int &quantity, AcDbSpline *
 	return arr;
 }
 
+void TVS_Pipe::setFlex( const bool &isFlex )
+{
+	assertWriteEnabled();
+	if (isFlex)
+	{
+		DuctType=DuctTypeFlex;
+		put_SizeB(0);
+	}
+	else
+	{
+		DuctType=DuctTypeStill;
+		
+	}
+	
+}
+
 // -----------------------------------------------------------------------------
 Acad::ErrorStatus TVS_Pipe::subExplode(AcDbVoidPtrArray & entitySet) const
 {

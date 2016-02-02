@@ -2081,6 +2081,8 @@ static bool changesize ()
 	dg.TapRadiusConst=globalTapRadiusConst;
 
 	dg.WipeoutLength=globalWipeoutLength;
+	if (globalDuctType==DuctTypeFlex) dg.DuctFlex=TRUE; else dg.DuctFlex=FALSE;
+	
 	//AcApDocument *pDoc=acDocManager->curDocument();
 	//acDocManager->lockDocument(pDoc,AcAp::kWrite);
 
@@ -2110,6 +2112,7 @@ static bool changesize ()
 
 	globalWipeoutLength=dg.WipeoutLength;
 
+	if (dg.DuctFlex==TRUE) {globalDuctType=DuctTypeFlex; globSizeB=0;} else globalDuctType=DuctTypeStill;
 	if (globSizeB==0) globRound=true;
 	else globRound=false;
 	if (a==globSizeA && b==globSizeB)
@@ -6058,7 +6061,7 @@ static void Ventilation_ARXTVS_Flex(void)
 	pEnt->ElevUp=0;
 	pEnt->IsPipe=false;
 	pEnt->Form=0;
-	pEnt->setFlex();
+	pEnt->setFlex(true);
 	//TCHAR * pPipe->Tag2=new TCHAR
 
 	//pPipe->Tag2=ACRX_T("");
@@ -6098,7 +6101,7 @@ static void Ventilation_ARXTVS_SPEC(void)
 		return;
 	pb=asPnt3d(pt1);
 	long len = 0;
-	SPEClist speclist;
+	SPEClist speclist, speclistflex;
 	acedSSLength(sset, &len);
 	//consoleprint(double(len),_T("\nL: "));
 	for (long i = 0; i < len; i++)
@@ -6117,13 +6120,28 @@ static void Ventilation_ARXTVS_SPEC(void)
 				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
 				{
 				
+				if ( (Ent = TVS_Entity::cast(pEnt)) != NULL )
 				
-				pEnt->close();
-				SPEC spec;
-				if(spec.add(pEnt)==true)
+
+				if (Ent->isDuctFlex())
 				{
-					speclist.append(spec);
+					SPEC spec;
+					if(spec.add(pEnt)==true)
+					{
+						speclistflex.append(spec);
+					}
 				}
+				
+				else
+				{
+					SPEC spec;
+					if(spec.add(pEnt)==true)
+					{
+						speclist.append(spec);
+					}
+				}
+
+				pEnt->close();
 				}
 		}
 	}
@@ -6133,7 +6151,11 @@ static void Ventilation_ARXTVS_SPEC(void)
 				//speclist.print();
 			speclist.printSPDSForm(pb);
 		}
-
+		if (speclistflex.specList.physicalLength()!=0)
+		{
+			//speclist.print();
+			speclistflex.printSPDSForm(pb);
+		}
 
 }
 

@@ -57,10 +57,10 @@ BEGIN_MESSAGE_MAP(dgAllEdit, CAdUiBaseDialog)
 	ON_BN_CLICKED(IDC_TapRadiusRectConst, &dgAllEdit::SetRadiusTypeRect_RadiusConstant)
 	ON_BN_CLICKED(IDC_TapRadiusRectVariable, &dgAllEdit::SetRadiusTypeRect_RadiusVariable)
 
+	ON_BN_CLICKED(IDC_DuctFlex, &dgAllEdit::ChangeDuctFlex)
 
 	ON_BN_CLICKED(IDOK, &dgAllEdit::OnBnClickedOk)
-	ON_BN_CLICKED(65535, &dgAllEdit::OnBnClicked65535)
-	ON_BN_CLICKED(10018, &dgAllEdit::OnBnClicked10018)
+
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
@@ -168,8 +168,8 @@ void dgAllEdit::DoDataExchange (CDataExchange *pDX) {
 		DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
 		DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
 
-		DDX_Control(pDX, IDC_DuctTypeFlex, fDuctType);
-		DDX_Check(pDX, IDC_DuctTypeFlex, iDuctType);
+		DDX_Control(pDX, IDC_DuctFlex, fDuctFlex);
+		DDX_Check(pDX, IDC_DuctFlex, DuctFlex);
 }
 
 //-----------------------------------------------------------------------------
@@ -187,7 +187,9 @@ void dgAllEdit::OnShowWindow(BOOL bShow, UINT nStatus)
 	fSizeA.SetFocus();
 
   SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
-  	iDuctType=_wtoi(DuctType);
+
+
+  	
 	if(Tpipe==false)
 	{
 		
@@ -291,10 +293,7 @@ if (Ttap==true)
 		break;
 	}
 
-	if (iDuctType==DuctTypeFlex)
-	{
-		fDuctType.SetCheck(1);
-	}
+
 }
 
 
@@ -426,22 +425,7 @@ void dgAllEdit::ChangeD1()
 }
 
 
-void dgAllEdit::ChangeDuctType()
-{
-		//change_BOOL(iDuctType,fDuctType);
 
-	if (iDuctType==1)
-	{
-		iDuctType=0;
-		fDuctType.SetCheck(0);
-
-	}
-	else
-	{
-		iDuctType=1;
-		fDuctType.SetCheck(1);
-	}
-}
 
 void dgAllEdit::SetForm_Up()
 {
@@ -622,5 +606,10 @@ void dgAllEdit::OnBnClickedOk()
 }
 
 
+void dgAllEdit::ChangeDuctFlex()
+{
+	//change_BOOL(iDuctFlex,fDuctFlex);
 
+	change_BOOL(DuctFlex,fDuctFlex);
+}
 

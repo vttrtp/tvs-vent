@@ -80,6 +80,9 @@
 #define IDC_TapMid 1035
 #define IDC_TapDown 1030
 #define IDC_Swectangle 1013
+
+
+#define IDC_DuctFlex 1041
 //-----------------------------------------------------------------------------
 class PipeSizeDiallog : public CAdUiBaseDialog {
 	DECLARE_DYNAMIC (PipeSizeDiallog)
@@ -204,9 +207,9 @@ public:
 	CEdit fWipeoutLength;
 	double WipeoutLength;
 
-	CButton fDuctType;
-	CString DuctType;
-	BOOL fDuctType;
+	CButton fDuctFlex;
+	BOOL DuctFlex;
+	BOOL bDuctFlex;
 //	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 
 	afx_msg void OnBnClickedOk();
@@ -239,7 +242,7 @@ public:
 	afx_msg void SetRadiusTypeRect_RadiusConstant();
 	afx_msg void SetRadiusTypeRect_RadiusVariable();
 
-
+	afx_msg void ChangeDuctFlex();
 
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 } ;

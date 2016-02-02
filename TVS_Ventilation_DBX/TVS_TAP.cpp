@@ -2783,6 +2783,21 @@ int TVS_TAP::get_RadiusVariableParameter(void) const
 	return(RadiusVariableParameter);
 }
 
+void TVS_TAP::setFlex( const bool &isFlex )
+{
+	assertWriteEnabled();
+	if (isFlex)
+	{
+		DuctType=DuctTypeFlex;
+		put_SizeB(0);
+	}
+	else
+	{
+		DuctType=DuctTypeStill;
+
+	}
+}
+
 Acad::ErrorStatus TVS_TAP::put_RadiusVariableParameter(int newVal)
 {
 	assertWriteEnabled () ;

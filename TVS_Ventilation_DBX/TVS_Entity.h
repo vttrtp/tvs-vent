@@ -272,13 +272,15 @@ public:
 	void setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt);
 	void setHideProperty(AcDbEntity *pEnt);
 	void setZigzagProperty(AcDbEntity *pEnt);
+	void setThinProperty(AcDbEntity *pEnt);
 	double get_WipeoutLength(void) const;
 	Acad::ErrorStatus put_WipeoutLength(double newVal);
-	void setFlex();
+	virtual void setFlex(const bool &isFlex);
 	void setStill();
 	int getDuctType();
-	void setDuctType(int pDuctType);
+	virtual void setDuctType(int pDuctType);
 	void setNewParameters();
+	bool isDuctFlex();
 } ;
 
 #ifdef TVS_VENTILATION_DBX_MODULE

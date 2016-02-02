@@ -261,7 +261,7 @@ static	TVS_TAP *add_new(
 	int get_RadiusTypeRect(void) const;
 	Acad::ErrorStatus put_RadiusVariableParameter(int newVal);
 	int get_RadiusVariableParameter(void) const;
-
+	void setFlex(const bool &isFlex);
 protected:
 	// -----------------------------------------------------------------------------
 	virtual Acad::ErrorStatus subExplode(AcDbVoidPtrArray & entitySet) const;

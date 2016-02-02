@@ -39,7 +39,7 @@
 
 #define TypeRoundTap_TapSection 1
 #define TypeRoundTap_TapRound 2
-
+#define DuctTypeStill 0
 #define DuctTypeFlex 1
 #define Form_Direct 1
 #define Form_Up 2
@@ -78,7 +78,7 @@
 #define IDC_TapMid 1035
 #define IDC_TapDown 1030
 #define IDC_Swectangle 1013
-#define IDC_DuctTypeFlex 1041
+#define IDC_DuctFlex 1041
 
 //-----------------------------------------------------------------------------
 class dgAllEdit : public CAdUiBaseDialog {
@@ -192,10 +192,10 @@ CButton fTapDown;
 	BOOL bWipeoutLength;
 	
 
-	CButton fDuctType;
-	CString DuctType;
-	BOOL bDuctType;
-	int iDuctType;
+	CButton fDuctFlex;
+	BOOL DuctFlex;
+	BOOL bDuctFlex;
+
 	//////////////////////////////////////////////////////////////////////////
 
 	bool Tpipe;
@@ -229,7 +229,7 @@ CButton fTapDown;
 	afx_msg void ChangeWipe();
 	afx_msg void ChangeGrani();
 	afx_msg void ChangeD1();
-		afx_msg void ChangeDuctType();
+		
 	afx_msg void SetForm_Up();
 	afx_msg void SetForm_Down();
 	afx_msg void SetFForm_Direct();
@@ -243,10 +243,9 @@ CButton fTapDown;
 	afx_msg void SetRadiusTypeRect_RadiusVariable();
 
 		
-	
+	afx_msg void ChangeDuctFlex();
 
 	
 	afx_msg void OnBnClickedOk();
-	afx_msg void OnBnClicked65535();
-	afx_msg void OnBnClicked10018();
+
 } ;

@@ -800,6 +800,16 @@ void TVS_Entity::setZigzagProperty(AcDbEntity *pEnt)
 	ListOfEntity.append(pEnt);
 }
 
+void TVS_Entity::setThinProperty( AcDbEntity *pEnt )
+{
+	pEnt->setLineWeight(AcDb::LineWeight(15));
+	pEnt->setLayer(this->layerId());
+	pEnt->setColor(this->color());
+	pEnt->setLinetype(this->linetypeId());
+	pEnt->setLinetypeScale(this->linetypeScale());
+	ListOfEntity.append(pEnt);
+}
+
 double TVS_Entity::get_WipeoutLength(void) const
 {
 	assertReadEnabled () ;
@@ -813,10 +823,11 @@ Acad::ErrorStatus TVS_Entity::put_WipeoutLength(double newVal)
 	return Acad::eOk;
 }
 
-void TVS_Entity::setFlex()
+
+
+void TVS_Entity::setFlex( const bool &isFlex )
 {
-	assertWriteEnabled () ;
-	DuctType=DuctTypeFlex;
+
 }
 
 void TVS_Entity::setStill()
@@ -841,6 +852,12 @@ void TVS_Entity::setNewParameters()
 {
 	assertWriteEnabled();
 	DuctType=DuctTypeStill;
+}
+
+bool TVS_Entity::isDuctFlex()
+{
+	if (DuctType==DuctTypeFlex) return true;
+	else return false;
 }
 
 void TVS_Entity::setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt)

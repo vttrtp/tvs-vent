@@ -169,7 +169,7 @@ void rprov (bool &variableconst,
 			double &myvar);
 void rprov (bool &variableconst, 
 			bool &firstvariable,
-			bool &objectvar,
+			const bool &objectvar,
 			bool &myvar);
 void rprov (bool &variableconst, bool &firstvariable, int &objectvar, int &myvar);
 void strfil (double &myvar,
