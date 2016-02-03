@@ -564,7 +564,7 @@ void dgAllEdit::OnBnClickedOk()
 
 	if (TapRadiusRoundConst==TRUE)
 	{
-		RadiusTypeRound.Format(L"%i", RadiusTypeRound_RadiusConstant);
+		RadiusTypeRound.Format(L"%.2f\n", RadiusTypeRound_RadiusConstant);
 	}
 
 	if (TapRadiusRoundVariable==TRUE)

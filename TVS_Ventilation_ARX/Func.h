@@ -204,7 +204,8 @@ CString &stringconst
 	 AcGePoint3d t2,
 	 AcGePoint3d t3
 	 );
-
+void getdouble(CString &svar, double dvar);
+void getint(CString &svar, int dvar);
 void PostToModelSpace(AcDbEntity *pEnt);
 void SetGlobalProperty(TVS_Entity *pEnt);
 void GiveStartvectorAndAngle (AcGePoint3d &n1, AcGePoint3d &n2, AcGePoint3d &n3, double &pAngle, AcGeVector3d &pStartvector);

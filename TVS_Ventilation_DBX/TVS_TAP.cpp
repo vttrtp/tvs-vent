@@ -3000,7 +3000,7 @@ void TVS_TAP::setFlex( const bool &isFlex )
 	}
 }
 
-Acad::ErrorStatus TVS_TAP::put_RadiusVariableParameter(int newVal)
+Acad::ErrorStatus TVS_TAP::put_RadiusVariableParameter(double newVal)
 {
 	assertWriteEnabled () ;
 	RadiusVariableParameter =newVal ;
@@ -3013,7 +3013,7 @@ int TVS_TAP::get_RadiusConst(void) const
 	return(RadiusConst);
 }
 
-Acad::ErrorStatus TVS_TAP::put_RadiusConst(int newVal)
+Acad::ErrorStatus TVS_TAP::put_RadiusConst(double newVal)
 {
 	assertWriteEnabled () ;
 	RadiusConst =newVal ;

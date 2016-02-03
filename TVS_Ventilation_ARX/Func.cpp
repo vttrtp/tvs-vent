@@ -2442,6 +2442,14 @@ void func::rprov (bool &variableconst,
 
 }
 
+void func::getdouble( CString &svar, double dvar )
+{
+	svar.Format(L"%.2f", dvar);
+}
+void func::getint( CString &svar, int dvar )
+{
+	svar.Format(L"%d", dvar);
+}
 
 void func::strfil (double &myvar,
 				   bool &variableconst,
@@ -2450,8 +2458,22 @@ void func::strfil (double &myvar,
 {
 	if (variableconst==true)
 		stringconst=CString("Разные");
-	else stringconst.Format(L"%g", myvar);
-
+	else 
+	{
+		double pnum=myvar;
+		CString stringvar;
+		getdouble(stringvar,pnum);
+		 int y = (int)pnum;
+		if ((pnum-y)==0)
+		{
+			getint(stringconst,myvar);
+			double g =1;
+		
+		}
+		else stringconst.Format(L"%.2f\n", myvar);
+	}
+		
+	double g =1;
 }
 
 void func::strfil (int &myvar,
@@ -2793,6 +2815,8 @@ TVS_TAP* func::drawTapDirect(AcGePoint3d t1, AcGePoint3d t2, AcGePoint3d t3)
 	pEnt->draw();
 	return pEnt;
 }
+
+
 
 
 
