@@ -30,6 +30,11 @@
 #include "dbmleader.h"
 #include "PipeSizeDiallog.h"
 #include "hangeZdg.h"
+
+#import "acax20ENU.tlb" 
+#include <rxmfcapi.h>
+#include <axpnt3d.h>
+
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
@@ -6159,6 +6164,277 @@ static void Ventilation_ARXTVS_SPEC(void)
 
 }
 
+
+
+
+static void AddNewAtt(ACHAR* pName)
+{
+	AcDbDatabase *pCurDb;
+	AcDbBlockTable* pBlkTbl;
+	AcDbBlockTableRecord* pBlkRec;
+	AcDbObjectId attId;
+	Acad::ErrorStatus es;
+
+	AcDbAttributeDefinition* pAttDef;
+	// location of the AttributeDefinition in the
+	// block definition
+	AcGePoint3d attLoc(1.2, -0.5, 0);
+
+	// specify the text,tag and prompt
+	ACHAR text[] = {L"NEW VALUE ADDED"};
+	ACHAR tag[] = {L"MYTAG"};
+	ACHAR prompt[] = {L"Enter a new value"};
+
+	pCurDb =
+		acdbHostApplicationServices()->workingDatabase();
+
+	es =
+		pCurDb->getBlockTable(pBlkTbl, AcDb::kForRead);
+
+	if(!pBlkTbl->has(pName))
+	{
+		acutPrintf(L"\nBlock definition TEST does not exist");
+			pBlkTbl->close();
+		return;
+	}
+
+	es = pBlkTbl->getAt(pName, pBlkRec, AcDb::kForWrite);
+	// create a AttributeDefinition
+	pAttDef = new AcDbAttributeDefinition(attLoc, text,
+		tag, prompt);
+
+	// append the AttributeDefinition to the definition
+	es = pBlkRec->appendAcDbEntity(attId, pAttDef);
+
+	pAttDef->close();
+	pBlkRec->close();
+	pBlkTbl->close();
+}
+
+
+
+
+
+static void Ventilation_ARXTVS_AddAtrib(void)
+{
+	int pstatus;
+	double SizeA,SizeB,Flow,SizeA2, SizeB2;
+	AcGePoint3d pCut;
+	double Lx,Ly, startangle;
+	ads_name ads_ent,vozd2, eName;
+	ACHAR handle[17];
+	ads_point pt1,pt2;
+	ads_real sise=0;
+	AcDbEntity *pEnt,*pEnt2 = NULL;
+	AcDbObjectId id;
+	TVS_WYE *wyie;
+	TVS_TAP * Tapie;
+	TVS_Pipe * Pipi1,*Pipi2;
+	TVS_TRANS * Transie;
+	double NewSiseA, NewRadius;
+	resbuf *rb = NULL;
+	AcGeLine3d Line;
+	bool ft=false, s2=false;
+	AcCmColor pColor;
+	AcDb::LineWeight pWeight;
+	AcDbObjectId pLayer;
+	AcDbObjectId pLineType;
+	AcDbBlockReference * br;
+	
+	int Astat;
+	bool  Astat2=false;
+	ACHAR resultss[512],resultss2[512];
+	while (ft==false)
+	{
+
+		Astat2=false;
+		while (Astat2==false)
+		{
+			Astat2=true;
+			Astat=acedEntSel (_T("\nВыберете блок для добавления атрибутов: "), ads_ent,pt1) ;
+			switch (Astat)
+			{
+			case RTCAN:
+				return;
+				break;
+
+			}
+
+	
+
+		}
+
+
+		ACHAR *pName;
+		if (acdbGetObjectId(id,ads_ent)==eOk)
+		{
+			{if (id!=AcDbObjectId::kNull)
+			{
+				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+
+				{
+					if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
+					{	
+
+// 						es = br->getName(pBlkName);
+// 						AcDbAttribute *atrib=new AcDbAttribute(AcGePoint3d(0,0,0),_T("hui32"),_T("11"));
+// 						
+// 					
+// 						acutPrintf(_T("%d"),br->appendAttribute(atrib));
+					
+						ACHAR *buf;
+
+						AcDbObjectId objBTRId = br->blockTableRecord();
+						AcDbObjectPointer<AcDbBlockTableRecord> pBTR(objBTRId,AcDb::kForRead);
+						
+						pBTR->getName(pName);
+						pBTR->close();
+						
+
+						
+						
+						AddNewAtt(pName);
+						
+// 					
+// 						 Acad::ErrorStatus es;
+// 						if ((es = pBTR.openStatus()) == Acad::eOk) {
+// 							AcDbBlockTableRecordIterator *pIterBTR = NULL;
+// 							if ((es = pBTR->newIterator(pIterBTR)) == Acad::eOk) {
+// 								for (;!pIterBTR->done();pIterBTR->step()) {
+// 									AcDbObjectId objSubId;
+// 									if ((es = pIterBTR->getEntityId(objSubId)) == Acad::eOk) {
+// 										AcDbObjectPointer<AcDbEntity> pSubEnt(objSubId,AcDb::kForRead);
+// 										if ((es = pSubEnt.openStatus()) == Acad::eOk) {
+// 											//
+// 											// Здесь можно работать с примитивами в блоке
+// 											//
+// 											//buf=pSubEnt->isA()->name();
+// 											acutPrintf(_T("\nПримитив: %s"),LPCTSTR(pSubEnt->isA()->name()));
+// 											AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
+// 											//
+// 											// Если это определение атрибута сделаем отдельную обработку
+// 											//
+// 											//acutPrintf(pAttdef->textStringConst());
+// 											if (pAttdef) {
+// 												acutPrintf(_T("-> Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
+// 													LPCTSTR(pAttdef->tagConst()), LPCTSTR(pAttdef->textStringConst()),
+// 													LPCTSTR((pAttdef->isConstant()?_T("Yes"):_T("No"))),
+// 													LPCTSTR((pAttdef->isPreset()?_T("Yes"):_T("No"))),
+// 													LPCTSTR((pAttdef->isInvisible()?_T("Yes"):_T("No"))),
+// 													LPCTSTR((pAttdef->isVerifiable()?_T("Yes"):_T("No")))
+// 													);
+// 											}
+// 										} else {
+//											acutPrintf(_T("\nНе удалось открыть примитив в блоке! Ошибка: %s",
+// 												LPCTSTR(acadErrorStatusText(es))));
+// 										}
+// 									} else {
+// 										acutPrintf(_T("\nНе удалось получить AcDbObjectId примитва в блоке! Ошибка: %s",
+// 											LPCTSTR(acadErrorStatusText(es))));
+// 									}
+// 								}
+// 							} else {
+// 								acutPrintf(_T("\nНе удалось создать итератор для записи таблицы блоков! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
+// 							}
+// 						} else {
+// 							acutPrintf(_T("\nНе удалось открыть запись таблицы блоков! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
+// 						}
+						//
+// 						//  Получаем информацию о неконстантных атрибутах в блоке
+// 						//
+// 						AcDbObjectIterator *pAttrIter = br->attributeIterator();
+// 						if (pAttrIter) {
+// 							for (pAttrIter->start();!pAttrIter->done();pAttrIter->step()) {
+// 								AcDbObjectId objAttrId = pAttrIter->objectId();
+// 								AcDbObjectPointer<AcDbAttribute> pAttr(objAttrId,AcDb::kForRead);
+// 								if ((es = pAttr.openStatus()) == Acad::eOk) {
+// 									//
+// 									// Здесь можно получить информацию об атрибуте
+// 									//
+// 									acutPrintf(_T("\nАтрибут: Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
+// 										LPCTSTR(pAttr->tagConst()), LPCTSTR(pAttr->textStringConst()),
+// 										LPCTSTR((pAttr->isConstant()?_T("Yes"):_T("No"))),
+// 										LPCTSTR((pAttr->isPreset()?_T("Yes"):_T("No"))),
+// 										LPCTSTR((pAttr->isInvisible()?_T("Yes"):_T("No"))),
+// 										LPCTSTR((pAttr->isVerifiable()?_T("Yes"):_T("No")))
+// 										);
+// 								} else {
+// 									acutPrintf(_T("\nНе удалось открыть атрибут блока! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
+// 								}
+// 							}
+// 						}
+// 				
+// 			
+
+
+
+
+
+
+
+										
+
+
+
+
+					acutPrintf(_T("Блочек чувачек"));
+
+
+					pEnt->close();
+					acedCommandS(RTSTR,_T("_ATTSYNC"),RTSTR,_T("_Name"),RTSTR,pName,RTNONE);
+					return;
+					ft=true;
+
+					}
+
+
+					pEnt->close();
+					
+				}
+
+
+				else {
+					acutPrintf(_T("\nОбьект заблокирован"));
+
+
+				}
+
+			}
+			}
+
+
+		}
+	}
+
+}
+// void fAddAttribute()
+// {
+// 	try
+// 	{
+// 		// Получаем объект ActiveX приложения AutoCAD, увеличивая счетчик использования
+// 		IAcadApplicationPtr pAcadApp = acedGetAcadWinApp()->GetIDispatch(TRUE);
+// 		// Теперь получим активный документ
+// 		IAcadDocument * pActiveDoc;
+// 		pAcadApp->get_ActiveDocument(&pActiveDoc);
+// 		IAcadBlockPtr pBlock = NULL;
+// 		TCHAR *pBlkName = _T("некоторое_имя_блока ");
+// 		// Создаём ActiveX-совместимую 3D-точку
+// 		AcAxPoint3d axInsPnt(0,0,0);
+// 		// Добавим имя блока
+// 		pBlock = pActiveDoc->Wblock()->Add(axInsPnt.asVariantPtr(),_bstr_t(pBlkName));
+// 		// Добавим атрибут к блоку
+// 		IAcadAttributePtr pAttDef;
+// 		pAttDef = pBlock->AddAttribute(1.0, (AcAttributeMode)0 ,
+// 			_bstr_t("Укажите имя сотрудника "), axInsPnt.asVariantPtr(),
+// 			_bstr_t("имя_сотрудника"),_bstr_t(""));
+// 		// Атрибут добавлен
+// 	}
+// 	catch(_com_error &es)
+// 	{
+// 		acutPrintf(L"\nОшибка : %s", es.ErrorMessage());
+// 	}
+//
+
 } ;
 
 //-----------------------------------------------------------------------------
@@ -6180,6 +6456,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Change, TVS_Change, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ERASE, TVS_ERASE, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_LEAD, TVS_LEAD, ACRX_CMD_TRANSPARENT, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AddAtrib, TVS_AddAtrib, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVSSomeParts, TVSSomeParts, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SETTINGS, TVS_SETTINGS, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 

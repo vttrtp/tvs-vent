@@ -56,7 +56,14 @@ bool	isCompare	(const T &pVal);
 
 
 
-
+// class TVS_Attribute {
+// 	public:
+// 	ACHAR  name[512];
+// 	ACHAR  model[512];
+// 	ACHAR  manufacture[512];
+// 	ACHAR  size[512];
+// 	addAtribute(*&fdsfdsf)
+// };
 
 
 
