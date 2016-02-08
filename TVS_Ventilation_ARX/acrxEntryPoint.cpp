@@ -45,10 +45,7 @@
 #define dCONNECTW 4
 #define dUP 5
 #define dDOWN 6
-#define TagName _T("ÈÌß")
-#define TagType _T("ÒÈÏ")
-#define TagSize _T("ÐÀÇÌÅÐ")
-#define TagManufacture _T("ÏÐÎÈÇÂÎÄÈÒÅËÜ")
+
 #define TVSisLinear 1
 #define TVSisPerpendicular 2
 #define TVSisParallel 3
@@ -5702,6 +5699,8 @@ static void Ventilation_ARXTVS_LEAD(void)
 	AcDbObjectId pLayer;
 	AcDbObjectId pLineType;
 
+	ACHAR atrType[512];
+	ACHAR atrSize[512];
 
 	int Astat;
 	bool  Astat2=false;
@@ -5802,7 +5801,7 @@ static void Ventilation_ARXTVS_LEAD(void)
 						ft=true;
 						pstatus=4;
 					}
-
+					pEnt1->close();
 					AcDbBlockReference * br;
 					if ( ( br= AcDbBlockReference::cast(pEnt1)) != NULL )
 					{	
@@ -5812,12 +5811,16 @@ static void Ventilation_ARXTVS_LEAD(void)
 						 ACHAR * pName;
 						pBTR->getName(pName);
 						pBTR->close();
-							pEnt1->close();
+							
 						if (!CheckAtt(pName,TagType)&&!CheckAtt(pName,TagSize))
 						{
-							GetAtt(pEnt1,TagType);
-							GetAtt(pEnt1,TagSize);
-							acutPrintf(_T("\n11111"));
+							if(GetAtt(pEnt1,TagType,atrType)&&GetAtt(pEnt1,TagSize,atrSize))
+							{
+							
+							pCut=AcGePoint3d(asPnt3d(pt1));
+							ft=true;
+							pstatus=5;
+							}
 						}
 // 						Line.set(Transie->FirstPoint,Transie->LastPoint);
 // 						pCut=Line.closestPointTo(pCut);
@@ -5828,9 +5831,9 @@ static void Ventilation_ARXTVS_LEAD(void)
 // 						Flow=Transie->LengthTr;
 // 						ft=true;
 					
-						return;
+						
 					}
-					pEnt1->close();
+					
 				}
 
 
@@ -5952,7 +5955,12 @@ static void Ventilation_ARXTVS_LEAD(void)
 
 	}
 
-
+	if (pstatus==5)
+	{
+		wcscpy_s(buffer1,atrType);
+		wcscat_s(buffer1,_T("-"));
+		wcscat_s(buffer1,atrSize);
+	}
 
 	AcDb::LineWeight lw;
 	double texth,textw;
@@ -6121,7 +6129,7 @@ static void Ventilation_ARXTVS_Flex(void)
 
 static void Ventilation_ARXTVS_SPEC(void)
 {
-	
+	AcDbBlockReference * br;
 	TVS_Entity * Ent;
 	AcDbEntity *pEnt = NULL;
 		ads_name sset, eName;
@@ -6135,6 +6143,7 @@ static void Ventilation_ARXTVS_SPEC(void)
 	pb=asPnt3d(pt1);
 	long len = 0;
 	SPEClist speclist, speclistflex;
+	SpecWithAttrlist specatrlist;
 	acedSSLength(sset, &len);
 	//consoleprint(double(len),_T("\nL: "));
 	for (long i = 0; i < len; i++)
@@ -6155,6 +6164,7 @@ static void Ventilation_ARXTVS_SPEC(void)
 				
 				if ( (Ent = TVS_Entity::cast(pEnt)) != NULL )
 				
+				{
 
 				if (Ent->isDuctFlex())
 				{
@@ -6173,8 +6183,17 @@ static void Ventilation_ARXTVS_SPEC(void)
 						speclist.append(spec);
 					}
 				}
-
+				}
 				pEnt->close();
+				if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
+				{
+					SPEC spec;
+					if(spec.addBlock(pEnt)==true)
+					{
+						specatrlist.append(spec);
+					}
+				}
+				
 				}
 		}
 	}
@@ -6190,9 +6209,15 @@ static void Ventilation_ARXTVS_SPEC(void)
 			speclistflex.printSPDSForm(pb);
 		}
 
+		if (specatrlist.specList.physicalLength()!=0)
+		{
+			//speclist.print();
+			specatrlist.printSPDSForm(pb);
+		}
+
 }
 
-static bool GetAtt(AcDbEntity* pEnt, ACHAR* tag)
+static bool GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR  *pVal)
 {
 
 	AcDbDatabase *pCurDb;
@@ -6228,11 +6253,13 @@ static bool GetAtt(AcDbEntity* pEnt, ACHAR* tag)
 
 														if (wcscmp(tag,pAttr->tagConst())==0) {
 															//	pAttDef->close();
-															
+															pAttr->close();
 															pEnt->close();
 															acutPrintf(_T("\nÀòðèáóò: Tag=%s Value=%s "),
 																LPCTSTR(pAttr->tagConst()),LPCTSTR(pAttr->textStringConst()));
-															return false;
+															ACHAR  tempachar[512];
+															wcscpy_s(pVal,512,pAttr->textStringConst());
+															return true;
 														}
 
 					 						pAttr->close();
@@ -6256,7 +6283,7 @@ static bool GetAtt(AcDbEntity* pEnt, ACHAR* tag)
 	
 
 	
-	return true;
+	return false;
 
 		}
 	

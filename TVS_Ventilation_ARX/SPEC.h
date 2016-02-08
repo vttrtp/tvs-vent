@@ -10,6 +10,15 @@ using namespace std;
 #include "../TVS_Ventilation_DBX/TVS_Pipe.h"
 #include "../TVS_Ventilation_DBX/TVS_Wye.h"
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
+
+#define TagName _T("»Ãﬂ")
+#define TagType _T("“»œ")
+#define TagSize _T("–¿«Ã≈–")
+#define TagArticle _T("¿–“» ”À")
+#define TagManufacture _T("œ–Œ»«¬Œƒ»“≈À‹")
+
+
+
 class SPEC
 {
 private: 
@@ -51,7 +60,17 @@ double pLength,
 double pSwectangle=0,
 double pSizeA2=0,
 double pSizeA3=0
+
+
+
+
+
 );
+
+
+
+
+
 bool add (AcDbEntity * pEnt);
 void setName (const ACHAR * pName);
 void setLable (const ACHAR * pAchar);
@@ -62,10 +81,25 @@ void setUnit1 (const ACHAR * pAchar);
 void setUnit2 (const ACHAR * pAchar);
 int toInt(const ACHAR * pAchar);
 void printResult ();
+void printResultChar ();
 const ACHAR * toChar(double val);
 void setParamChars();
 double sCircle(double diam);
 double lCircle(double diam);
+
+
+bool GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR *pVal);
+ACHAR sPos[512];
+ACHAR sName[512];
+ACHAR sTypeSize[512];
+ACHAR sArticle[512];
+ACHAR sManufacture[512];
+ACHAR sUnit[512];
+ACHAR sValue[512];
+ACHAR sMass[512];
+ACHAR sCommit[512];
+bool addBlock(AcDbEntity * pEnt);
+
 
 };
 
@@ -78,12 +112,27 @@ class SPEClist
 		void append (SPEC line);
 		int length;
 		int checkRelevations(SPEC param1, SPEC param2);
+
 		void print();
 		
 		void printSPDSForm(AcGePoint3d &cent);
 		void printText(AcGePoint3d cent, const ACHAR * pAchar);
 	static	void printLine(AcGePoint3d start, AcGePoint3d end);
 };
+
+class SpecWithAttrlist : public SPEClist
+{
+public:
+	SpecWithAttrlist(void);
+	~SpecWithAttrlist(void);
+/*void append (SPEC line);*/
+int checkRelevations(SPEC param1, SPEC param2); //First vs two
+int checkCharRelevations(ACHAR * param1, ACHAR * param2);
+void printSPDSForm(AcGePoint3d &cent);
+void print();
+};
+
+
 
 // class TVSForm
 // {
