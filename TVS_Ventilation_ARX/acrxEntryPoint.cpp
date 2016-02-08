@@ -45,8 +45,10 @@
 #define dCONNECTW 4
 #define dUP 5
 #define dDOWN 6
-
-
+#define TagName _T("ИМЯ")
+#define TagType _T("ТИП")
+#define TagSize _T("РАЗМЕР")
+#define TagManufacture _T("ПРОИЗВОДИТЕЛЬ")
 #define TVSisLinear 1
 #define TVSisPerpendicular 2
 #define TVSisParallel 3
@@ -5801,7 +5803,33 @@ static void Ventilation_ARXTVS_LEAD(void)
 						pstatus=4;
 					}
 
-
+					AcDbBlockReference * br;
+					if ( ( br= AcDbBlockReference::cast(pEnt1)) != NULL )
+					{	
+						AcDbObjectId objBTRId = br->blockTableRecord();
+						AcDbObjectPointer<AcDbBlockTableRecord> pBTR(objBTRId,AcDb::kForRead);
+						
+						 ACHAR * pName;
+						pBTR->getName(pName);
+						pBTR->close();
+							pEnt1->close();
+						if (!CheckAtt(pName,TagType)&&!CheckAtt(pName,TagSize))
+						{
+							GetAtt(pEnt1,TagType);
+							GetAtt(pEnt1,TagSize);
+							acutPrintf(_T("\n11111"));
+						}
+// 						Line.set(Transie->FirstPoint,Transie->LastPoint);
+// 						pCut=Line.closestPointTo(pCut);
+// 						SizeA=Transie->get_SizeAp1();
+// 						SizeB=Transie->SizeBp1;
+// 						SizeA2=Transie->SizeAp2;
+// 						SizeB2=Transie->SizeBp2;
+// 						Flow=Transie->LengthTr;
+// 						ft=true;
+					
+						return;
+					}
 					pEnt1->close();
 				}
 
@@ -6164,10 +6192,164 @@ static void Ventilation_ARXTVS_SPEC(void)
 
 }
 
+static bool GetAtt(AcDbEntity* pEnt, ACHAR* tag)
+{
+
+	AcDbDatabase *pCurDb;
+	AcDbBlockTable* pBlkTbl;
+	AcDbBlockTableRecord* pBlkRec;
+	AcDbObjectId attId;
+	Acad::ErrorStatus es;
+	AcDbBlockReference * br;
+	AcDbAttributeDefinition* pAttDef;
+	// location of the AttributeDefinition in the
+	// block definition
+	ACHAR* pName;
+	
+
+			if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForWrite)==eOk)
+
+			{
+				if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
+				{	
+
+				
+
+ 				 						AcDbObjectIterator *pAttrIter = br->attributeIterator();
+ 				 						if (pAttrIter) {
+ 				 							for (pAttrIter->start();!pAttrIter->done();pAttrIter->step()) {
+ 				 								AcDbObjectId objAttrId = pAttrIter->objectId();
+ 				 								AcDbObjectPointer<AcDbAttribute> pAttr(objAttrId,AcDb::kForRead);
+ 				 							
+					 								if ((es = pAttr.openStatus()) == Acad::eOk) {
+					 									//
+					 									// Здесь можно получить информацию об атрибуте
+					 									//
+
+														if (wcscmp(tag,pAttr->tagConst())==0) {
+															//	pAttDef->close();
+															
+															pEnt->close();
+															acutPrintf(_T("\nАтрибут: Tag=%s Value=%s "),
+																LPCTSTR(pAttr->tagConst()),LPCTSTR(pAttr->textStringConst()));
+															return false;
+														}
+
+					 						pAttr->close();
+					 								} else {
+					 									acutPrintf(_T("\nНе удалось открыть атрибут блока! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
+					 								}
+											}
+										}
+				}
+			pEnt->close();
+			}
+
+	
 
 
 
-static void AddNewAtt(ACHAR* pName)
+
+
+
+
+	
+
+	
+	return true;
+
+		}
+	
+
+
+
+static bool CheckAtt(ACHAR* pName,ACHAR* tag)
+{
+	AcDbDatabase *pCurDb;
+	AcDbBlockTable* pBlkTbl;
+	AcDbBlockTableRecord* pBlkRec;
+	AcDbObjectId attId;
+	Acad::ErrorStatus es;
+
+	AcDbAttributeDefinition* pAttDef;
+	// location of the AttributeDefinition in the
+	// block definition
+
+
+	pCurDb =
+		acdbHostApplicationServices()->workingDatabase();
+
+	es =
+		pCurDb->getBlockTable(pBlkTbl, AcDb::kForRead);
+
+	if(!pBlkTbl->has(pName))
+	{
+		acutPrintf(L"\nBlock definition TEST does not exist");
+		pBlkTbl->close();
+		return false;
+	}
+
+	es = pBlkTbl->getAt(pName, pBlkRec, AcDb::kForWrite);
+	// create a AttributeDefinition
+
+			AcDbBlockTableRecordIterator *pIterBTR = NULL;
+	if ((es = pBlkRec->newIterator(pIterBTR)) == Acad::eOk) {
+		 								for (;!pIterBTR->done();pIterBTR->step()) {
+		 									AcDbObjectId objSubId;
+		 									if ((es = pIterBTR->getEntityId(objSubId)) == Acad::eOk) {
+		 										AcDbObjectPointer<AcDbEntity> pSubEnt(objSubId,AcDb::kForRead);
+		 										if ((es = pSubEnt.openStatus()) == Acad::eOk) {
+		 											//
+		 											// Здесь можно работать с примитивами в блоке
+		 											//
+		 											//buf=pSubEnt->isA()->name();
+//		 											acutPrintf(_T("\nПримитив: %s"),LPCTSTR(pSubEnt->isA()->name()));
+		 											AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
+
+													if (pAttdef) {
+		 											//
+		 											// Если это определение атрибута сделаем отдельную обработку
+		 											//
+		 											//acutPrintf(pAttdef->textStringConst());
+// 													acutPrintf(_T("\nTag1=%s"),LPCTSTR(pAttdef->tagConst()));
+// 													acutPrintf(_T("\nTag2=%s"),LPCTSTR(tag));
+												//	const ACHAR* tagconst=LPCTSTR(pAttdef->tagConst());
+													if (wcscmp(tag,pAttdef->tagConst())==0) {
+												//	pAttDef->close();
+													pBlkRec->close();
+													pBlkTbl->close();
+														
+														return false;
+													}
+// 														acutPrintf(_T("-> Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
+// 															LPCTSTR(pAttdef->tagConst()), LPCTSTR(pAttdef->textStringConst()),
+// 															LPCTSTR((pAttdef->isConstant()?_T("Yes"):_T("No"))),
+// 															LPCTSTR((pAttdef->isPreset()?_T("Yes"):_T("No"))),
+// 															LPCTSTR((pAttdef->isInvisible()?_T("Yes"):_T("No"))),
+// 															LPCTSTR((pAttdef->isVerifiable()?_T("Yes"):_T("No")))
+// 															);
+		 											}
+		 										} else {
+													acutPrintf(_T("\nНе удалось открыть примитив в блоке! Ошибка: %s",
+		 												LPCTSTR(acadErrorStatusText(es))));
+		 										}
+		 									} else {
+		 										acutPrintf(_T("\nНе удалось получить AcDbObjectId примитва в блоке! Ошибка: %s",
+		 											LPCTSTR(acadErrorStatusText(es))));
+		 									}
+		 								}
+		 							} else {
+		 								acutPrintf(_T("\nНе удалось создать итератор для записи таблицы блоков! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
+		 							}
+		 						
+
+	//pAttDef->close();
+	pBlkRec->close();
+	pBlkTbl->close();
+	return true;
+}
+
+static void AddNewAtt(ACHAR* pName,ACHAR* tag)
 {
 	AcDbDatabase *pCurDb;
 	AcDbBlockTable* pBlkTbl;
@@ -6182,7 +6364,7 @@ static void AddNewAtt(ACHAR* pName)
 
 	// specify the text,tag and prompt
 	ACHAR text[] = {L"NEW VALUE ADDED"};
-	ACHAR tag[] = {L"MYTAG"};
+	
 	ACHAR prompt[] = {L"Enter a new value"};
 
 	pCurDb =
@@ -6292,8 +6474,23 @@ static void Ventilation_ARXTVS_AddAtrib(void)
 						
 
 						
+						if (CheckAtt(pName,TagName))
+						{
+							AddNewAtt(pName,TagName);
+						}
 						
-						AddNewAtt(pName);
+						if (CheckAtt(pName,TagType))
+						{
+							AddNewAtt(pName,TagType);
+						}
+						if (CheckAtt(pName,TagSize))
+						{
+							AddNewAtt(pName,TagSize);
+						}
+						if (CheckAtt(pName,TagManufacture))
+						{
+							AddNewAtt(pName,TagManufacture);
+						}
 						
 // 					
 // 						 Acad::ErrorStatus es;
@@ -6377,7 +6574,7 @@ static void Ventilation_ARXTVS_AddAtrib(void)
 
 
 
-					acutPrintf(_T("Блочек чувачек"));
+				
 
 
 					pEnt->close();
