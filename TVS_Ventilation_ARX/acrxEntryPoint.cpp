@@ -5958,7 +5958,10 @@ static void Ventilation_ARXTVS_LEAD(void)
 	if (pstatus==5)
 	{
 		wcscpy_s(buffer1,atrType);
-		wcscat_s(buffer1,_T("-"));
+		if ((wcscmp(atrType,_T(""))!=0)&&(wcscmp(atrSize, _T(""))!=0))
+		{
+			wcscat_s(buffer1,_T("-"));
+		}
 		wcscat_s(buffer1,atrSize);
 	}
 
@@ -6390,9 +6393,9 @@ static void AddNewAtt(ACHAR* pName,ACHAR* tag)
 	AcGePoint3d attLoc(1.2, -0.5, 0);
 
 	// specify the text,tag and prompt
-	ACHAR text[] = {L"NEW VALUE ADDED"};
+	ACHAR text[] = {L""};
 	
-	ACHAR prompt[] = {L"Enter a new value"};
+	ACHAR prompt[] = {L""};
 
 	pCurDb =
 		acdbHostApplicationServices()->workingDatabase();
@@ -6413,7 +6416,21 @@ static void AddNewAtt(ACHAR* pName,ACHAR* tag)
 		tag, prompt);
 
 	// append the AttributeDefinition to the definition
+	pAttDef->setConstant(false);
+	pAttDef->setPreset(false);
+	pAttDef->setInvisible(true);
+	pAttDef->setVerifiable(false);
+	pAttDef->setLockPositionInBlock(true);
 	es = pBlkRec->appendAcDbEntity(attId, pAttDef);
+// 
+// 	 												acutPrintf(_T("-> Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
+// 	 													LPCTSTR(pAttdef->tagConst()), LPCTSTR(pAttdef->textStringConst()),
+// 	 													LPCTSTR((pAttdef->isConstant()?_T("Yes"):_T("No"))),
+// 	 													LPCTSTR((pAttdef->isPreset()?_T("Yes"):_T("No"))),
+// 	 													LPCTSTR((pAttdef->isInvisible()?_T("Yes"):_T("No"))),
+// 	 													LPCTSTR((pAttdef->isVerifiable()?_T("Yes"):_T("No")))
+// 	 													);
+
 
 	pAttDef->close();
 	pBlkRec->close();
@@ -6500,7 +6517,10 @@ static void Ventilation_ARXTVS_AddAtrib(void)
 						pBTR->close();
 						
 
-						
+						if (CheckAtt(pName,TagPos))
+						{
+							AddNewAtt(pName,TagPos);
+						}
 						if (CheckAtt(pName,TagName))
 						{
 							AddNewAtt(pName,TagName);
@@ -6514,9 +6534,21 @@ static void Ventilation_ARXTVS_AddAtrib(void)
 						{
 							AddNewAtt(pName,TagSize);
 						}
+						if (CheckAtt(pName,TagArticle))
+						{
+							AddNewAtt(pName,TagArticle);
+						}
 						if (CheckAtt(pName,TagManufacture))
 						{
 							AddNewAtt(pName,TagManufacture);
+						}
+						if (CheckAtt(pName,TagMass))
+						{
+							AddNewAtt(pName,TagMass);
+						}
+						if (CheckAtt(pName,TagCommit))
+						{
+							AddNewAtt(pName,TagCommit);
 						}
 						
 // 					

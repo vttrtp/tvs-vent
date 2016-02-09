@@ -11,13 +11,14 @@ using namespace std;
 #include "../TVS_Ventilation_DBX/TVS_Wye.h"
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
 
+#define TagPos _T("œŒ«»÷»ﬂ")
 #define TagName _T("»Ãﬂ")
 #define TagType _T("“»œ")
 #define TagSize _T("–¿«Ã≈–")
 #define TagArticle _T("¿–“» ”À")
 #define TagManufacture _T("œ–Œ»«¬Œƒ»“≈À‹")
-
-
+#define TagMass _T("Ã¿——¿")
+#define TagCommit _T("œ–»Ã≈◊¿Õ»≈")
 
 class SPEC
 {
@@ -99,7 +100,7 @@ ACHAR sValue[512];
 ACHAR sMass[512];
 ACHAR sCommit[512];
 bool addBlock(AcDbEntity * pEnt);
-
+bool getBlockName(AcDbEntity * pEnt, ACHAR *pVal);
 
 };
 
@@ -109,9 +110,9 @@ class SPEClist
 		SPEClist(void);
 		~SPEClist(void);
 		AcArray <SPEC> specList;
-		void append (SPEC line);
+virtual		void append (SPEC line);
 		int length;
-		int checkRelevations(SPEC param1, SPEC param2);
+virtual		int checkRelevations(SPEC param1, SPEC param2);
 
 		void print();
 		

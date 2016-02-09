@@ -509,6 +509,11 @@ bool SPEC::addBlock(AcDbEntity * pEnt)
 	ACHAR sSize[512];
 	if(GetAtt(pEnt,TagName,sName)&&GetAtt(pEnt,TagType,sType)&&GetAtt(pEnt,TagSize,sSize))
 	{
+		if ((wcscmp(sName,_T(""))==0)&&(wcscmp(sType,_T(""))==0)&&(wcscmp(sSize,_T(""))==0))
+		{
+			getBlockName(pEnt,sName);
+		}
+
 		wcscpy_s(sPos,_T(""));
 		//wcscpy_s(sName,_T(""));
 		wcscpy_s(sTypeSize,_T(""));
@@ -520,16 +525,68 @@ bool SPEC::addBlock(AcDbEntity * pEnt)
 		wcscpy_s(sCommit,_T(""));
 
 		wcscpy_s(sTypeSize,sType);
-		wcscat_s(sTypeSize,_T("-"));
+		if ((wcscmp(sType,_T(""))!=0)&&(wcscmp(sSize,_T(""))!=0))
+		{
+			wcscat_s(sTypeSize,_T("-"));
+		}
+		
 		wcscat_s(sTypeSize,sSize);
 
+		GetAtt(pEnt,TagPos,sPos);
 		GetAtt(pEnt,TagManufacture,sManufacture);
 		GetAtt(pEnt,TagArticle,sArticle);
+		GetAtt(pEnt,TagMass,sMass);
+		GetAtt(pEnt,TagCommit,sCommit);
 		setParam1(1, TypeInt);
 		setParam2(0, TypeInt);
 		return true;
 	}
 	else return false;
+}
+
+
+bool SPEC::getBlockName( AcDbEntity * pEnt, ACHAR *pVal )
+{
+
+	AcDbBlockReference *pInsert = AcDbBlockReference::cast(pEnt);
+	if (!pInsert)
+	{
+		acutPrintf(L"\nВыбрали не вставку блока.\n");
+		pEnt->close();
+		return false;
+	}
+
+	// Получаем objectID определения блока.
+	AcDbObjectId blockDefId = pInsert->blockTableRecord();
+
+	// Закрываем вставку блока.
+	pInsert->close();
+
+	// Открываем определение блока.
+	AcDbBlockTableRecord *pBlkRecord;
+	Acad::ErrorStatus es;
+	if (Acad::eOk != (es = acdbOpenObject(pBlkRecord,
+		blockDefId,
+		AcDb::kForRead)))
+	{
+		acutPrintf(L"\nНельзя получить доступ к определению блока.\n");
+		return false;
+	}
+
+	// Получаем имя определения блока.
+	ACHAR * pname;
+
+	es = pBlkRecord->getName(pname);
+	wcscpy_s(pVal,512,pname);
+	pBlkRecord->close();
+	acutPrintf(pVal);
+	if ((Acad::eOk != es) || !pVal)
+	{
+		acutPrintf(L"\nНе можем получить имя блока.\n");
+		return false;
+	}
+	pBlkRecord->close();
+	return true;
 }
 
 void SPEC:: add(double pSizeA,
@@ -810,8 +867,14 @@ SpecWithAttrlist::~SpecWithAttrlist(void)
 int SpecWithAttrlist::checkRelevations(SPEC param1, SPEC param2)
 {
 	int ret;
-	ret=checkCharRelevations(param1.sName,param2.sName);
+	ret=checkCharRelevations(param1.sPos,param2.sPos);
+	if(ret==Equal) ret=checkCharRelevations(param1.sName,param2.sName);
 	if(ret==Equal) ret=checkCharRelevations(param1.sTypeSize,param2.sTypeSize);
+	if(ret==Equal) ret=checkCharRelevations(param1.sArticle,param2.sArticle);
+	if(ret==Equal) ret=checkCharRelevations(param1.sManufacture,param2.sManufacture);
+	if(ret==Equal) ret=checkCharRelevations(param1.sMass,param2.sMass);
+	if(ret==Equal) ret=checkCharRelevations(param1.sCommit,param2.sCommit);
+	
 return ret;
 }
 
@@ -874,6 +937,7 @@ void SpecWithAttrlist::printSPDSForm(AcGePoint3d &cent)
 			//specList[i].setParamChars();
 			//printText(pos1,specList[i].name);
 			specList[i].setParamChars();
+			if(wcscmp(specList[i].sPos,_T(""))!=0) printText(pos1,specList[i].sPos);
 			if(wcscmp(specList[i].sName,_T(""))!=0) printText(pos2,specList[i].sName);
 			if(wcscmp(specList[i].sTypeSize,_T(""))!=0) printText(pos3,specList[i].sTypeSize);
 			if(wcscmp(specList[i].sArticle,_T(""))!=0) printText(pos4,specList[i].sArticle);
