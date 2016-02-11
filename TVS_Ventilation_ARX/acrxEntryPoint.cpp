@@ -5810,10 +5810,10 @@ static void Ventilation_ARXTVS_LEAD(void)
 						
 						 ACHAR * pName;
 						pBTR->getName(pName);
+						
 						pBTR->close();
 							
-						if (!CheckAtt(pName,TagType)&&!CheckAtt(pName,TagSize))
-						{
+
 							if(GetAtt(pEnt1,TagType,atrType)&&GetAtt(pEnt1,TagSize,atrSize))
 							{
 							
@@ -5821,7 +5821,7 @@ static void Ventilation_ARXTVS_LEAD(void)
 							ft=true;
 							pstatus=5;
 							}
-						}
+						
 // 						Line.set(Transie->FirstPoint,Transie->LastPoint);
 // 						pCut=Line.closestPointTo(pCut);
 // 						SizeA=Transie->get_SizeAp1();
@@ -6040,7 +6040,7 @@ static void Ventilation_ARXTVS_LEAD(void)
 
 
 
-	return static void();
+	return ;
 }
 
 static void setZ()
@@ -6315,7 +6315,7 @@ static bool CheckAtt(ACHAR* pName,ACHAR* tag)
 	if(!pBlkTbl->has(pName))
 	{
 		acutPrintf(L"\nBlock definition TEST does not exist");
-		pBlkTbl->close();
+		
 		return false;
 	}
 
@@ -6345,12 +6345,16 @@ static bool CheckAtt(ACHAR* pName,ACHAR* tag)
 // 													acutPrintf(_T("\nTag2=%s"),LPCTSTR(tag));
 												//	const ACHAR* tagconst=LPCTSTR(pAttdef->tagConst());
 													if (wcscmp(tag,pAttdef->tagConst())==0) {
-												//	pAttDef->close();
+												    pSubEnt->close();
 													pBlkRec->close();
 													pBlkTbl->close();
 														
 														return false;
 													}
+
+
+
+
 // 														acutPrintf(_T("-> Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
 // 															LPCTSTR(pAttdef->tagConst()), LPCTSTR(pAttdef->textStringConst()),
 // 															LPCTSTR((pAttdef->isConstant()?_T("Yes"):_T("No"))),
@@ -6359,22 +6363,28 @@ static bool CheckAtt(ACHAR* pName,ACHAR* tag)
 // 															LPCTSTR((pAttdef->isVerifiable()?_T("Yes"):_T("No")))
 // 															);
 		 											}
+
+													pSubEnt->close();
+
 		 										} else {
 													acutPrintf(_T("\nНе удалось открыть примитив в блоке! Ошибка: %s",
 		 												LPCTSTR(acadErrorStatusText(es))));
 		 										}
+
 		 									} else {
 		 										acutPrintf(_T("\nНе удалось получить AcDbObjectId примитва в блоке! Ошибка: %s",
 		 											LPCTSTR(acadErrorStatusText(es))));
 		 									}
 		 								}
+
+										pBlkRec->close();
 		 							} else {
 		 								acutPrintf(_T("\nНе удалось создать итератор для записи таблицы блоков! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
 		 							}
 		 						
 
 	//pAttDef->close();
-	pBlkRec->close();
+	
 	pBlkTbl->close();
 	return true;
 }
@@ -6637,6 +6647,7 @@ static void Ventilation_ARXTVS_AddAtrib(void)
 
 
 					pEnt->close();
+					acutPrintf(_T("/n"));
 					acedCommandS(RTSTR,_T("_ATTSYNC"),RTSTR,_T("_Name"),RTSTR,pName,RTNONE);
 					return;
 					ft=true;
