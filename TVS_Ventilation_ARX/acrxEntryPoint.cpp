@@ -6254,7 +6254,7 @@ public:
 		CMSExcel* m_msExcel=new CMSExcel;
 		acedSetStatusBarProgressMeter(_T("Экспорт в Excel"),0,100);
 		
-		if(m_msExcel->NewExcelBook(false)==E_FAIL) {acutPrintf(_T("\n Ошибка")); acedRestoreStatusBar();delete m_msExcel; return;}
+		if(FAILED( m_msExcel->NewExcelBook(false)==E_FAIL)) {acutPrintf(_T("\n Ошибка")); acedRestoreStatusBar();delete m_msExcel; return;}
 			acedRestoreStatusBar();
 		if (speclist.specList.physicalLength()!=0)
 		{
@@ -6278,6 +6278,7 @@ public:
 	}
 
 		m_msExcel->SetVisible(true);
+		delete m_msExcel;
 	}
 
 

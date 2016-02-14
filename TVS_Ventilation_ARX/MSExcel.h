@@ -35,4 +35,5 @@ public:
 	HRESULT SetActiveCellText(LPCTSTR szText);
 	HRESULT printExelText( const ACHAR *pColumn,long pRow, const ACHAR *pText);
 	HRESULT Quit();
+	HRESULT Quit2();
 };

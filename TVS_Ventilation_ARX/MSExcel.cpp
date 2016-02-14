@@ -996,9 +996,26 @@ HRESULT CMSExcel::Quit()
 }
 
 
+HRESULT CMSExcel::Quit2()
+{
+	if(m_pEApp==NULL) return E_FAIL;
+// 	DISPID dispID;
+// 	LPOLESTR ptName=_T("Quit");
+// 	m_hr = m_pEApp->GetIDsOfNames(IID_NULL, &ptName, 1, LOCALE_USER_DEFAULT, &dispID);
+// 
+// 
+// 		DISPPARAMS dp = { NULL, NULL, 0, 0 };
+// 		m_hr = m_pEApp->Invoke(dispID, IID_NULL, LOCALE_SYSTEM_DEFAULT, DISPATCH_METHOD, 
+// 			&dp, NULL, NULL, NULL);
+
+	m_pEApp->Release();
+	m_pEApp=NULL;
+	return m_hr;
+}
+
 CMSExcel::~CMSExcel(void)
 {
-	Quit();
+	Quit2();
 	CoUninitialize();
 }
 
