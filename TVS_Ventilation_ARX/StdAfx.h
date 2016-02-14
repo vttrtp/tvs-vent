@@ -80,5 +80,12 @@ extern AcApDataManager<CDocData> DocVars ;
 //-----------------------------------------------------------------------------
 #import "acax20enu.tlb" raw_interfaces_only no_namespace
 
+
+
+#include <afxwin.h>         // MFC core and standard components
+#include <afxext.h>         // MFC extensions
+
+
+#include <afxdisp.h>        // MFC Automation classes
 #pragma pack (pop)
 

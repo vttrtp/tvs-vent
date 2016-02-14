@@ -222,8 +222,7 @@ void TVS_TRANS::unappended (const AcDbObject *pDbObj) {
 //----- AcDbEntity protocols
 Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 	assertReadEnabled () ;
-		ListOfEntity.removeAll();
-		ListOfWipeout.removeAll();
+	ClearEntitylist();
 	bool tt=false;
 	AcGeVector3d vec=AcGeVector3d(VectTr.y,-VectTr.x,VectTr.z);
 	vec.normalize();

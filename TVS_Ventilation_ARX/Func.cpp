@@ -2518,7 +2518,7 @@ void func::sequal(double &var,
 	double dbl=atof(ch);
 
 
-
+	delete[] ch;
 
 
 	if (Svar1==Svar2)
@@ -2556,7 +2556,7 @@ void func::sequal(int &var,
 	int dbl=atoi(ch);
 
 
-
+	delete[] ch;
 
 
 	if (Svar1==Svar2)

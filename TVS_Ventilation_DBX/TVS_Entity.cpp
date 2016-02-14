@@ -855,6 +855,26 @@ void TVS_Entity::setNewParameters()
 	DuctType=DuctTypeStill;
 }
 
+void TVS_Entity::ClearEntitylist()
+{
+	
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+
+	delete var;
+			
+	}
+
+	for each (AcDbEntity * var in ListOfWipeout)
+	{
+
+		delete var;
+
+	}
+	ListOfEntity.removeAll();
+	ListOfWipeout.removeAll();
+}
+
 bool TVS_Entity::isDuctFlex()
 {
 	if (DuctType==DuctTypeFlex) return true;

@@ -242,8 +242,7 @@ Acad::ErrorStatus TVS_Pipe::subGetClassID (CLSID *pClsid) const {
 //----- AcDbEntity protocols
 Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 	assertReadEnabled () ;
-	ListOfEntity.removeAll();
-	ListOfWipeout.removeAll();
+	ClearEntitylist();
 	Length=(sqrt((FirstPoint.x-LastPoint.x)*(FirstPoint.x-LastPoint.x)+
 		(FirstPoint.y-LastPoint.y)*
 		(FirstPoint.y-LastPoint.y)));

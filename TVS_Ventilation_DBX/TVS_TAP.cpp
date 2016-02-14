@@ -249,8 +249,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 	setRadius();
 
-	ListOfWipeout.removeAll();
-	ListOfEntity.removeAll();
+	ClearEntitylist();
 	double  Lx, Ly,Nx, Ny;
 	
 	Nx=Startvector.x;

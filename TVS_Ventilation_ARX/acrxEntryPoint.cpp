@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2012 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2012 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -30,6 +30,7 @@
 #include "dbmleader.h"
 #include "PipeSizeDiallog.h"
 #include "hangeZdg.h"
+#include "MSExcel.h"	
 
 #import "acax20ENU.tlb" 
 #include <rxmfcapi.h>
@@ -164,1264 +165,1264 @@ public:
 	}
 
 
-// 
-// 	static void pCon (	AcDbEntity *pEnt1,
-// 		AcDbEntity  *pEnt2
-// 		)
-// 	{
-// 		AcGePoint3d lastpipi;
-// 		AcDbObjectId id;
-// 		double Lx,Ly, startangle;
-// 		ads_name vozd1,vozd2, eName;
-// 		ACHAR handle[17];
-// 		ads_point pt1,pt2;
-// 		ads_real sise=0;
-// 		AcDbEntity *pEnt = NULL;
-// 		AcDbObjectId id1, id2;
-// 		TVS_WYE wyie;
-// 		TVS_TAP * Tapi;
-// 		TVS_TRANS * Transi;
-// 		TVS_WYE * Wyi;
-// 		TVS_Pipe * Pipi1,*Pipi2, *Pip;
-// 		double NewSiseA, NewRadius;
-// 		resbuf *rb = NULL;
-// 		bool ft=false;
-// 		TVS_Pipe pipie;
-// 		TVS_TAP tapie;
-// 		AcGePoint3d kr1,kr2,na1,na2;
-// 
-// 
-// 		AcCmColor pColor;
-// 		AcDb::LineWeight pWeight;
-// 		AcDbObjectId pLayer;
-// 		AcDbObjectId pLineType;
-// 
-// 
-// 		///проверка на класс1
-// 
-// 		if (acdbOpenAcDbEntity(pEnt1,pEnt1->id(),AcDb::kForWrite)==eOk)
-// 		{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
-// 		{	
-// 
-// 			pColor=Pipi1->color();
-// 			pWeight=Pipi1->lineWeight();
-// 			pLayer=Pipi1->layerId();
-// 			pLineType=Pipi1->linetypeId();
-// 
-// 		}}
-// 		else {
-// 			consoleprint(0,_T("\nОбьект заблокирован"));
-// 
-// 			return;
-// 		}
-// 
-// 		pEnt1->close();	
-// 
-// 
-// 		///////////оконьчание проверки1
-// 
-// 
-// 		///проверка на класс1
-// 
-// 		if (acdbOpenAcDbEntity(pEnt2,pEnt2->id(),AcDb::kForWrite)==eOk)
-// 		{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
-// 		{	
-// 
-// 
-// 
-// 		}}
-// 		else {
-// 			consoleprint(0,_T("\nОбьект заблокирован"));
-// 
-// 			return;
-// 		}
-// 
-// 		pEnt2->close();	
-// 
-// 
-// 		///////////оконьчание проверки1
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 		//точка пересечения
-// 		bool b1=false;
-// 		bool b2=false;
-// 		AcGePoint3d p1,p2,p3,p4,midp, pPr1,pOtv1,pX,pX2;
-// 		AcGeVector3d pvectpr,pvectotv;	
-// 		p1=Pipi1->FirstPoint;
-// 		p2=Pipi1->LastPoint;
-// 		p3=Pipi2->FirstPoint;
-// 		p4=Pipi2->LastPoint;
-// 		AcGeLine3d line1(p1,p2),line2(p3,p4) ;
-// 		line1.intersectWith(line2,midp);
-// 		///////
-// 		TVS_Pipe *PipiPr,*PipiOtv;
-// 
-// 		double lengthX;
-// 		double pSizeApr=200;
-// 		double pSizeBpr=0;
-// 		double pSizeAotv=100;
-// 		double pSizeBotv=0;
-// 		double pLengthPl=globalLengthW;
-// 		AcGeVector3d pVectpr=AcGeVector3d(1,0,0);
-// 		AcGeVector3d pVectotv=AcGeVector3d(0,1,0);
-// 		AcGePoint3d pBasepoint=AcGePoint3d(0,0,0);
-// 		bool pThisRoundpr=true;
-// 		bool pThisRoundotv=true;
-// 		bool pThis1D=false;
-// 		AcDbEntity *pEntX;
-// 		int statpersec=-1;
-// 		int statnapr=-1;
-// 		int obshaia=-1;
-// 		AcGeVector3d vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
-// 		AcGeVector3d vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
-// 		AcGePoint3d blig1;
-// 
-// 		///проверка на общую точку
-// 		if ((p1==p3)||(p1==p4)||(p2==p3)||(p2==p4))
-// 		{
-// 			obshaia=dObshaiztochka;
-// 			statpersec=dNeperesec;
-// 			//acutPrintf(_T("\nимеют общую точку"));
-// 		}
-// 
-// 		/////проверка на перпендикуляпность
-// 
-// 		if (abs(vect1.x*vect2.x+vect1.y*vect2.y)<=0.00001)
-// 		{
-// 			statnapr=dPerpend;
-// 			//acutPrintf(_T("\nПерпендикулярны"));
-// 		}
-// 		if (statnapr!=dPerpend)
-// 		{
-// 
-// 			double asdf,asdk;
-// 			if (abs(vect2.x)!=0)
-// 			{
-// 				asdf=abs(vect1.x/vect2.x);
-// 			}
-// 			else
-// 			{
-// 				asdf=1;
-// 			}
-// 			//consoleprint(asdf,_T("\nasdf "));
-// 			if (abs(vect2.y)!=0)
-// 			{
-// 				asdk=abs(vect1.y/vect2.y);
-// 			}
-// 			else
-// 			{
-// 				asdk=2;
-// 			}
-// 
-// 			//consoleprint(asdk,_T("\nasdk "));
-// 			//проверка на параллельность компланарность
-// 			if ((abs(asdf-asdk)<0.0001)||(abs(vect1.x-vect2.x)<0.0001)||(abs(vect1.y-vect2.y)<0.0001))
-// 			{
-// 				if ( (abs(p1.x-p2.x)<0.0001)||(abs(p1.y-p2.y)<0.0001)    )
-// 				{
-// 					if(((abs(p1.x-p2.x)<0.0001)&&(abs(p1.x-p4.x)<0.0001))||((abs(p1.y-p2.y)<0.0001)&&(abs(p1.y-p4.y)<0.0001)  ))
-// 					{
-// 						statnapr=dComplanar;
-// 						//acutPrintf(_T("\nКомпланарны 1"));
-// 
-// 					}
-// 					else 
-// 					{
-// 						statnapr=dParal;
-// 						//acutPrintf(_T("\nПараллельны 1"));
-// 					}
-// 				} 
-// 				else
-// 				{
-// 					double bb1,bb2;
-// 					bb1=p1.y-(p1.y-p2.y)/(p1.x-p2.x)*p1.x;
-// 					bb2=p3.y-(p3.y-p4.y)/(p3.x-p4.x)*p3.x;
-// 
-// 					//consoleprint(bb1,_T("\n"));
-// 					//	consoleprint(bb2,_T("\n"));
-// 					if (abs(bb1-bb2)<0.0001)
-// 					{
-// 						statnapr=dComplanar;
-// 						//acutPrintf(_T("\nКомпланарны 2"));
-// 					} 
-// 					else
-// 					{
-// 
-// 						statnapr=dParal;
-// 						//acutPrintf(_T("\nПараллельны 2"));
-// 					}
-// 				}
-// 			}
-// 
-// 		}
-// 		///для выбор
-// 
-// 		double fSizeA=Pipi1->SizeA;
-// 		bool fRound=Pipi1->ThisRound;
-// 		double fSizeB=Pipi1->SizeB;
-// 
-// 		double tapradius, radius, pSwectangle;
-// 		AcGeVector3d normvect1=AcGeVector3d(-vect1.y,vect1.x,0);
-// 		AcGePoint3d t2norm=AcGePoint3d(p2.x+normvect1.x,p2.y+normvect1.y,0);
-// 		AcGeLine3d line3=AcGeLine3d(p2,t2norm);
-// 		AcGePoint3d pCenterpoint;
-// 		AcGeVector3d pstartvect;
-// 		AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
-// 		AcGePoint3d impr;
-// 
-// 
-// 
-// 		//выбор (исправление параллельности)
-// 		if (statnapr==dParal)
-// 		{
-// 
-// 			//////////////////////////////////sdfdsfsdf//////
-// 
-// 			line3.intersectWith(line2,midp);
-// 			normvect1=AcGeVector3d(midp.x-p2.x,midp.y-p2.y,0);
-// 			normvect1.normalize();
-// 
-// 			Tapi=drawTapDirect(p1,p2,midp);
-// 			SetGlobalProperty(Tapi);
-// 
-// 			double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
-// 
-// 			if ((length2p(p1,p2)>=delta)&&(length2p(p2,midp)>=delta))
-// 			{
-// 
-// 				///задание слоя
-// 				if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
-// 				{	
-// 					Tapi->setColor(pColor);
-// 					Tapi->setLineWeight(pWeight);
-// 					Tapi->setLayer(pLayer);
-// 					Tapi->setLinetype(pLineType);
-// 					Tapi->close();
-// 
-// 
-// 				}
-// 
-// 
-// 
-// 				id=Pipi1->id();
-// 				acdbGetAdsName(eName,id);
-// 				acdbGetObjectId(id,eName);
-// 				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-// 				Pipi1->assertWriteEnabled();
-// 				Pipi1->put_Lastpoint(lastpipi);
-// 				Pipi1->close();
-// 				impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
-// 				Pipi1=pipie.add_new(p2,impr,fSizeA,fSizeB,false,fRound);
-// 				///задание слоя
-// 				if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
-// 				{	
-// 					Pipi1->setColor(pColor);
-// 					Pipi1->setLineWeight(pWeight);
-// 					Pipi1->setLayer(pLayer);
-// 					Pipi1->setLinetype(pLineType);
-// 					Pipi1->close();
-// 				}
-// 
-// 				p1=Pipi1->FirstPoint;
-// 				p2=Pipi1->LastPoint;
-// 				line1=AcGeLine3d(p1,p2);
-// 				vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
-// 				statnapr=dPerpend;
-// 			}
-// 			else
-// 			{
-// 
-// 				AcDbEntity* pnt;
-// 				acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
-// 				Tapi->erase();
-// 				Tapi->close();
-// 
-// 			}
-// 		}
-// 
-// 		//проверка на пересеч перпендикуляров
-// 		if ((statnapr==dPerpend)&&(obshaia!=dObshaiztochka))
-// 		{
-// 			if(((((p3.x-midp.x)*(midp.x-p4.x))>=0)&&(((p3.y-midp.y)*(midp.y-p4.y))>=0))||((((p1.x-midp.x)*(midp.x-p2.x))>=0)&&(((p1.y-midp.y)*(midp.y-p2.y))>=0)) )
-// 			{
-// 				statpersec=dPeresec;
-// 				//acutPrintf(_T("\nПеперcекаются"));
-// 			}
-// 
-// 			else statpersec=dNeperesec;
-// 
-// 		}
-// 
-// 		//проверка на вставку тройника и исправление 
-// 		// (проверка на пересечение перпендикуляра из крайней точки 1-го возд и второго 
-// 		// если да превращение в перпендикуляр
-// 
-// 		if ((statpersec!=dPeresec)&&(statnapr!=dComplanar)&&(statnapr!=dPeresec))
-// 		{
-// 
-// 			//acutPrintf(_T("\nПроверка на пересечение"));
-// 
-// 			if (length2p(p1,midp)>length2p(p2,midp)) 
-// 			{
-// 				kr1=p2;
-// 				na1=p1;
-// 			}
-// 			else 
-// 			{
-// 				kr1=p1;
-// 				na1=p2;
-// 			}
-// 
-// 			if (length2p(p3,midp)>length2p(p4,midp)) 
-// 			{
-// 				kr2=p4;
-// 				na2=p3;
-// 			}
-// 			else 
-// 			{
-// 				kr2=p3;
-// 				na2=p4;
-// 			}
-// 
-// 			bool ff=false;
-// 
-// 			AcGePoint3d ffmidp;
-// 			AcGeVector3d ffnorm=AcGeVector3d(-(p4.y-p3.y),p4.x-p3.x,0);
-// 			AcGePoint3d fftnorm=AcGePoint3d(kr1.x+ffnorm.x,kr1.y+ffnorm.y,0);
-// 			AcGeLine3d ffline=AcGeLine3d(kr1,fftnorm);
-// 			ffline.intersectWith(line2,ffmidp);
-// 
-// 
-// 
-// 			//проверка на нахождение точки персеч внутри 2 воздуховода
-// 			if((((p3.x-ffmidp.x)*(ffmidp.x-p4.x))>=0)&&(((p3.y-ffmidp.y)*(ffmidp.y-p4.y))>=0))
-// 			{
-// 				//acutPrintf(_T("\nотвод и перпенд"));
-// 				midp=ffmidp;
-// 				line2.intersectWith(ffline,midp);
-// 				normvect1=AcGeVector3d(midp.x-kr1.x,midp.y-kr1.y,0);
-// 				normvect1.normalize();
-// 				Tapi=drawTapDirect(na1,midp,na2);
-// 				SetGlobalProperty(Tapi);
-// 
-// 				double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
-// 
-// 				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
-// 				{
-// 
-// 					///задание слоя
-// 					if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Tapi->setColor(pColor);
-// 						Tapi->setLineWeight(pWeight);
-// 						Tapi->setLayer(pLayer);
-// 						Tapi->setLinetype(pLineType);
-// 						Tapi->close();
-// 					}
-// 					lastpipi=
-// 						id=Pipi1->id();
-// 					acdbGetAdsName(eName,id);
-// 					acdbGetObjectId(id,eName);
-// 					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-// 					Pipi1->assertWriteEnabled();
-// 					//consoleprint(na1,_T("\nmidp"));
-// 					//consoleprint(Pipi1->LastPoint,_T("\nmidp"));
-// 					if (na1==Pipi1->FirstPoint)			
-// 						Pipi1->LastPoint=lastpipi;
-// 					else Pipi1->FirstPoint=lastpipi;
-// 
-// 					Pipi1->close();
-// 					impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
-// 					Pipi1=pipie.add_new(kr1,impr,fSizeA,fSizeB,false,fRound);
-// 					if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Pipi1->setColor(pColor);
-// 						Pipi1->setLineWeight(pWeight);
-// 						Pipi1->setLayer(pLayer);
-// 						Pipi1->setLinetype(pLineType);
-// 						Pipi1->close();
-// 					}
-// 					p1=Pipi1->FirstPoint;
-// 					p2=Pipi1->LastPoint;
-// 					line1=AcGeLine3d(p1,p2);
-// 					vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
-// 					statnapr=dPerpend;
-// 					statpersec=dPeresec;
-// 				}
-// 
-// 			}
-// 
-// 			else
-// 			{
-// 				//второй вариант
-// 				bool dd=false;
-// 				AcGePoint3d ddmidp;
-// 				AcGeVector3d ddnorm=AcGeVector3d(-(p2.y-p1.y),p2.x-p1.x,0);
-// 				AcGePoint3d ddtnorm=AcGePoint3d(kr2.x+ddnorm.x,kr2.y+ddnorm.y,0);
-// 				AcGeLine3d ddline=AcGeLine3d(kr2,ddtnorm);
-// 				ddline.intersectWith(line1,ddmidp);
-// 				if((((p1.x-ddmidp.x)*(ddmidp.x-p2.x))>=0)&&(((p1.y-ddmidp.y)*(ddmidp.y-p2.y))>=0))
-// 				{
-// 					fSizeA=Pipi2->SizeA;
-// 					fRound=Pipi2->ThisRound;
-// 					fSizeB=Pipi2->SizeB;
-// 					//	acutPrintf(_T("\nотвод и перпенд вар2"));
-// 					midp=ddmidp;
-// 					line1.intersectWith(ddline,midp);
-// 					normvect1=AcGeVector3d(midp.x-kr2.x,midp.y-kr2.y,0);
-// 					normvect1.normalize();
-// 					Tapi=drawTapDirect(na1,midp,na2);
-// 					SetGlobalProperty(Tapi);
-// 
-// 					double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
-// 
-// 					if ((length2p(na1,midp)>=delta)&&(length2p(midp,na2)>=delta))
-// 					{
-// 
-// 						if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
-// 						{	
-// 							Tapi->setColor(pColor);
-// 							Tapi->setLineWeight(pWeight);
-// 							Tapi->setLayer(pLayer);
-// 							Tapi->setLinetype(pLineType);
-// 							Tapi->close();
-// 						}
-// 						id=Pipi2->id();
-// 						acdbGetAdsName(eName,id);
-// 						acdbGetObjectId(id,eName);
-// 						acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-// 						Pipi2->assertWriteEnabled();
-// 						//consoleprint(na2,_T("\nmidp"));
-// 						//consoleprint(Pipi2->LastPoint,_T("\nmidp"));
-// 						if (na2==Pipi2->FirstPoint)			
-// 							Pipi2->LastPoint=lastpipi;
-// 						else Pipi2->FirstPoint=lastpipi;
-// 
-// 						Pipi2->close();
-// 						impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
-// 						Pipi2=pipie.add_new(kr2,impr,fSizeA,fSizeB,false,fRound);
-// 
-// 						if (acdbOpenAcDbEntity(pEnt,Pipi2->id(),AcDb::kForWrite)==eOk)
-// 						{	
-// 							Pipi2->setColor(pColor);
-// 							Pipi2->setLineWeight(pWeight);
-// 							Pipi2->setLayer(pLayer);
-// 							Pipi2->setLinetype(pLineType);
-// 							Pipi2->close();
-// 						}
-// 						p3=Pipi2->FirstPoint;
-// 						p4=Pipi2->LastPoint;
-// 						line2=AcGeLine3d(p3,p4);
-// 						vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
-// 						statnapr=dPerpend;
-// 						statpersec=dPeresec;
-// 					}
-// 					else
-// 					{
-// 
-// 						AcDbEntity* pnt;
-// 						acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
-// 						Tapi->erase();
-// 						Tapi->close();
-// 
-// 					}
-// 
-// 				} 
-// 				else {
-// 					//acutPrintf(_T("\nНепересекаются"));
-// 					statpersec=dNeperesec;
-// 
-// 				}
-// 			}
-// 
-// 		}
-// 
-// 
-// 		//установка перехода
-// 
-// 		if ((statpersec!=dPeresec)||(statnapr==dComplanar)||(obshaia==dObshaiztochka))
-// 		{
-// 
-// 			if ((Pipi1->SizeA!=Pipi2->SizeA)||(Pipi1->SizeB!=Pipi2->SizeB))
-// 			{
-// 				//acutPrintf(_T("\nСтавлю переход"));
-// 
-// 
-// 
-// 
-// 				if (statnapr==dComplanar)
-// 				{
-// 					if(Pipi1->SizeA>Pipi2->SizeA)
-// 					{
-// 
-// 
-// 						if (length2p(p1,p3)>length2p(p1,p4)) midp=p3;
-// 						else midp=p4;
-// 
-// 					}
-// 					else
-// 					{
-// 						if (length2p(p3,p1)>length2p(p3,p2)) midp=p1;
-// 						else midp=p2;
-// 					}
-// 				}
-// 				if (length2p(p1,midp)>length2p(p2,midp)) 
-// 				{
-// 					kr1=p2;
-// 					na1=p1;
-// 				}
-// 				else 
-// 				{
-// 					kr1=p1;
-// 					na1=p2;
-// 				}
-// 
-// 				if (length2p(p3,midp)>length2p(p4,midp)) 
-// 				{
-// 					kr2=p4;
-// 					na2=p3;
-// 				}
-// 				else 
-// 				{
-// 					kr2=p3;
-// 					na2=p4;
-// 				}
-// 				TVS_TRANS transie;
-// 				double pSizeAp1;
-// 				double pSizeBp1;
-// 				double pSizeAp2;
-// 				double pSizeBp2;
-// 				if (Pipi1->SizeA>Pipi2->SizeA)
-// 				{
-// 
-// 
-// 					pSizeAp1=Pipi1->SizeA;
-// 					pSizeBp1=Pipi1->SizeB;
-// 					pSizeAp2=Pipi2->SizeA;
-// 					pSizeBp2=Pipi2->SizeB;
-// 
-// 
-// 
-// 					double pLengthTr=globalLengthTr;
-// 					AcGeVector3d Vect=AcGeVector3d(midp.x-na1.x, midp.y-na1.y,0);
-// 					AcGeVector3d pVectTr;
-// 					AcGePoint3d pFirstPoint=na1;
-// 					pVectTr=Vect.normalize()*pLengthTr;
-// 
-// 					double pThisRoundp1,
-// 						pThisRoundp2;
-// 					int pTransType=ftTransType;
-// 					bool pThis1D=false;
-// 
-// 					if (pSizeBp1==0) pThisRoundp1=true;
-// 					else pThisRoundp1=false;
-// 
-// 					if (pSizeBp2==0) pThisRoundp2=true;
-// 					else pThisRoundp2=false;
-// 
-// 					Transi=transie.add_new(pSizeAp1,
-// 						pSizeBp1,
-// 						pSizeAp2,
-// 						pSizeBp2,
-// 						pLengthTr,
-// 						pVectTr,
-// 						pFirstPoint,
-// 						pThisRoundp1,
-// 						pThisRoundp2,
-// 						pTransType,
-// 						pThis1D);
-// 					if (acdbOpenAcDbEntity(pEnt,Transi->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Transi->setColor(pColor);
-// 						Transi->setLineWeight(pWeight);
-// 						Transi->setLayer(pLayer);
-// 						Transi->setLinetype(pLineType);
-// 						Transi->close();
-// 					}
-// 					pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
-// 						pFirstPoint.y+pLengthTr*Vect.y,
-// 						pFirstPoint.z+pLengthTr*Vect.z
-// 						);
-// 					AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
-// 						pFirstPoint.y+100*Vect.y,
-// 						pFirstPoint.z+100*Vect.z
-// 						);
-// 
-// 					bool pThis1d=false;
-// 
-// 
-// 					id=Pipi1->id();
-// 					acdbGetAdsName(eName,id);
-// 					acdbEntDel(eName);
-// 					Pipi1=Pipi2->add_new(pFirstPoint,
-// 						pLastPoint,
-// 						pSizeAp2,
-// 						pSizeBp2,
-// 						pThis1d,
-// 						pThisRoundp2);
-// 					if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Pipi1->setColor(pColor);
-// 						Pipi1->setLineWeight(pWeight);
-// 						Pipi1->setLayer(pLayer);
-// 						Pipi1->setLinetype(pLineType);
-// 						Pipi1->close();
-// 					}
-// 					p1=Pipi1->FirstPoint;
-// 					p2=Pipi1->LastPoint;
-// 					line1=AcGeLine3d(p1,p2);
-// 					vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
-// 
-// 				}
-// 				else
-// 				{
-// 
-// 					pSizeAp1=Pipi2->SizeA;
-// 					pSizeBp1=Pipi2->SizeB;
-// 					pSizeAp2=Pipi1->SizeA;
-// 					pSizeBp2=Pipi1->SizeB;
-// 
-// 
-// 
-// 					double pLengthTr=globalLengthTr;
-// 					AcGeVector3d Vect=AcGeVector3d(midp.x-na2.x, midp.y-na2.y,0);
-// 					AcGeVector3d pVectTr;
-// 					AcGePoint3d pFirstPoint=na2;
-// 					pVectTr=Vect.normalize()*pLengthTr;
-// 
-// 					double pThisRoundp1,
-// 						pThisRoundp2;
-// 					int pTransType=ftTransType;
-// 					bool pThis1D=false;
-// 
-// 					if (pSizeBp1==0) pThisRoundp1=true;
-// 					else pThisRoundp1=false;
-// 
-// 					if (pSizeBp2==0) pThisRoundp2=true;
-// 					else pThisRoundp2=false;
-// 
-// 					Transi=transie.add_new(pSizeAp1,
-// 						pSizeBp1,
-// 						pSizeAp2,
-// 						pSizeBp2,
-// 						pLengthTr,
-// 						pVectTr,
-// 						pFirstPoint,
-// 						pThisRoundp1,
-// 						pThisRoundp2,
-// 						pTransType,
-// 						pThis1D);
-// 
-// 					if (acdbOpenAcDbEntity(pEnt,Transi->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Transi->setColor(pColor);
-// 						Transi->setLineWeight(pWeight);
-// 						Transi->setLayer(pLayer);
-// 						Transi->setLinetype(pLineType);
-// 						Transi->close();
-// 					}
-// 					pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
-// 						pFirstPoint.y+pLengthTr*Vect.y,
-// 						pFirstPoint.z+pLengthTr*Vect.z
-// 						);
-// 					AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
-// 						pFirstPoint.y+100*Vect.y,
-// 						pFirstPoint.z+100*Vect.z
-// 						);
-// 
-// 					bool pThis1d=false;
-// 					id=Pipi2->id();
-// 
-// 					acdbGetAdsName(eName,id);
-// 					/*acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-// 					Pipi2->assertWriteEnabled();*/
-// 					acdbEntDel(eName);
-// 					Pipi2=Pipi1->add_new(pFirstPoint,
-// 						pLastPoint,
-// 						pSizeAp2,
-// 						pSizeBp2,
-// 						pThis1d,
-// 						pThisRoundp2);
-// 
-// 					if (acdbOpenAcDbEntity(pEnt,Pipi2->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Pipi2->setColor(pColor);
-// 						Pipi2->setLineWeight(pWeight);
-// 						Pipi2->setLayer(pLayer);
-// 						Pipi2->setLinetype(pLineType);
-// 						Pipi2->close();
-// 					}
-// 					p3=Pipi2->FirstPoint;
-// 					p4=Pipi2->LastPoint;
-// 					line2=AcGeLine3d(p3,p4);
-// 					vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
-// 				}
-// 			}
-// 
-// 
-// 
-// 		}
-// 
-// 
-// 
-// 		///////////отводы
-// 
-// 
-// 		if (((statpersec==dNeperesec)||(obshaia==dObshaiztochka))&&(statnapr!=dComplanar))
-// 
-// 		{
-// 			//acutPrintf(_T("\nПытаюсь поставить отвод"));
-// 			if (length2p(p1,midp)>length2p(p2,midp)) 
-// 			{
-// 				kr1=p2;
-// 				na1=p1;
-// 			}
-// 			else 
-// 			{
-// 				kr1=p1;
-// 				na1=p2;
-// 			}
-// 
-// 			if (length2p(p3,midp)>length2p(p4,midp)) 
-// 			{
-// 				kr2=p4;
-// 				na2=p3;
-// 			}
-// 			else 
-// 			{
-// 				kr2=p3;
-// 				na2=p4;
-// 			}
-// 
-// 
-// 			vect1=AcGeVector3d(kr1.x-na1.x,
-// 				kr1.y-na1.y,
-// 				kr1.z-na1.z);
-// 			vect2=AcGeVector3d(kr2.x-na2.x,
-// 				kr2.y-na2.y,
-// 				kr2.z-na2.z);
-// 			vect1.normalize();
-// 			vect2.normalize();
-// 			double pSizeAw=Pipi1->SizeA;
-// 			double pSizeBw=Pipi1->SizeB;
-// 			bool pRoundw=Pipi1->ThisRound;
-// 
-// 			if (vect1!=vect2)
-// 			{
-// 
-// 				Tapi=drawTapDirect(na1,midp,na2);
-// 				SetGlobalProperty(Tapi);
-// 
-// 				double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
-// 
-// 				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
-// 				{
-// 					if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Tapi->setColor(pColor);
-// 						Tapi->setLineWeight(pWeight);
-// 						Tapi->setLayer(pLayer);
-// 						Tapi->setLinetype(pLineType);
-// 						Tapi->close();
-// 					}
-// 					id=Pipi1->id();
-// 					acdbGetAdsName(eName,id);
-// 					acdbGetObjectId(id,eName);
-// 					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-// 					Pipi1->assertWriteEnabled();
-// 					if (na1==Pipi1->FirstPoint)			
-// 						Pipi1->LastPoint=lastpipi;
-// 					else Pipi1->FirstPoint=lastpipi;
-// 
-// 
-// 					Pipi1->close();
-// 
-// 
-// 					id=Pipi2->id();
-// 					acdbGetAdsName(eName,id);
-// 					acdbGetObjectId(id,eName);
-// 					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-// 					Pipi2->assertWriteEnabled();
-// 					if (na2==Pipi2->FirstPoint)			
-// 						Pipi2->LastPoint=midp;
-// 					else Pipi2->FirstPoint=midp;
-// 
-// 					Pipi2->close();
-// 
-// 					//acutPrintf(_T("\nОтвод поставлен"));
-// 
-// 
-// 
-// 				}
-// 				//else acutPrintf(_T("\nНе могу поставить отвод"));
-// 
-// 				else
-// 				{
-// 
-// 					AcDbEntity* pnt;
-// 					acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
-// 					Tapi->erase();
-// 					Tapi->close();
-// 
-// 				}
-// 
-// 
-// 
-// 			}
-// 
-// 
-// 		}
-// 
-// 
-// 		///////// удлинение компланара
-// 
-// 
-// 		if (statnapr==dComplanar)
-// 		{
-// 			if (length2p(p1,p3)>length2p(p2,p3)) kr1=p1;
-// 			else kr1=p2;
-// 
-// 			if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
-// 			else kr2=p3;
-// 
-// 			id=Pipi1->id();
-// 			acdbGetAdsName(eName,id);
-// 			acdbGetObjectId(id,eName);
-// 			acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-// 			Pipi1->assertWriteEnabled();
-// 			if (kr1==Pipi1->FirstPoint)			
-// 				Pipi1->LastPoint=kr2;
-// 			else Pipi1->FirstPoint=kr2;
-// 			Pipi1->close();
-// 
-// 			id=Pipi2->id();
-// 			acdbGetAdsName(eName,id);
-// 			acdbEntDel(eName);
-// 
-// 		}
-// 
-// 
-// 
-// 
-// 		///////тройники
-// 		if ((statpersec==dPeresec)&&(statnapr==dPerpend)&&(obshaia!=dObshaiztochka))
-// 		{
-// 			if((((p1.x-midp.x)*(midp.x-p2.x))>=0)&&(((p1.y-midp.y)*(midp.y-p2.y))>=0)) //p1-проход (тройник)
-// 
-// 			{
-// 				PipiPr=Pipi1;
-// 				PipiOtv=Pipi2;
-// 				pSizeApr=PipiPr->SizeA;
-// 				pSizeAotv=PipiOtv->SizeA;
-// 				pSizeBpr=PipiPr->SizeB;
-// 				pSizeBotv=PipiOtv->SizeB;
-// 				pThisRoundpr=PipiPr->ThisRound;
-// 				pThisRoundotv=PipiOtv->ThisRound;
-// 
-// 				pVectpr=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
-// 
-// 
-// 				////////////kraynaja  точка отвода
-// 
-// 				if (length2p(midp,p3)<length2p(midp,p4))
-// 				{
-// 					pOtv1=p4;
-// 					pVectotv=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
-// 				}
-// 
-// 				else
-// 				{
-// 					pOtv1=p3;
-// 					pVectotv=AcGeVector3d(p3.x-p4.x,p3.y-p4.y,0);
-// 				}
-// 				////////////kraynaja  точка прохода
-// 
-// 				if (length2p(midp,p2)<length2p(midp,p1))
-// 				{
-// 					pPr1=p2;
-// 
-// 				}
-// 
-// 				else
-// 				{
-// 					pPr1=p1;
-// 
-// 				}
-// 
-// 				if (length2p(midp,pOtv1)<(pLengthPl+pSizeApr/2))	
-// 				{
-// 					//acutPrintf(_T("отвод короткий"));
-// 				}
-// 				else b1=true;
-// 				if ((length2p(midp,p1)<(pLengthPl+pSizeAotv/2))&&(length2p(midp,p2)<(pLengthPl+pSizeAotv/2)))	
-// 				{
-// 					//acutPrintf(_T("проход короткий"));
-// 				}
-// 				else b2=true;
-// 
-// 				if ((b1==true)&&(b1==true))
-// 				{
-// 					pBasepoint=midp;
-// 					Wyi=wyie.add_new(pSizeApr,
-// 						pSizeBpr,
-// 						pSizeAotv,
-// 						pSizeBotv,
-// 						pLengthPl,
-// 						pVectpr,
-// 						pVectotv,
-// 						pBasepoint,
-// 						pThisRoundpr,
-// 						pThisRoundotv,
-// 						pThis1D);
-// 
-// 					if (acdbOpenAcDbEntity(pEnt,Wyi->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Wyi->setColor(pColor);
-// 						Wyi->setLineWeight(pWeight);
-// 						Wyi->setLayer(pLayer);
-// 						Wyi->setLinetype(pLineType);
-// 						Wyi->close();
-// 					}
-// 
-// 				} 
-// 
-// 				////построение прохода
-// 				if (acdbOpenAcDbEntity(pEntX,PipiPr->id(),AcDb::kForWrite)==eOk)
-// 				{if ( (PipiPr = TVS_Pipe::cast(pEntX)) != NULL )
-// 				{	
-// 
-// 
-// 
-// 					pX=midp;
-// 					pX2=PipiPr->LastPoint;
-// 					lengthX=pSizeAotv/2+pLengthPl;
-// 					pX=shortlength(PipiPr->FirstPoint,pX,lengthX);
-// 
-// 					PipiPr->put_Lastpoint(pX);
-// 					pX=midp;
-// 					pX=shortlength(pX2,pX,lengthX);
-// 					Pip=PipiPr->add_new(pX2,pX,pSizeApr,pSizeBpr,PipiPr->This1D,PipiPr->ThisRound);
-// 
-// 					if (acdbOpenAcDbEntity(pEnt,Pip->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Pip->setColor(pColor);
-// 						Pip->setLineWeight(pWeight);
-// 						Pip->setLayer(pLayer);
-// 						Pip->setLinetype(pLineType);
-// 						Pip->close();
-// 					}
-// 
-// 
-// 
-// 					//acutPrintf(_T("\nПостроение 1"));
-// 
-// 
-// 				}}
-// 				else {
-// 					consoleprint(0,_T("\nОбьект заблокирован"));
-// 
-// 					return;
-// 				}
-// 
-// 				pEntX->close();	
-// 				/////построение отвода
-// 				if (acdbOpenAcDbEntity(pEntX,PipiOtv->id(),AcDb::kForWrite)==eOk)
-// 				{if ( (PipiOtv = TVS_Pipe::cast(pEntX)) != NULL )
-// 				{	
-// 
-// 					pX=midp;
-// 					lengthX=pSizeApr/2+pLengthPl;
-// 					if(length2p(midp,PipiOtv->LastPoint)>length2p(midp,PipiOtv->FirstPoint))
-// 					{
-// 						pX=shortlength(PipiOtv->FirstPoint,pX,lengthX);
-// 						PipiOtv->put_FirstPoint(pX);
-// 					}
-// 					else 
-// 					{
-// 						pX=shortlength(PipiOtv->LastPoint,pX,lengthX);
-// 						PipiOtv->put_Lastpoint(pX);
-// 					}
-// 
-// 
-// 					//acutPrintf(_T("\nПостроение 1.2"));
-// 
-// 				}}
-// 				else {
-// 					acutPrintf(_T("\nОбьект заблокирован"));
-// 
-// 					return;
-// 				}
-// 
-// 				pEntX->close();	
-// 				////////
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 			}
-// 
-// 
-// 			if((((p3.x-midp.x)*(midp.x-p4.x))>=0)&&(((p3.y-midp.y)*(midp.y-p4.y))>=0)) //p2-проход (тройник)
-// 
-// 			{
-// 				PipiPr=Pipi2;
-// 				PipiOtv=Pipi1;
-// 				pSizeApr=PipiPr->SizeA;
-// 				pSizeAotv=PipiOtv->SizeA;
-// 				pSizeBpr=PipiPr->SizeB;
-// 				pSizeBotv=PipiOtv->SizeB;
-// 				pThisRoundpr=PipiPr->ThisRound;
-// 				pThisRoundotv=PipiOtv->ThisRound;
-// 
-// 				pVectpr=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
-// 
-// 
-// 				////////////kraynaja  точка отвода
-// 
-// 				if (length2p(midp,p1)<length2p(midp,p2))
-// 				{
-// 					pOtv1=p2;
-// 					pVectotv=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
-// 				}
-// 
-// 				else
-// 				{
-// 					pOtv1=p1;
-// 					pVectotv=AcGeVector3d(p1.x-p2.x,p1.y-p2.y,0);
-// 				}
-// 				////////////kraynaja  точка прохода
-// 
-// 				if (length2p(midp,p4)<length2p(midp,p3))
-// 				{
-// 					pPr1=p4;
-// 
-// 				}
-// 
-// 				else
-// 				{
-// 					pPr1=p3;
-// 
-// 				}
-// 
-// 				if (length2p(midp,pOtv1)<(pLengthPl+pSizeApr/2))	
-// 				{
-// 					acutPrintf(_T("отвод короткий"));
-// 				}
-// 				else b1=true;
-// 				if ((length2p(midp,p3)<(pLengthPl+pSizeAotv/2))&&(length2p(midp,p4)<(pLengthPl+pSizeAotv/2)))	
-// 				{
-// 					acutPrintf(_T("проход короткий"));
-// 				}
-// 				else b2=true;
-// 
-// 				if ((b1==true)&&(b1==true))
-// 				{
-// 					pBasepoint=midp;
-// 					Wyi=wyie.add_new(pSizeApr,
-// 						pSizeBpr,
-// 						pSizeAotv,
-// 						pSizeBotv,
-// 						pLengthPl,
-// 						pVectpr,
-// 						pVectotv,
-// 						pBasepoint,
-// 						pThisRoundpr,
-// 						pThisRoundotv,
-// 						pThis1D);
-// 					if (acdbOpenAcDbEntity(pEnt,Wyi->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Wyi->setColor(pColor);
-// 						Wyi->setLineWeight(pWeight);
-// 						Wyi->setLayer(pLayer);
-// 						Wyi->setLinetype(pLineType);
-// 						Wyi->close();
-// 					}
-// 
-// 				} 
-// 
-// 				////построение прохода
-// 				if (acdbOpenAcDbEntity(pEntX,PipiPr->id(),AcDb::kForWrite)==eOk)
-// 				{if ( (PipiPr = TVS_Pipe::cast(pEntX)) != NULL )
-// 				{	
-// 					//acutPrintf(_T("\npEntX...ок"));
-// 
-// 
-// 					pX=midp;
-// 					pX2=PipiPr->LastPoint;
-// 					lengthX=pSizeAotv/2+pLengthPl;
-// 					pX=shortlength(PipiPr->FirstPoint,pX,lengthX);
-// 
-// 					PipiPr->put_Lastpoint(pX);
-// 					pX=midp;
-// 					pX=shortlength(pX2,pX,lengthX);
-// 					Pip=PipiPr->add_new(pX2,pX,pSizeApr,pSizeBpr,PipiPr->This1D,PipiPr->ThisRound);
-// 					if (acdbOpenAcDbEntity(pEnt,Pip->id(),AcDb::kForWrite)==eOk)
-// 					{	
-// 						Pip->setColor(pColor);
-// 						Pip->setLineWeight(pWeight);
-// 						Pip->setLayer(pLayer);
-// 						Pip->setLinetype(pLineType);
-// 						Pip->close();
-// 					}
-// 
-// 					//	acutPrintf(_T("\nПостроение 2"));
-// 
-// 
-// 				}}
-// 				else {
-// 					acutPrintf(_T("\nОбьект заблокирован"));
-// 
-// 					return;
-// 				}
-// 
-// 				pEntX->close();	
-// 
-// 				/////построение отвода
-// 				if (acdbOpenAcDbEntity(pEntX,PipiOtv->id(),AcDb::kForWrite)==eOk)
-// 				{if ( (PipiOtv = TVS_Pipe::cast(pEntX)) != NULL )
-// 				{	
-// 
-// 					pX=midp;
-// 					lengthX=pSizeApr/2+pLengthPl;
-// 					if(length2p(midp,PipiOtv->LastPoint)>length2p(midp,PipiOtv->FirstPoint))
-// 					{
-// 						pX=shortlength(PipiOtv->FirstPoint,pX,lengthX);
-// 						PipiOtv->put_FirstPoint(pX);
-// 					}
-// 					else 
-// 					{
-// 						pX=shortlength(PipiOtv->LastPoint,pX,lengthX);
-// 						PipiOtv->put_Lastpoint(pX);
-// 					}
-// 
-// 
-// 					//acutPrintf(_T("\nПостроение 1.2"));
-// 
-// 				}}
-// 				else {
-// 					acutPrintf(_T("\nОбьект заблокирован"));
-// 
-// 					return;
-// 				}
-// 
-// 				pEntX->close();	
-// 				////////
-// 
-// 			}
-// 
-// 
-// 
-// 
-// 		}
-// 		///////////////////////конец тройники
-// 
-// 	}
+	// 
+	// 	static void pCon (	AcDbEntity *pEnt1,
+	// 		AcDbEntity  *pEnt2
+	// 		)
+	// 	{
+	// 		AcGePoint3d lastpipi;
+	// 		AcDbObjectId id;
+	// 		double Lx,Ly, startangle;
+	// 		ads_name vozd1,vozd2, eName;
+	// 		ACHAR handle[17];
+	// 		ads_point pt1,pt2;
+	// 		ads_real sise=0;
+	// 		AcDbEntity *pEnt = NULL;
+	// 		AcDbObjectId id1, id2;
+	// 		TVS_WYE wyie;
+	// 		TVS_TAP * Tapi;
+	// 		TVS_TRANS * Transi;
+	// 		TVS_WYE * Wyi;
+	// 		TVS_Pipe * Pipi1,*Pipi2, *Pip;
+	// 		double NewSiseA, NewRadius;
+	// 		resbuf *rb = NULL;
+	// 		bool ft=false;
+	// 		TVS_Pipe pipie;
+	// 		TVS_TAP tapie;
+	// 		AcGePoint3d kr1,kr2,na1,na2;
+	// 
+	// 
+	// 		AcCmColor pColor;
+	// 		AcDb::LineWeight pWeight;
+	// 		AcDbObjectId pLayer;
+	// 		AcDbObjectId pLineType;
+	// 
+	// 
+	// 		///РїСЂРѕРІРµСЂРєР° РЅР° РєР»Р°СЃСЃ1
+	// 
+	// 		if (acdbOpenAcDbEntity(pEnt1,pEnt1->id(),AcDb::kForWrite)==eOk)
+	// 		{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+	// 		{	
+	// 
+	// 			pColor=Pipi1->color();
+	// 			pWeight=Pipi1->lineWeight();
+	// 			pLayer=Pipi1->layerId();
+	// 			pLineType=Pipi1->linetypeId();
+	// 
+	// 		}}
+	// 		else {
+	// 			consoleprint(0,_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+	// 
+	// 			return;
+	// 		}
+	// 
+	// 		pEnt1->close();	
+	// 
+	// 
+	// 		///////////РѕРєРѕРЅСЊС‡Р°РЅРёРµ РїСЂРѕРІРµСЂРєРё1
+	// 
+	// 
+	// 		///РїСЂРѕРІРµСЂРєР° РЅР° РєР»Р°СЃСЃ1
+	// 
+	// 		if (acdbOpenAcDbEntity(pEnt2,pEnt2->id(),AcDb::kForWrite)==eOk)
+	// 		{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
+	// 		{	
+	// 
+	// 
+	// 
+	// 		}}
+	// 		else {
+	// 			consoleprint(0,_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+	// 
+	// 			return;
+	// 		}
+	// 
+	// 		pEnt2->close();	
+	// 
+	// 
+	// 		///////////РѕРєРѕРЅСЊС‡Р°РЅРёРµ РїСЂРѕРІРµСЂРєРё1
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 		//С‚РѕС‡РєР° РїРµСЂРµСЃРµС‡РµРЅРёСЏ
+	// 		bool b1=false;
+	// 		bool b2=false;
+	// 		AcGePoint3d p1,p2,p3,p4,midp, pPr1,pOtv1,pX,pX2;
+	// 		AcGeVector3d pvectpr,pvectotv;	
+	// 		p1=Pipi1->FirstPoint;
+	// 		p2=Pipi1->LastPoint;
+	// 		p3=Pipi2->FirstPoint;
+	// 		p4=Pipi2->LastPoint;
+	// 		AcGeLine3d line1(p1,p2),line2(p3,p4) ;
+	// 		line1.intersectWith(line2,midp);
+	// 		///////
+	// 		TVS_Pipe *PipiPr,*PipiOtv;
+	// 
+	// 		double lengthX;
+	// 		double pSizeApr=200;
+	// 		double pSizeBpr=0;
+	// 		double pSizeAotv=100;
+	// 		double pSizeBotv=0;
+	// 		double pLengthPl=globalLengthW;
+	// 		AcGeVector3d pVectpr=AcGeVector3d(1,0,0);
+	// 		AcGeVector3d pVectotv=AcGeVector3d(0,1,0);
+	// 		AcGePoint3d pBasepoint=AcGePoint3d(0,0,0);
+	// 		bool pThisRoundpr=true;
+	// 		bool pThisRoundotv=true;
+	// 		bool pThis1D=false;
+	// 		AcDbEntity *pEntX;
+	// 		int statpersec=-1;
+	// 		int statnapr=-1;
+	// 		int obshaia=-1;
+	// 		AcGeVector3d vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+	// 		AcGeVector3d vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+	// 		AcGePoint3d blig1;
+	// 
+	// 		///РїСЂРѕРІРµСЂРєР° РЅР° РѕР±С‰СѓСЋ С‚РѕС‡РєСѓ
+	// 		if ((p1==p3)||(p1==p4)||(p2==p3)||(p2==p4))
+	// 		{
+	// 			obshaia=dObshaiztochka;
+	// 			statpersec=dNeperesec;
+	// 			//acutPrintf(_T("\nРёРјРµСЋС‚ РѕР±С‰СѓСЋ С‚РѕС‡РєСѓ"));
+	// 		}
+	// 
+	// 		/////РїСЂРѕРІРµСЂРєР° РЅР° РїРµСЂРїРµРЅРґРёРєСѓР»СЏРїРЅРѕСЃС‚СЊ
+	// 
+	// 		if (abs(vect1.x*vect2.x+vect1.y*vect2.y)<=0.00001)
+	// 		{
+	// 			statnapr=dPerpend;
+	// 			//acutPrintf(_T("\nРџРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅС‹"));
+	// 		}
+	// 		if (statnapr!=dPerpend)
+	// 		{
+	// 
+	// 			double asdf,asdk;
+	// 			if (abs(vect2.x)!=0)
+	// 			{
+	// 				asdf=abs(vect1.x/vect2.x);
+	// 			}
+	// 			else
+	// 			{
+	// 				asdf=1;
+	// 			}
+	// 			//consoleprint(asdf,_T("\nasdf "));
+	// 			if (abs(vect2.y)!=0)
+	// 			{
+	// 				asdk=abs(vect1.y/vect2.y);
+	// 			}
+	// 			else
+	// 			{
+	// 				asdk=2;
+	// 			}
+	// 
+	// 			//consoleprint(asdk,_T("\nasdk "));
+	// 			//РїСЂРѕРІРµСЂРєР° РЅР° РїР°СЂР°Р»Р»РµР»СЊРЅРѕСЃС‚СЊ РєРѕРјРїР»Р°РЅР°СЂРЅРѕСЃС‚СЊ
+	// 			if ((abs(asdf-asdk)<0.0001)||(abs(vect1.x-vect2.x)<0.0001)||(abs(vect1.y-vect2.y)<0.0001))
+	// 			{
+	// 				if ( (abs(p1.x-p2.x)<0.0001)||(abs(p1.y-p2.y)<0.0001)    )
+	// 				{
+	// 					if(((abs(p1.x-p2.x)<0.0001)&&(abs(p1.x-p4.x)<0.0001))||((abs(p1.y-p2.y)<0.0001)&&(abs(p1.y-p4.y)<0.0001)  ))
+	// 					{
+	// 						statnapr=dComplanar;
+	// 						//acutPrintf(_T("\nРљРѕРјРїР»Р°РЅР°СЂРЅС‹ 1"));
+	// 
+	// 					}
+	// 					else 
+	// 					{
+	// 						statnapr=dParal;
+	// 						//acutPrintf(_T("\nРџР°СЂР°Р»Р»РµР»СЊРЅС‹ 1"));
+	// 					}
+	// 				} 
+	// 				else
+	// 				{
+	// 					double bb1,bb2;
+	// 					bb1=p1.y-(p1.y-p2.y)/(p1.x-p2.x)*p1.x;
+	// 					bb2=p3.y-(p3.y-p4.y)/(p3.x-p4.x)*p3.x;
+	// 
+	// 					//consoleprint(bb1,_T("\n"));
+	// 					//	consoleprint(bb2,_T("\n"));
+	// 					if (abs(bb1-bb2)<0.0001)
+	// 					{
+	// 						statnapr=dComplanar;
+	// 						//acutPrintf(_T("\nРљРѕРјРїР»Р°РЅР°СЂРЅС‹ 2"));
+	// 					} 
+	// 					else
+	// 					{
+	// 
+	// 						statnapr=dParal;
+	// 						//acutPrintf(_T("\nРџР°СЂР°Р»Р»РµР»СЊРЅС‹ 2"));
+	// 					}
+	// 				}
+	// 			}
+	// 
+	// 		}
+	// 		///РґР»СЏ РІС‹Р±РѕСЂ
+	// 
+	// 		double fSizeA=Pipi1->SizeA;
+	// 		bool fRound=Pipi1->ThisRound;
+	// 		double fSizeB=Pipi1->SizeB;
+	// 
+	// 		double tapradius, radius, pSwectangle;
+	// 		AcGeVector3d normvect1=AcGeVector3d(-vect1.y,vect1.x,0);
+	// 		AcGePoint3d t2norm=AcGePoint3d(p2.x+normvect1.x,p2.y+normvect1.y,0);
+	// 		AcGeLine3d line3=AcGeLine3d(p2,t2norm);
+	// 		AcGePoint3d pCenterpoint;
+	// 		AcGeVector3d pstartvect;
+	// 		AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
+	// 		AcGePoint3d impr;
+	// 
+	// 
+	// 
+	// 		//РІС‹Р±РѕСЂ (РёСЃРїСЂР°РІР»РµРЅРёРµ РїР°СЂР°Р»Р»РµР»СЊРЅРѕСЃС‚Рё)
+	// 		if (statnapr==dParal)
+	// 		{
+	// 
+	// 			//////////////////////////////////sdfdsfsdf//////
+	// 
+	// 			line3.intersectWith(line2,midp);
+	// 			normvect1=AcGeVector3d(midp.x-p2.x,midp.y-p2.y,0);
+	// 			normvect1.normalize();
+	// 
+	// 			Tapi=drawTapDirect(p1,p2,midp);
+	// 			SetGlobalProperty(Tapi);
+	// 
+	// 			double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+	// 
+	// 			if ((length2p(p1,p2)>=delta)&&(length2p(p2,midp)>=delta))
+	// 			{
+	// 
+	// 				///Р·Р°РґР°РЅРёРµ СЃР»РѕСЏ
+	// 				if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+	// 				{	
+	// 					Tapi->setColor(pColor);
+	// 					Tapi->setLineWeight(pWeight);
+	// 					Tapi->setLayer(pLayer);
+	// 					Tapi->setLinetype(pLineType);
+	// 					Tapi->close();
+	// 
+	// 
+	// 				}
+	// 
+	// 
+	// 
+	// 				id=Pipi1->id();
+	// 				acdbGetAdsName(eName,id);
+	// 				acdbGetObjectId(id,eName);
+	// 				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+	// 				Pipi1->assertWriteEnabled();
+	// 				Pipi1->put_Lastpoint(lastpipi);
+	// 				Pipi1->close();
+	// 				impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
+	// 				Pipi1=pipie.add_new(p2,impr,fSizeA,fSizeB,false,fRound);
+	// 				///Р·Р°РґР°РЅРёРµ СЃР»РѕСЏ
+	// 				if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
+	// 				{	
+	// 					Pipi1->setColor(pColor);
+	// 					Pipi1->setLineWeight(pWeight);
+	// 					Pipi1->setLayer(pLayer);
+	// 					Pipi1->setLinetype(pLineType);
+	// 					Pipi1->close();
+	// 				}
+	// 
+	// 				p1=Pipi1->FirstPoint;
+	// 				p2=Pipi1->LastPoint;
+	// 				line1=AcGeLine3d(p1,p2);
+	// 				vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+	// 				statnapr=dPerpend;
+	// 			}
+	// 			else
+	// 			{
+	// 
+	// 				AcDbEntity* pnt;
+	// 				acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
+	// 				Tapi->erase();
+	// 				Tapi->close();
+	// 
+	// 			}
+	// 		}
+	// 
+	// 		//РїСЂРѕРІРµСЂРєР° РЅР° РїРµСЂРµСЃРµС‡ РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРѕРІ
+	// 		if ((statnapr==dPerpend)&&(obshaia!=dObshaiztochka))
+	// 		{
+	// 			if(((((p3.x-midp.x)*(midp.x-p4.x))>=0)&&(((p3.y-midp.y)*(midp.y-p4.y))>=0))||((((p1.x-midp.x)*(midp.x-p2.x))>=0)&&(((p1.y-midp.y)*(midp.y-p2.y))>=0)) )
+	// 			{
+	// 				statpersec=dPeresec;
+	// 				//acutPrintf(_T("\nРџРµРїРµСЂcРµРєР°СЋС‚СЃСЏ"));
+	// 			}
+	// 
+	// 			else statpersec=dNeperesec;
+	// 
+	// 		}
+	// 
+	// 		//РїСЂРѕРІРµСЂРєР° РЅР° РІСЃС‚Р°РІРєСѓ С‚СЂРѕР№РЅРёРєР° Рё РёСЃРїСЂР°РІР»РµРЅРёРµ 
+	// 		// (РїСЂРѕРІРµСЂРєР° РЅР° РїРµСЂРµСЃРµС‡РµРЅРёРµ РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂР° РёР· РєСЂР°Р№РЅРµР№ С‚РѕС‡РєРё 1-РіРѕ РІРѕР·Рґ Рё РІС‚РѕСЂРѕРіРѕ 
+	// 		// РµСЃР»Рё РґР° РїСЂРµРІСЂР°С‰РµРЅРёРµ РІ РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂ
+	// 
+	// 		if ((statpersec!=dPeresec)&&(statnapr!=dComplanar)&&(statnapr!=dPeresec))
+	// 		{
+	// 
+	// 			//acutPrintf(_T("\nРџСЂРѕРІРµСЂРєР° РЅР° РїРµСЂРµСЃРµС‡РµРЅРёРµ"));
+	// 
+	// 			if (length2p(p1,midp)>length2p(p2,midp)) 
+	// 			{
+	// 				kr1=p2;
+	// 				na1=p1;
+	// 			}
+	// 			else 
+	// 			{
+	// 				kr1=p1;
+	// 				na1=p2;
+	// 			}
+	// 
+	// 			if (length2p(p3,midp)>length2p(p4,midp)) 
+	// 			{
+	// 				kr2=p4;
+	// 				na2=p3;
+	// 			}
+	// 			else 
+	// 			{
+	// 				kr2=p3;
+	// 				na2=p4;
+	// 			}
+	// 
+	// 			bool ff=false;
+	// 
+	// 			AcGePoint3d ffmidp;
+	// 			AcGeVector3d ffnorm=AcGeVector3d(-(p4.y-p3.y),p4.x-p3.x,0);
+	// 			AcGePoint3d fftnorm=AcGePoint3d(kr1.x+ffnorm.x,kr1.y+ffnorm.y,0);
+	// 			AcGeLine3d ffline=AcGeLine3d(kr1,fftnorm);
+	// 			ffline.intersectWith(line2,ffmidp);
+	// 
+	// 
+	// 
+	// 			//РїСЂРѕРІРµСЂРєР° РЅР° РЅР°С…РѕР¶РґРµРЅРёРµ С‚РѕС‡РєРё РїРµСЂСЃРµС‡ РІРЅСѓС‚СЂРё 2 РІРѕР·РґСѓС…РѕРІРѕРґР°
+	// 			if((((p3.x-ffmidp.x)*(ffmidp.x-p4.x))>=0)&&(((p3.y-ffmidp.y)*(ffmidp.y-p4.y))>=0))
+	// 			{
+	// 				//acutPrintf(_T("\nРѕС‚РІРѕРґ Рё РїРµСЂРїРµРЅРґ"));
+	// 				midp=ffmidp;
+	// 				line2.intersectWith(ffline,midp);
+	// 				normvect1=AcGeVector3d(midp.x-kr1.x,midp.y-kr1.y,0);
+	// 				normvect1.normalize();
+	// 				Tapi=drawTapDirect(na1,midp,na2);
+	// 				SetGlobalProperty(Tapi);
+	// 
+	// 				double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+	// 
+	// 				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
+	// 				{
+	// 
+	// 					///Р·Р°РґР°РЅРёРµ СЃР»РѕСЏ
+	// 					if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Tapi->setColor(pColor);
+	// 						Tapi->setLineWeight(pWeight);
+	// 						Tapi->setLayer(pLayer);
+	// 						Tapi->setLinetype(pLineType);
+	// 						Tapi->close();
+	// 					}
+	// 					lastpipi=
+	// 						id=Pipi1->id();
+	// 					acdbGetAdsName(eName,id);
+	// 					acdbGetObjectId(id,eName);
+	// 					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+	// 					Pipi1->assertWriteEnabled();
+	// 					//consoleprint(na1,_T("\nmidp"));
+	// 					//consoleprint(Pipi1->LastPoint,_T("\nmidp"));
+	// 					if (na1==Pipi1->FirstPoint)			
+	// 						Pipi1->LastPoint=lastpipi;
+	// 					else Pipi1->FirstPoint=lastpipi;
+	// 
+	// 					Pipi1->close();
+	// 					impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
+	// 					Pipi1=pipie.add_new(kr1,impr,fSizeA,fSizeB,false,fRound);
+	// 					if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Pipi1->setColor(pColor);
+	// 						Pipi1->setLineWeight(pWeight);
+	// 						Pipi1->setLayer(pLayer);
+	// 						Pipi1->setLinetype(pLineType);
+	// 						Pipi1->close();
+	// 					}
+	// 					p1=Pipi1->FirstPoint;
+	// 					p2=Pipi1->LastPoint;
+	// 					line1=AcGeLine3d(p1,p2);
+	// 					vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+	// 					statnapr=dPerpend;
+	// 					statpersec=dPeresec;
+	// 				}
+	// 
+	// 			}
+	// 
+	// 			else
+	// 			{
+	// 				//РІС‚РѕСЂРѕР№ РІР°СЂРёР°РЅС‚
+	// 				bool dd=false;
+	// 				AcGePoint3d ddmidp;
+	// 				AcGeVector3d ddnorm=AcGeVector3d(-(p2.y-p1.y),p2.x-p1.x,0);
+	// 				AcGePoint3d ddtnorm=AcGePoint3d(kr2.x+ddnorm.x,kr2.y+ddnorm.y,0);
+	// 				AcGeLine3d ddline=AcGeLine3d(kr2,ddtnorm);
+	// 				ddline.intersectWith(line1,ddmidp);
+	// 				if((((p1.x-ddmidp.x)*(ddmidp.x-p2.x))>=0)&&(((p1.y-ddmidp.y)*(ddmidp.y-p2.y))>=0))
+	// 				{
+	// 					fSizeA=Pipi2->SizeA;
+	// 					fRound=Pipi2->ThisRound;
+	// 					fSizeB=Pipi2->SizeB;
+	// 					//	acutPrintf(_T("\nРѕС‚РІРѕРґ Рё РїРµСЂРїРµРЅРґ РІР°СЂ2"));
+	// 					midp=ddmidp;
+	// 					line1.intersectWith(ddline,midp);
+	// 					normvect1=AcGeVector3d(midp.x-kr2.x,midp.y-kr2.y,0);
+	// 					normvect1.normalize();
+	// 					Tapi=drawTapDirect(na1,midp,na2);
+	// 					SetGlobalProperty(Tapi);
+	// 
+	// 					double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+	// 
+	// 					if ((length2p(na1,midp)>=delta)&&(length2p(midp,na2)>=delta))
+	// 					{
+	// 
+	// 						if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+	// 						{	
+	// 							Tapi->setColor(pColor);
+	// 							Tapi->setLineWeight(pWeight);
+	// 							Tapi->setLayer(pLayer);
+	// 							Tapi->setLinetype(pLineType);
+	// 							Tapi->close();
+	// 						}
+	// 						id=Pipi2->id();
+	// 						acdbGetAdsName(eName,id);
+	// 						acdbGetObjectId(id,eName);
+	// 						acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+	// 						Pipi2->assertWriteEnabled();
+	// 						//consoleprint(na2,_T("\nmidp"));
+	// 						//consoleprint(Pipi2->LastPoint,_T("\nmidp"));
+	// 						if (na2==Pipi2->FirstPoint)			
+	// 							Pipi2->LastPoint=lastpipi;
+	// 						else Pipi2->FirstPoint=lastpipi;
+	// 
+	// 						Pipi2->close();
+	// 						impr=AcGePoint3d(midp.x-normvect1.x,midp.y-normvect1.y,0);
+	// 						Pipi2=pipie.add_new(kr2,impr,fSizeA,fSizeB,false,fRound);
+	// 
+	// 						if (acdbOpenAcDbEntity(pEnt,Pipi2->id(),AcDb::kForWrite)==eOk)
+	// 						{	
+	// 							Pipi2->setColor(pColor);
+	// 							Pipi2->setLineWeight(pWeight);
+	// 							Pipi2->setLayer(pLayer);
+	// 							Pipi2->setLinetype(pLineType);
+	// 							Pipi2->close();
+	// 						}
+	// 						p3=Pipi2->FirstPoint;
+	// 						p4=Pipi2->LastPoint;
+	// 						line2=AcGeLine3d(p3,p4);
+	// 						vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+	// 						statnapr=dPerpend;
+	// 						statpersec=dPeresec;
+	// 					}
+	// 					else
+	// 					{
+	// 
+	// 						AcDbEntity* pnt;
+	// 						acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
+	// 						Tapi->erase();
+	// 						Tapi->close();
+	// 
+	// 					}
+	// 
+	// 				} 
+	// 				else {
+	// 					//acutPrintf(_T("\nРќРµРїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ"));
+	// 					statpersec=dNeperesec;
+	// 
+	// 				}
+	// 			}
+	// 
+	// 		}
+	// 
+	// 
+	// 		//СѓСЃС‚Р°РЅРѕРІРєР° РїРµСЂРµС…РѕРґР°
+	// 
+	// 		if ((statpersec!=dPeresec)||(statnapr==dComplanar)||(obshaia==dObshaiztochka))
+	// 		{
+	// 
+	// 			if ((Pipi1->SizeA!=Pipi2->SizeA)||(Pipi1->SizeB!=Pipi2->SizeB))
+	// 			{
+	// 				//acutPrintf(_T("\nРЎС‚Р°РІР»СЋ РїРµСЂРµС…РѕРґ"));
+	// 
+	// 
+	// 
+	// 
+	// 				if (statnapr==dComplanar)
+	// 				{
+	// 					if(Pipi1->SizeA>Pipi2->SizeA)
+	// 					{
+	// 
+	// 
+	// 						if (length2p(p1,p3)>length2p(p1,p4)) midp=p3;
+	// 						else midp=p4;
+	// 
+	// 					}
+	// 					else
+	// 					{
+	// 						if (length2p(p3,p1)>length2p(p3,p2)) midp=p1;
+	// 						else midp=p2;
+	// 					}
+	// 				}
+	// 				if (length2p(p1,midp)>length2p(p2,midp)) 
+	// 				{
+	// 					kr1=p2;
+	// 					na1=p1;
+	// 				}
+	// 				else 
+	// 				{
+	// 					kr1=p1;
+	// 					na1=p2;
+	// 				}
+	// 
+	// 				if (length2p(p3,midp)>length2p(p4,midp)) 
+	// 				{
+	// 					kr2=p4;
+	// 					na2=p3;
+	// 				}
+	// 				else 
+	// 				{
+	// 					kr2=p3;
+	// 					na2=p4;
+	// 				}
+	// 				TVS_TRANS transie;
+	// 				double pSizeAp1;
+	// 				double pSizeBp1;
+	// 				double pSizeAp2;
+	// 				double pSizeBp2;
+	// 				if (Pipi1->SizeA>Pipi2->SizeA)
+	// 				{
+	// 
+	// 
+	// 					pSizeAp1=Pipi1->SizeA;
+	// 					pSizeBp1=Pipi1->SizeB;
+	// 					pSizeAp2=Pipi2->SizeA;
+	// 					pSizeBp2=Pipi2->SizeB;
+	// 
+	// 
+	// 
+	// 					double pLengthTr=globalLengthTr;
+	// 					AcGeVector3d Vect=AcGeVector3d(midp.x-na1.x, midp.y-na1.y,0);
+	// 					AcGeVector3d pVectTr;
+	// 					AcGePoint3d pFirstPoint=na1;
+	// 					pVectTr=Vect.normalize()*pLengthTr;
+	// 
+	// 					double pThisRoundp1,
+	// 						pThisRoundp2;
+	// 					int pTransType=ftTransType;
+	// 					bool pThis1D=false;
+	// 
+	// 					if (pSizeBp1==0) pThisRoundp1=true;
+	// 					else pThisRoundp1=false;
+	// 
+	// 					if (pSizeBp2==0) pThisRoundp2=true;
+	// 					else pThisRoundp2=false;
+	// 
+	// 					Transi=transie.add_new(pSizeAp1,
+	// 						pSizeBp1,
+	// 						pSizeAp2,
+	// 						pSizeBp2,
+	// 						pLengthTr,
+	// 						pVectTr,
+	// 						pFirstPoint,
+	// 						pThisRoundp1,
+	// 						pThisRoundp2,
+	// 						pTransType,
+	// 						pThis1D);
+	// 					if (acdbOpenAcDbEntity(pEnt,Transi->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Transi->setColor(pColor);
+	// 						Transi->setLineWeight(pWeight);
+	// 						Transi->setLayer(pLayer);
+	// 						Transi->setLinetype(pLineType);
+	// 						Transi->close();
+	// 					}
+	// 					pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
+	// 						pFirstPoint.y+pLengthTr*Vect.y,
+	// 						pFirstPoint.z+pLengthTr*Vect.z
+	// 						);
+	// 					AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
+	// 						pFirstPoint.y+100*Vect.y,
+	// 						pFirstPoint.z+100*Vect.z
+	// 						);
+	// 
+	// 					bool pThis1d=false;
+	// 
+	// 
+	// 					id=Pipi1->id();
+	// 					acdbGetAdsName(eName,id);
+	// 					acdbEntDel(eName);
+	// 					Pipi1=Pipi2->add_new(pFirstPoint,
+	// 						pLastPoint,
+	// 						pSizeAp2,
+	// 						pSizeBp2,
+	// 						pThis1d,
+	// 						pThisRoundp2);
+	// 					if (acdbOpenAcDbEntity(pEnt,Pipi1->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Pipi1->setColor(pColor);
+	// 						Pipi1->setLineWeight(pWeight);
+	// 						Pipi1->setLayer(pLayer);
+	// 						Pipi1->setLinetype(pLineType);
+	// 						Pipi1->close();
+	// 					}
+	// 					p1=Pipi1->FirstPoint;
+	// 					p2=Pipi1->LastPoint;
+	// 					line1=AcGeLine3d(p1,p2);
+	// 					vect1=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+	// 
+	// 				}
+	// 				else
+	// 				{
+	// 
+	// 					pSizeAp1=Pipi2->SizeA;
+	// 					pSizeBp1=Pipi2->SizeB;
+	// 					pSizeAp2=Pipi1->SizeA;
+	// 					pSizeBp2=Pipi1->SizeB;
+	// 
+	// 
+	// 
+	// 					double pLengthTr=globalLengthTr;
+	// 					AcGeVector3d Vect=AcGeVector3d(midp.x-na2.x, midp.y-na2.y,0);
+	// 					AcGeVector3d pVectTr;
+	// 					AcGePoint3d pFirstPoint=na2;
+	// 					pVectTr=Vect.normalize()*pLengthTr;
+	// 
+	// 					double pThisRoundp1,
+	// 						pThisRoundp2;
+	// 					int pTransType=ftTransType;
+	// 					bool pThis1D=false;
+	// 
+	// 					if (pSizeBp1==0) pThisRoundp1=true;
+	// 					else pThisRoundp1=false;
+	// 
+	// 					if (pSizeBp2==0) pThisRoundp2=true;
+	// 					else pThisRoundp2=false;
+	// 
+	// 					Transi=transie.add_new(pSizeAp1,
+	// 						pSizeBp1,
+	// 						pSizeAp2,
+	// 						pSizeBp2,
+	// 						pLengthTr,
+	// 						pVectTr,
+	// 						pFirstPoint,
+	// 						pThisRoundp1,
+	// 						pThisRoundp2,
+	// 						pTransType,
+	// 						pThis1D);
+	// 
+	// 					if (acdbOpenAcDbEntity(pEnt,Transi->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Transi->setColor(pColor);
+	// 						Transi->setLineWeight(pWeight);
+	// 						Transi->setLayer(pLayer);
+	// 						Transi->setLinetype(pLineType);
+	// 						Transi->close();
+	// 					}
+	// 					pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
+	// 						pFirstPoint.y+pLengthTr*Vect.y,
+	// 						pFirstPoint.z+pLengthTr*Vect.z
+	// 						);
+	// 					AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
+	// 						pFirstPoint.y+100*Vect.y,
+	// 						pFirstPoint.z+100*Vect.z
+	// 						);
+	// 
+	// 					bool pThis1d=false;
+	// 					id=Pipi2->id();
+	// 
+	// 					acdbGetAdsName(eName,id);
+	// 					/*acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+	// 					Pipi2->assertWriteEnabled();*/
+	// 					acdbEntDel(eName);
+	// 					Pipi2=Pipi1->add_new(pFirstPoint,
+	// 						pLastPoint,
+	// 						pSizeAp2,
+	// 						pSizeBp2,
+	// 						pThis1d,
+	// 						pThisRoundp2);
+	// 
+	// 					if (acdbOpenAcDbEntity(pEnt,Pipi2->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Pipi2->setColor(pColor);
+	// 						Pipi2->setLineWeight(pWeight);
+	// 						Pipi2->setLayer(pLayer);
+	// 						Pipi2->setLinetype(pLineType);
+	// 						Pipi2->close();
+	// 					}
+	// 					p3=Pipi2->FirstPoint;
+	// 					p4=Pipi2->LastPoint;
+	// 					line2=AcGeLine3d(p3,p4);
+	// 					vect2=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+	// 				}
+	// 			}
+	// 
+	// 
+	// 
+	// 		}
+	// 
+	// 
+	// 
+	// 		///////////РѕС‚РІРѕРґС‹
+	// 
+	// 
+	// 		if (((statpersec==dNeperesec)||(obshaia==dObshaiztochka))&&(statnapr!=dComplanar))
+	// 
+	// 		{
+	// 			//acutPrintf(_T("\nРџС‹С‚Р°СЋСЃСЊ РїРѕСЃС‚Р°РІРёС‚СЊ РѕС‚РІРѕРґ"));
+	// 			if (length2p(p1,midp)>length2p(p2,midp)) 
+	// 			{
+	// 				kr1=p2;
+	// 				na1=p1;
+	// 			}
+	// 			else 
+	// 			{
+	// 				kr1=p1;
+	// 				na1=p2;
+	// 			}
+	// 
+	// 			if (length2p(p3,midp)>length2p(p4,midp)) 
+	// 			{
+	// 				kr2=p4;
+	// 				na2=p3;
+	// 			}
+	// 			else 
+	// 			{
+	// 				kr2=p3;
+	// 				na2=p4;
+	// 			}
+	// 
+	// 
+	// 			vect1=AcGeVector3d(kr1.x-na1.x,
+	// 				kr1.y-na1.y,
+	// 				kr1.z-na1.z);
+	// 			vect2=AcGeVector3d(kr2.x-na2.x,
+	// 				kr2.y-na2.y,
+	// 				kr2.z-na2.z);
+	// 			vect1.normalize();
+	// 			vect2.normalize();
+	// 			double pSizeAw=Pipi1->SizeA;
+	// 			double pSizeBw=Pipi1->SizeB;
+	// 			bool pRoundw=Pipi1->ThisRound;
+	// 
+	// 			if (vect1!=vect2)
+	// 			{
+	// 
+	// 				Tapi=drawTapDirect(na1,midp,na2);
+	// 				SetGlobalProperty(Tapi);
+	// 
+	// 				double delta=length2p(Tapi->MA,Tapi->MiddlePoint);
+	// 
+	// 				if ((length2p(na1,midp)>=delta)&&(length2p(na2,midp)>=delta))
+	// 				{
+	// 					if (acdbOpenAcDbEntity(pEnt,Tapi->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Tapi->setColor(pColor);
+	// 						Tapi->setLineWeight(pWeight);
+	// 						Tapi->setLayer(pLayer);
+	// 						Tapi->setLinetype(pLineType);
+	// 						Tapi->close();
+	// 					}
+	// 					id=Pipi1->id();
+	// 					acdbGetAdsName(eName,id);
+	// 					acdbGetObjectId(id,eName);
+	// 					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+	// 					Pipi1->assertWriteEnabled();
+	// 					if (na1==Pipi1->FirstPoint)			
+	// 						Pipi1->LastPoint=lastpipi;
+	// 					else Pipi1->FirstPoint=lastpipi;
+	// 
+	// 
+	// 					Pipi1->close();
+	// 
+	// 
+	// 					id=Pipi2->id();
+	// 					acdbGetAdsName(eName,id);
+	// 					acdbGetObjectId(id,eName);
+	// 					acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+	// 					Pipi2->assertWriteEnabled();
+	// 					if (na2==Pipi2->FirstPoint)			
+	// 						Pipi2->LastPoint=midp;
+	// 					else Pipi2->FirstPoint=midp;
+	// 
+	// 					Pipi2->close();
+	// 
+	// 					//acutPrintf(_T("\nРћС‚РІРѕРґ РїРѕСЃС‚Р°РІР»РµРЅ"));
+	// 
+	// 
+	// 
+	// 				}
+	// 				//else acutPrintf(_T("\nРќРµ РјРѕРіСѓ РїРѕСЃС‚Р°РІРёС‚СЊ РѕС‚РІРѕРґ"));
+	// 
+	// 				else
+	// 				{
+	// 
+	// 					AcDbEntity* pnt;
+	// 					acdbOpenAcDbEntity(pnt,Tapi->id(),AcDb::kForWrite);
+	// 					Tapi->erase();
+	// 					Tapi->close();
+	// 
+	// 				}
+	// 
+	// 
+	// 
+	// 			}
+	// 
+	// 
+	// 		}
+	// 
+	// 
+	// 		///////// СѓРґР»РёРЅРµРЅРёРµ РєРѕРјРїР»Р°РЅР°СЂР°
+	// 
+	// 
+	// 		if (statnapr==dComplanar)
+	// 		{
+	// 			if (length2p(p1,p3)>length2p(p2,p3)) kr1=p1;
+	// 			else kr1=p2;
+	// 
+	// 			if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
+	// 			else kr2=p3;
+	// 
+	// 			id=Pipi1->id();
+	// 			acdbGetAdsName(eName,id);
+	// 			acdbGetObjectId(id,eName);
+	// 			acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+	// 			Pipi1->assertWriteEnabled();
+	// 			if (kr1==Pipi1->FirstPoint)			
+	// 				Pipi1->LastPoint=kr2;
+	// 			else Pipi1->FirstPoint=kr2;
+	// 			Pipi1->close();
+	// 
+	// 			id=Pipi2->id();
+	// 			acdbGetAdsName(eName,id);
+	// 			acdbEntDel(eName);
+	// 
+	// 		}
+	// 
+	// 
+	// 
+	// 
+	// 		///////С‚СЂРѕР№РЅРёРєРё
+	// 		if ((statpersec==dPeresec)&&(statnapr==dPerpend)&&(obshaia!=dObshaiztochka))
+	// 		{
+	// 			if((((p1.x-midp.x)*(midp.x-p2.x))>=0)&&(((p1.y-midp.y)*(midp.y-p2.y))>=0)) //p1-РїСЂРѕС…РѕРґ (С‚СЂРѕР№РЅРёРє)
+	// 
+	// 			{
+	// 				PipiPr=Pipi1;
+	// 				PipiOtv=Pipi2;
+	// 				pSizeApr=PipiPr->SizeA;
+	// 				pSizeAotv=PipiOtv->SizeA;
+	// 				pSizeBpr=PipiPr->SizeB;
+	// 				pSizeBotv=PipiOtv->SizeB;
+	// 				pThisRoundpr=PipiPr->ThisRound;
+	// 				pThisRoundotv=PipiOtv->ThisRound;
+	// 
+	// 				pVectpr=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+	// 
+	// 
+	// 				////////////kraynaja  С‚РѕС‡РєР° РѕС‚РІРѕРґР°
+	// 
+	// 				if (length2p(midp,p3)<length2p(midp,p4))
+	// 				{
+	// 					pOtv1=p4;
+	// 					pVectotv=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+	// 				}
+	// 
+	// 				else
+	// 				{
+	// 					pOtv1=p3;
+	// 					pVectotv=AcGeVector3d(p3.x-p4.x,p3.y-p4.y,0);
+	// 				}
+	// 				////////////kraynaja  С‚РѕС‡РєР° РїСЂРѕС…РѕРґР°
+	// 
+	// 				if (length2p(midp,p2)<length2p(midp,p1))
+	// 				{
+	// 					pPr1=p2;
+	// 
+	// 				}
+	// 
+	// 				else
+	// 				{
+	// 					pPr1=p1;
+	// 
+	// 				}
+	// 
+	// 				if (length2p(midp,pOtv1)<(pLengthPl+pSizeApr/2))	
+	// 				{
+	// 					//acutPrintf(_T("РѕС‚РІРѕРґ РєРѕСЂРѕС‚РєРёР№"));
+	// 				}
+	// 				else b1=true;
+	// 				if ((length2p(midp,p1)<(pLengthPl+pSizeAotv/2))&&(length2p(midp,p2)<(pLengthPl+pSizeAotv/2)))	
+	// 				{
+	// 					//acutPrintf(_T("РїСЂРѕС…РѕРґ РєРѕСЂРѕС‚РєРёР№"));
+	// 				}
+	// 				else b2=true;
+	// 
+	// 				if ((b1==true)&&(b1==true))
+	// 				{
+	// 					pBasepoint=midp;
+	// 					Wyi=wyie.add_new(pSizeApr,
+	// 						pSizeBpr,
+	// 						pSizeAotv,
+	// 						pSizeBotv,
+	// 						pLengthPl,
+	// 						pVectpr,
+	// 						pVectotv,
+	// 						pBasepoint,
+	// 						pThisRoundpr,
+	// 						pThisRoundotv,
+	// 						pThis1D);
+	// 
+	// 					if (acdbOpenAcDbEntity(pEnt,Wyi->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Wyi->setColor(pColor);
+	// 						Wyi->setLineWeight(pWeight);
+	// 						Wyi->setLayer(pLayer);
+	// 						Wyi->setLinetype(pLineType);
+	// 						Wyi->close();
+	// 					}
+	// 
+	// 				} 
+	// 
+	// 				////РїРѕСЃС‚СЂРѕРµРЅРёРµ РїСЂРѕС…РѕРґР°
+	// 				if (acdbOpenAcDbEntity(pEntX,PipiPr->id(),AcDb::kForWrite)==eOk)
+	// 				{if ( (PipiPr = TVS_Pipe::cast(pEntX)) != NULL )
+	// 				{	
+	// 
+	// 
+	// 
+	// 					pX=midp;
+	// 					pX2=PipiPr->LastPoint;
+	// 					lengthX=pSizeAotv/2+pLengthPl;
+	// 					pX=shortlength(PipiPr->FirstPoint,pX,lengthX);
+	// 
+	// 					PipiPr->put_Lastpoint(pX);
+	// 					pX=midp;
+	// 					pX=shortlength(pX2,pX,lengthX);
+	// 					Pip=PipiPr->add_new(pX2,pX,pSizeApr,pSizeBpr,PipiPr->This1D,PipiPr->ThisRound);
+	// 
+	// 					if (acdbOpenAcDbEntity(pEnt,Pip->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Pip->setColor(pColor);
+	// 						Pip->setLineWeight(pWeight);
+	// 						Pip->setLayer(pLayer);
+	// 						Pip->setLinetype(pLineType);
+	// 						Pip->close();
+	// 					}
+	// 
+	// 
+	// 
+	// 					//acutPrintf(_T("\nРџРѕСЃС‚СЂРѕРµРЅРёРµ 1"));
+	// 
+	// 
+	// 				}}
+	// 				else {
+	// 					consoleprint(0,_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+	// 
+	// 					return;
+	// 				}
+	// 
+	// 				pEntX->close();	
+	// 				/////РїРѕСЃС‚СЂРѕРµРЅРёРµ РѕС‚РІРѕРґР°
+	// 				if (acdbOpenAcDbEntity(pEntX,PipiOtv->id(),AcDb::kForWrite)==eOk)
+	// 				{if ( (PipiOtv = TVS_Pipe::cast(pEntX)) != NULL )
+	// 				{	
+	// 
+	// 					pX=midp;
+	// 					lengthX=pSizeApr/2+pLengthPl;
+	// 					if(length2p(midp,PipiOtv->LastPoint)>length2p(midp,PipiOtv->FirstPoint))
+	// 					{
+	// 						pX=shortlength(PipiOtv->FirstPoint,pX,lengthX);
+	// 						PipiOtv->put_FirstPoint(pX);
+	// 					}
+	// 					else 
+	// 					{
+	// 						pX=shortlength(PipiOtv->LastPoint,pX,lengthX);
+	// 						PipiOtv->put_Lastpoint(pX);
+	// 					}
+	// 
+	// 
+	// 					//acutPrintf(_T("\nРџРѕСЃС‚СЂРѕРµРЅРёРµ 1.2"));
+	// 
+	// 				}}
+	// 				else {
+	// 					acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+	// 
+	// 					return;
+	// 				}
+	// 
+	// 				pEntX->close();	
+	// 				////////
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 
+	// 			}
+	// 
+	// 
+	// 			if((((p3.x-midp.x)*(midp.x-p4.x))>=0)&&(((p3.y-midp.y)*(midp.y-p4.y))>=0)) //p2-РїСЂРѕС…РѕРґ (С‚СЂРѕР№РЅРёРє)
+	// 
+	// 			{
+	// 				PipiPr=Pipi2;
+	// 				PipiOtv=Pipi1;
+	// 				pSizeApr=PipiPr->SizeA;
+	// 				pSizeAotv=PipiOtv->SizeA;
+	// 				pSizeBpr=PipiPr->SizeB;
+	// 				pSizeBotv=PipiOtv->SizeB;
+	// 				pThisRoundpr=PipiPr->ThisRound;
+	// 				pThisRoundotv=PipiOtv->ThisRound;
+	// 
+	// 				pVectpr=AcGeVector3d(p4.x-p3.x,p4.y-p3.y,0);
+	// 
+	// 
+	// 				////////////kraynaja  С‚РѕС‡РєР° РѕС‚РІРѕРґР°
+	// 
+	// 				if (length2p(midp,p1)<length2p(midp,p2))
+	// 				{
+	// 					pOtv1=p2;
+	// 					pVectotv=AcGeVector3d(p2.x-p1.x,p2.y-p1.y,0);
+	// 				}
+	// 
+	// 				else
+	// 				{
+	// 					pOtv1=p1;
+	// 					pVectotv=AcGeVector3d(p1.x-p2.x,p1.y-p2.y,0);
+	// 				}
+	// 				////////////kraynaja  С‚РѕС‡РєР° РїСЂРѕС…РѕРґР°
+	// 
+	// 				if (length2p(midp,p4)<length2p(midp,p3))
+	// 				{
+	// 					pPr1=p4;
+	// 
+	// 				}
+	// 
+	// 				else
+	// 				{
+	// 					pPr1=p3;
+	// 
+	// 				}
+	// 
+	// 				if (length2p(midp,pOtv1)<(pLengthPl+pSizeApr/2))	
+	// 				{
+	// 					acutPrintf(_T("РѕС‚РІРѕРґ РєРѕСЂРѕС‚РєРёР№"));
+	// 				}
+	// 				else b1=true;
+	// 				if ((length2p(midp,p3)<(pLengthPl+pSizeAotv/2))&&(length2p(midp,p4)<(pLengthPl+pSizeAotv/2)))	
+	// 				{
+	// 					acutPrintf(_T("РїСЂРѕС…РѕРґ РєРѕСЂРѕС‚РєРёР№"));
+	// 				}
+	// 				else b2=true;
+	// 
+	// 				if ((b1==true)&&(b1==true))
+	// 				{
+	// 					pBasepoint=midp;
+	// 					Wyi=wyie.add_new(pSizeApr,
+	// 						pSizeBpr,
+	// 						pSizeAotv,
+	// 						pSizeBotv,
+	// 						pLengthPl,
+	// 						pVectpr,
+	// 						pVectotv,
+	// 						pBasepoint,
+	// 						pThisRoundpr,
+	// 						pThisRoundotv,
+	// 						pThis1D);
+	// 					if (acdbOpenAcDbEntity(pEnt,Wyi->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Wyi->setColor(pColor);
+	// 						Wyi->setLineWeight(pWeight);
+	// 						Wyi->setLayer(pLayer);
+	// 						Wyi->setLinetype(pLineType);
+	// 						Wyi->close();
+	// 					}
+	// 
+	// 				} 
+	// 
+	// 				////РїРѕСЃС‚СЂРѕРµРЅРёРµ РїСЂРѕС…РѕРґР°
+	// 				if (acdbOpenAcDbEntity(pEntX,PipiPr->id(),AcDb::kForWrite)==eOk)
+	// 				{if ( (PipiPr = TVS_Pipe::cast(pEntX)) != NULL )
+	// 				{	
+	// 					//acutPrintf(_T("\npEntX...РѕРє"));
+	// 
+	// 
+	// 					pX=midp;
+	// 					pX2=PipiPr->LastPoint;
+	// 					lengthX=pSizeAotv/2+pLengthPl;
+	// 					pX=shortlength(PipiPr->FirstPoint,pX,lengthX);
+	// 
+	// 					PipiPr->put_Lastpoint(pX);
+	// 					pX=midp;
+	// 					pX=shortlength(pX2,pX,lengthX);
+	// 					Pip=PipiPr->add_new(pX2,pX,pSizeApr,pSizeBpr,PipiPr->This1D,PipiPr->ThisRound);
+	// 					if (acdbOpenAcDbEntity(pEnt,Pip->id(),AcDb::kForWrite)==eOk)
+	// 					{	
+	// 						Pip->setColor(pColor);
+	// 						Pip->setLineWeight(pWeight);
+	// 						Pip->setLayer(pLayer);
+	// 						Pip->setLinetype(pLineType);
+	// 						Pip->close();
+	// 					}
+	// 
+	// 					//	acutPrintf(_T("\nРџРѕСЃС‚СЂРѕРµРЅРёРµ 2"));
+	// 
+	// 
+	// 				}}
+	// 				else {
+	// 					acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+	// 
+	// 					return;
+	// 				}
+	// 
+	// 				pEntX->close();	
+	// 
+	// 				/////РїРѕСЃС‚СЂРѕРµРЅРёРµ РѕС‚РІРѕРґР°
+	// 				if (acdbOpenAcDbEntity(pEntX,PipiOtv->id(),AcDb::kForWrite)==eOk)
+	// 				{if ( (PipiOtv = TVS_Pipe::cast(pEntX)) != NULL )
+	// 				{	
+	// 
+	// 					pX=midp;
+	// 					lengthX=pSizeApr/2+pLengthPl;
+	// 					if(length2p(midp,PipiOtv->LastPoint)>length2p(midp,PipiOtv->FirstPoint))
+	// 					{
+	// 						pX=shortlength(PipiOtv->FirstPoint,pX,lengthX);
+	// 						PipiOtv->put_FirstPoint(pX);
+	// 					}
+	// 					else 
+	// 					{
+	// 						pX=shortlength(PipiOtv->LastPoint,pX,lengthX);
+	// 						PipiOtv->put_Lastpoint(pX);
+	// 					}
+	// 
+	// 
+	// 					//acutPrintf(_T("\nРџРѕСЃС‚СЂРѕРµРЅРёРµ 1.2"));
+	// 
+	// 				}}
+	// 				else {
+	// 					acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+	// 
+	// 					return;
+	// 				}
+	// 
+	// 				pEntX->close();	
+	// 				////////
+	// 
+	// 			}
+	// 
+	// 
+	// 
+	// 
+	// 		}
+	// 		///////////////////////РєРѕРЅРµС† С‚СЂРѕР№РЅРёРєРё
+	// 
+	// 	}
 
-static bool addTrans(TVS_Pipe *pPipe1,
-						   TVS_Pipe  *pPipe2, AcGePoint3d &point1,AcGePoint3d &midp,AcGePoint3d &point2)
-{
-	if (length2p(pPipe1->FirstPoint,point1)>length2p(pPipe1->LastPoint,point1))
+	static bool addTrans(TVS_Pipe *pPipe1,
+		TVS_Pipe  *pPipe2, AcGePoint3d &point1,AcGePoint3d &midp,AcGePoint3d &point2)
 	{
-		AcDbEntity* pEnt;
+		if (length2p(pPipe1->FirstPoint,point1)>length2p(pPipe1->LastPoint,point1))
+		{
+			AcDbEntity* pEnt;
 			if (acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite)==eOk){
 				pPipe1->put_Lastpoint(pPipe1->FirstPoint);
-		pPipe1->put_FirstPoint(point1);
-		pPipe1->close();
+				pPipe1->put_FirstPoint(point1);
+				pPipe1->close();
 
-	}
-	}
-
-			if (length2p(pPipe2->FirstPoint,point2)<length2p(pPipe2->LastPoint,point2))
-			{
-				AcDbEntity* pEnt;
-				if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
-					pPipe2->put_FirstPoint(pPipe2->LastPoint);
-					pPipe2->put_Lastpoint(point2);
-pPipe2->close();
-				}
 			}
-
-
-	int GroseStatus=whyIsGrose(pPipe1,pPipe2);
-	AcDbEntity* pEnt;
-	if (GroseStatus==TVSEnt1isGrose)		
-	{
-
-		TVS_TRANS * pTrans;
-		TVS_Pipe* GPipe=pPipe1;
-		TVS_Pipe* SPipe=pPipe2;
-
-		
-		pTrans=pTrans->add_new(GPipe->SizeA,
-			GPipe->SizeB,
-			SPipe->SizeA,
-			SPipe->SizeB,
-			globalLengthTr,
-			AcGeVector3d(-GPipe->FirstPoint.x+GPipe->LastPoint.x,-GPipe->FirstPoint.y+GPipe->LastPoint.y,-GPipe->FirstPoint.z+GPipe->LastPoint.z).normalize(),
-			GPipe->FirstPoint,
-			GPipe->ThisRound,
-			SPipe->ThisRound,
-			globalLengthTr,
-			GPipe->This1D
-			);
-		if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
-			pTrans->put_Length(globalLengthTr);
-			pTrans->close();
 		}
-		SetGlobalProperty(pTrans);
-		SetPropertyLikePipe(SPipe,pTrans);
-		SetPropertyLikePipe(SPipe,GPipe);
-		AcGePoint3d lastPoint=GPipe->LastPoint;
 
-		point1=shortlength(midp,point1,globalLengthTr);
-		return true;
-	}
-	if (GroseStatus==TVSEnt2isGrose)
-	{
-
-		TVS_TRANS * pTrans;
-		TVS_Pipe* GPipe=pPipe2;
-		TVS_Pipe* SPipe=pPipe1;
-
-
-		pTrans=pTrans->add_new(GPipe->SizeA,
-			GPipe->SizeB,
-			SPipe->SizeA,
-			SPipe->SizeB,
-			globalLengthTr,
-			AcGeVector3d(GPipe->FirstPoint.x-GPipe->LastPoint.x,GPipe->FirstPoint.y-GPipe->LastPoint.y,GPipe->FirstPoint.z-GPipe->LastPoint.z).normalize(),
-			GPipe->LastPoint,
-			GPipe->ThisRound,
-			SPipe->ThisRound,
-			globalLengthTr,
-			GPipe->This1D
-			);
-		if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
-			pTrans->put_Length(globalLengthTr);
-			pTrans->close();
+		if (length2p(pPipe2->FirstPoint,point2)<length2p(pPipe2->LastPoint,point2))
+		{
+			AcDbEntity* pEnt;
+			if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
+				pPipe2->put_FirstPoint(pPipe2->LastPoint);
+				pPipe2->put_Lastpoint(point2);
+				pPipe2->close();
+			}
 		}
-		SetGlobalProperty(pTrans);
-		SetPropertyLikePipe(SPipe,pTrans);
-		SetPropertyLikePipe(SPipe,GPipe);
 
-		point2=shortlength(midp,point2,globalLengthTr);
-		return true;
 
+		int GroseStatus=whyIsGrose(pPipe1,pPipe2);
+		AcDbEntity* pEnt;
+		if (GroseStatus==TVSEnt1isGrose)		
+		{
+
+			TVS_TRANS * pTrans;
+			TVS_Pipe* GPipe=pPipe1;
+			TVS_Pipe* SPipe=pPipe2;
+
+
+			pTrans=pTrans->add_new(GPipe->SizeA,
+				GPipe->SizeB,
+				SPipe->SizeA,
+				SPipe->SizeB,
+				globalLengthTr,
+				AcGeVector3d(-GPipe->FirstPoint.x+GPipe->LastPoint.x,-GPipe->FirstPoint.y+GPipe->LastPoint.y,-GPipe->FirstPoint.z+GPipe->LastPoint.z).normalize(),
+				GPipe->FirstPoint,
+				GPipe->ThisRound,
+				SPipe->ThisRound,
+				globalLengthTr,
+				GPipe->This1D
+				);
+			if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
+				pTrans->put_Length(globalLengthTr);
+				pTrans->close();
+			}
+			SetGlobalProperty(pTrans);
+			SetPropertyLikePipe(SPipe,pTrans);
+			SetPropertyLikePipe(SPipe,GPipe);
+			AcGePoint3d lastPoint=GPipe->LastPoint;
+
+			point1=shortlength(midp,point1,globalLengthTr);
+			return true;
+		}
+		if (GroseStatus==TVSEnt2isGrose)
+		{
+
+			TVS_TRANS * pTrans;
+			TVS_Pipe* GPipe=pPipe2;
+			TVS_Pipe* SPipe=pPipe1;
+
+
+			pTrans=pTrans->add_new(GPipe->SizeA,
+				GPipe->SizeB,
+				SPipe->SizeA,
+				SPipe->SizeB,
+				globalLengthTr,
+				AcGeVector3d(GPipe->FirstPoint.x-GPipe->LastPoint.x,GPipe->FirstPoint.y-GPipe->LastPoint.y,GPipe->FirstPoint.z-GPipe->LastPoint.z).normalize(),
+				GPipe->LastPoint,
+				GPipe->ThisRound,
+				SPipe->ThisRound,
+				globalLengthTr,
+				GPipe->This1D
+				);
+			if (acdbOpenAcDbEntity(pEnt,pTrans->id(),AcDb::kForWrite)==eOk){
+				pTrans->put_Length(globalLengthTr);
+				pTrans->close();
+			}
+			SetGlobalProperty(pTrans);
+			SetPropertyLikePipe(SPipe,pTrans);
+			SetPropertyLikePipe(SPipe,GPipe);
+
+			point2=shortlength(midp,point2,globalLengthTr);
+			return true;
+
+		}
+
+		return false;
 	}
-
-	return false;
-}
 
 
 
@@ -1429,16 +1430,16 @@ pPipe2->close();
 		AcDbEntity  *pEnt2, ads_point pnt1,ads_point pnt2)
 
 	{
-		//Проверка
+		//РџСЂРѕРІРµСЂРєР°
 		if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
 		{
-			acutPrintf(_T("\n Выбран не тот обьект"));
+			acutPrintf(_T("\n Р’С‹Р±СЂР°РЅ РЅРµ С‚РѕС‚ РѕР±СЊРµРєС‚"));
 			return false;
 		}
 
 		if (TVSClassCheck(pEnt2)!=isTVS_Pipe)
 		{
-			acutPrintf(_T("\n Выбран не тот обьект"));
+			acutPrintf(_T("\n Р’С‹Р±СЂР°РЅ РЅРµ С‚РѕС‚ РѕР±СЊРµРєС‚"));
 			return false;
 		}
 
@@ -1456,9 +1457,9 @@ pPipe2->close();
 		dop.setEqualPoint(0.01);
 		int LineStatus=TVSisIntersection;
 		int SizeStatus;
-		if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n Параллельны"));} 
-		if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Линейны"));} 
-		if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n Перпендикулярны"));} 
+		if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n РџР°СЂР°Р»Р»РµР»СЊРЅС‹"));} 
+		if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Р›РёРЅРµР№РЅС‹"));} 
+		if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n РџРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅС‹"));} 
 		if((pPipe1->SizeA==pPipe2->SizeA)&&(pPipe1->SizeA==pPipe2->SizeA)) SizeStatus=TVSisSameSize;
 		else SizeStatus=TVSisNoSameSize;
 		int GroseStatus=whyIsGrose(pPipe1,pPipe2);
@@ -1517,916 +1518,916 @@ pPipe2->close();
 
 				addTrans(pPipe1,pPipe2,point1,midp,point2);
 
-		
+
 			}
-			#pragma endregion
-				TVS_TAP* pTap=drawTapDirect(point1,midp,point2);
-				SetGlobalProperty(pTap);
-				SetPropertyLikePipe(pPipe1,pTap);
-				
-				if (acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite)==eOk){
-					pPipe1->put_FirstPoint(point1);
-					pPipe1->put_Lastpoint(shortlength(point1, midp,length2p(pTap->MA,pTap->MiddlePoint)));
-					pPipe1->close();
+#pragma endregion
+			TVS_TAP* pTap=drawTapDirect(point1,midp,point2);
+			SetGlobalProperty(pTap);
+			SetPropertyLikePipe(pPipe1,pTap);
 
-				}
-				if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
+			if (acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite)==eOk){
+				pPipe1->put_FirstPoint(point1);
+				pPipe1->put_Lastpoint(shortlength(point1, midp,length2p(pTap->MA,pTap->MiddlePoint)));
+				pPipe1->close();
 
-
-					pPipe2->put_FirstPoint(shortlength(point2, midp,length2p(pTap->MA,pTap->MiddlePoint)));
-					pPipe2->put_Lastpoint(point2);
-					pPipe2->close();
-
-				}	
+			}
+			if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
 
 
-			
-		
-	} //end if line intersection
+				pPipe2->put_FirstPoint(shortlength(point2, midp,length2p(pTap->MA,pTap->MiddlePoint)));
+				pPipe2->put_Lastpoint(point2);
+				pPipe2->close();
+
+			}	
+
+
+
+
+		} //end if line intersection
 #pragma endregion 
 
 #pragma region linear
-	if (LineStatus==TVSisLinear)
-	{
-		AcGePoint3d kr1;
-		AcGePoint3d kr2;
-	AcGePoint3d midp;
-	if (max(length2p(p1,p3),length2p(p1,p4))>max(length2p(p2,p3),length2p(p2,p4)))
-	{kr1=p1;midp=p2;}
-	else  {kr1=p2;midp=p1;}
-		 
-		 			if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
-		 			else kr2=p3;
-		 
-		 				AcDbEntity * pEnt;
-
-//put trans
-
-					addTrans(pPipe1,pPipe2,kr1,midp,kr2);
-
-		 			acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
-		 			pPipe1->assertWriteEnabled();
-		 			pPipe1->put_FirstPoint(kr1);
-		 		pPipe1->put_Lastpoint(kr2);
-		 			pPipe1->close();
-		 
-		 			ads_name eName;
-		 			acdbGetAdsName(eName,pPipe2->id());
-					acdbEntDel(eName);
-		
-	}
-#pragma endregion 
-	if (LineStatus==TVSisParallel) return false;
-	return true;
-}
-
-
-static bool ConnectWithWye(AcDbEntity *pEnt1,
-						   AcDbEntity  *pEnt2, ads_point pnt1,ads_point pnt2)
-
-{
-	//Проверка
-	if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
-	{
-		acutPrintf(_T("\n Выбран не тот обьект"));
-		return false;
-	}
-
-	if (TVSClassCheck(pEnt2)!=isTVS_Pipe)
-	{
-		acutPrintf(_T("\n Выбран не тот обьект"));
-		return false;
-	}
-
-
-	TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
-	TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
-	AcGePoint3d p1 = pPipe1->get_FirstPoint();
-	AcGePoint3d p2 = pPipe1->get_Lastpoint();
-	AcGePoint3d p3 = pPipe2->get_FirstPoint();
-	AcGePoint3d p4 = pPipe2->get_Lastpoint();
-
-	AcGeLine3d line1=AcGeLine3d (p1,p2);
-	AcGeLine3d  line2=AcGeLine3d (p3,p4);
-	AcGeTol dop;
-	dop.setEqualPoint(0.01);
-	int LineStatus=TVSisIntersection;
-	int SizeStatus;
-	if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n Параллельны"));} 
-	if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Линейны"));} 
-	if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n Перпендикулярны"));} 
-	if((pPipe1->SizeA==pPipe2->SizeA)&&(pPipe1->SizeA==pPipe2->SizeA)) SizeStatus=TVSisSameSize;
-	else SizeStatus=TVSisNoSameSize;
-	int GroseStatus=whyIsGrose(pPipe1,pPipe2);
-	AcGePoint3d pointSelect1=line1.closestPointTo(asPnt3d(pnt1));
-	AcGePoint3d pointSelect2=line2.closestPointTo(asPnt3d(pnt2));
-	AcDbEntity * pEnt;
-#pragma region  line intersection
-	if (LineStatus==TVSisPerpendicular||LineStatus==TVSisIntersection)
-	{
-
-		AcGePoint3d midp, point1,point2,intersectpoint;
-
-		line1.intersectWith(line2,midp);
-		//find point1
-		if (max(midp.distanceTo(p1),midp.distanceTo(p2))<p1.distanceTo(p2))
+		if (LineStatus==TVSisLinear)
 		{
-			if (p2.distanceTo(pointSelect1)<p2.distanceTo(midp))
-			{
-			AcGePoint3d temp;
-			temp=p2;
-			p2=p1;
-			p1=temp;
-				acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+			AcGePoint3d kr1;
+			AcGePoint3d kr2;
+			AcGePoint3d midp;
+			if (max(length2p(p1,p3),length2p(p1,p4))>max(length2p(p2,p3),length2p(p2,p4)))
+			{kr1=p1;midp=p2;}
+			else  {kr1=p2;midp=p1;}
+
+			if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
+			else kr2=p3;
+
+			AcDbEntity * pEnt;
+
+			//put trans
+
+			addTrans(pPipe1,pPipe2,kr1,midp,kr2);
+
+			acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
 			pPipe1->assertWriteEnabled();
-			pPipe1->put_FirstPoint(p1);
-			pPipe1->put_Lastpoint(p2);
+			pPipe1->put_FirstPoint(kr1);
+			pPipe1->put_Lastpoint(kr2);
 			pPipe1->close();
+
+			ads_name eName;
+			acdbGetAdsName(eName,pPipe2->id());
+			acdbEntDel(eName);
+
+		}
+#pragma endregion 
+		if (LineStatus==TVSisParallel) return false;
+		return true;
+	}
+
+
+	static bool ConnectWithWye(AcDbEntity *pEnt1,
+		AcDbEntity  *pEnt2, ads_point pnt1,ads_point pnt2)
+
+	{
+		//РџСЂРѕРІРµСЂРєР°
+		if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
+		{
+			acutPrintf(_T("\n Р’С‹Р±СЂР°РЅ РЅРµ С‚РѕС‚ РѕР±СЊРµРєС‚"));
+			return false;
+		}
+
+		if (TVSClassCheck(pEnt2)!=isTVS_Pipe)
+		{
+			acutPrintf(_T("\n Р’С‹Р±СЂР°РЅ РЅРµ С‚РѕС‚ РѕР±СЊРµРєС‚"));
+			return false;
+		}
+
+
+		TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
+		TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
+		AcGePoint3d p1 = pPipe1->get_FirstPoint();
+		AcGePoint3d p2 = pPipe1->get_Lastpoint();
+		AcGePoint3d p3 = pPipe2->get_FirstPoint();
+		AcGePoint3d p4 = pPipe2->get_Lastpoint();
+
+		AcGeLine3d line1=AcGeLine3d (p1,p2);
+		AcGeLine3d  line2=AcGeLine3d (p3,p4);
+		AcGeTol dop;
+		dop.setEqualPoint(0.01);
+		int LineStatus=TVSisIntersection;
+		int SizeStatus;
+		if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n РџР°СЂР°Р»Р»РµР»СЊРЅС‹"));} 
+		if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Р›РёРЅРµР№РЅС‹"));} 
+		if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n РџРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅС‹"));} 
+		if((pPipe1->SizeA==pPipe2->SizeA)&&(pPipe1->SizeA==pPipe2->SizeA)) SizeStatus=TVSisSameSize;
+		else SizeStatus=TVSisNoSameSize;
+		int GroseStatus=whyIsGrose(pPipe1,pPipe2);
+		AcGePoint3d pointSelect1=line1.closestPointTo(asPnt3d(pnt1));
+		AcGePoint3d pointSelect2=line2.closestPointTo(asPnt3d(pnt2));
+		AcDbEntity * pEnt;
+#pragma region  line intersection
+		if (LineStatus==TVSisPerpendicular||LineStatus==TVSisIntersection)
+		{
+
+			AcGePoint3d midp, point1,point2,intersectpoint;
+
+			line1.intersectWith(line2,midp);
+			//find point1
+			if (max(midp.distanceTo(p1),midp.distanceTo(p2))<p1.distanceTo(p2))
+			{
+				if (p2.distanceTo(pointSelect1)<p2.distanceTo(midp))
+				{
+					AcGePoint3d temp;
+					temp=p2;
+					p2=p1;
+					p1=temp;
+					acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+					pPipe1->assertWriteEnabled();
+					pPipe1->put_FirstPoint(p1);
+					pPipe1->put_Lastpoint(p2);
+					pPipe1->close();
+				}
+
 			}
-			
+			else
+			{
+				if (p2.distanceTo(midp)>p1.distanceTo(midp))
+				{
+					AcGePoint3d temp;
+					temp=p2;
+					p2=p1;
+					p1=temp;
+					acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+					pPipe1->assertWriteEnabled();
+					pPipe1->put_FirstPoint(p1);
+					pPipe1->put_Lastpoint(p2);
+					pPipe1->close();
+				}
+			}
+
+			intersectpoint=line2.closestPointTo(p2);
+
+			//made perpendicular
+
+			if (LineStatus==TVSisIntersection)
+			{
+				TVS_Pipe* tempPipe;
+				tempPipe=tempPipe->add_new(p2,intersectpoint,globSizeA,globSizeB);
+				SetPropertyLikePipe(pPipe1,tempPipe);
+				ads_point pt1;
+				ads_point pt2;
+
+
+
+
+
+				ConnectWithTap(pPipe1,tempPipe,asDblArray(p1),asDblArray(intersectpoint));
+				pPipe1=tempPipe;
+				p1=p2;
+				p2=intersectpoint;
+
+			}
+
+
+
+			if (length2p(p3,intersectpoint)<length2p(p4,intersectpoint))
+			{
+				AcGePoint3d temp;
+				temp=p4;
+				p4=p3;
+				p3=temp;
+			}
+
+
+
+
+			acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
+			pPipe2->assertWriteEnabled();
+			pPipe2->put_FirstPoint(p3);
+			pPipe2->put_Lastpoint(intersectpoint);
+			pPipe2->close();
+
+			TVS_WYE* pWye;	 				
+			pWye=pWye->add_new(pPipe2->SizeA,
+				pPipe2->SizeB,
+				pPipe1->SizeA,
+				pPipe1->SizeB,
+				globalLengthW,
+				AcGeVector3d(-pPipe2->FirstPoint.x+pPipe2->LastPoint.x,-pPipe2->FirstPoint.y+pPipe2->LastPoint.y,-pPipe2->FirstPoint.z+pPipe2->LastPoint.z).normalize(),
+				AcGeVector3d(p1.x-p2.x,p1.y-p2.y,p1.z-p2.z).normalize(),
+				intersectpoint,
+				pPipe2->ThisRound,
+				pPipe1->ThisRound,
+				pPipe2->This1D);
+			SetGlobalProperty(pWye);
+			SetPropertyLikePipe(pPipe2,pWye);
+
+
+			acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+			pPipe1->assertWriteEnabled();
+
+			pPipe1->put_Lastpoint(shortlength(p1,intersectpoint,pPipe2->SizeA/2+pWye->LengthPl));
+			pPipe1->close();
+			acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
+			pPipe2->assertWriteEnabled();
+			pPipe2->put_Lastpoint(shortlength(p3,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
+			pPipe2->close();
+			//if intersection between p3 and p4
+			if (max(length2p(p3,intersectpoint),length2p(p4,intersectpoint))<length2p(p3,p4))
+			{
+				TVS_Pipe* tempPipe;
+				tempPipe=tempPipe->add_new(intersectpoint,p4,globSizeA,globSizeB);
+				SetPropertyLikePipe(pPipe2,tempPipe);
+				acdbOpenAcDbEntity(pEnt,tempPipe->id(),AcDb::kForWrite);
+				tempPipe->assertWriteEnabled();
+				tempPipe->put_FirstPoint(shortlength(p4,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
+				tempPipe->close();
+			}
+
+
+
+		} //end if line intersection
+#pragma endregion 
+
+#pragma region linear
+		if (LineStatus==TVSisLinear)
+		{
+			AcGePoint3d kr1;
+			AcGePoint3d kr2;
+			AcGePoint3d midp;
+			if (max(length2p(p1,p3),length2p(p1,p4))>max(length2p(p2,p3),length2p(p2,p4)))
+			{kr1=p1;midp=p2;}
+			else  {kr1=p2;midp=p1;}
+
+			if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
+			else kr2=p3;
+
+			AcDbEntity * pEnt;
+
+			//put trans
+
+			addTrans(pPipe1,pPipe2,kr1,midp,kr2);
+
+			acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+			pPipe1->assertWriteEnabled();
+			pPipe1->put_FirstPoint(kr1);
+			pPipe1->put_Lastpoint(kr2);
+			pPipe1->close();
+
+			ads_name eName;
+			acdbGetAdsName(eName,pPipe2->id());
+			acdbEntDel(eName);
+
+		}
+#pragma endregion 
+		if (LineStatus==TVSisParallel) return false;
+		return true;
+	}
+
+
+	// 
+	// 	static bool ConnectPutTrans(AcDbEntity *pEnt1, AcDbEntity *pEnt2, int pointStatus)
+	// 
+	// 	{
+	// 		//РџСЂРѕРІРµСЂРєР°
+	// 		if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
+	// 		{
+	// 			acutPrintf(_T("\n Р’С‹Р±СЂР°РЅ РЅРµ С‚РѕС‚ РѕР±СЊРµРєС‚"));
+	// 			return false;
+	// 		}
+	// 
+	// 		if (TVSClassCheck(pEnt2)!=isTVS_Pipe)
+	// 		{
+	// 			acutPrintf(_T("\n Р’С‹Р±СЂР°РЅ РЅРµ С‚РѕС‚ РѕР±СЊРµРєС‚"));
+	// 			return false;
+	// 		}
+	// 
+	// 
+	// 		TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
+	// 		TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
+	// 		AcGePoint3d p1 = pPipe1->get_FirstPoint();
+	// 		AcGePoint3d p2 = pPipe1->get_Lastpoint();
+	// 		AcGePoint3d p3 = pPipe2->get_FirstPoint();
+	// 		AcGePoint3d p4 = pPipe2->get_Lastpoint();
+	// 
+	// 		AcGeLine3d line1=AcGeLine3d (p1,p2);
+	// 		AcGeLine3d  line2=AcGeLine3d (p3,p4);
+	// 		AcGeTol dop;
+	// 		dop.setEqualPoint(0.01);
+	// 		int LineStatus=TVSisIntersection;
+	// 		int SizeStatus;
+	// 		if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n РџР°СЂР°Р»Р»РµР»СЊРЅС‹"));} 
+	// 		if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Р›РёРЅРµР№РЅС‹"));} 
+	// 		if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n РџРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅС‹"));} 
+	// 		if((pPipe1->SizeA==pPipe2->SizeA)&&(pPipe1->SizeA==pPipe2->SizeA)) SizeStatus=TVSisSameSize;
+	// 		else SizeStatus=TVSisNoSameSize;
+	// 		int GroseStatus=whyIsGrose(pPipe1,pPipe2);
+	// 
+	// 
+	// #pragma region //if pipes various
+	// 		
+	// 			if (GroseStatus=TVSisNoSameSize)
+	// 			{
+	// 
+	// 
+	// 				if (pointStatus==TVSFirstPoint)
+	// 				{
+	// 
+	// 					p1=
+	// 				}
+	// 
+	// 
+	// 
+	// 				TVS_TAP* pTap=drawTapDirect(point1,midp,point2);
+	// 				SetGlobalProperty(pTap);
+	// 				SetPropertyLikePipe(pPipe1,pTap);
+	// 				AcDbEntity * pEnt;
+	// 				if (acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite)==eOk){
+	// 					pPipe1->put_FirstPoint(point1);
+	// 					pPipe1->put_Lastpoint(shortlength(point1, midp,length2p(pTap->MA,pTap->MiddlePoint)));
+	// 					pPipe1->close();
+	// 
+	// 				}
+	// 				if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
+	// 
+	// 
+	// 					pPipe2->put_FirstPoint(shortlength(point2, midp,length2p(pTap->MA,pTap->MiddlePoint)));
+	// 					pPipe2->put_Lastpoint(point2);
+	// 					pPipe2->close();
+	// 				
+	// 
+	// 			}
+	// 		} //end if line intersection
+	// #pragma endregion
+	// 
+	// 	}
+	// 
+
+	static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
+	{
+		AcDbEntity * pAEnt;
+		if (acdbOpenAcDbEntity(pAEnt,pEnt->id(),AcDb::kForWrite)==eOk){
+			pEnt->put_SizeA(pPipe->get_SizeA());
+			pEnt->put_SizeB(pPipe->get_SizeB());
+			pEnt->put_Wipeout(pPipe->get_Wipeout());
+			pEnt->put_Grani(pPipe->get_Grani());
+			pEnt->put_This1D(pPipe->get_This1D());
+			pEnt->put_Flow(pPipe->get_Flow());
+			pEnt->put_Elevation(pPipe->get_Elevation());
+			pEnt->setDuctType(pPipe->getDuctType());
+			pEnt->setColor(pPipe->color());
+			pEnt->setLineWeight(pPipe->lineWeight());
+			pEnt->setLayer(pPipe->layer());
+			pEnt->setLinetype(pPipe->linetype());
+			pEnt->setLinetypeScale(pPipe->linetypeScale());
+			pEnt->draw();
+			pEnt->close();
 		}
 		else
 		{
-			if (p2.distanceTo(midp)>p1.distanceTo(midp))
-			{
-				AcGePoint3d temp;
-				temp=p2;
-				p2=p1;
-				p1=temp;
-					acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
-				pPipe1->assertWriteEnabled();
-				pPipe1->put_FirstPoint(p1);
-				pPipe1->put_Lastpoint(p2);
-				pPipe1->close();
-			}
+			acutPrintf(_T("\n РћР±СЊРµРєС‚ Р±Р»РѕРєРёСЂРѕРІР°РЅ: РЅРµРІРѕР·РјРѕР¶РЅРѕ РєРѕРїРёСЂРѕРІР°С‚СЊ СЃРІРѕР№СЃС‚РІР°"));
 		}
-	
-		intersectpoint=line2.closestPointTo(p2);
-
-		//made perpendicular
-		
-if (LineStatus==TVSisIntersection)
-{
-	TVS_Pipe* tempPipe;
-	tempPipe=tempPipe->add_new(p2,intersectpoint,globSizeA,globSizeB);
-	SetPropertyLikePipe(pPipe1,tempPipe);
-	ads_point pt1;
-	ads_point pt2;
-
-
-
-
-
-	ConnectWithTap(pPipe1,tempPipe,asDblArray(p1),asDblArray(intersectpoint));
-	pPipe1=tempPipe;
-	p1=p2;
-	p2=intersectpoint;
-
-}
-
-
-
-if (length2p(p3,intersectpoint)<length2p(p4,intersectpoint))
-{
-	AcGePoint3d temp;
-	temp=p4;
-	p4=p3;
-	p3=temp;
-}
-	
-
-
-	
-	acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
-	pPipe2->assertWriteEnabled();
-	pPipe2->put_FirstPoint(p3);
-	pPipe2->put_Lastpoint(intersectpoint);
-	pPipe2->close();
-
-TVS_WYE* pWye;	 				
-	pWye=pWye->add_new(pPipe2->SizeA,
-	 						pPipe2->SizeB,
-	 						pPipe1->SizeA,
-	 						pPipe1->SizeB,
-	 						globalLengthW,
-	 						AcGeVector3d(-pPipe2->FirstPoint.x+pPipe2->LastPoint.x,-pPipe2->FirstPoint.y+pPipe2->LastPoint.y,-pPipe2->FirstPoint.z+pPipe2->LastPoint.z).normalize(),
-	 						AcGeVector3d(p1.x-p2.x,p1.y-p2.y,p1.z-p2.z).normalize(),
-	 						intersectpoint,
-	 						pPipe2->ThisRound,
-	 						pPipe1->ThisRound,
-	 						pPipe2->This1D);
-	SetGlobalProperty(pWye);
-	SetPropertyLikePipe(pPipe2,pWye);
-
-
-	acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
-	pPipe1->assertWriteEnabled();
-
-	pPipe1->put_Lastpoint(shortlength(p1,intersectpoint,pPipe2->SizeA/2+pWye->LengthPl));
-	pPipe1->close();
-	acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite);
-	pPipe2->assertWriteEnabled();
-	pPipe2->put_Lastpoint(shortlength(p3,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
-	pPipe2->close();
-	//if intersection between p3 and p4
-	if (max(length2p(p3,intersectpoint),length2p(p4,intersectpoint))<length2p(p3,p4))
+	}
+	static void InstallGlobalProperty( TVS_Entity *pEnt )
 	{
-		TVS_Pipe* tempPipe;
-		tempPipe=tempPipe->add_new(intersectpoint,p4,globSizeA,globSizeB);
-		SetPropertyLikePipe(pPipe2,tempPipe);
-		acdbOpenAcDbEntity(pEnt,tempPipe->id(),AcDb::kForWrite);
-		tempPipe->assertWriteEnabled();
-		tempPipe->put_FirstPoint(shortlength(p4,intersectpoint,pPipe1->SizeA/2+pWye->LengthPl));
-		tempPipe->close();
-}
-
-
-
-	} //end if line intersection
-#pragma endregion 
-
-#pragma region linear
-	if (LineStatus==TVSisLinear)
-	{
-		AcGePoint3d kr1;
-		AcGePoint3d kr2;
-		AcGePoint3d midp;
-		if (max(length2p(p1,p3),length2p(p1,p4))>max(length2p(p2,p3),length2p(p2,p4)))
-		{kr1=p1;midp=p2;}
-		else  {kr1=p2;midp=p1;}
-
-		if (length2p(p1,p4)>length2p(p1,p3)) kr2=p4;
-		else kr2=p3;
-
-		AcDbEntity * pEnt;
-
-		//put trans
-
-		addTrans(pPipe1,pPipe2,kr1,midp,kr2);
-
-		acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
-		pPipe1->assertWriteEnabled();
-		pPipe1->put_FirstPoint(kr1);
-		pPipe1->put_Lastpoint(kr2);
-		pPipe1->close();
-
+		TVS_Pipe * Pipi;
+		TVS_TAP * Tapie;
+		TVS_WYE* Wyeie;
+		TVS_TRANS * Transie;
+		AcDbObjectId	id=pEnt->id();
 		ads_name eName;
-		acdbGetAdsName(eName,pPipe2->id());
-		acdbEntDel(eName);
+
+
+		acdbGetAdsName(eName,id);
+		acdbGetObjectId(id,eName);
+		AcDbEntity* pnt;
+
+
+		//acdbOpenAcDbEntity(pnt,id,AcDb::kForRead);
+
+
+
+
+		globSizeA=pEnt->get_SizeA();
+		globSizeB=pEnt->get_SizeB();
+		globalWipeout=pEnt->get_Wipeout();
+		globalGrani=pEnt->get_Grani();
+		global1D=pEnt->get_This1D();
+		globalFlow=pEnt->get_Flow();
+		globalDuctType=pEnt->getDuctType();
+		globalElevMid=pEnt->get_Elevation();
+
+
+		//	pEnt->close();
+	}
+	static void SetGlobalProperty( TVS_Entity *pEnt )
+	{
+
+		TVS_Pipe * Pipi;
+		TVS_TAP * Tapie;
+		TVS_WYE* Wyeie;
+		TVS_TRANS * Transie;
+		AcDbObjectId	id=pEnt->id();
+		ads_name eName;
+
+
+		// 	acdbGetAdsName(eName,id);
+		// 	acdbGetObjectId(id,eName);
+		AcDbEntity* pnt;
+
+
+		if (acdbOpenAcDbEntity(pnt,pEnt->id(),AcDb::kForWrite)==eOk)
+
+
+		{
+
+
+
+			pEnt->put_SizeA(globSizeA);
+			pEnt->put_SizeB(globSizeB);
+			pEnt->put_Wipeout(globalWipeout);
+			pEnt->put_WipeoutLength(globalWipeoutLength);
+			pEnt->put_Grani(globalGrani);
+			pEnt->put_This1D(global1D);
+			pEnt->put_Flow(globalFlow);
+			pEnt->put_Elevation(globalElevMid);
+			pEnt->setDuctType(globalDuctType);
+
+
+			if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+			{	
+
+
+				// 			///
+				// 			if (cSizeA==false) Pipi->put_SizeA(SizeA);
+				// 			if (cSizeB==false) Pipi->put_SizeB(SizeB);
+				// 			if (cFlow==false) Pipi->put_Flow(Flow);
+				// 			if (cGrani==false) Pipi->put_Grani(Grani);
+				// 			if (cD1==false) Pipi->put_This1D(D1);
+				// 			if (cWipe==false) Pipi->put_Wipeout(Wipe);
+				// 			if (cElev==false) Pipi->put_Elevation(getElev(Elev,Emode,Pipi->SizeA,Pipi->SizeB));
+				//
+
+
+			}
+
+			if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+			{	
+
+
+				// 			///
+				// 			if (cSizeA==false) Tapie->put_SizeA(SizeA);
+				// 			if (cSizeB==false) Tapie->put_SizeB(SizeB);
+				// 			if (cFlow==false) Tapie->put_Flow(Flow);
+				// 
+				// 			if (cD1==false) Tapie->put_This1D(D1);
+				// 			if (cWipe==false) Tapie->put_Wipeout(Wipe);
+				// 			if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
+				// 			//
+				// 
+				// 
+				// 			if (cTapForm==false) Tapie->put_Form(TapForm);
+				Tapie->put_TypeRoundTap(globalTypeRoundTap);
+				Tapie->put_RadiusTypeRound(globalRadiusTypeRound);
+				Tapie->put_RadiusTypeRect(globalRadiusTypeRect);
+				Tapie->put_RadiusVariableParameter(globalTapRadiusVariableParameter);
+				Tapie->put_RadiusConst(globalTapRadiusConst);
+				// 			if (cSwectangle==false) Tapie->put_Swectangle(Swectangle);
+
+			}
+
+			if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+			{	
+
+
+				// 			///
+				// 			if (cSizeA==false) Wyeie->put_SizeApr(SizeA);
+				// 			if (cSizeB==false) Wyeie->put_SizeBpr(SizeB);
+				// 			if (cSizeA2==false) Wyeie->put_SizeAotv(SizeA2);
+				// 			if (cSizeB2==false) Wyeie->put_SizeBotv(SizeB2);
+				// 			if (cLengthW==false) Wyeie->put_Length(LengthW);
+				// 			//if (cFlow==false) Tapie->put_Flow(Flow);
+				// 
+				// 			if (cD1==false) Wyeie->put_This1D(D1);
+				// 			if (cWipe==false) Wyeie->put_Wipeout(Wipe);
+				// 			if (cElev==false) Wyeie->put_Elevation(getElev(Elev,Emode,Wyeie->SizeApr,Wyeie->SizeBpr));
+				// 			//
+
+
+			}
+
+			if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+			{	
+				// 			///
+				// 			if (cSizeA==false) Transie->put_SizeAp1(SizeA);
+				// 			if (cSizeB==false) Transie->put_SizeBp1(SizeB);
+				// 			if (cSizeA2==false) Transie->put_SizeAp2(SizeA2);
+				// 			if (cSizeB2==false) Transie->put_SizeBp2(SizeB2);
+				// 			if (cLengthTr==false) Transie->put_Length(LengthTr);
+				// 			//if (cFlow==false) Tapie->put_Flow(Flow);
+				// 
+				// 			if (cD1==false) Transie->put_This1D(D1);
+				// 			if (cWipe==false) Transie->put_Wipeout(Wipe);
+				// 			if (cElev==false) Transie->put_Elevation(getElev(Elev,Emode,Transie->SizeAp1,Transie->SizeBp1));
+				// 			//
+
+
+
+			}
+
+			pEnt->draw();
+			pEnt->close();
+		}
+
+
 
 	}
-#pragma endregion 
-	if (LineStatus==TVSisParallel) return false;
-	return true;
-}
 
 
-// 
-// 	static bool ConnectPutTrans(AcDbEntity *pEnt1, AcDbEntity *pEnt2, int pointStatus)
-// 
-// 	{
-// 		//Проверка
-// 		if (TVSClassCheck(pEnt1)!=isTVS_Pipe)
-// 		{
-// 			acutPrintf(_T("\n Выбран не тот обьект"));
-// 			return false;
-// 		}
-// 
-// 		if (TVSClassCheck(pEnt2)!=isTVS_Pipe)
-// 		{
-// 			acutPrintf(_T("\n Выбран не тот обьект"));
-// 			return false;
-// 		}
-// 
-// 
-// 		TVS_Pipe* pPipe1=TVS_Pipe::cast(pEnt1);
-// 		TVS_Pipe* pPipe2=TVS_Pipe::cast(pEnt2);
-// 		AcGePoint3d p1 = pPipe1->get_FirstPoint();
-// 		AcGePoint3d p2 = pPipe1->get_Lastpoint();
-// 		AcGePoint3d p3 = pPipe2->get_FirstPoint();
-// 		AcGePoint3d p4 = pPipe2->get_Lastpoint();
-// 
-// 		AcGeLine3d line1=AcGeLine3d (p1,p2);
-// 		AcGeLine3d  line2=AcGeLine3d (p3,p4);
-// 		AcGeTol dop;
-// 		dop.setEqualPoint(0.01);
-// 		int LineStatus=TVSisIntersection;
-// 		int SizeStatus;
-// 		if(line1.isParallelTo(line2,dop)) {LineStatus=TVSisParallel; acutPrintf(_T("\n Параллельны"));} 
-// 		if(line1.isColinearTo(line2,dop)) {LineStatus=TVSisLinear; acutPrintf(_T("\n Линейны"));} 
-// 		if(line1.isPerpendicularTo(line2,dop)) {LineStatus=TVSisPerpendicular; acutPrintf(_T("\n Перпендикулярны"));} 
-// 		if((pPipe1->SizeA==pPipe2->SizeA)&&(pPipe1->SizeA==pPipe2->SizeA)) SizeStatus=TVSisSameSize;
-// 		else SizeStatus=TVSisNoSameSize;
-// 		int GroseStatus=whyIsGrose(pPipe1,pPipe2);
-// 
-// 
-// #pragma region //if pipes various
-// 		
-// 			if (GroseStatus=TVSisNoSameSize)
-// 			{
-// 
-// 
-// 				if (pointStatus==TVSFirstPoint)
-// 				{
-// 
-// 					p1=
-// 				}
-// 
-// 
-// 
-// 				TVS_TAP* pTap=drawTapDirect(point1,midp,point2);
-// 				SetGlobalProperty(pTap);
-// 				SetPropertyLikePipe(pPipe1,pTap);
-// 				AcDbEntity * pEnt;
-// 				if (acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite)==eOk){
-// 					pPipe1->put_FirstPoint(point1);
-// 					pPipe1->put_Lastpoint(shortlength(point1, midp,length2p(pTap->MA,pTap->MiddlePoint)));
-// 					pPipe1->close();
-// 
-// 				}
-// 				if (acdbOpenAcDbEntity(pEnt,pPipe2->id(),AcDb::kForWrite)==eOk){
-// 
-// 
-// 					pPipe2->put_FirstPoint(shortlength(point2, midp,length2p(pTap->MA,pTap->MiddlePoint)));
-// 					pPipe2->put_Lastpoint(point2);
-// 					pPipe2->close();
-// 				
-// 
-// 			}
-// 		} //end if line intersection
-// #pragma endregion
-// 
-// 	}
-// 
 
-static void SetPropertyLikePipe( TVS_Pipe *pPipe, TVS_Entity* pEnt )
-{
-	AcDbEntity * pAEnt;
-	if (acdbOpenAcDbEntity(pAEnt,pEnt->id(),AcDb::kForWrite)==eOk){
-		pEnt->put_SizeA(pPipe->get_SizeA());
-		pEnt->put_SizeB(pPipe->get_SizeB());
-		pEnt->put_Wipeout(pPipe->get_Wipeout());
-		pEnt->put_Grani(pPipe->get_Grani());
-		pEnt->put_This1D(pPipe->get_This1D());
-		pEnt->put_Flow(pPipe->get_Flow());
-		pEnt->put_Elevation(pPipe->get_Elevation());
-		pEnt->setDuctType(pPipe->getDuctType());
-		pEnt->setColor(pPipe->color());
-		pEnt->setLineWeight(pPipe->lineWeight());
-		pEnt->setLayer(pPipe->layer());
-		pEnt->setLinetype(pPipe->linetype());
-		pEnt->setLinetypeScale(pPipe->linetypeScale());
+
+
+	static bool changesize ()
+	{
+
+		//	ads_real sa,sb;
+		double a,b;
+		// 			a=globSizeA;
+		// 			b=globSizeB;
+		// 		if (acedGetReal(_T("\nР’РІРµРґРёС‚Рµ РЁРёСЂРёРЅСѓ:"),&sa) != RTNORM)
+		// 		{
+		// 			return false;}
+		// 
+		// 		if (acedGetReal(_T("\nР’РІРµРґРёС‚Рµ Р’С‹СЃРѕС‚Сѓ:"),&sb) != RTNORM)
+		// 		{
+		// 			return false;}
+		// 		globSizeA=sa;
+		// 		globSizeB=sb;
+		// 		if (globSizeB==0) globRound=true;
+		// 		else globRound=false;
+
+		PipeSizeDiallog dg;
+		a=dg.SizeA=globSizeA;
+		b=dg.SizeB=globSizeB;
+		dg.Flow=globalFlow;
+		dg.LengthTr=globalLengthTr;
+		dg.LengthW=globalLengthW;
+		//dg.Tpipe=firstPipe;
+		//dg.Twye=firstWye;
+		//dg.Ttrans=firstTrans;
+		//dg.Ttap=firstTap;
+		dg.Wipe=globalWipeout;
+		dg.Grani=globalGrani;
+		dg.D1=global1D;
+		dg.ElevMid=true;
+		dg.Elev=globalElevMid;
+		dg.TapForm=globalTapForm;
+		dg.TypeRoundTap=globalTypeRoundTap;
+		dg.RadiusTypeRound=globalRadiusTypeRound;
+		dg.RadiusTypeRect=globalRadiusTypeRect;
+		dg.TapRadiusVariableParameter=globalTapRadiusVariableParameter;
+		dg.TapRadiusConst=globalTapRadiusConst;
+
+		dg.WipeoutLength=globalWipeoutLength;
+		if (globalDuctType==DuctTypeFlex) dg.DuctFlex=TRUE; else dg.DuctFlex=FALSE;
+
+		//AcApDocument *pDoc=acDocManager->curDocument();
+		//acDocManager->lockDocument(pDoc,AcAp::kWrite);
+
+
+
+
+
+		dg.DoModal();
+		//acDocManager->unlockDocument(pDoc);
+		globSizeA=dg.SizeA;
+		globSizeB=dg.SizeB;
+		double fl=globalFlow=dg.Flow;
+		globalLengthTr=dg.LengthTr;
+		globalLengthW=dg.LengthW;
+
+		globalWipeout=dg.Wipe;
+		globalGrani=dg.Grani;
+		global1D=dg.D1;
+		globalElevMid=dg.Elev;
+		globalElev=dg.Elev;
+		globalTapForm=dg.TapForm;
+		globalTypeRoundTap=dg.TypeRoundTap;
+		globalRadiusTypeRound=dg.RadiusTypeRound;
+		globalRadiusTypeRect=dg.RadiusTypeRect;
+		globalTapRadiusVariableParameter=dg.TapRadiusVariableParameter;
+		globalTapRadiusConst=dg.TapRadiusConst;
+
+		globalWipeoutLength=dg.WipeoutLength;
+
+		if (dg.DuctFlex==TRUE) {globalDuctType=DuctTypeFlex; globSizeB=0;} else globalDuctType=DuctTypeStill;
+		if (globSizeB==0) globRound=true;
+		else globRound=false;
+		if (a==globSizeA && b==globSizeB)
+			return false; 
+		else
+			return true;
+	}
+
+
+	static TVS_TAP* drawTapDirect(AcGePoint3d t1, AcGePoint3d t2, AcGePoint3d t3)
+	{
+
+
+
+		double pSizeA=globSizeA;
+		double pSizeB=globSizeB;
+		double pRadius=globalTapRadiusConst;
+		AcGeVector3d pNormVect;
+		AcGeVector3d pStartVect;
+		AcGePoint3d pMidPoint;
+		double pSwectangle;
+		bool pThisRound=globRound;
+
+		pMidPoint=t2;
+		GiveStartvectorAndAngle(t1,t2,t3,pSwectangle,pStartVect);
+		pStartVect.normalize();
+		pNormVect=AcGeVector3d(0,0,1);
+		TVS_TAP* pEnt=TVS_TAP::add_new(pSizeA,pSizeB,pRadius,pNormVect,pStartVect,pMidPoint,pSwectangle,false,pThisRound);
+		AcDbObjectId	id=pEnt->id();
+		ads_name eName;
+
+
+		acdbGetAdsName(eName,id);
+		acdbGetObjectId(id,eName);
+		AcDbEntity* pnt;
+		acdbOpenAcDbEntity(pnt,id,AcDb::kForWrite);
+
+		pEnt->assertWriteEnabled();
+		pEnt->RadiusConst=(globalTapRadiusConst);
+		pEnt->RadiusTypeRound=(globalRadiusTypeRound);
+		pEnt->RadiusTypeRect=(globalRadiusTypeRect);
+		pEnt->TypeRoundTap=(globalTypeRoundTap);
+		pEnt->Form=(globalTapForm);
+		pEnt->RadiusVariableParameter=(globalTapRadiusVariableParameter);
+		pEnt->RadiusConst=(globalTapRadiusConst);
 		pEnt->draw();
 		pEnt->close();
-	}
-	else
-	{
-		acutPrintf(_T("\n Обьект блокирован: невозможно копировать свойства"));
-	}
-}
- static void InstallGlobalProperty( TVS_Entity *pEnt )
-{
-	TVS_Pipe * Pipi;
-	TVS_TAP * Tapie;
-	TVS_WYE* Wyeie;
-	TVS_TRANS * Transie;
-	AcDbObjectId	id=pEnt->id();
-	ads_name eName;
 
-
-	acdbGetAdsName(eName,id);
-	acdbGetObjectId(id,eName);
-	AcDbEntity* pnt;
-
-
-	//acdbOpenAcDbEntity(pnt,id,AcDb::kForRead);
-
-
-
-
-	globSizeA=pEnt->get_SizeA();
-	globSizeB=pEnt->get_SizeB();
-	globalWipeout=pEnt->get_Wipeout();
-	globalGrani=pEnt->get_Grani();
-	global1D=pEnt->get_This1D();
-	globalFlow=pEnt->get_Flow();
-	globalDuctType=pEnt->getDuctType();
-	globalElevMid=pEnt->get_Elevation();
-	
-
-//	pEnt->close();
- }
-static void SetGlobalProperty( TVS_Entity *pEnt )
-{
-
-	TVS_Pipe * Pipi;
-	TVS_TAP * Tapie;
-	TVS_WYE* Wyeie;
-	TVS_TRANS * Transie;
-	AcDbObjectId	id=pEnt->id();
-	ads_name eName;
-
-
-// 	acdbGetAdsName(eName,id);
-// 	acdbGetObjectId(id,eName);
-	AcDbEntity* pnt;
-
-
-	if (acdbOpenAcDbEntity(pnt,pEnt->id(),AcDb::kForWrite)==eOk)
-
-
-	{
-
-	
-
-	pEnt->put_SizeA(globSizeA);
-	pEnt->put_SizeB(globSizeB);
-	pEnt->put_Wipeout(globalWipeout);
-	pEnt->put_WipeoutLength(globalWipeoutLength);
-	pEnt->put_Grani(globalGrani);
-	pEnt->put_This1D(global1D);
-	pEnt->put_Flow(globalFlow);
-	pEnt->put_Elevation(globalElevMid);
-	pEnt->setDuctType(globalDuctType);
-
-
-	if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
-	{	
-
-
-		// 			///
-		// 			if (cSizeA==false) Pipi->put_SizeA(SizeA);
-		// 			if (cSizeB==false) Pipi->put_SizeB(SizeB);
-		// 			if (cFlow==false) Pipi->put_Flow(Flow);
-		// 			if (cGrani==false) Pipi->put_Grani(Grani);
-		// 			if (cD1==false) Pipi->put_This1D(D1);
-		// 			if (cWipe==false) Pipi->put_Wipeout(Wipe);
-		// 			if (cElev==false) Pipi->put_Elevation(getElev(Elev,Emode,Pipi->SizeA,Pipi->SizeB));
-		//
-
-
-	}
-
-	if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
-	{	
-
-
-		// 			///
-		// 			if (cSizeA==false) Tapie->put_SizeA(SizeA);
-		// 			if (cSizeB==false) Tapie->put_SizeB(SizeB);
-		// 			if (cFlow==false) Tapie->put_Flow(Flow);
-		// 
-		// 			if (cD1==false) Tapie->put_This1D(D1);
-		// 			if (cWipe==false) Tapie->put_Wipeout(Wipe);
-		// 			if (cElev==false) Tapie->put_Elevation(getElev(Elev,Emode,Tapie->SizeA,Tapie->SizeB));
-		// 			//
-		// 
-		// 
-		// 			if (cTapForm==false) Tapie->put_Form(TapForm);
-		Tapie->put_TypeRoundTap(globalTypeRoundTap);
-		Tapie->put_RadiusTypeRound(globalRadiusTypeRound);
-		Tapie->put_RadiusTypeRect(globalRadiusTypeRect);
-		Tapie->put_RadiusVariableParameter(globalTapRadiusVariableParameter);
-		Tapie->put_RadiusConst(globalTapRadiusConst);
-		// 			if (cSwectangle==false) Tapie->put_Swectangle(Swectangle);
-
-	}
-
-	if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
-	{	
-
-
-		// 			///
-		// 			if (cSizeA==false) Wyeie->put_SizeApr(SizeA);
-		// 			if (cSizeB==false) Wyeie->put_SizeBpr(SizeB);
-		// 			if (cSizeA2==false) Wyeie->put_SizeAotv(SizeA2);
-		// 			if (cSizeB2==false) Wyeie->put_SizeBotv(SizeB2);
-		// 			if (cLengthW==false) Wyeie->put_Length(LengthW);
-		// 			//if (cFlow==false) Tapie->put_Flow(Flow);
-		// 
-		// 			if (cD1==false) Wyeie->put_This1D(D1);
-		// 			if (cWipe==false) Wyeie->put_Wipeout(Wipe);
-		// 			if (cElev==false) Wyeie->put_Elevation(getElev(Elev,Emode,Wyeie->SizeApr,Wyeie->SizeBpr));
-		// 			//
-
-
-	}
-
-	if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
-	{	
-		// 			///
-		// 			if (cSizeA==false) Transie->put_SizeAp1(SizeA);
-		// 			if (cSizeB==false) Transie->put_SizeBp1(SizeB);
-		// 			if (cSizeA2==false) Transie->put_SizeAp2(SizeA2);
-		// 			if (cSizeB2==false) Transie->put_SizeBp2(SizeB2);
-		// 			if (cLengthTr==false) Transie->put_Length(LengthTr);
-		// 			//if (cFlow==false) Tapie->put_Flow(Flow);
-		// 
-		// 			if (cD1==false) Transie->put_This1D(D1);
-		// 			if (cWipe==false) Transie->put_Wipeout(Wipe);
-		// 			if (cElev==false) Transie->put_Elevation(getElev(Elev,Emode,Transie->SizeAp1,Transie->SizeBp1));
-		// 			//
-
-
-
-	}
-
-	pEnt->draw();
-	pEnt->close();
+		return pEnt;
 	}
 
 
 
-}
-
-
-
-
-
-static bool changesize ()
-{
-
-	//	ads_real sa,sb;
-	double a,b;
-	// 			a=globSizeA;
-	// 			b=globSizeB;
-	// 		if (acedGetReal(_T("\nВведите Ширину:"),&sa) != RTNORM)
-	// 		{
-	// 			return false;}
-	// 
-	// 		if (acedGetReal(_T("\nВведите Высоту:"),&sb) != RTNORM)
-	// 		{
-	// 			return false;}
-	// 		globSizeA=sa;
-	// 		globSizeB=sb;
-	// 		if (globSizeB==0) globRound=true;
-	// 		else globRound=false;
-
-	PipeSizeDiallog dg;
-	a=dg.SizeA=globSizeA;
-	b=dg.SizeB=globSizeB;
-	dg.Flow=globalFlow;
-	dg.LengthTr=globalLengthTr;
-	dg.LengthW=globalLengthW;
-	//dg.Tpipe=firstPipe;
-	//dg.Twye=firstWye;
-	//dg.Ttrans=firstTrans;
-	//dg.Ttap=firstTap;
-	dg.Wipe=globalWipeout;
-	dg.Grani=globalGrani;
-	dg.D1=global1D;
-	dg.ElevMid=true;
-	dg.Elev=globalElevMid;
-	dg.TapForm=globalTapForm;
-	dg.TypeRoundTap=globalTypeRoundTap;
-	dg.RadiusTypeRound=globalRadiusTypeRound;
-	dg.RadiusTypeRect=globalRadiusTypeRect;
-	dg.TapRadiusVariableParameter=globalTapRadiusVariableParameter;
-	dg.TapRadiusConst=globalTapRadiusConst;
-
-	dg.WipeoutLength=globalWipeoutLength;
-	if (globalDuctType==DuctTypeFlex) dg.DuctFlex=TRUE; else dg.DuctFlex=FALSE;
-	
-	//AcApDocument *pDoc=acDocManager->curDocument();
-	//acDocManager->lockDocument(pDoc,AcAp::kWrite);
-
-
-
-
-
-	dg.DoModal();
-	//acDocManager->unlockDocument(pDoc);
-	globSizeA=dg.SizeA;
-	globSizeB=dg.SizeB;
-	double fl=globalFlow=dg.Flow;
-	globalLengthTr=dg.LengthTr;
-	globalLengthW=dg.LengthW;
-
-	globalWipeout=dg.Wipe;
-	globalGrani=dg.Grani;
-	global1D=dg.D1;
-	globalElevMid=dg.Elev;
-	globalElev=dg.Elev;
-	globalTapForm=dg.TapForm;
-	globalTypeRoundTap=dg.TypeRoundTap;
-	globalRadiusTypeRound=dg.RadiusTypeRound;
-	globalRadiusTypeRect=dg.RadiusTypeRect;
-	globalTapRadiusVariableParameter=dg.TapRadiusVariableParameter;
-	globalTapRadiusConst=dg.TapRadiusConst;
-
-	globalWipeoutLength=dg.WipeoutLength;
-
-	if (dg.DuctFlex==TRUE) {globalDuctType=DuctTypeFlex; globSizeB=0;} else globalDuctType=DuctTypeStill;
-	if (globSizeB==0) globRound=true;
-	else globRound=false;
-	if (a==globSizeA && b==globSizeB)
-		return false; 
-	else
-		return true;
-}
-
-
-static TVS_TAP* drawTapDirect(AcGePoint3d t1, AcGePoint3d t2, AcGePoint3d t3)
-{
-
-
-
-	double pSizeA=globSizeA;
-	double pSizeB=globSizeB;
-	double pRadius=globalTapRadiusConst;
-	AcGeVector3d pNormVect;
-	AcGeVector3d pStartVect;
-	AcGePoint3d pMidPoint;
-	double pSwectangle;
-	bool pThisRound=globRound;
-
-	pMidPoint=t2;
-	GiveStartvectorAndAngle(t1,t2,t3,pSwectangle,pStartVect);
-	pStartVect.normalize();
-	pNormVect=AcGeVector3d(0,0,1);
-	TVS_TAP* pEnt=TVS_TAP::add_new(pSizeA,pSizeB,pRadius,pNormVect,pStartVect,pMidPoint,pSwectangle,false,pThisRound);
-	AcDbObjectId	id=pEnt->id();
-	ads_name eName;
-
-
-	acdbGetAdsName(eName,id);
-	acdbGetObjectId(id,eName);
-	AcDbEntity* pnt;
-	acdbOpenAcDbEntity(pnt,id,AcDb::kForWrite);
-
-	pEnt->assertWriteEnabled();
-	pEnt->RadiusConst=(globalTapRadiusConst);
-	pEnt->RadiusTypeRound=(globalRadiusTypeRound);
-	pEnt->RadiusTypeRect=(globalRadiusTypeRect);
-	pEnt->TypeRoundTap=(globalTypeRoundTap);
-	pEnt->Form=(globalTapForm);
-	pEnt->RadiusVariableParameter=(globalTapRadiusVariableParameter);
-	pEnt->RadiusConst=(globalTapRadiusConst);
-	pEnt->draw();
-	pEnt->close();
-
-	return pEnt;
-}
-
-
-
-static void nextpipe(AcGePoint3d &A1,
-					 AcGePoint3d &A2,
-					 AcGePoint3d &A3,
-					 TVS_Pipe *&pipi,
-					 ads_point &pt1
-					 )
-{
-
-
-	double tapradius, radius, pSwectangle;
-	AcGePoint3d pCenterpoint;
-	AcGePoint3d lastpipi;
-	TVS_Pipe pipie;
-	TVS_TAP * pTap;
-	AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
-	AcGeVector3d pstartvect;
-	AcDbObjectId id;
-	ads_name eName;
-	AcDbEntity *pEnt;
-	AcGeVector3d vect1,vect2,vect22;
-	vect1=AcGeVector3d(A2.x-A1.x,
-		A2.y-A1.y,
-		A2.z-A1.z);
-	vect2=AcGeVector3d(A3.x-A2.x,
-		A3.y-A2.y,
-		A3.z-A2.z);
-	vect22=AcGeVector3d(-A3.x+A2.x,
-		-A3.y+A2.y,
-		-A3.z+A2.z);
-	vect1.normalize();
-	vect2.normalize();
-	vect22.normalize();
-	if ((vect1!=vect2)&&(vect1!=vect22))
+	static void nextpipe(AcGePoint3d &A1,
+		AcGePoint3d &A2,
+		AcGePoint3d &A3,
+		TVS_Pipe *&pipi,
+		ads_point &pt1
+		)
 	{
 
 
-
-		pTap=drawTapDirect(A1,A2,A3);
-		SetGlobalProperty(pTap);
-		double delta=length2p(pTap->MA,pTap->MiddlePoint);
-		AcGePoint3d A2a=shortlength(A1,A2,delta);
-		AcGePoint3d A2b=shortlength(A3,A2,delta);
-		if ((length2p(A1,A2)>=delta)&&(length2p(A2,A3)>=delta))
+		double tapradius, radius, pSwectangle;
+		AcGePoint3d pCenterpoint;
+		AcGePoint3d lastpipi;
+		TVS_Pipe pipie;
+		TVS_TAP * pTap;
+		AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
+		AcGeVector3d pstartvect;
+		AcDbObjectId id;
+		ads_name eName;
+		AcDbEntity *pEnt;
+		AcGeVector3d vect1,vect2,vect22;
+		vect1=AcGeVector3d(A2.x-A1.x,
+			A2.y-A1.y,
+			A2.z-A1.z);
+		vect2=AcGeVector3d(A3.x-A2.x,
+			A3.y-A2.y,
+			A3.z-A2.z);
+		vect22=AcGeVector3d(-A3.x+A2.x,
+			-A3.y+A2.y,
+			-A3.z+A2.z);
+		vect1.normalize();
+		vect2.normalize();
+		vect22.normalize();
+		if ((vect1!=vect2)&&(vect1!=vect22))
 		{
+
+
+
+			pTap=drawTapDirect(A1,A2,A3);
+			SetGlobalProperty(pTap);
+			double delta=length2p(pTap->MA,pTap->MiddlePoint);
+			AcGePoint3d A2a=shortlength(A1,A2,delta);
+			AcGePoint3d A2b=shortlength(A3,A2,delta);
+			if ((length2p(A1,A2)>=delta)&&(length2p(A2,A3)>=delta))
+			{
+
+				id=pipi->id();
+				acdbGetAdsName(eName,id);
+				acdbGetObjectId(id,eName);
+				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+				pipi->assertWriteEnabled();
+				pipi->LastPoint=A2a;
+				pipi->close();
+				pipi=pipie.add_new(A2b,A3,globSizeA,globSizeB,false,globRound);
+				SetGlobalProperty(pipi);
+				A1=A2;
+				A2=A3;
+
+				pt1[0]=A2.x;
+				pt1[1]=A2.y;
+				pt1[2]=A2.z;
+
+			}
+			else
+			{
+
+				AcDbEntity* pnt;
+				acdbOpenAcDbEntity(pnt,pTap->id(),AcDb::kForWrite);
+				pTap->erase();
+				pTap->close();
+
+			}
+		}
+		else
+		{
+
 
 			id=pipi->id();
 			acdbGetAdsName(eName,id);
 			acdbGetObjectId(id,eName);
 			acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
 			pipi->assertWriteEnabled();
-			pipi->LastPoint=A2a;
+			pipi->setLastpoint(A3);
 			pipi->close();
-			pipi=pipie.add_new(A2b,A3,globSizeA,globSizeB,false,globRound);
 			SetGlobalProperty(pipi);
-			A1=A2;
 			A2=A3;
 
 			pt1[0]=A2.x;
 			pt1[1]=A2.y;
 			pt1[2]=A2.z;
 
-		}
-		else
-		{
-
-			AcDbEntity* pnt;
-			acdbOpenAcDbEntity(pnt,pTap->id(),AcDb::kForWrite);
-			pTap->erase();
-			pTap->close();
 
 		}
-	}
-	else
-	{
-
-
-		id=pipi->id();
-		acdbGetAdsName(eName,id);
-		acdbGetObjectId(id,eName);
-		acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-		pipi->assertWriteEnabled();
-		pipi->setLastpoint(A3);
-		pipi->close();
-		SetGlobalProperty(pipi);
-		A2=A3;
-
-		pt1[0]=A2.x;
-		pt1[1]=A2.y;
-		pt1[2]=A2.z;
-
 
 	}
 
-}
 
+	static void connect2(
+		TVS_Pipe *&pipi1
+		, int connectstatus
+		)
 
-static void connect2(
-	TVS_Pipe *&pipi1
-	, int connectstatus
-	)
-
-{
-
-	TVS_Pipe *pipi2;
-	bool ft=false;
-	bool lt=false;
-	int stat;
-	ads_point pt1;
-	AcDbObjectId id;
-	ads_name eName,vozd;
-	AcDbEntity *pEnt,*pEnt2;
-	while (ft==false)
 	{
-		while (lt==false)
+
+		TVS_Pipe *pipi2;
+		bool ft=false;
+		bool lt=false;
+		int stat;
+		ads_point pt1;
+		AcDbObjectId id;
+		ads_name eName,vozd;
+		AcDbEntity *pEnt,*pEnt2;
+		while (ft==false)
 		{
-			stat=acedEntSel (_T("\nВыберете воздуховод:"), vozd,pt1);
-
-			switch (stat)
+			while (lt==false)
 			{
-			case RTNORM:
-				lt=true;
-				break;
-			case RTCAN:
-				return;
-				break;
-			}
-		}
+				stat=acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ РІРѕР·РґСѓС…РѕРІРѕРґ:"), vozd,pt1);
 
-		if (acdbGetObjectId(id,vozd)==eOk)
-		{
-
-			acdbGetObjectId(id,vozd);
-
-			{if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
-				{if ( (pipi2 = TVS_Pipe::cast(pEnt)) != NULL )
-				{	
-
-					ft=true;
-
-				}
-				}
-
-				else {
-					consoleprint(0,_T("\nОбьект заблокирован"));
-
+				switch (stat)
+				{
+				case RTNORM:
+					lt=true;
+					break;
+				case RTCAN:
 					return;
+					break;
 				}
-				pEnt->close();	
-			}
 			}
 
+			if (acdbGetObjectId(id,vozd)==eOk)
+			{
 
+				acdbGetObjectId(id,vozd);
+
+				{if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+					{if ( (pipi2 = TVS_Pipe::cast(pEnt)) != NULL )
+					{	
+
+						ft=true;
+
+					}
+					}
+
+					else {
+						consoleprint(0,_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+
+						return;
+					}
+					pEnt->close();	
+				}
+				}
+
+
+			}
 		}
+		pEnt2=AcDbEntity::cast(pipi1);
+		//pCon(pEnt2,pEnt);
+		if(connectstatus==dCONNECTT) ConnectWithTap(pipi1,pipi2,asDblArray(pipi1->LastPoint),pt1);
+		if(connectstatus==dCONNECTW) ConnectWithWye(pipi1,pipi2,asDblArray(pipi1->LastPoint),pt1);
+
 	}
-	pEnt2=AcDbEntity::cast(pipi1);
-	//pCon(pEnt2,pEnt);
-	if(connectstatus==dCONNECTT) ConnectWithTap(pipi1,pipi2,asDblArray(pipi1->LastPoint),pt1);
-	if(connectstatus==dCONNECTW) ConnectWithWye(pipi1,pipi2,asDblArray(pipi1->LastPoint),pt1);
-
-}
 
 
-static bool changeZ(TVS_Pipe* &pPipe)
-{
-		AcDbEntity * pEnt;
-	double startZ, nextZ, Axis;
-	changeZdg dg;
-	startZ=globalElevMid;
-	nextZ=globalElevMid;
-	Axis=globalAxis;
-	dg.startZ=startZ;
-	dg.nextZ=nextZ;
-	dg.Axis=Axis;
-	dg.DoModal();
-	startZ=dg.startZ;
-	nextZ=dg.nextZ;
-	Axis=dg.Axis;
-	globalAxis=Axis;
-	globalElevMid=nextZ;
-
-
-	if (dg.nextZ!=startZ)
+	static bool changeZ(TVS_Pipe* &pPipe)
 	{
-		double x = pPipe->LastPoint.x-pPipe->FirstPoint.x;
-		double y = pPipe->LastPoint.y-pPipe->FirstPoint.y;
-		double z = pPipe->LastPoint.z-pPipe->FirstPoint.z;
-		Axis=M_PI*Axis/180;
-		double Axis2=Axis; //correct axis while correct view tap
-		if (abs(M_PI/2-Axis2)<0.0001) Axis2=M_PI*89.4/180;
-		
-		TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis2,pPipe->This1D,pPipe->ThisRound);
-		SetGlobalProperty(pTap);
-		SetPropertyLikePipe(pPipe,pTap);
-
-		acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
-		pTap->put_Form(Form_Up);
-		pTap->close();
-		pTap->draw();
-		TVS_TAP* pTap2=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(-y,x,0),pPipe->LastPoint,Axis2,pPipe->This1D,pPipe->ThisRound);
-		SetGlobalProperty(pTap2);
-		SetPropertyLikePipe(pPipe,pTap2);
-	
-		double plecho1=abs(length2p(pTap->MA,pTap->MiddlePoint));
-		double plecho2=abs(length2p(pTap->MC,pTap->MiddlePoint));
-		double dLx;  
-		if(abs(M_PI/2-Axis)>=0.0001)  dLx=abs(tan(pTap->Swectangle)*(nextZ-startZ));  	
-		else dLx=0;
-		AcGePoint3d p1,p2,p3,p4,p5,p6,p7;
-		p2=pPipe->LastPoint;
-		p1=shortlength(pPipe->FirstPoint,p2,plecho1);
-		p3=shortlength(pPipe->FirstPoint,p2,-plecho2);
-		p4=shortlength(pPipe->FirstPoint,p2,plecho2-dLx);
-		p5=shortlength(pPipe->FirstPoint,p2,-dLx);
-		p6=shortlength(pPipe->FirstPoint,p2,-dLx-plecho1);
-		p7=shortlength(pPipe->FirstPoint,p2,-dLx-plecho1-300);
+		AcDbEntity * pEnt;
+		double startZ, nextZ, Axis;
+		changeZdg dg;
+		startZ=globalElevMid;
+		nextZ=globalElevMid;
+		Axis=globalAxis;
+		dg.startZ=startZ;
+		dg.nextZ=nextZ;
+		dg.Axis=Axis;
+		dg.DoModal();
+		startZ=dg.startZ;
+		nextZ=dg.nextZ;
+		Axis=dg.Axis;
+		globalAxis=Axis;
+		globalElevMid=nextZ;
 
 
-		if (startZ>nextZ)
+		if (dg.nextZ!=startZ)
 		{
+			double x = pPipe->LastPoint.x-pPipe->FirstPoint.x;
+			double y = pPipe->LastPoint.y-pPipe->FirstPoint.y;
+			double z = pPipe->LastPoint.z-pPipe->FirstPoint.z;
+			Axis=M_PI*Axis/180;
+			double Axis2=Axis; //correct axis while correct view tap
+			if (abs(M_PI/2-Axis2)<0.0001) Axis2=M_PI*89.4/180;
 
-						acdbOpenAcDbEntity(pEnt,pTap2->id(),AcDb::kForWrite);
-						pTap2->put_Form(Form_Up);
-						pTap2->put_Centerpoint(p5);
-						pTap2->close();
-						acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
-						pTap->put_Form(Form_Down);
-						pTap->close();
-						
-		}
-		else
-		{
+			TVS_TAP* pTap=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(y,-x,0),pPipe->LastPoint,Axis2,pPipe->This1D,pPipe->ThisRound);
+			SetGlobalProperty(pTap);
+			SetPropertyLikePipe(pPipe,pTap);
+
 			acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
 			pTap->put_Form(Form_Up);
-			pTap->put_Elevation(startZ);
 			pTap->close();
+			pTap->draw();
+			TVS_TAP* pTap2=TVS_TAP::add_new(pPipe->SizeA,pPipe->SizeB,Axis,AcGeVector3d(0,0,1),AcGeVector3d(-y,x,0),pPipe->LastPoint,Axis2,pPipe->This1D,pPipe->ThisRound);
+			SetGlobalProperty(pTap2);
+			SetPropertyLikePipe(pPipe,pTap2);
 
-			acdbOpenAcDbEntity(pEnt,pTap2->id(),AcDb::kForWrite);
-			pTap2->put_Form(Form_Down);
-			pTap2->put_Centerpoint(p5);
-			pTap2->put_Elevation(nextZ);
-			pTap2->close();
+			double plecho1=abs(length2p(pTap->MA,pTap->MiddlePoint));
+			double plecho2=abs(length2p(pTap->MC,pTap->MiddlePoint));
+			double dLx;  
+			if(abs(M_PI/2-Axis)>=0.0001)  dLx=abs(tan(pTap->Swectangle)*(nextZ-startZ));  	
+			else dLx=0;
+			AcGePoint3d p1,p2,p3,p4,p5,p6,p7;
+			p2=pPipe->LastPoint;
+			p1=shortlength(pPipe->FirstPoint,p2,plecho1);
+			p3=shortlength(pPipe->FirstPoint,p2,-plecho2);
+			p4=shortlength(pPipe->FirstPoint,p2,plecho2-dLx);
+			p5=shortlength(pPipe->FirstPoint,p2,-dLx);
+			p6=shortlength(pPipe->FirstPoint,p2,-dLx-plecho1);
+			p7=shortlength(pPipe->FirstPoint,p2,-dLx-plecho1-300);
 
-		}
-		
-		if(abs(M_PI/2-Axis)>=0.0001) //draw pPipe1
-		{
-			TVS_Pipe*pPipe1=pPipe1->add_new(p3,p4,globSizeA,globSizeB);
-			SetGlobalProperty(pPipe1);
-			SetPropertyLikePipe(pPipe,pPipe1);
-			acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
 
-			pPipe1->put_Elevation(startZ);
-			pPipe1->close();
-		}
-		//draw pPipe2
+			if (startZ>nextZ)
+			{
+
+				acdbOpenAcDbEntity(pEnt,pTap2->id(),AcDb::kForWrite);
+				pTap2->put_Form(Form_Up);
+				pTap2->put_Centerpoint(p5);
+				pTap2->close();
+				acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
+				pTap->put_Form(Form_Down);
+				pTap->close();
+
+			}
+			else
+			{
+				acdbOpenAcDbEntity(pEnt,pTap->id(),AcDb::kForWrite);
+				pTap->put_Form(Form_Up);
+				pTap->put_Elevation(startZ);
+				pTap->close();
+
+				acdbOpenAcDbEntity(pEnt,pTap2->id(),AcDb::kForWrite);
+				pTap2->put_Form(Form_Down);
+				pTap2->put_Centerpoint(p5);
+				pTap2->put_Elevation(nextZ);
+				pTap2->close();
+
+			}
+
+			if(abs(M_PI/2-Axis)>=0.0001) //draw pPipe1
+			{
+				TVS_Pipe*pPipe1=pPipe1->add_new(p3,p4,globSizeA,globSizeB);
+				SetGlobalProperty(pPipe1);
+				SetPropertyLikePipe(pPipe,pPipe1);
+				acdbOpenAcDbEntity(pEnt,pPipe1->id(),AcDb::kForWrite);
+
+				pPipe1->put_Elevation(startZ);
+				pPipe1->close();
+			}
+			//draw pPipe2
 			TVS_Pipe*pPipe2=pPipe2->add_new(p6,p7,globSizeA,globSizeB);
 			SetGlobalProperty(pPipe2);
 			SetPropertyLikePipe(pPipe,pPipe2);
@@ -2439,98 +2440,98 @@ static bool changeZ(TVS_Pipe* &pPipe)
 			pPipe->put_Lastpoint(p1);
 			pPipe->close();
 			pPipe=pPipe2;
-			
+
+		}
+		else return false;
+
+		return true;
 	}
-	else return false;
+	static void addtrans(double &pSizeAp1,
+		double &pSizeBp1,
+		double &pSizeAp2,
+		double &pSizeBp2,
+		AcGePoint3d &A1,
+		AcGePoint3d &A2,
+		AcGePoint3d &A3,
+		TVS_Pipe *&pipi,
+		ads_point &pt1
+		)
+	{
 
-return true;
-}
-static void addtrans(double &pSizeAp1,
-					 double &pSizeBp1,
-					 double &pSizeAp2,
-					 double &pSizeBp2,
-					 AcGePoint3d &A1,
-					 AcGePoint3d &A2,
-					 AcGePoint3d &A3,
-					 TVS_Pipe *&pipi,
-					 ads_point &pt1
-					 )
-{
+		TVS_TRANS* transie;
+		double pLengthTr=globalLengthTr;
+		AcGeVector3d Vect=AcGeVector3d(pipi->LastPoint.x-pipi->FirstPoint.x,
+			pipi->LastPoint.y-pipi->FirstPoint.y,
+			pipi->LastPoint.z-pipi->FirstPoint.z);
+		AcGeVector3d pVectTr;
+		AcGePoint3d pFirstPoint=pipi->LastPoint;
+		pVectTr=Vect.normalize()*pLengthTr;
 
-	TVS_TRANS* transie;
-	double pLengthTr=globalLengthTr;
-	AcGeVector3d Vect=AcGeVector3d(pipi->LastPoint.x-pipi->FirstPoint.x,
-		pipi->LastPoint.y-pipi->FirstPoint.y,
-		pipi->LastPoint.z-pipi->FirstPoint.z);
-	AcGeVector3d pVectTr;
-	AcGePoint3d pFirstPoint=pipi->LastPoint;
-	pVectTr=Vect.normalize()*pLengthTr;
+		double pThisRoundp1,
+			pThisRoundp2,
+			pTransType=ftTransType,
+			pThis1D=false;
 
-	double pThisRoundp1,
-		pThisRoundp2,
-		pTransType=ftTransType,
-		pThis1D=false;
+		if (pSizeBp1==0) pThisRoundp1=true;
+		else pThisRoundp1=false;
 
-	if (pSizeBp1==0) pThisRoundp1=true;
-	else pThisRoundp1=false;
+		if (pSizeBp2==0) pThisRoundp2=true;
+		else pThisRoundp2=false;
 
-	if (pSizeBp2==0) pThisRoundp2=true;
-	else pThisRoundp2=false;
+		transie=TVS_TRANS::add_new(pSizeAp1,
+			pSizeBp1,
+			pSizeAp2,
+			pSizeBp2,
+			pLengthTr,
+			pVectTr,
+			pFirstPoint,
+			pThisRoundp1,
+			pThisRoundp2,
+			pTransType,
+			pThis1D);
+		SetGlobalProperty(transie);
+		pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
+			pFirstPoint.y+pLengthTr*Vect.y,
+			pFirstPoint.z+pLengthTr*Vect.z
+			);
+		AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
+			pFirstPoint.y+100*Vect.y,
+			pFirstPoint.z+100*Vect.z
+			);
 
-	transie=TVS_TRANS::add_new(pSizeAp1,
-		pSizeBp1,
-		pSizeAp2,
-		pSizeBp2,
-		pLengthTr,
-		pVectTr,
-		pFirstPoint,
-		pThisRoundp1,
-		pThisRoundp2,
-		pTransType,
-		pThis1D);
-	SetGlobalProperty(transie);
-	pFirstPoint=AcGePoint3d(pFirstPoint.x+pLengthTr*Vect.x,
-		pFirstPoint.y+pLengthTr*Vect.y,
-		pFirstPoint.z+pLengthTr*Vect.z
-		);
-	AcGePoint3d pLastPoint=AcGePoint3d(pFirstPoint.x+100*Vect.x,
-		pFirstPoint.y+100*Vect.y,
-		pFirstPoint.z+100*Vect.z
-		);
+		bool pThis1d=false;
 
-	bool pThis1d=false;
-
-	pipi=pipi->add_new(pFirstPoint,
-		pLastPoint,
-		pSizeAp2,
-		pSizeBp2,
-		pThis1d,
-		pThisRoundp2);
-	SetGlobalProperty(pipi);
-	A1=A2;
-	A2=pLastPoint;
-	pt1[0]=A2.x;
-	pt1[1]=A2.y;
-	pt1[2]=A2.z;
-}
+		pipi=pipi->add_new(pFirstPoint,
+			pLastPoint,
+			pSizeAp2,
+			pSizeBp2,
+			pThis1d,
+			pThisRoundp2);
+		SetGlobalProperty(pipi);
+		A1=A2;
+		A2=pLastPoint;
+		pt1[0]=A2.x;
+		pt1[1]=A2.y;
+		pt1[2]=A2.z;
+	}
 
 
-static void Ventilation_ARXTVS_SETTINGS(void)
-{
-changesize();
-}
+	static void Ventilation_ARXTVS_SETTINGS(void)
+	{
+		changesize();
+	}
 
-static void Ventilation_ARXTVS_DRAW(void)
-{
-	int index;
-	AcDbObjectId id;
-	TVS_Pipe::GetParamsForDraw(id,index);
-	
+	static void Ventilation_ARXTVS_DRAW(void)
+	{
+		int index;
+		AcDbObjectId id;
+		TVS_Pipe::GetParamsForDraw(id,index);
+
 
 		ads_point pt1,pt2;
 		AcDbEntity *pEnt;
 		TVS_Pipe *pipi;
-		
+
 		bool stat=true;
 		AcGePoint3d p1, p2;
 		if (index==0)
@@ -2543,3177 +2544,256 @@ static void Ventilation_ARXTVS_DRAW(void)
 		{
 
 			if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
-	{
-
-		if ( (pipi = TVS_Pipe::cast(pEnt)) != NULL )
-		{
-			InstallGlobalProperty(pipi);
-			if (index==102)
 			{
-		
-			AcGePoint3d buf=pipi->get_FirstPoint();
-			pipi->put_FirstPoint(pipi->LastPoint);
-			pipi->put_Lastpoint(buf);
+
+				if ( (pipi = TVS_Pipe::cast(pEnt)) != NULL )
+				{
+					InstallGlobalProperty(pipi);
+					if (index==102)
+					{
+
+						AcGePoint3d buf=pipi->get_FirstPoint();
+						pipi->put_FirstPoint(pipi->LastPoint);
+						pipi->put_Lastpoint(buf);
+					}
+					pt1[0]=pipi->get_FirstPoint().x;
+					pt1[1]=pipi->get_FirstPoint().y;
+					pt1[2]=pipi->get_FirstPoint().z;
+					pt2[0]=pipi->get_Lastpoint().x;
+					pt2[1]=pipi->get_Lastpoint().y;
+					pt2[2]=pipi->get_Lastpoint().z;
+					pEnt->close();
+					if(drawStep3(pt1,pt2,pipi)==false);
+				}
+
 			}
-				pt1[0]=pipi->get_FirstPoint().x;
-				pt1[1]=pipi->get_FirstPoint().y;
-				pt1[2]=pipi->get_FirstPoint().z;
-				pt2[0]=pipi->get_Lastpoint().x;
-				pt2[1]=pipi->get_Lastpoint().y;
-				pt2[2]=pipi->get_Lastpoint().z;
-			pEnt->close();
-			if(drawStep3(pt1,pt2,pipi)==false);
 		}
-		
-	}
-		}
-	TVS_Pipe::SetParamsForDraw(id,0);
+		TVS_Pipe::SetParamsForDraw(id,0);
 		//TVS_Pipe pipie;
 
 
 		//pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
-		
+
 		//if(drawStep1(pt1,pt2,pipi)==false)return;
 		//if(drawStep2(pt1,pt2,pipi)==false)return;
-		
-}
-static bool drawStep1(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
-{
-
-	int reg;
-	int Astat;
-	int Astat2=false;
-	ACHAR  resultss [512];
-	ACHAR  resultnil [512];
-
-
-	while (Astat2==false)
-	{
-		Astat2=true;
-		acedInitGet(RSG_NONULL, _T("Размер Р h"));
-		Astat=acedGetPoint(NULL,_T("\nУкажите первую точку или [Размер]:"),pt1) ;
-		switch (Astat)
-		{
-		case RTCAN:
-			return false;
-			break;
-		case RTKWORD:
-			acedGetInput(resultss);
-			break;
-		}
-
-		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
-		{
-			reg=dSIZE;
-			changesize();
-			Astat2=false;
-			acdbRToS(0,2,2,resultss);
-		}
 
 	}
-	return true;
-}
-
-
-static bool drawStep2(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
-{
-
-
-	int reg;
-	int Astat;
-	int Astat2=false;
-	ACHAR  resultss [512];
-	ACHAR  resultnil [512];
-	AcDbEntity * pEnt;
-	while (Astat2==false)
-	{
-		Astat2=true;
-		acedInitGet(RSG_NONULL, _T("Размер Р "));
-		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер]:"),pt2) ;
-		switch (Astat)
-		{
-		case RTCAN:
-			return false;
-			break;
-		case RTKWORD:
-			acedGetInput(resultss);
-			break;
-		}
-
-		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
-		{
-			reg=dSIZE;
-			changesize();
-			Astat2=false;
-			acdbRToS(0,2,2,resultss);
-		}
-
-
-
-	}
-
-
-
-
-	AcGePoint3d A1=asPnt3d(pt1);
-	AcGePoint3d A2=asPnt3d(pt2);
-	
-	TVS_Pipe pipie;
-
-
-	pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
-	
-	if (acdbOpenAcDbEntity(pEnt,pipi->id(),AcDb::kForWrite)==eOk)
-	{		
-		
-		pipi->close();
-	}
-	else
-	{
-		acutPrintf(_T("\nСлой блокирован"));
-		return false;
-	}
-
-
-
-	
-	return true;
-}
-
-static bool drawStep3(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
-{
-
-	int reg;
-	int Astat;
-	int Astat2=false;
-	ACHAR  resultss [512];
-	ACHAR  resultnil [512];
-	AcDbEntity * pEnt;
-	
-	AcGePoint3d A1=asPnt3d(pt1);
-	AcGePoint3d A2=asPnt3d(pt2);
-	AcGePoint3d A3;
-	AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
-	pt1[0]=A2.x;
-	pt1[1]=A2.y;
-	pt1[2]=A2.z;
-	double oldsizeA, oldsizeB, oldRound;
-	for (; ;)
+	static bool drawStep1(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
 	{
 
+		int reg;
+		int Astat;
+		int Astat2=false;
+		ACHAR  resultss [512];
+		ACHAR  resultnil [512];
 
-		acedInitGet(RSG_NONULL, _T("Размер Р h соедОтвод о j соедТройник n т Z z я вВерх d в вНиз н y"));
-		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер/соедОтвод/соедТройник/Z/вВерх/вНиз]:"),pt2) ;
-		switch (Astat)
-		{
-		case RTCAN:
-			return false;
-			break;
-		case RTKWORD:
-			acedGetInput(resultss);
-			break;
-		case RTNORM:
-			A3=asPnt3d(pt2);
-			nextpipe(A1,A2,A3,pipi,pt1);
 
-		}
-
-
-		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
-		{
-			reg=dSIZE;
-			oldsizeA=globSizeA;
-			oldsizeB=globSizeB;
-			oldRound=globRound;
-			if (changesize()==true)
-			{
-				addtrans(oldsizeA,oldsizeB,globSizeA,globSizeB,A1,A2,A3,pipi,pt1);
-			}
-			Astat2=false;
-			acdbRToS(0,2,2,resultss);
-		}
-		if ((wcscmp(resultss,_T("соедОтвод"))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("о"))==0))
-		{
-			reg=dCONNECTT;
-			connect2(pipi,reg);
-			return false;
-		}
-
-
-		if ((wcscmp(resultss,_T("соедТройник"))==0)||(wcscmp(resultss,_T("т"))==0)||(wcscmp(resultss,_T("n"))==0))
-		{
-			reg=dCONNECTW;
-			connect2(pipi,reg);
-			return false;
-		}
-
-		if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("z"))==0)||(wcscmp(resultss,_T("я"))==0))
-		{
-			reg=dZ;
-			changeZ(pipi);
-			A1=A2;
-			A2=pipi->LastPoint;
-			pt1[0]=A2.x;
-			pt1[1]=A2.y;
-			pt1[2]=A2.z;
-			acdbRToS(0,2,2,resultss);
-		}
-
-		if ((wcscmp(resultss,_T("вВерх"))==0)||(wcscmp(resultss,_T("в"))==0)||(wcscmp(resultss,_T("d"))==0))
-		{
-			reg=dUP;
-			UpDown(pipi,Form_Up);
-			return false;
-		}
-
-		if ((wcscmp(resultss,_T("вНиз"))==0)||(wcscmp(resultss,_T("н"))==0)||(wcscmp(resultss,_T("y"))==0))
-		{
-			reg=dDOWN;
-			UpDown(pipi,Form_Down);
-			return false;
-		}
-
-	}
-
-}
-// ----- Ventilation_ARX.TVS_PIPE command
-static void Ventilation_ARXTVS_PIPE(void)
-{
-
-	ads_point pt1,pt2;
-	int reg;
-	int Astat;
-	int Astat2=false;
-	ACHAR  resultss [512];
-	ACHAR  resultnil [512];
-	AcDbEntity* pEnt;
-
-	while (Astat2==false)
-	{
-		Astat2=true;
-		acedInitGet(RSG_NONULL, _T("Размер Р h"));
-		Astat=acedGetPoint(NULL,_T("\nУкажите первую точку или [Размер]:"),pt1) ;
-		switch (Astat)
-		{
-		case RTCAN:
-			return;
-			break;
-		case RTKWORD:
-			acedGetInput(resultss);
-			break;
-		}
-
-		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
-		{
-			reg=dSIZE;
-			changesize();
-			Astat2=false;
-			acdbRToS(0,2,2,resultss);
-		}
-
-	}
-
-	Astat2=false;
-
-
-
-	while (Astat2==false)
-	{
-		Astat2=true;
-		acedInitGet(RSG_NONULL, _T("Размер Р "));
-		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер]:"),pt2) ;
-		switch (Astat)
-		{
-		case RTCAN:
-			return;
-			break;
-		case RTKWORD:
-			acedGetInput(resultss);
-			break;
-		}
-
-		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
-		{
-			reg=dSIZE;
-			changesize();
-			Astat2=false;
-			acdbRToS(0,2,2,resultss);
-		}
-
-	
-
-	}
-
-
-
-
-	AcGePoint3d A1=asPnt3d(pt1);
-	AcGePoint3d A2=asPnt3d(pt2);
-	TVS_Pipe *pipi;
-	TVS_Pipe pipie;
-
-
-	pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
-	SetGlobalProperty(pipi);
-	if (acdbOpenAcDbEntity(pEnt,pipi->id(),AcDb::kForWrite)==eOk)
-	{		
-		pipi->close();
-	}
-	else
-	{
-		acutPrintf(_T("\nСлой блокирован"));
-		return;
-	}
-
-
-	AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
-	pt1[0]=A2.x;
-	pt1[1]=A2.y;
-	pt1[2]=A2.z;
-
-	////////////
-	AcGePoint3d A3;
-	double oldsizeA, oldsizeB, oldRound;
-	for (; ;)
-	{
-
-
-		acedInitGet(RSG_NONULL, _T("Размер Р h соедОтвод о j соедТройник n т Z z я вВерх d в вНиз н y"));
-		Astat=acedGetPoint(pt1,_T("\nУкажите следующую точку или [Размер/соедОтвод/соедТройник/Z/вВерх/вНиз]:"),pt2) ;
-		switch (Astat)
-		{
-		case RTCAN:
-			return;
-			break;
-		case RTKWORD:
-			acedGetInput(resultss);
-			break;
-		case RTNORM:
-			A3=asPnt3d(pt2);
-			nextpipe(A1,A2,A3,pipi,pt1);
-
-		}
-
-
-		if ((wcscmp(resultss,_T("Размер"))==0)||(wcscmp(resultss,_T("Р"))==0)||(wcscmp(resultss,_T("h"))==0))
-		{
-			reg=dSIZE;
-			oldsizeA=globSizeA;
-			oldsizeB=globSizeB;
-			oldRound=globRound;
-			if (changesize()==true)
-			{
-				addtrans(oldsizeA,oldsizeB,globSizeA,globSizeB,A1,A2,A3,pipi,pt1);
-			}
-			Astat2=false;
-			acdbRToS(0,2,2,resultss);
-		}
-		if ((wcscmp(resultss,_T("соедОтвод"))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("о"))==0))
-		{
-			reg=dCONNECTT;
-			connect2(pipi,reg);
-			return;
-		}
-
-
-		if ((wcscmp(resultss,_T("соедТройник"))==0)||(wcscmp(resultss,_T("т"))==0)||(wcscmp(resultss,_T("n"))==0))
-		{
-			reg=dCONNECTW;
-			connect2(pipi,reg);
-			return;
-		}
-
-		if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("z"))==0)||(wcscmp(resultss,_T("я"))==0))
-		{
-			reg=dZ;
-			changeZ(pipi);
-			A1=A2;
-			A2=pipi->LastPoint;
-			pt1[0]=A2.x;
-			pt1[1]=A2.y;
-			pt1[2]=A2.z;
-			acdbRToS(0,2,2,resultss);
-		}
-
-		if ((wcscmp(resultss,_T("вВерх"))==0)||(wcscmp(resultss,_T("в"))==0)||(wcscmp(resultss,_T("d"))==0))
-		{
-			reg=dUP;
-			UpDown(pipi,Form_Up);
-			return;
-		}
-
-		if ((wcscmp(resultss,_T("вНиз"))==0)||(wcscmp(resultss,_T("н"))==0)||(wcscmp(resultss,_T("y"))==0))
-		{
-			reg=dDOWN;
-			UpDown(pipi,Form_Down);
-			return;
-		}
-
-	}
-
-
-
-
-
-	// Add your code for command TVSTVS_Vent_ARX.TVS_Pipe here
-}
-
-
-// - Ventilation_ARX.TVS_TRANS command (do not rename)
-static void Ventilation_ARXTVS_TRANS(void)
-{
-
-	ads_point pt1,pt2;
-	double pSizeAp1=500;
-	double pSizeBp1=0;
-	double pSizeAp2=300;
-	double pSizeBp2=0;
-	double pLengthTr=300;
-	AcGeVector3d pVectTr=AcGeVector3d(1,1,0);
-	AcGePoint3d pFirstPoint;
-	AcGePoint3d pLastPoint;
-
-	bool pThisRoundp1=false;
-	bool pThisRoundp2=false;
-	int pTransType=3;
-	bool pThis1D=false;
-	TVS_TRANS transie;
-
-	if (acedGetPoint(NULL,_T("Set the first point:\n"),pt1) != RTNORM)
-		return;
-	if (acedGetPoint(pt1,_T("Set the second point:\n"),pt2) != RTNORM)
-		return;
-	pFirstPoint=asPnt3d(pt1);
-	pLastPoint=asPnt3d(pt2);
-	pVectTr=AcGeVector3d(pLastPoint.x-pFirstPoint.x,
-		pLastPoint.y-pFirstPoint.y,
-		pFirstPoint.z 
-		);
-
-	transie.add_new(pSizeAp1,
-		pSizeBp1,
-		pSizeAp2,
-		pSizeBp2,
-		pLengthTr,
-		pVectTr,
-		pFirstPoint,
-		pThisRoundp1,
-		pThisRoundp2,
-		pTransType,
-		pThis1D);
-
-
-
-	// Add your code for command Ventilation_ARX.TVS_TRANS here
-}
-
-// - Ventilation_ARX.TVS_WYE command (do not rename)
-static void Ventilation_ARXTVS_WYE(void)
-{
-
-	ads_point pt1;
-	TVS_WYE wyeie;
-	ads_real aSizeAotv,aSizeApr;
-	double pSizeApr=200;
-	double pSizeBpr=0;
-	double pSizeAotv=100;
-	double pSizeBotv=0;
-	double pLengthPl=150;
-	AcGeVector3d pVectpr=AcGeVector3d(1,0,0);
-	AcGeVector3d pVectotv=AcGeVector3d(0,1,0);
-	AcGePoint3d pBasepoint;
-	bool pThisRoundpr=true;
-	bool pThisRoundotv=true;
-	bool pThis1D=false;
-
-	if (acedGetPoint(NULL,_T("Set the first point:\n"),pt1) != RTNORM)
-		return;
-	if ( acedGetReal(_T("\nВведите ширину прохода: "),&aSizeApr)!= RTNORM)
-		return;
-	pSizeApr=aSizeApr;
-	if ( acedGetReal(_T("\nВведите ширину ответвления: "),&aSizeAotv)!= RTNORM)
-		return;
-	pSizeAotv=aSizeAotv;
-
-	pBasepoint=asPnt3d(pt1);
-	wyeie.add_new(pSizeApr,
-		pSizeBpr,
-		pSizeAotv,
-		pSizeBotv,
-		pLengthPl,
-		pVectpr,
-		pVectotv,
-		pBasepoint,
-		pThisRoundpr,
-		pThisRoundotv,
-		pThis1D);
-	wyeie.add_new(pSizeApr,
-		pSizeBpr,
-		pSizeAotv,
-		pSizeBotv,
-		pLengthPl,
-		pVectpr,
-		pVectotv,
-		pBasepoint,
-		pThisRoundpr,
-		false,
-		pThis1D);
-	wyeie.add_new(pSizeApr,
-		pSizeBpr,
-		pSizeAotv,
-		pSizeBotv,
-		pLengthPl,
-		pVectpr,
-		pVectotv,
-		pBasepoint,
-		false,
-		false,
-		pThis1D);
-	wyeie.add_new(pSizeApr,
-		pSizeBpr,
-		pSizeAotv,
-		pSizeBotv,
-		pLengthPl,
-		pVectpr,
-		pVectotv,
-		pBasepoint,
-		false,
-		true,
-		pThis1D);
-	// Add your code for command Ventilation_ARX.TVS_WYE here
-}
-
-// - Ventilation_ARX.TVS_CONNECT command (do not rename)
-static void Ventilation_ARXTVS_CONNECTW(void)
-{
-	// Add your code for command Ventilation_ARX.TVS_CONNECT here
-
-	double Lx,Ly, startangle;
-	ads_name vozd1,vozd2, eName;
-	ACHAR handle[17];
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt1,*pEnt2 = NULL;
-	AcDbObjectId id;
-	TVS_WYE wyie;
-	TVS_TAP * Tapie;
-	TVS_Pipe * Pipi1,*Pipi2;
-	double NewSiseA, NewRadius;
-	resbuf *rb = NULL;
-	bool ft=false;
-	while (ft==false)
-	{
-
-		if (acedEntSel (_T("\nВыберете 1-ый воздуховод:"), vozd1,pt1)== RTCAN)
-			return;
-
-
-
-		if (acdbGetObjectId(id,vozd1)==eOk)
-		{
-
-			acdbGetObjectId(id,vozd1);
-
-			{if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
-				{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
-				{	
-					//acutPrintf(_T("\nPipe 1...ок"));
-					ft=true;
-
-				}
-				}
-
-				else {
-					acutPrintf(_T("\nОбьект заблокирован"));
-
-					return;
-				}
-				pEnt1->close();	
-			}
-			}
-
-
-		}
-	}
-	ft=false;
-	while (ft==false)
-	{
-		if (acedEntSel (_T("\nВыберете 2-ый воздуховод:"), vozd2,pt2)== RTCAN)
-			return;
-
-		if (acdbGetObjectId(id,vozd2)==eOk)
-		{
-
-			acdbGetObjectId(id,vozd2);
-
-			{if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt2,id,AcDb::kForWrite)==eOk)
-				{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
-				{	
-					if (Pipi1!=Pipi2)
-					{
-						//acutPrintf(_T("\nPipe 2...ок"));
-						ft=true;
-					}
-					else
-					{
-						acutPrintf(_T("\nВыбоан тот же воздуховод"));
-
-					}
-
-				}
-				}
-
-				else {
-					acutPrintf(_T("\nОбьект заблокирован"));
-
-					return;
-				}
-
-				pEnt2->close();	
-			}
-			}
-
-
-		}
-
-
-	}
-
-	ConnectWithWye(pEnt1,pEnt2,pt1,pt2);
-}
-
-static void Ventilation_ARXTVS_CONNECTT(void)
-{
-	// Add your code for command Ventilation_ARX.TVS_CONNECT here
-
-	double Lx,Ly, startangle;
-	ads_name vozd1,vozd2, eName;
-	ACHAR handle[17];
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt1,*pEnt2 = NULL;
-	AcDbObjectId id;
-	TVS_WYE wyie;
-	TVS_TAP * Tapie;
-	TVS_Pipe * Pipi1,*Pipi2;
-	double NewSiseA, NewRadius;
-	resbuf *rb = NULL;
-	bool ft=false;
-	while (ft==false)
-	{
-
-		if (acedEntSel (_T("\nВыберете 1-ый воздуховод:"), vozd1,pt1)== RTCAN)
-			return;
-
-
-
-		if (acdbGetObjectId(id,vozd1)==eOk)
-		{
-
-			acdbGetObjectId(id,vozd1);
-
-			{if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
-				{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
-				{	
-					//acutPrintf(_T("\nPipe 1...ок"));
-					ft=true;
-
-				}
-				}
-
-				else {
-					acutPrintf(_T("\nОбьект заблокирован"));
-
-					return;
-				}
-				pEnt1->close();	
-			}
-			}
-
-
-		}
-	}
-	ft=false;
-	while (ft==false)
-	{
-		if (acedEntSel (_T("\nВыберете 2-ый воздуховод:"), vozd2,pt2)== RTCAN)
-			return;
-
-		if (acdbGetObjectId(id,vozd2)==eOk)
-		{
-
-			acdbGetObjectId(id,vozd2);
-
-			{if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt2,id,AcDb::kForWrite)==eOk)
-				{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
-				{	
-					if (Pipi1!=Pipi2)
-					{
-						//acutPrintf(_T("\nPipe 2...ок"));
-						ft=true;
-					}
-					else
-					{
-						acutPrintf(_T("\nВыбоан тот же воздуховод"));
-
-					}
-
-				}
-				}
-
-				else {
-					acutPrintf(_T("\nОбьект заблокирован"));
-
-					return;
-				}
-
-				pEnt2->close();	
-			}
-			}
-
-
-		}
-
-
-	}
-
-	ConnectWithTap(pEnt1,pEnt2,pt1,pt2);
-}
-
-
-// - Ventilation_ARX.TVS_DUCT command (do not rename)
-static void Ventilation_ARXTVS_DUCT(void)
-{
-
-
-	// Add your code for command TVSTVS_Vent_ARX.MyCommand1 here
-
-	//AcGePoint3d * gg=new AcGePoint3d;
-	double Pi=3.14159265358979323846;
-	AcDbEntity *pEnt;
-	ads_point pt1,pt2,pt3;
-	TVS_Pipe *pipi;
-	TVS_Pipe pipie;
-	TVS_TAP tapie;
-	ads_real sa,sb;
-	AcDbObjectId id = AcDbObjectId::kNull;
-	ads_name eName;
-	double pSizeA=250, pSizeB=0, X1, X2, Y1, Y2,pSwectangle,radius=150, tapradius;
-	AcGePoint3d A1, A2, A3, pCenterpoint,lastpipi;
-	AcGeVector3d pnormvect, pstartvect;
-	bool pThisRound=false;
-
-	if (acedGetReal(_T("\nВведите ширину:"),&sa) != RTNORM)
-	{
-		return;}
-	if (acedGetReal(_T("\nВведите высоту:"),&sb) != RTNORM)
-	{
-		return;}
-	pSizeA=sa;
-	pSizeB=sb;
-
-
-
-	if (acedGetPoint(NULL,_T("\nУкажите первую точку: "),pt1) != RTNORM)
-		return;
-	A1=asPnt3d(pt1);
-	if (acedGetPoint(pt1,_T("\nУкажите следующую точку: "),pt2) != RTNORM)
-		return;
-	A2=asPnt3d(pt2);
-	pipi=pipie.add_new(A1,A2,pSizeA,pSizeB,false,pThisRound);
-
-	pnormvect=AcGeVector3d(0,0,1);
-	pt1[0]=A2.x;
-	pt1[1]=A2.y;
-	pt1[2]=A2.z;
-
-
-	///////////
-	for (; ;)
-	{
-		if (acedGetPoint(pt1,_T("\nУкажите следующую точку: "),pt2) != RTNORM)
-			return;
-		A3=asPnt3d(pt2);
-		if	(pThisRound==true)
-		{
-			if (pSizeA<355)
-			{
-				tapradius=pSizeA+pSizeA/2;
-				radius=pSizeA;
-			} 
-			else
-			{
-				tapradius=pSizeA/2+pSizeA/2;
-				radius=pSizeA/2;
-			}
-		}
-		else
-		{
-			tapradius=radius+pSizeA/2;
-		}
-		Givecenterpoint(A1,A2,A3,tapradius,pCenterpoint,pSwectangle,pstartvect);
-		if (correctpipes(A1,A2,A3,pSwectangle,pSizeA,radius,lastpipi,pThisRound)==true)
-		{
-			tapie.add_new(pSizeA,pSizeB,radius,pnormvect,pstartvect,pCenterpoint,pSwectangle,false,pThisRound);
-			drawTapDirect(A1,A2,A3);
-			id=pipi->id();
-			acdbGetAdsName(eName,id);
-			//acdbEntDel(ename);
-			//pipi=pipie.add_new(A1,lastpipi,pSizeA,pSizeB);
-			acdbGetObjectId(id,eName);
-			acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
-			pipi->assertWriteEnabled();
-			pipi->LastPoint=lastpipi;
-			pipi->close();
-			pipi=pipie.add_new(A2,A3,pSizeA,pSizeB,false,pThisRound);
-			A1=A2;
-			A2=A3;
-
-			pt1[0]=A2.x;
-			pt1[1]=A2.y;
-			pt1[2]=A2.z;
-
-		}
-
-		//pstartvect= AcGeVector3d(1,0,0);
-		//pSwectangle=1.7;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	}
-	// Add your code for command Ventilation_ARX.TVS_DUCT here
-}
-
-// - Ventilation_ARX.TVS_1D2D command (do not rename)
-static void Ventilation_ARXTVS_1D2D(void)
-{
-
-
-	ads_name sset, eName;
-	ACHAR  resultss [512];
-	ACHAR  results1 [512]=_T("2");
-	ACHAR  results2 [512]=_T("2d");
-
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt = NULL;
-	AcDbObjectId id;
-	TVS_Pipe * Pipi;
-	TVS_TAP * Tapie;
-	TVS_WYE* Wyeie;
-	TVS_TRANS * Transie;
-
-	double NewSiseA;
-	bool p1d;
-	resbuf *rb = NULL;
-
-	if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
-		return;
-	acedInitGet(RSG_NOZERO, _T("1 2 1d 2d"));
-	if ( acedGetKword(_T("\nПреобразовать в [1d/2d]<2d>:"),  resultss)!= RTNORM)
-		return;
-
-	if (wcscmp(resultss,results1)==0||wcscmp(resultss,results2)==0)
-	{
-		p1d=false;
-	}
-	else
-	{
-		p1d=true;
-	}
-
-
-
-	long len = 0;
-
-	acedSSLength(sset, &len);
-	//consoleprint(double(len),_T("\nL: "));
-	for (long i = 0; i < len; i++)
-	{             
-
-
-		if (NULL != (acedSSName(sset,i,eName)))
-		{
-
-			//consoleprint(double(i),_T("\nd"));
-
-
-			acdbGetObjectId(id,eName);
-			if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
-				{
-
-
-					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
-					{	
-						Pipi->assertWriteEnabled();
-
-
-						Pipi->This1D=p1d;
-
-					}
-
-					if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
-					{	
-						Tapie->assertWriteEnabled();
-						Tapie->This1D=p1d;
-
-					}
-
-					if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
-					{	
-						Wyeie->assertWriteEnabled();
-						Wyeie->This1D=p1d;
-
-					}
-
-					if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
-					{	
-						Transie->assertWriteEnabled();
-						Transie->This1D=p1d;
-
-					}
-
-
-					pEnt->close();
-				}
-
-			}
-		}
-
-
-	}
-	// Add your code for command Ventilation_ARX.TVS_1D2D here
-}
-
-// - Ventilation_ARX.TVS_SPEC command (do not rename)
-static void Ventilation_ARXTVS_Specification(void)
-{
-	ads_name sset, eName;
-	AcGeDoubleArray PipPar;
-	AcGeDoubleArray PipArr;
-	AcGeDoubleArray PipArrRound;
-	AcGeDoubleArray PipArrRect;
-	AcArray <SPEC> VRnd;
-	AcArray <SPEC> VRct;
-	AcArray <SPEC> TRct;
-	AcArray <SPEC> TRnd;
-
-	AcArray <SPEC> WPRctORct;
-	AcArray <SPEC> WPRctORnd;
-	AcArray <SPEC> WPRndORct;
-	AcArray <SPEC> WPRndORnd;
-
-
-	AcArray <SPEC> TRctRct;
-	AcArray <SPEC> TRndRct;
-	AcArray <SPEC> TRndRnd;
-	double sA, sB, sWa,sA2,sB2, drad, prad, prad2;
-
-
-	SPEC spc;
-	PipPar.setLogicalLength(3);
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt = NULL;
-	AcDbObjectId id;
-	TVS_Pipe * Pipi;
-	TVS_TAP * Tapie;
-	TVS_WYE* Wyeie;
-	TVS_TRANS * Transie;
-
-	double NewSiseA;
-	bool p1d;
-	resbuf *rb = NULL;
-
-	if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
-		return;
-
-	AcGePoint3d pb=AcGePoint3d(0,0,0);
-	if(acedGetPoint(NULL,_T("\nУкажите точку вставки спецификации:"),pt1)!=RTNORM )
-		return;
-	pb=asPnt3d(pt1);
-	long len = 0;
-
-	acedSSLength(sset, &len);
-	//consoleprint(double(len),_T("\nL: "));
-	for (long i = 0; i < len; i++)
-	{             
-
-
-		if (NULL != (acedSSName(sset,i,eName)))
-		{
-
-			//consoleprint(double(i),_T("\nd"));
-
-
-			acdbGetObjectId(id,eName);
-			if (id!=AcDbObjectId::kNull)
-			{
-				acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead);
-				if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
-				{	
-					if (Pipi->ThisRound==true)
-					{
-						if (Pipi->SizeA>Pipi->SizeB)
-						{
-							sA=Pipi->SizeA;
-							sB=Pipi->SizeB;
-						} 
-						else
-						{
-							sA=Pipi->SizeB;
-							sB=Pipi->SizeA;
-						}
-						spc.add(sA,
-							sB,
-							true,
-							Pipi->Length);
-						VRnd.append(spc);
-					}
-					else
-					{
-						if (Pipi->SizeA>Pipi->SizeB)
-						{
-							sA=Pipi->SizeA;
-							sB=Pipi->SizeB;
-						} 
-						else
-						{
-							sA=Pipi->SizeB;
-							sB=Pipi->SizeA;
-						}
-
-						spc.add(sA,
-							sB,
-							false,
-							Pipi->Length);
-						VRct.append(spc);
-					}
-
-
-
-
-				}
-
-				if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
-				{	
-
-					if (Tapie->ThisRound==true)
-					{
-
-
-						sA=Tapie->SizeA;
-						sB=Tapie->SizeB;
-						sWa=5*floor((Tapie->Swectangle+(2*M_PI/180))/5*180/M_PI);
-						//consoleprint(sWa,_T("\nSWA:"));
-						//consoleprint(Tapie->Swectangle,_T("\nTapie->Swectangle:"));
-						spc.add(sA,
-							sB,
-							true,
-							1,
-							sWa);
-
-						if (Tapie->Swectangle>(M_PI/4+0.01))
-
-
-							spc.Length2= M_PI*(length2p(Tapie->pMass[0],Tapie->pMass[1])*2+length2p(Tapie->pMass[5],Tapie->pMass[6]))*Tapie->SizeA/1000000;
-
-
-						else
-
-							spc.Length2= M_PI*(length2p(Tapie->pMass45[0],Tapie->pMass45[1])+length2p(Tapie->pMass45[3],Tapie->pMass45[4]))*Tapie->SizeA/1000000;
-
-						TRnd.append(spc);
-					}
-					else
-					{
-
-						sA=Tapie->SizeA;
-						sB=Tapie->SizeB;
-
-						sWa=5*floor(((Tapie->Swectangle)+(2*M_PI/180))/5*180/M_PI);
-						//consoleprint(sWa,_T("\nSWA:"));
-						//consoleprint(Tapie->Swectangle,_T("\nTapie->Swectangle:"));
-						//consoleprint((180*M_PI/100),_T("\n(180*M_PI/100):"));
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							sWa);
-
-						spc.Length2= (Tapie->Swectangle)/(2*M_PI) 
-							*(2*(M_PI*(Tapie->Radius+Tapie->SizeA)*(Tapie->Radius+Tapie->SizeA)/1000000
-							-M_PI*(Tapie->Radius)*(Tapie->Radius)/1000000) 
-							+2*M_PI*(Tapie->SizeA+Tapie->Radius)/1000*Tapie->SizeB/1000
-							+2*M_PI*(Tapie->Radius)/1000*Tapie->SizeB/1000);
-						//  							consoleprint(spc.Length2,_T("\nspc.Length2"));
-						//  							consoleprint((Tapie->Swectangle)/(2*M_PI),_T("\n(Tapie->Swectangle)/(2*M_PI)"));
-						//  							consoleprint(M_PI*(Tapie->Radius+Tapie->SizeA)*(Tapie->Radius+Tapie->SizeA)/4000000,_T("\nM_PI*(Tapie->Radius+Tapie->SizeA)*(Tapie->Radius+Tapie->SizeA)/4000000 "));
-						//  							consoleprint(M_PI*(Tapie->Radius)*(Tapie->Radius)/4000000 ,_T("\nM_PI*(Tapie->Radius)*(Tapie->Radius)/4000000 "));
-						//  							consoleprint(M_PI*(Tapie->SizeA+Tapie->Radius)/1000*Tapie->SizeB/1000,_T("\nM_PI*(Tapie->SizeA+Tapie->Radius)/1000*Tapie->SizeB/1000 "));
-						//  							consoleprint(M_PI*(Tapie->Radius)/1000*Tapie->SizeB/1000,_T("\nM_PI*(Tapie->Radius)/1000*Tapie->SizeB/1000 "));
-						// 
-
-						TRct.append(spc);
-					}
-
-				}
-
-				if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
-				{	
-
-					sA=Wyeie->SizeApr;
-					sB=Wyeie->SizeBpr;
-					sA2=Wyeie->SizeAotv;
-					sB2=Wyeie->SizeBotv;
-
-
-					if ((Wyeie->ThisRoundpr==true)&&(Wyeie->ThisRoundotv==true))
-					{
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Wyeie->LengthPl,
-							sA2,
-							sB2);
-						if (sA>=sA2)
-						{
-							drad=sA/2-sqrt((sA/2)*(sA/2)-(sA2/2)*(sA2/2));
-
-						}
-						else
-							drad=sA/2;
-						spc.Length2=(sA2+Wyeie->LengthPl*2)*M_PI*sA/1000000 ///цилиндр прохода
-							+(Wyeie->LengthPl+drad)*M_PI*sA2/1000000 ;  ///цилиндр отвода
-						WPRndORnd.append(spc);
-					}
-
-					if ((Wyeie->ThisRoundpr==true)&&(Wyeie->ThisRoundotv==false))
-					{
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Wyeie->LengthPl,
-							sA2,
-							sB2);
-
-						if (sA>=sB2)
-						{
-							drad=sA/2-sqrt((sA/2)*(sA/2)-(sB2/2)*(sB2/2));
-
-						}
-						else
-							drad=sA/2;
-
-						spc.Length2=(sA2+Wyeie->LengthPl*2)*M_PI*sA/1000000 ///цилиндр прохода
-							+(Wyeie->LengthPl+drad)*(sB2+sA2)/500000;   ///призма отвода
-						WPRndORct.append(spc);
-					}
-
-					if ((Wyeie->ThisRoundpr==false)&&(Wyeie->ThisRoundotv==false))
-					{
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Wyeie->LengthPl,
-							sA2,
-							sB2);
-
-						spc.Length2=(sA2+Wyeie->LengthPl*2)*(sB+sA)/500000 ///призма прохода
-							+(Wyeie->LengthPl)*(sB2+sA2)/500000;   ///призма отвода
-						WPRctORct.append(spc);
-					}
-
-					if ((Wyeie->ThisRoundpr==false)&&(Wyeie->ThisRoundotv==true))
-					{
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Wyeie->LengthPl,
-							sA2,
-							sB2);
-
-						spc.Length2=(sA2+Wyeie->LengthPl*2)*(sB+sA)/500000 ///призма прохода
-							+(Wyeie->LengthPl)*M_PI*sA2/1000000;  ///цилиндр отвода
-						WPRctORnd.append(spc);
-					}
-
-
-
-				}
-
-				if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
-				{	
-
-					sA=Transie->SizeAp1;
-					sB=Transie->SizeBp1;
-					sA2=Transie->SizeAp2;
-					sB2=Transie->SizeBp2;
-
-					//круглый круглый
-					if ((Transie->ThisRoundp1==true)&&(Transie->ThisRoundp2==true))
-					{
-
-						if (Transie->SizeAp1>Transie->SizeAp2)
-						{
-							sA=Transie->SizeAp1;
-							sB=Transie->SizeBp1;
-							sA2=Transie->SizeAp2;
-							sB2=Transie->SizeBp2;
-						}
-
-						else
-						{
-							sA=Transie->SizeAp2;
-							sB=Transie->SizeBp2;
-							sA2=Transie->SizeAp1;
-							sB2=Transie->SizeBp1;
-						}
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Transie->LengthTr,
-							sA2,
-							sB2);
-
-						drad=sqrt(Transie->LengthTr*Transie->LengthTr+(sA/2-sA2/2)*(sA/2-sA2/2))/1000;
-						spc.Length2=drad*M_PI*(sA/2+sA2/2)/1000;
-						TRndRnd.append(spc);
-					}
-
-
-
-					//круглый прямоугольн
-					if ((Transie->ThisRoundp1==true)&&(Transie->ThisRoundp2==false))
-					{
-
-						if (Transie->SizeAp2>Transie->SizeBp2)
-						{
-							sA=Transie->SizeAp1;
-							sB=Transie->SizeBp1;
-							sA2=Transie->SizeAp2;
-							sB2=Transie->SizeBp2;
-						}
-
-						else
-						{
-							sA=Transie->SizeAp1;
-							sB=Transie->SizeBp1;
-							sA2=Transie->SizeBp2;
-							sB2=Transie->SizeAp2;
-						}
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Transie->LengthTr,
-							sA2,
-							sB2);
-						prad=(sA2+sB2)/M_PI;
-						drad=sqrt(Transie->LengthTr*Transie->LengthTr+(sA/2-prad)*(sA/2-prad))/1000;
-						spc.Length2=drad*M_PI*(sA/2+prad)/1000;
-						TRndRct.append(spc);
-					}
-
-
-					// прямоугольн круглый
-					if ((Transie->ThisRoundp1==false)&&(Transie->ThisRoundp2==true))
-					{
-
-						if (Transie->SizeAp1>Transie->SizeBp1)
-						{
-							sA=Transie->SizeAp2;
-							sB=Transie->SizeBp2;
-							sA2=Transie->SizeAp1;
-							sB2=Transie->SizeBp1;
-						}
-
-						else
-						{
-							sA=Transie->SizeAp2;
-							sB=Transie->SizeBp2;
-							sA2=Transie->SizeBp1;
-							sB2=Transie->SizeAp1;
-						}
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Transie->LengthTr,
-							sA2,
-							sB2);
-						prad=(sA2+sB2)/M_PI;
-						drad=sqrt(Transie->LengthTr*Transie->LengthTr+(sA/2-prad)*(sA/2-prad))/1000;
-						spc.Length2=drad*M_PI*(sA/2+prad)/1000;
-						TRndRct.append(spc);
-					}
-
-					// прямоугольн прямоугольн
-					if ((Transie->ThisRoundp1==false)&&(Transie->ThisRoundp2==false))
-					{
-
-						if (Transie->SizeAp1>Transie->SizeBp1)
-						{
-
-
-							if (Transie->SizeAp1>Transie->SizeAp2)
-							{
-
-								sA=Transie->SizeAp1;
-								sB=Transie->SizeBp1;
-								sA2=Transie->SizeAp2;
-								sB2=Transie->SizeBp2;
-							}
-							else
-							{
-								if (Transie->SizeAp2>Transie->SizeBp2)
-								{
-									sA=Transie->SizeAp2;
-									sB=Transie->SizeBp2;
-									sA2=Transie->SizeAp1;
-									sB2=Transie->SizeBp1;
-								} 
-								else
-								{
-									sA=Transie->SizeBp2;
-									sB=Transie->SizeAp2;
-									sA2=Transie->SizeBp1;
-									sB2=Transie->SizeAp1;
-								}
-							}
-						}
-
-						else
-						{
-							if (Transie->SizeBp1>Transie->SizeBp2)
-							{
-								sA=Transie->SizeBp1;
-								sB=Transie->SizeAp1;
-								sA2=Transie->SizeBp2;
-								sB2=Transie->SizeAp2;
-							} 
-							else
-							{
-								if (Transie->SizeBp2>Transie->SizeAp2)
-								{
-									sA=Transie->SizeBp2;
-									sB=Transie->SizeAp2;
-									sA2=Transie->SizeBp1;
-									sB2=Transie->SizeAp1;
-								} 
-								else
-								{
-									sA=Transie->SizeAp2;
-									sB=Transie->SizeBp2;
-									sA2=Transie->SizeAp1;
-									sB2=Transie->SizeBp1;
-								}
-							}		
-
-
-
-
-						}
-
-						spc.add(sA,
-							sB,
-							false,
-							1,
-							Transie->LengthTr,
-							sA2,
-							sB2);
-						prad=(sA2+sB2)/M_PI;
-						prad2=(sA+sB)/M_PI;
-						drad=sqrt(Transie->LengthTr*Transie->LengthTr+(prad2-prad)*(prad2-prad))/1000;
-						spc.Length2=drad*M_PI*(prad2+prad)/1000;
-						TRctRct.append(spc);
-					}
-
-				}
-
-
-				pEnt->close();
-
-			}
-		}
-
-
-	}
-
-
-
-
-	double buf1,buf2,buf3,buf4;
-	long j;
-
-	//Подсчет прямоугольных воздуховодов (переменная VRct)
-	long lenP=VRct.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((VRct[i].SizeA>VRct[j].SizeA)||((VRct[i].SizeA==VRct[j].SizeA)&&(VRct[i].SizeB>VRct[j].SizeB)))
-				{
-					buf1 = VRct[i].SizeA;
-					buf2 = VRct[i].SizeB;
-					buf3 = VRct[i].Length;
-
-					VRct[i].SizeA=VRct[j].SizeA;
-					VRct[i].SizeB=VRct[j].SizeB;
-					VRct[i].Length=VRct[j].Length;
-
-					VRct[j].SizeA=buf1;
-					VRct[j].SizeB=buf2;
-					VRct[j].Length=buf3;
-				}
-
-				AcArray<SPEC> VRct2;
-				VRct2.append(VRct[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((VRct2[j].SizeA==VRct[i].SizeA)&&(VRct2[j].SizeB==VRct[i].SizeB))
-
-						VRct2[j].Length=VRct2[j].Length+VRct[i].Length;
-
-
-					else 
-					{
-						VRct2.append(VRct[i]);
-						j++;
-
-					}
-
-				}
-				VRct=VRct2;
-				lenP=VRct.logicalLength();
-
-	}
-
-
-
-
-
-
-
-
-	//Подсчет круглых воздуховодов воздуховодов (переменная VRnd)
-
-	lenP=VRnd.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if (VRnd[i].SizeA>VRnd[j].SizeA)
-				{
-					buf1 = VRnd[i].SizeA;
-					buf2 = VRnd[i].SizeB;
-					buf3 = VRnd[i].Length;
-
-					VRnd[i].SizeA=VRnd[j].SizeA;
-					VRnd[i].SizeB=VRnd[j].SizeB;
-					VRnd[i].Length=VRnd[j].Length;
-
-					VRnd[j].SizeA=buf1;
-					VRnd[j].SizeB=buf2;
-					VRnd[j].Length=buf3;
-				}
-
-				AcArray<SPEC> VRnd2;
-				VRnd2.append(VRnd[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((VRnd2[j].SizeA==VRnd[i].SizeA)&&(VRnd2[j].SizeB==VRnd[i].SizeB))
-
-						VRnd2[j].Length=VRnd2[j].Length+VRnd[i].Length;
-
-					else 
-					{
-						VRnd2.append(VRnd[i]);
-						j++;
-					}
-
-				}
-				VRnd=VRnd2;
-				lenP=VRnd.logicalLength();
-
-
-
-
-	}
-
-
-	//Подсчет прямоугольных отводов (переменная TRct)
-	lenP=TRct.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((TRct[i].Swectangle>TRct[j].Swectangle)||
-					((TRct[i].Swectangle==TRct[j].Swectangle)&&
-					((TRct[i].SizeA>TRct[j].SizeA)||((TRct[i].SizeA==TRct[j].SizeA)&&(TRct[i].SizeB>TRct[j].SizeB)))))
-				{
-					buf1 = TRct[i].SizeA;
-					buf2 = TRct[i].SizeB;
-					buf3 = TRct[i].Swectangle;
-					buf4 = TRct[i].Length2;
-
-					TRct[i].SizeA=TRct[j].SizeA;
-					TRct[i].SizeB=TRct[j].SizeB;
-					TRct[i].Swectangle=TRct[j].Swectangle;
-					TRct[i].Length2=TRct[j].Length2;
-
-					TRct[j].SizeA=buf1;
-					TRct[j].SizeB=buf2;
-					TRct[j].Swectangle=buf3;
-					TRct[j].Length2=buf4;
-
-				}
-
-				AcArray<SPEC> TRct2;
-				TRct2.append(TRct[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((TRct2[j].SizeA==TRct[i].SizeA)&&(TRct2[j].SizeB==TRct[i].SizeB)&&(TRct2[j].Swectangle==TRct[i].Swectangle))
-
-						TRct2[j].Length=TRct2[j].Length+TRct[i].Length;
-
-					else 
-					{
-						TRct2.append(TRct[i]);
-						j++;
-					}
-
-				}
-				TRct=TRct2;
-				lenP=TRct.logicalLength();
-
-
-
-	}
-
-
-
-	//Подсчет круглых отводов (переменная TRnd)
-	lenP=TRnd.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((TRnd[i].Swectangle>TRnd[j].Swectangle)||
-					((TRnd[i].Swectangle==TRnd[j].Swectangle)&&
-					((TRnd[i].SizeA>TRnd[j].SizeA)||((TRnd[i].SizeA==TRnd[j].SizeA)&&(TRnd[i].SizeB>TRnd[j].SizeB)))))
-				{
-					buf1 = TRnd[i].SizeA;
-					buf2 = TRnd[i].SizeB;
-					buf3 = TRnd[i].Swectangle;
-					buf4 = TRnd[i].Length2;
-
-
-
-					TRnd[i].SizeA=TRnd[j].SizeA;
-					TRnd[i].SizeB=TRnd[j].SizeB;
-					TRnd[i].Swectangle=TRnd[j].Swectangle;
-					TRnd[i].Length2=TRnd[j].Length2;
-
-					TRnd[j].SizeA=buf1;
-					TRnd[j].SizeB=buf2;
-					TRnd[j].Swectangle=buf3;
-					TRnd[j].Length2=buf4;
-				}
-
-				AcArray<SPEC> TRnd2;
-				TRnd2.append(TRnd[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((TRnd2[j].SizeA==TRnd[i].SizeA)&&(TRnd2[j].SizeB==TRnd[i].SizeB)&&(TRnd2[j].Swectangle==TRnd[i].Swectangle))
-
-						TRnd2[j].Length=TRnd2[j].Length+TRnd[i].Length;
-
-					else 
-					{
-						TRnd2.append(TRnd[i]);
-						j++;
-					}
-
-				}
-				TRnd=TRnd2;
-				lenP=TRnd.logicalLength();
-
-
-
-	}
-
-
-
-
-	SPEC buff;
-
-	//Подсчет тройников прям прям (переменная WPRctORct)
-	lenP=WPRctORct.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((WPRctORct[i].Swectangle>WPRctORct[j].Swectangle)||
-					((WPRctORct[i].Swectangle==WPRctORct[j].Swectangle)&&
-					((WPRctORct[i].SizeA>WPRctORct[j].SizeA)||
-					((WPRctORct[i].SizeA==WPRctORct[j].SizeA)&&
-					((WPRctORct[i].SizeB>WPRctORct[j].SizeB)||
-					((WPRctORct[i].SizeB==WPRctORct[j].SizeB)&&
-					((WPRctORct[i].SizeA2>WPRctORct[j].SizeA2)||
-					((WPRctORct[i].SizeA2==WPRctORct[j].SizeA2)&&
-					((WPRctORct[i].SizeA3>WPRctORct[j].SizeA3)
-					)
-					)
-					)
-					)
-					)
-					)
-					)
-					)	
-					)
-				{
-
-
-					buff=WPRctORct[i];
-					WPRctORct[i]=WPRctORct[j];
-					WPRctORct[j]=buff;
-
-
-
-				}
-
-				AcArray<SPEC> WPRctORct2;
-				WPRctORct2.append(WPRctORct[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((WPRctORct2[j].Swectangle==WPRctORct[i].Swectangle)&&
-						(WPRctORct2[j].SizeA==WPRctORct[i].SizeA)&&
-						(WPRctORct2[j].SizeB==WPRctORct[i].SizeB)&&
-						(WPRctORct2[j].SizeA2==WPRctORct[i].SizeA2)&&
-						(WPRctORct2[j].SizeA3==WPRctORct[i].SizeA3)
-
-						)
-
-						WPRctORct2[j].Length=WPRctORct2[j].Length+WPRctORct[i].Length;
-
-					else 
-					{
-						WPRctORct2.append(WPRctORct[i]);
-						j++;
-					}
-
-				}
-				WPRctORct=WPRctORct2;
-				lenP=WPRctORct.logicalLength();
-
-
-
-	}
-
-
-
-
-
-	//Подсчет тройников прям кругл (переменная WPRctORnd)
-	lenP=WPRctORnd.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((WPRctORnd[i].Swectangle>WPRctORnd[j].Swectangle)||
-					((WPRctORnd[i].Swectangle==WPRctORnd[j].Swectangle)&&
-					((WPRctORnd[i].SizeA>WPRctORnd[j].SizeA)||
-					((WPRctORnd[i].SizeA==WPRctORnd[j].SizeA)&&
-					((WPRctORnd[i].SizeB>WPRctORnd[j].SizeB)||
-					((WPRctORnd[i].SizeB==WPRctORnd[j].SizeB)&&
-					((WPRctORnd[i].SizeA2>WPRctORnd[j].SizeA2)||
-					((WPRctORnd[i].SizeA2==WPRctORnd[j].SizeA2)&&
-					((WPRctORnd[i].SizeA3>WPRctORnd[j].SizeA3)
-					)
-					)
-					)
-					)
-					)
-					)
-					)
-					)	
-					)
-				{
-
-
-					buff=WPRctORnd[i];
-					WPRctORnd[i]=WPRctORnd[j];
-					WPRctORnd[j]=buff;
-
-
-
-				}
-
-				AcArray<SPEC> WPRctORnd2;
-				WPRctORnd2.append(WPRctORnd[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((WPRctORnd2[j].Swectangle==WPRctORnd[i].Swectangle)&&
-						(WPRctORnd2[j].SizeA==WPRctORnd[i].SizeA)&&
-						(WPRctORnd2[j].SizeB==WPRctORnd[i].SizeB)&&
-						(WPRctORnd2[j].SizeA2==WPRctORnd[i].SizeA2)&&
-						(WPRctORnd2[j].SizeA3==WPRctORnd[i].SizeA3)
-
-						)
-
-						WPRctORnd2[j].Length=WPRctORnd2[j].Length+WPRctORnd[i].Length;
-
-					else 
-					{
-						WPRctORnd2.append(WPRctORnd[i]);
-						j++;
-					}
-
-				}
-				WPRctORnd=WPRctORnd2;
-				lenP=WPRctORnd.logicalLength();
-
-
-
-	}
-
-
-	//Подсчет тройников кругл кругл (переменная WPRndORnd)
-	lenP=WPRndORnd.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((WPRndORnd[i].Swectangle>WPRndORnd[j].Swectangle)||
-					((WPRndORnd[i].Swectangle==WPRndORnd[j].Swectangle)&&
-					((WPRndORnd[i].SizeA>WPRndORnd[j].SizeA)||
-					((WPRndORnd[i].SizeA==WPRndORnd[j].SizeA)&&
-					((WPRndORnd[i].SizeB>WPRndORnd[j].SizeB)||
-					((WPRndORnd[i].SizeB==WPRndORnd[j].SizeB)&&
-					((WPRndORnd[i].SizeA2>WPRndORnd[j].SizeA2)||
-					((WPRndORnd[i].SizeA2==WPRndORnd[j].SizeA2)&&
-					((WPRndORnd[i].SizeA3>WPRndORnd[j].SizeA3)
-					)
-					)
-					)
-					)
-					)
-					)
-					)
-					)	
-					)
-				{
-
-
-					buff=WPRndORnd[i];
-					WPRndORnd[i]=WPRndORnd[j];
-					WPRndORnd[j]=buff;
-
-
-
-				}
-
-				AcArray<SPEC> WPRndORnd2;
-				WPRndORnd2.append(WPRndORnd[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((WPRndORnd2[j].Swectangle==WPRndORnd[i].Swectangle)&&
-						(WPRndORnd2[j].SizeA==WPRndORnd[i].SizeA)&&
-						(WPRndORnd2[j].SizeB==WPRndORnd[i].SizeB)&&
-						(WPRndORnd2[j].SizeA2==WPRndORnd[i].SizeA2)&&
-						(WPRndORnd2[j].SizeA3==WPRndORnd[i].SizeA3)
-
-						)
-
-						WPRndORnd2[j].Length=WPRndORnd2[j].Length+WPRndORnd[i].Length;
-
-					else 
-					{
-						WPRndORnd2.append(WPRndORnd[i]);
-						j++;
-					}
-
-				}
-				WPRndORnd=WPRndORnd2;
-				lenP=WPRndORnd.logicalLength();
-
-
-
-	}
-
-
-	//Подсчет тройников кругл прям  (переменная WPRndORct)
-	lenP=WPRndORct.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((WPRndORct[i].Swectangle>WPRndORct[j].Swectangle)||
-					((WPRndORct[i].Swectangle==WPRndORct[j].Swectangle)&&
-					((WPRndORct[i].SizeA>WPRndORct[j].SizeA)||
-					((WPRndORct[i].SizeA==WPRndORct[j].SizeA)&&
-					((WPRndORct[i].SizeB>WPRndORct[j].SizeB)||
-					((WPRndORct[i].SizeB==WPRndORct[j].SizeB)&&
-					((WPRndORct[i].SizeA2>WPRndORct[j].SizeA2)||
-					((WPRndORct[i].SizeA2==WPRndORct[j].SizeA2)&&
-					((WPRndORct[i].SizeA3>WPRndORct[j].SizeA3)
-					)
-					)
-					)
-					)
-					)
-					)
-					)
-					)	
-					)
-				{
-
-
-					buff=WPRndORct[i];
-					WPRndORct[i]=WPRndORct[j];
-					WPRndORct[j]=buff;
-
-
-
-				}
-
-				AcArray<SPEC> WPRndORct2;
-				WPRndORct2.append(WPRndORct[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((WPRndORct2[j].Swectangle==WPRndORct[i].Swectangle)&&
-						(WPRndORct2[j].SizeA==WPRndORct[i].SizeA)&&
-						(WPRndORct2[j].SizeB==WPRndORct[i].SizeB)&&
-						(WPRndORct2[j].SizeA2==WPRndORct[i].SizeA2)&&
-						(WPRndORct2[j].SizeA3==WPRndORct[i].SizeA3)
-
-						)
-
-						WPRndORct2[j].Length=WPRndORct2[j].Length+WPRndORct[i].Length;
-
-					else 
-					{
-						WPRndORct2.append(WPRndORct[i]);
-						j++;
-					}
-
-				}
-				WPRndORct=WPRndORct2;
-				lenP=WPRndORct.logicalLength();
-
-
-
-	}
-
-
-
-
-	//Подсчет переход кругл кругл (переменная TRndRnd)
-	lenP=TRndRnd.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((TRndRnd[i].Swectangle>TRndRnd[j].Swectangle)||
-					((TRndRnd[i].Swectangle==TRndRnd[j].Swectangle)&&
-					((TRndRnd[i].SizeA>TRndRnd[j].SizeA)||
-					((TRndRnd[i].SizeA==TRndRnd[j].SizeA)&&
-					((TRndRnd[i].SizeB>TRndRnd[j].SizeB)||
-					((TRndRnd[i].SizeB==TRndRnd[j].SizeB)&&
-					((TRndRnd[i].SizeA2>TRndRnd[j].SizeA2)||
-					((TRndRnd[i].SizeA2==TRndRnd[j].SizeA2)&&
-					((TRndRnd[i].SizeA3>TRndRnd[j].SizeA3)
-					)
-					)
-					)
-					)
-					)
-					)
-					)
-					)	
-					)
-				{
-
-
-					buff=TRndRnd[i];
-					TRndRnd[i]=TRndRnd[j];
-					TRndRnd[j]=buff;
-
-
-
-				}
-
-				AcArray<SPEC> TRndRnd2;
-				TRndRnd2.append(TRndRnd[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((TRndRnd2[j].Swectangle==TRndRnd[i].Swectangle)&&
-						(TRndRnd2[j].SizeA==TRndRnd[i].SizeA)&&
-						(TRndRnd2[j].SizeB==TRndRnd[i].SizeB)&&
-						(TRndRnd2[j].SizeA2==TRndRnd[i].SizeA2)&&
-						(TRndRnd2[j].SizeA3==TRndRnd[i].SizeA3)
-
-						)
-
-						TRndRnd2[j].Length=TRndRnd2[j].Length+TRndRnd[i].Length;
-
-					else 
-					{
-						TRndRnd2.append(TRndRnd[i]);
-						j++;
-					}
-
-				}
-				TRndRnd=TRndRnd2;
-				lenP=TRndRnd.logicalLength();
-
-
-
-	}
-
-
-
-	//Подсчет переход кругл прям(переменная TRndRct)
-	lenP=TRndRct.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((TRndRct[i].Swectangle>TRndRct[j].Swectangle)||
-					((TRndRct[i].Swectangle==TRndRct[j].Swectangle)&&
-					((TRndRct[i].SizeA>TRndRct[j].SizeA)||
-					((TRndRct[i].SizeA==TRndRct[j].SizeA)&&
-					((TRndRct[i].SizeB>TRndRct[j].SizeB)||
-					((TRndRct[i].SizeB==TRndRct[j].SizeB)&&
-					((TRndRct[i].SizeA2>TRndRct[j].SizeA2)||
-					((TRndRct[i].SizeA2==TRndRct[j].SizeA2)&&
-					((TRndRct[i].SizeA3>TRndRct[j].SizeA3)
-					)
-					)
-					)
-					)
-					)
-					)
-					)
-					)	
-					)
-				{
-
-
-					buff=TRndRct[i];
-					TRndRct[i]=TRndRct[j];
-					TRndRct[j]=buff;
-
-
-
-				}
-
-				AcArray<SPEC> TRndRct2;
-				TRndRct2.append(TRndRct[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((TRndRct2[j].Swectangle==TRndRct[i].Swectangle)&&
-						(TRndRct2[j].SizeA==TRndRct[i].SizeA)&&
-						(TRndRct2[j].SizeB==TRndRct[i].SizeB)&&
-						(TRndRct2[j].SizeA2==TRndRct[i].SizeA2)&&
-						(TRndRct2[j].SizeA3==TRndRct[i].SizeA3)
-
-						)
-
-						TRndRct2[j].Length=TRndRct2[j].Length+TRndRct[i].Length;
-
-					else 
-					{
-						TRndRct2.append(TRndRct[i]);
-						j++;
-					}
-
-				}
-				TRndRct=TRndRct2;
-				lenP=TRndRct.logicalLength();
-
-
-
-	}
-
-
-
-	//Подсчет переход прям прям(переменная TRctRct)
-	lenP=TRctRct.logicalLength();
-	if (lenP>0)
-	{
-
-		for (long i=0;i<lenP;i++)
-
-			for (long j = i+1; j < lenP; j++)
-
-				if ((TRctRct[i].Swectangle>TRctRct[j].Swectangle)||
-					((TRctRct[i].Swectangle==TRctRct[j].Swectangle)&&
-					((TRctRct[i].SizeA>TRctRct[j].SizeA)||
-					((TRctRct[i].SizeA==TRctRct[j].SizeA)&&
-					((TRctRct[i].SizeB>TRctRct[j].SizeB)||
-					((TRctRct[i].SizeB==TRctRct[j].SizeB)&&
-					((TRctRct[i].SizeA2>TRctRct[j].SizeA2)||
-					((TRctRct[i].SizeA2==TRctRct[j].SizeA2)&&
-					((TRctRct[i].SizeA3>TRctRct[j].SizeA3)
-					)
-					)
-					)
-					)
-					)
-					)
-					)
-					)	
-					)
-				{
-
-
-					buff=TRctRct[i];
-					TRctRct[i]=TRctRct[j];
-					TRctRct[j]=buff;
-
-
-
-				}
-
-				AcArray<SPEC> TRctRct2;
-				TRctRct2.append(TRctRct[0]);
-				j=0;
-				for (long i=1;i<lenP;i++)
-
-				{
-					if ((TRctRct2[j].Swectangle==TRctRct[i].Swectangle)&&
-						(TRctRct2[j].SizeA==TRctRct[i].SizeA)&&
-						(TRctRct2[j].SizeB==TRctRct[i].SizeB)&&
-						(TRctRct2[j].SizeA2==TRctRct[i].SizeA2)&&
-						(TRctRct2[j].SizeA3==TRctRct[i].SizeA3)
-
-						)
-
-						TRctRct2[j].Length=TRctRct2[j].Length+TRctRct[i].Length;
-
-					else 
-					{
-						TRctRct2.append(TRctRct[i]);
-						j++;
-					}
-
-				}
-				TRctRct=TRctRct2;
-				lenP=TRctRct.logicalLength();
-
-
-
-	}
-
-
-
-	//отрисовка спец
-	ACHAR buffer[512], buffer1[512], buffer2[512] ;
-
-	double pArea=0;
-	double pSumArea=0;
-
-
-
-
-	if ((VRct.logicalLength()>0)||
-		(VRnd.logicalLength()>0)	
-		)
-	{
-		pb=AddSpecLine(pb,_T("Воздуховоды:"));
-	}
-
-
-
-	if (VRnd.logicalLength()!=0)
-	{
-		//отрисовка круглых
-
-		for (long i=0;i<VRnd.logicalLength();i++)
-		{
-			//подщет площади
-			VRnd[i].Area=ceil(VRnd[i].Length/1000)*M_PI*VRnd[i].SizeA/1000;
-			pArea=VRnd[i].Area+pArea;
-			//
-
-
-			wcscpy_s(buffer1,_T("%%C"));
-			acdbRToS(VRnd[i].SizeA,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-			acdbRToS(ceil(VRnd[i].Length/100)/10,2,1,buffer2);
-			acdbRToS(VRnd[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("м"),buffer2,_T("м2"),buffer);
-
-		}
-		//acdbRToS(pArea,2,2,buffer);
-		//pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		//pSumArea=pSumArea+pArea;
-		//pArea=0;
-	}
-
-
-
-	//отрисовка прямоугольных
-	if (VRct.logicalLength()!=0)
-	{
-		/*pb=AddSpecLine(pb,_T("Прямоугольные воздуховоды:"));*/
-		for (long i=0;i<VRct.logicalLength();i++)
-		{
-			//подщет площади
-			VRct[i].Area=ceil(VRct[i].Length/1000)*2*(VRct[i].SizeA+VRct[i].SizeB)/1000;
-			pArea=VRct[i].Area+pArea;
-			//	
-			acdbRToS(VRct[i].SizeA,2,2,buffer1);
-			acdbRToS(VRct[i].SizeB,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			acdbRToS(ceil(VRct[i].Length/100)/10,2,1,buffer2);
-			acdbRToS(VRct[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("м"),buffer2,_T("м2"),buffer);
-
-		}
-
-	}
-
-
-
-	if ((VRct.logicalLength()>0)||
-		(VRnd.logicalLength()>0)	
-		)
-	{
-		acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;
-	}
-
-
-	/////отводы
-
-	if ((TRct.logicalLength()>0)||
-		(TRnd.logicalLength()>0)	
-		)
-	{
-		pb=AddSpecLine(pb,_T("Отводы:"));
-	}
-
-
-
-	double pl1,pl2;
-	//отрисовка круглых отводов
-	if (TRnd.logicalLength()!=0)
-	{
-
-		for (long i=0;i<TRnd.logicalLength();i++)
-		{
-			//подщет площади
-
-
-			TRnd[i].Area=ceil(TRnd[i].Length)*TRnd[i].Length2;
-			pArea=TRnd[i].Area+pArea;
-
-			//
-
-
-			wcscpy_s(buffer1,_T("%%C"));
-			acdbRToS(TRnd[i].SizeA,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-
-			acdbRToS(TRnd[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" ("));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("%%d)"));
-
-			acdbRToS(ceil(TRnd[i].Length),2,2,buffer2);
-			acdbRToS(TRnd[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-
-	}
-
-
-
-
-	//отрисовка прямоугольных отводов
-	if (TRct.logicalLength()!=0)
-	{
-		//pb=AddSpecLine(pb,_T("Прямоугольные отводы:"));
-		for (long i=0;i<TRct.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			TRct[i].Area=ceil(TRct[i].Length)*TRct[i].Length2;
-			pArea=TRct[i].Area+pArea;
-
-			//
-
-			acdbRToS(TRct[i].SizeA,2,2,buffer1);
-			acdbRToS(TRct[i].SizeB,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			acdbRToS(TRct[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" ("));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("%%d)"));
-
-			acdbRToS(ceil(TRct[i].Length),2,2,buffer2);
-			acdbRToS(TRct[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-
-	}
-
-
-	if ((TRct.logicalLength()>0)||
-		(TRnd.logicalLength()>0)	
-		)
-	{
-		acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;
-	}
-
-
-
-
-	/////тройники
-
-
-	if ((WPRctORct.logicalLength()>0)||
-		(WPRctORnd.logicalLength()>0)||
-		(WPRndORct.logicalLength()>0)||
-		(WPRndORnd.logicalLength()>0)
-		)
-	{
-		pb=AddSpecLine(pb,_T("Тройники:"));
-	}
-
-
-
-
-
-	//отрисовка тройника  кругл кругл
-	if (WPRndORnd.logicalLength()!=0)
-	{
-
-		for (long i=0;i<WPRndORnd.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			WPRndORnd[i].Area=ceil(WPRndORnd[i].Length)*WPRndORnd[i].Length2;
-			pArea=WPRndORnd[i].Area+pArea;
-
-			//
-			wcscpy_s(buffer1,_T("%%c"));
-			acdbRToS(WPRndORnd[i].SizeA,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-
-
-			wcscat_s(buffer1,_T("x%%c"));
-			acdbRToS(WPRndORnd[i].SizeA2,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-
-
-
-
-			acdbRToS(WPRndORnd[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" (L="));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("мм)"));
-
-			acdbRToS(ceil(WPRndORnd[i].Length),2,2,buffer2);
-			acdbRToS(WPRndORnd[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-		/*	acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;*/
-
-
-
-	}
-
-	
-
-	//отрисовка тройника  кругл прям
-	if (WPRndORct.logicalLength()!=0)
-	{
-		//pb=AddSpecLine(pb,_T("Тройник кругл-прям:"));
-		for (long i=0;i<WPRndORct.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			WPRndORct[i].Area=ceil(WPRndORct[i].Length)*WPRndORct[i].Length2;
-			pArea=WPRndORct[i].Area+pArea;
-
-			//
-			wcscpy_s(buffer1,_T("%%c"));
-			acdbRToS(WPRndORct[i].SizeA,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-
-
-			wcscat_s(buffer1,_T("x("));
-			acdbRToS(WPRndORct[i].SizeA2,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-			acdbRToS(WPRndORct[i].SizeA3,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
-
-
-
-
-			acdbRToS(WPRndORct[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" (L="));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("мм)"));
-
-			acdbRToS(ceil(WPRndORct[i].Length),2,2,buffer2);
-			acdbRToS(WPRndORct[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-		/*	acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;*/
-
-
-
-	}
-
-
-
-
-
-
-
-	//отрисовка тройника  прям кругл
-	if (WPRctORnd.logicalLength()!=0)
-	{
-		//pb=AddSpecLine(pb,_T("Тройник прям-кругл:"));
-		for (long i=0;i<WPRctORnd.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			WPRctORnd[i].Area=ceil(WPRctORnd[i].Length)*WPRctORnd[i].Length2;
-			pArea=WPRctORnd[i].Area+pArea;
-
-			//
-			wcscpy_s(buffer1,_T("("));
-			acdbRToS(WPRctORnd[i].SizeA,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-			acdbRToS(WPRctORnd[i].SizeB,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
-
-
-			wcscat_s(buffer1,_T("x%%c"));
-			acdbRToS(WPRctORnd[i].SizeA2,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-
-
-
-
-			acdbRToS(WPRctORnd[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" (L="));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("мм)"));
-
-			acdbRToS(ceil(WPRctORnd[i].Length),2,2,buffer2);
-			acdbRToS(WPRctORnd[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-		// 			acdbRToS(pArea,2,2,buffer);
-		// 			pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		// 			pSumArea=pSumArea+pArea;
-		// 			pArea=0;
-
-
-
-	}
-
-	//отрисовка тройника прям прям 
-	if (WPRctORct.logicalLength()!=0)
-	{
-		//pb=AddSpecLine(pb,_T("Тройник Прям-Прям:"));
-		for (long i=0;i<WPRctORct.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			WPRctORct[i].Area=ceil(WPRctORct[i].Length)*WPRctORct[i].Length2;
-			pArea=WPRctORct[i].Area+pArea;
-
-			//
-			wcscpy_s(buffer1,_T("("));
-			acdbRToS(WPRctORct[i].SizeA,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-			acdbRToS(WPRctORct[i].SizeB,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
-
-			wcscat_s(buffer1,_T("x("));
-			acdbRToS(WPRctORct[i].SizeA2,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-			acdbRToS(WPRctORct[i].SizeA3,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
-
-
-
-			acdbRToS(WPRctORct[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" (L="));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("мм)"));
-
-			acdbRToS(ceil(WPRctORct[i].Length),2,2,buffer2);
-			acdbRToS(WPRctORct[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-
-
-
-
-	}
-
-	if ((WPRctORct.logicalLength()>0)||
-		(WPRctORnd.logicalLength()>0)||
-		(WPRndORct.logicalLength()>0)||
-		(WPRndORnd.logicalLength()>0)
-		)
-	{
-		acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;
-	}
-
-
-
-
-
-
-
-
-	//переходы
-
-	if ((TRndRnd.logicalLength()>0)||
-		(TRndRct.logicalLength()>0)||
-		(TRctRct.logicalLength()>0)
-		)
-	{
-		pb=AddSpecLine(pb,_T("Переходы:"));
-	}
-
-	//отрисовка перехода  кругл кругл
-	if (TRndRnd.logicalLength()!=0)
-	{
-
-		for (long i=0;i<TRndRnd.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			TRndRnd[i].Area=ceil(TRndRnd[i].Length)*TRndRnd[i].Length2;
-			pArea=TRndRnd[i].Area+pArea;
-
-			//
-			wcscpy_s(buffer1,_T("%%c"));
-			acdbRToS(TRndRnd[i].SizeA,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-
-
-			wcscat_s(buffer1,_T("x%%c"));
-			acdbRToS(TRndRnd[i].SizeA2,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-
-
-
-
-			acdbRToS(TRndRnd[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" (L="));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("мм)"));
-
-			acdbRToS(ceil(TRndRnd[i].Length),2,2,buffer2);
-			acdbRToS(TRndRnd[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-		/*	acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;*/
-
-	}
-	//отрисовка перехода  кругл прям
-	if (TRndRct.logicalLength()!=0)
-	{
-		//pb=AddSpecLine(pb,_T("Тройник кругл-прям:"));
-		for (long i=0;i<TRndRct.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			TRndRct[i].Area=ceil(TRndRct[i].Length)*TRndRct[i].Length2;
-			pArea=TRndRct[i].Area+pArea;
-
-			//
-			wcscpy_s(buffer1,_T("%%c"));
-			acdbRToS(TRndRct[i].SizeA,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-
-
-			wcscat_s(buffer1,_T("x("));
-			acdbRToS(TRndRct[i].SizeA2,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-			acdbRToS(TRndRct[i].SizeA3,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
-
-
-
-
-			acdbRToS(TRndRct[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" (L="));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("мм)"));
-
-			acdbRToS(ceil(TRndRct[i].Length),2,2,buffer2);
-			acdbRToS(TRndRct[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-		/*	acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;*/
-
-
-
-	}
-
-
-
-	//отрисовка перехода прям прям 
-	if (TRctRct.logicalLength()!=0)
-	{
-		//pb=AddSpecLine(pb,_T("Тройник Прям-Прям:"));
-		for (long i=0;i<TRctRct.logicalLength();i++)
-		{
-
-			//подщет площади
-
-
-			TRctRct[i].Area=ceil(TRctRct[i].Length)*TRctRct[i].Length2;
-			pArea=TRctRct[i].Area+pArea;
-
-			//
-			wcscpy_s(buffer1,_T("("));
-			acdbRToS(TRctRct[i].SizeA,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-			acdbRToS(TRctRct[i].SizeB,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
-
-			wcscat_s(buffer1,_T("x("));
-			acdbRToS(TRctRct[i].SizeA2,2,2,buffer2);
-			wcscat_s(buffer1,buffer2);
-			acdbRToS(TRctRct[i].SizeA3,2,2,buffer);
-			wcscat_s(buffer1,_T("x"));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
-
-
-
-			acdbRToS(TRctRct[i].Swectangle,2,2,buffer);
-			wcscat_s(buffer1,_T(" (L="));
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("мм)"));
-
-			acdbRToS(ceil(TRctRct[i].Length),2,2,buffer2);
-			acdbRToS(TRctRct[i].Area,2,2,buffer);
-			pb=AddSpecLine(pb,buffer1,_T("шт"),buffer2,_T("м2"),buffer);
-
-		}
-
-
-
-
-	}
-
-
-
-
-
-
-	if ((TRndRnd.logicalLength()>0)||
-		(TRndRct.logicalLength()>0)||
-		(TRctRct.logicalLength()>0)
-		)
-	{
-		acdbRToS(pArea,2,2,buffer);
-		pb=AddSpecLine(pb,_T("Всего:"),_T(""),_T(""),_T("м2"),buffer);
-		pSumArea=pSumArea+pArea;
-		pArea=0;
-	}
-
-
-	//общее количество
-	acdbRToS(pSumArea,2,2,buffer);
-	pb=AddSpecLine(pb,_T("Общее количество:"),_T(""),_T(""),_T("м2"),buffer);
-
-
-} 
-
-
-
-
-// - Ventilation_ARX.TVS_Show command (do not rename)
-static void Ventilation_ARXTVS_Show(void)
-{
-
-	acutRelRb(acutBuildList(RTSTR,_T("(TVS_TEST2)"),RTNONE,RTNONE));
-	//acedCommand(RTSTR,_T("(TVS_TEST2)"),RTNONE,RTNONE);
-	// Add your code for command Ventilation_ARX.TVS_Show here
-}
-
-// - Ventilation_ARX.TVS_CUT command (do not rename)
-static void Ventilation_ARXTVS_CUT(void)
-{
-	AcGePoint3d pCut;
-	double Lx,Ly, startangle;
-	ads_name vozd1,vozd2, eName;
-	ACHAR handle[17];
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt1,*pEnt2 = NULL;
-	AcDbObjectId id;
-	TVS_WYE wyie;
-	TVS_TAP * Tapie;
-	TVS_Pipe * Pipi1,*Pipi2;
-	double NewSiseA, NewRadius;
-	resbuf *rb = NULL;
-	AcGeLine3d Line;
-	bool ft=false, s2=false;
-	AcCmColor pColor;
-	AcDb::LineWeight pWeight;
-	AcDbObjectId pLayer;
-	AcDbObjectId pLineType;
-
-	while (ft==false)
-	{
-
-		if (acedEntSel (_T("\nВыберете воздуховод:"), vozd1,pt1)== RTCAN)
-			return;
-
-		pCut=asPnt3d(pt1);
-
-		if (acdbGetObjectId(id,vozd1)==eOk)
-		{
-
-			acdbGetObjectId(id,vozd1);
-
-			{if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
-				{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
-				{	
-					Line.set(Pipi1->FirstPoint,Pipi1->LastPoint);
-					pCut=Line.closestPointTo(pCut);
-
-
-					if ((length2p(pCut,Pipi1->FirstPoint)<=(Pipi1->Length-1))
-						&&(length2p(pCut,Pipi1->LastPoint)<=(Pipi1->Length-1)))
-					{
-
-
-						Pipi2=Pipi1->add_new(pCut,
-							Pipi1->LastPoint,
-							Pipi1->SizeA,
-							Pipi1->SizeB,
-							Pipi1->This1D,
-							Pipi1->ThisRound
-							);
-						Pipi1->put_Lastpoint(pCut);
-						s2=true	;
-						pColor=Pipi1->color();
-						pWeight=Pipi1->lineWeight();
-						pLayer=Pipi1->layerId();
-						pLineType=Pipi1->linetypeId();
-					}
-					Pipi1->close();
-
-					if (s2==true)
-					{
-
-						if (acdbOpenAcDbEntity(pEnt2,Pipi2->id(),AcDb::kForWrite)==eOk)
-						{	
-
-
-
-
-							Pipi2->setColor(pColor);
-							Pipi2->setLineWeight(pWeight);
-							Pipi2->setLayer(pLayer);
-							Pipi2->setLinetype(pLineType);
-
-							Pipi2->put_Wipeout(Pipi1->Wipeout);
-							Pipi2->close();
-
-						}
-
-
-						s2=false;
-						ft=true;
-					}
-
-
-				}
-				}
-
-				else {
-					acutPrintf(_T("\nОбьект заблокирован"));
-
-
-				}
-
-			}
-			}
-
-
-		}
-	}
-
-
-
-	// Add your code for command Ventilation_ARX.TVS_CUT here
-}
-
-// - Ventilation_ARX.TVS_Change command (do not rename)
-
-
-
-
-
-static void Ventilation_ARXTVS_Change(void)
-{
-
-	ads_name sset;
-
-	if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
-		return;
-
-
-
-
-	Change(sset);
-
-
-
-
-
-
-
-	// Add your code for command Ventilation_ARX.TVS_Change here
-}
-
-
-
-
-
-
-static Acad::ErrorStatus postToDatabase(AcDbVoidPtrArray eSet)
-{
-	Acad::ErrorStatus es;
-	AcDbBlockTable *pBtbl;
-	AcDbBlockTableRecord *pBtblr;
-	es =acdbHostApplicationServices()->workingDatabase()
-		->getSymbolTable(pBtbl, AcDb::kForRead);
-	if (es != Acad::eOk)
-	{
-		acutPrintf(L"\nFailed to open block table");
-		return es;
-	}
-	es=pBtbl->getAt(ACDB_MODEL_SPACE, pBtblr,AcDb::kForWrite);
-	if (es != Acad::eOk)
-	{
-		acutPrintf(L"\nFailed to open block table record");
-		es =pBtbl->close();
-		if (es != Acad::eOk)
-		{
-			acutPrintf(L"\nFailed to close block table");
-		}
-		return es;
-	}
-
-	es =pBtbl->close();
-	if (es != Acad::eOk)
-	{
-		acutPrintf(L"\nFailed to close block table");
-		return es;
-	}
-
-	for(int i=0; i < eSet.length(); i++)
-	{
-		AcDbObjectId ObjId;
-		AcDbEntity *pNewEnt=AcDbEntity::cast((AcRxObject*)eSet[i]);
-		es=pBtblr->appendAcDbEntity(ObjId, pNewEnt);
-		if (es != Acad::eOk)
-		{
-			acutPrintf(L"\nFailed to append entity");
-		}
-
-		es=pNewEnt->close();
-		if (es != Acad::eOk)
-		{
-			acutPrintf(L"\nFailed to close entity");
-		}
-	}
-
-	es=pBtblr->close();
-	if (es != Acad::eOk)
-	{
-		acutPrintf(L"\nFailed to close block table record");
-	}
-	return es;
-}
-
-
-
-
-
-
-// - Ventilation_ARX.TVS_ERASE command (do not rename)
-static void Ventilation_ARXTVS_ERASE(void)
-{
-
-	ads_name sset, eName;
-	ACHAR  resultss [512];
-	ACHAR  results1 [512]=_T("2");
-	ACHAR  results2 [512]=_T("2d");
-
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt = NULL;
-	AcDbObjectId id;
-	TVS_Pipe * Pipi;
-	TVS_TAP * Tapie;
-	TVS_WYE* Wyeie;
-	TVS_TRANS * Transie;
-
-	double NewSiseA;
-	bool p1d;
-	resbuf *rb = NULL;
-
-	if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
-		return;
-
-
-
-	long len = 0;
-
-	acedSSLength(sset, &len);
-	//consoleprint(double(len),_T("\nL: "));
-	for (long i = 0; i < len; i++)
-	{             
-
-
-		if (NULL != (acedSSName(sset,i,eName)))
-		{
-
-			//consoleprint(double(i),_T("\nd"));
-
-
-			acdbGetObjectId(id,eName);
-
-			bool g=false;
-			if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
-				{
-
-
-					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
-					{	
-
-						AcDbVoidPtrArray eSet;
-						Acad::ErrorStatus es=pEnt->explode(eSet);
-						pEnt->close();
-
-						//delete the original entity
-						acdbEntDel(eName);
-
-						// Add the new entities to the db
-						es=postToDatabase(eSet);
-						g=true;
-					}
-
-					if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
-					{	
-						AcDbVoidPtrArray eSet;
-						Acad::ErrorStatus es=pEnt->explode(eSet);
-						pEnt->close();
-
-						//delete the original entity
-						acdbEntDel(eName);
-
-						// Add the new entities to the db
-						es=postToDatabase(eSet);
-						g=true;
-					}
-
-					if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
-					{	
-						AcDbVoidPtrArray eSet;
-						Acad::ErrorStatus es=pEnt->explode(eSet);
-						pEnt->close();
-
-						//delete the original entity
-						acdbEntDel(eName);
-
-						// Add the new entities to the db
-						es=postToDatabase(eSet);
-						g=true;
-					}
-
-					if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
-					{	
-						AcDbVoidPtrArray eSet;
-						Acad::ErrorStatus es=pEnt->explode(eSet);
-						pEnt->close();
-
-						//delete the original entity
-						acdbEntDel(eName);
-
-						// Add the new entities to the db
-						es=postToDatabase(eSet);
-						g=true;
-					}
-
-
-					if (g==false)pEnt->close();
-					g=false;
-				}
-
-			}
-		}
-
-
-	}
-	// Add your code for command Ventilation_ARX.TVS_1D2D here
-
-
-
-
-
-
-	// Add your code for command Ventilation_ARX.TVS_ERASE here
-}
-
-static void Ventilation_ARXTVSSomeParts(void)
-{
-	ads_name ent;
-	bool  Astat=false, status=false;
-	//acedInitGet(RSG_NONULL);
-	ads_point pt1,pt2;
-	AcDbObjectId id;
-	AcDbEntity *pEnt;
-	AcDbLine*pLine;
-	AcGePoint3d pstart,pend;
-	while (status==false)
-	{
-
-	Astat=acedEntSel (_T("\nВыберете линию: "), ent,pt1) ;
-	if (Astat==true)
-	{
-
-	
-	if (acdbGetObjectId(id,ent)==eOk)
-	{
-		{if (id!=AcDbObjectId::kNull)
-		{
-			if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
-
-			{
-				if ( (pLine = AcDbLine::cast(pEnt)) != NULL )
-				{	
-					status=true;
-					pLine->getStartPoint(pstart);
-					pLine->getEndPoint(pend);
-				}
-			pLine->close();
-			}
-		}
-		}
-	}
-	}
-	}
-	int * quantity=new int;
-	if (acedGetInt (_T("\nКоличество сегментов: "), quantity)!= RTNORM) return ;
-	double pDist=pstart.distanceTo(pend);
-	for (int i = 1; i < *quantity+1; i++)
-	{
-	//AcGePoint3d base=AcGePoint3d(((*quantity-i)*pstart.x+i*pend.x)/(*quantity),((*quantity-i)*pstart.y+i*pend.y)/(*quantity),((*quantity-i)*pstart.z+i*pend.z)/(*quantity));
-	AcGePoint3d base=AcGePoint3d(((*quantity*2-2*i+1)*pstart.x+(2*i-1)*pend.x)/(*quantity*2),((*quantity*2-2*i+1)*pstart.y+(2*i-1)*pend.y)/(*quantity*2),((*quantity*2-2*i+1)*pstart.z+(2*i-1)*pend.z)/(*quantity*2));
-	SPEClist::printLine(AcGePoint3d(base.x-200,base.y,base.z),AcGePoint3d(base.x+200,base.y,base.z));
-	SPEClist::printLine(AcGePoint3d(base.x,base.y+200,base.z),AcGePoint3d(base.x,base.y-200,base.z));
-	}
-	
-}
-
-static void Ventilation_ARXTVS_LEAD(void)
-{
-
-	int pstatus;
-	double SizeA,SizeB,Flow,SizeA2, SizeB2;
-	AcGePoint3d pCut;
-	double Lx,Ly, startangle;
-	ads_name vozd1,vozd2, eName;
-	ACHAR handle[17];
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt1,*pEnt2 = NULL;
-	AcDbObjectId id;
-	TVS_WYE *wyie;
-	TVS_TAP * Tapie;
-	TVS_Pipe * Pipi1,*Pipi2;
-	TVS_TRANS * Transie;
-	double NewSiseA, NewRadius;
-	resbuf *rb = NULL;
-	AcGeLine3d Line;
-	bool ft=false, s2=false;
-	AcCmColor pColor;
-	AcDb::LineWeight pWeight;
-	AcDbObjectId pLayer;
-	AcDbObjectId pLineType;
-
-	ACHAR atrType[512];
-	ACHAR atrSize[512];
-
-	int Astat;
-	bool  Astat2=false;
-	ACHAR resultss[512],resultss2[512];
-	while (ft==false)
-	{
-
-		Astat2=false;
 		while (Astat2==false)
 		{
 			Astat2=true;
-			acedInitGet(RSG_NONULL, _T("Формат Ф a"));
-			Astat=acedEntSel (_T("\nВыберете воздуховод или [Формат]: "), vozd1,pt1) ;
+			acedInitGet(RSG_NONULL, _T("Р Р°Р·РјРµСЂ Р  h"));
+			Astat=acedGetPoint(NULL,_T("\nРЈРєР°Р¶РёС‚Рµ РїРµСЂРІСѓСЋ С‚РѕС‡РєСѓ РёР»Рё [Р Р°Р·РјРµСЂ]:"),pt1) ;
+			switch (Astat)
+			{
+			case RTCAN:
+				return false;
+				break;
+			case RTKWORD:
+				acedGetInput(resultss);
+				break;
+			}
+
+			if ((wcscmp(resultss,_T("Р Р°Р·РјРµСЂ"))==0)||(wcscmp(resultss,_T("Р "))==0)||(wcscmp(resultss,_T("h"))==0))
+			{
+				reg=dSIZE;
+				changesize();
+				Astat2=false;
+				acdbRToS(0,2,2,resultss);
+			}
+
+		}
+		return true;
+	}
+
+
+	static bool drawStep2(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
+	{
+
+
+		int reg;
+		int Astat;
+		int Astat2=false;
+		ACHAR  resultss [512];
+		ACHAR  resultnil [512];
+		AcDbEntity * pEnt;
+		while (Astat2==false)
+		{
+			Astat2=true;
+			acedInitGet(RSG_NONULL, _T("Р Р°Р·РјРµСЂ Р  "));
+			Astat=acedGetPoint(pt1,_T("\nРЈРєР°Р¶РёС‚Рµ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ РёР»Рё [Р Р°Р·РјРµСЂ]:"),pt2) ;
+			switch (Astat)
+			{
+			case RTCAN:
+				return false;
+				break;
+			case RTKWORD:
+				acedGetInput(resultss);
+				break;
+			}
+
+			if ((wcscmp(resultss,_T("Р Р°Р·РјРµСЂ"))==0)||(wcscmp(resultss,_T("Р "))==0)||(wcscmp(resultss,_T("h"))==0))
+			{
+				reg=dSIZE;
+				changesize();
+				Astat2=false;
+				acdbRToS(0,2,2,resultss);
+			}
+
+
+
+		}
+
+
+
+
+		AcGePoint3d A1=asPnt3d(pt1);
+		AcGePoint3d A2=asPnt3d(pt2);
+
+		TVS_Pipe pipie;
+
+
+		pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
+
+		if (acdbOpenAcDbEntity(pEnt,pipi->id(),AcDb::kForWrite)==eOk)
+		{		
+
+			pipi->close();
+		}
+		else
+		{
+			acutPrintf(_T("\nРЎР»РѕР№ Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+			return false;
+		}
+
+
+
+
+		return true;
+	}
+
+	static bool drawStep3(ads_point &pt1, ads_point &pt2, TVS_Pipe *&pipi)
+	{
+
+		int reg;
+		int Astat;
+		int Astat2=false;
+		ACHAR  resultss [512];
+		ACHAR  resultnil [512];
+		AcDbEntity * pEnt;
+
+		AcGePoint3d A1=asPnt3d(pt1);
+		AcGePoint3d A2=asPnt3d(pt2);
+		AcGePoint3d A3;
+		AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
+		pt1[0]=A2.x;
+		pt1[1]=A2.y;
+		pt1[2]=A2.z;
+		double oldsizeA, oldsizeB, oldRound;
+		for (; ;)
+		{
+
+
+			acedInitGet(RSG_NONULL, _T("Р Р°Р·РјРµСЂ Р  h СЃРѕРµРґРћС‚РІРѕРґ Рѕ j СЃРѕРµРґРўСЂРѕР№РЅРёРє n С‚ Z z СЏ РІР’РµСЂС… d РІ РІРќРёР· РЅ y"));
+			Astat=acedGetPoint(pt1,_T("\nРЈРєР°Р¶РёС‚Рµ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ РёР»Рё [Р Р°Р·РјРµСЂ/СЃРѕРµРґРћС‚РІРѕРґ/СЃРѕРµРґРўСЂРѕР№РЅРёРє/Z/РІР’РµСЂС…/РІРќРёР·]:"),pt2) ;
+			switch (Astat)
+			{
+			case RTCAN:
+				return false;
+				break;
+			case RTKWORD:
+				acedGetInput(resultss);
+				break;
+			case RTNORM:
+				A3=asPnt3d(pt2);
+				nextpipe(A1,A2,A3,pipi,pt1);
+
+			}
+
+
+			if ((wcscmp(resultss,_T("Р Р°Р·РјРµСЂ"))==0)||(wcscmp(resultss,_T("Р "))==0)||(wcscmp(resultss,_T("h"))==0))
+			{
+				reg=dSIZE;
+				oldsizeA=globSizeA;
+				oldsizeB=globSizeB;
+				oldRound=globRound;
+				if (changesize()==true)
+				{
+					addtrans(oldsizeA,oldsizeB,globSizeA,globSizeB,A1,A2,A3,pipi,pt1);
+				}
+				Astat2=false;
+				acdbRToS(0,2,2,resultss);
+			}
+			if ((wcscmp(resultss,_T("СЃРѕРµРґРћС‚РІРѕРґ"))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("Рѕ"))==0))
+			{
+				reg=dCONNECTT;
+				connect2(pipi,reg);
+				return false;
+			}
+
+
+			if ((wcscmp(resultss,_T("СЃРѕРµРґРўСЂРѕР№РЅРёРє"))==0)||(wcscmp(resultss,_T("С‚"))==0)||(wcscmp(resultss,_T("n"))==0))
+			{
+				reg=dCONNECTW;
+				connect2(pipi,reg);
+				return false;
+			}
+
+			if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("z"))==0)||(wcscmp(resultss,_T("СЏ"))==0))
+			{
+				reg=dZ;
+				changeZ(pipi);
+				A1=A2;
+				A2=pipi->LastPoint;
+				pt1[0]=A2.x;
+				pt1[1]=A2.y;
+				pt1[2]=A2.z;
+				acdbRToS(0,2,2,resultss);
+			}
+
+			if ((wcscmp(resultss,_T("РІР’РµСЂС…"))==0)||(wcscmp(resultss,_T("РІ"))==0)||(wcscmp(resultss,_T("d"))==0))
+			{
+				reg=dUP;
+				UpDown(pipi,Form_Up);
+				return false;
+			}
+
+			if ((wcscmp(resultss,_T("РІРќРёР·"))==0)||(wcscmp(resultss,_T("РЅ"))==0)||(wcscmp(resultss,_T("y"))==0))
+			{
+				reg=dDOWN;
+				UpDown(pipi,Form_Down);
+				return false;
+			}
+
+		}
+
+	}
+	// ----- Ventilation_ARX.TVS_PIPE command
+	static void Ventilation_ARXTVS_PIPE(void)
+	{
+
+		ads_point pt1,pt2;
+		int reg;
+		int Astat;
+		int Astat2=false;
+		ACHAR  resultss [512];
+		ACHAR  resultnil [512];
+		AcDbEntity* pEnt;
+
+		while (Astat2==false)
+		{
+			Astat2=true;
+			acedInitGet(RSG_NONULL, _T("Р Р°Р·РјРµСЂ Р  h"));
+			Astat=acedGetPoint(NULL,_T("\nРЈРєР°Р¶РёС‚Рµ РїРµСЂРІСѓСЋ С‚РѕС‡РєСѓ РёР»Рё [Р Р°Р·РјРµСЂ]:"),pt1) ;
 			switch (Astat)
 			{
 			case RTCAN:
@@ -5724,19 +2804,150 @@ static void Ventilation_ARXTVS_LEAD(void)
 				break;
 			}
 
-			if (Astat==RTKWORD)
+			if ((wcscmp(resultss,_T("Р Р°Р·РјРµСЂ"))==0)||(wcscmp(resultss,_T("Р "))==0)||(wcscmp(resultss,_T("h"))==0))
 			{
-				acedInitGet(RSG_NONULL, _T("Да Нет д н y n l"));
-				if (acedGetKword(_T("\nУказывать расход? [Да/Нет]: "), resultss2)== RTCAN)
-					return;
-
-				if ((wcscmp(resultss2,_T("Да"))==0)||(wcscmp(resultss2,_T("д"))==0)||(wcscmp(resultss2,_T("y"))==0)||(wcscmp(resultss2,_T("l"))==0))
-
-					globalMlead=2;
-				else globalMlead=1;
+				reg=dSIZE;
+				changesize();
 				Astat2=false;
-				Astat=0;
-				wcscpy_s(resultss,_T(""));
+				acdbRToS(0,2,2,resultss);
+			}
+
+		}
+
+		Astat2=false;
+
+
+
+		while (Astat2==false)
+		{
+			Astat2=true;
+			acedInitGet(RSG_NONULL, _T("Р Р°Р·РјРµСЂ Р  "));
+			Astat=acedGetPoint(pt1,_T("\nРЈРєР°Р¶РёС‚Рµ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ РёР»Рё [Р Р°Р·РјРµСЂ]:"),pt2) ;
+			switch (Astat)
+			{
+			case RTCAN:
+				return;
+				break;
+			case RTKWORD:
+				acedGetInput(resultss);
+				break;
+			}
+
+			if ((wcscmp(resultss,_T("Р Р°Р·РјРµСЂ"))==0)||(wcscmp(resultss,_T("Р "))==0)||(wcscmp(resultss,_T("h"))==0))
+			{
+				reg=dSIZE;
+				changesize();
+				Astat2=false;
+				acdbRToS(0,2,2,resultss);
+			}
+
+
+
+		}
+
+
+
+
+		AcGePoint3d A1=asPnt3d(pt1);
+		AcGePoint3d A2=asPnt3d(pt2);
+		TVS_Pipe *pipi;
+		TVS_Pipe pipie;
+
+
+		pipi=pipie.add_new(A1,A2,globSizeA,globSizeB,false,globRound);
+		SetGlobalProperty(pipi);
+		if (acdbOpenAcDbEntity(pEnt,pipi->id(),AcDb::kForWrite)==eOk)
+		{		
+			pipi->close();
+		}
+		else
+		{
+			acutPrintf(_T("\nРЎР»РѕР№ Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+			return;
+		}
+
+
+		AcGeVector3d pnormvect=AcGeVector3d(0,0,1);
+		pt1[0]=A2.x;
+		pt1[1]=A2.y;
+		pt1[2]=A2.z;
+
+		////////////
+		AcGePoint3d A3;
+		double oldsizeA, oldsizeB, oldRound;
+		for (; ;)
+		{
+
+
+			acedInitGet(RSG_NONULL, _T("Р Р°Р·РјРµСЂ Р  h СЃРѕРµРґРћС‚РІРѕРґ Рѕ j СЃРѕРµРґРўСЂРѕР№РЅРёРє n С‚ Z z СЏ РІР’РµСЂС… d РІ РІРќРёР· РЅ y"));
+			Astat=acedGetPoint(pt1,_T("\nРЈРєР°Р¶РёС‚Рµ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ РёР»Рё [Р Р°Р·РјРµСЂ/СЃРѕРµРґРћС‚РІРѕРґ/СЃРѕРµРґРўСЂРѕР№РЅРёРє/Z/РІР’РµСЂС…/РІРќРёР·]:"),pt2) ;
+			switch (Astat)
+			{
+			case RTCAN:
+				return;
+				break;
+			case RTKWORD:
+				acedGetInput(resultss);
+				break;
+			case RTNORM:
+				A3=asPnt3d(pt2);
+				nextpipe(A1,A2,A3,pipi,pt1);
+
+			}
+
+
+			if ((wcscmp(resultss,_T("Р Р°Р·РјРµСЂ"))==0)||(wcscmp(resultss,_T("Р "))==0)||(wcscmp(resultss,_T("h"))==0))
+			{
+				reg=dSIZE;
+				oldsizeA=globSizeA;
+				oldsizeB=globSizeB;
+				oldRound=globRound;
+				if (changesize()==true)
+				{
+					addtrans(oldsizeA,oldsizeB,globSizeA,globSizeB,A1,A2,A3,pipi,pt1);
+				}
+				Astat2=false;
+				acdbRToS(0,2,2,resultss);
+			}
+			if ((wcscmp(resultss,_T("СЃРѕРµРґРћС‚РІРѕРґ"))==0)||(wcscmp(resultss,_T("j"))==0)||(wcscmp(resultss,_T("Рѕ"))==0))
+			{
+				reg=dCONNECTT;
+				connect2(pipi,reg);
+				return;
+			}
+
+
+			if ((wcscmp(resultss,_T("СЃРѕРµРґРўСЂРѕР№РЅРёРє"))==0)||(wcscmp(resultss,_T("С‚"))==0)||(wcscmp(resultss,_T("n"))==0))
+			{
+				reg=dCONNECTW;
+				connect2(pipi,reg);
+				return;
+			}
+
+			if ((wcscmp(resultss,_T("Z"))==0)||(wcscmp(resultss,_T("z"))==0)||(wcscmp(resultss,_T("СЏ"))==0))
+			{
+				reg=dZ;
+				changeZ(pipi);
+				A1=A2;
+				A2=pipi->LastPoint;
+				pt1[0]=A2.x;
+				pt1[1]=A2.y;
+				pt1[2]=A2.z;
+				acdbRToS(0,2,2,resultss);
+			}
+
+			if ((wcscmp(resultss,_T("РІР’РµСЂС…"))==0)||(wcscmp(resultss,_T("РІ"))==0)||(wcscmp(resultss,_T("d"))==0))
+			{
+				reg=dUP;
+				UpDown(pipi,Form_Up);
+				return;
+			}
+
+			if ((wcscmp(resultss,_T("РІРќРёР·"))==0)||(wcscmp(resultss,_T("РЅ"))==0)||(wcscmp(resultss,_T("y"))==0))
+			{
+				reg=dDOWN;
+				UpDown(pipi,Form_Down);
+				return;
 			}
 
 		}
@@ -5744,311 +2955,3104 @@ static void Ventilation_ARXTVS_LEAD(void)
 
 
 
-		pCut=asPnt3d(pt1);
 
-		if (acdbGetObjectId(id,vozd1)==eOk)
+		// Add your code for command TVSTVS_Vent_ARX.TVS_Pipe here
+	}
+
+
+	// - Ventilation_ARX.TVS_TRANS command (do not rename)
+	static void Ventilation_ARXTVS_TRANS(void)
+	{
+
+		ads_point pt1,pt2;
+		double pSizeAp1=500;
+		double pSizeBp1=0;
+		double pSizeAp2=300;
+		double pSizeBp2=0;
+		double pLengthTr=300;
+		AcGeVector3d pVectTr=AcGeVector3d(1,1,0);
+		AcGePoint3d pFirstPoint;
+		AcGePoint3d pLastPoint;
+
+		bool pThisRoundp1=false;
+		bool pThisRoundp2=false;
+		int pTransType=3;
+		bool pThis1D=false;
+		TVS_TRANS transie;
+
+		if (acedGetPoint(NULL,_T("Set the first point:\n"),pt1) != RTNORM)
+			return;
+		if (acedGetPoint(pt1,_T("Set the second point:\n"),pt2) != RTNORM)
+			return;
+		pFirstPoint=asPnt3d(pt1);
+		pLastPoint=asPnt3d(pt2);
+		pVectTr=AcGeVector3d(pLastPoint.x-pFirstPoint.x,
+			pLastPoint.y-pFirstPoint.y,
+			pFirstPoint.z 
+			);
+
+		transie.add_new(pSizeAp1,
+			pSizeBp1,
+			pSizeAp2,
+			pSizeBp2,
+			pLengthTr,
+			pVectTr,
+			pFirstPoint,
+			pThisRoundp1,
+			pThisRoundp2,
+			pTransType,
+			pThis1D);
+
+
+
+		// Add your code for command Ventilation_ARX.TVS_TRANS here
+	}
+
+	// - Ventilation_ARX.TVS_WYE command (do not rename)
+	static void Ventilation_ARXTVS_WYE(void)
+	{
+
+		ads_point pt1;
+		TVS_WYE wyeie;
+		ads_real aSizeAotv,aSizeApr;
+		double pSizeApr=200;
+		double pSizeBpr=0;
+		double pSizeAotv=100;
+		double pSizeBotv=0;
+		double pLengthPl=150;
+		AcGeVector3d pVectpr=AcGeVector3d(1,0,0);
+		AcGeVector3d pVectotv=AcGeVector3d(0,1,0);
+		AcGePoint3d pBasepoint;
+		bool pThisRoundpr=true;
+		bool pThisRoundotv=true;
+		bool pThis1D=false;
+
+		if (acedGetPoint(NULL,_T("Set the first point:\n"),pt1) != RTNORM)
+			return;
+		if ( acedGetReal(_T("\nР’РІРµРґРёС‚Рµ С€РёСЂРёРЅСѓ РїСЂРѕС…РѕРґР°: "),&aSizeApr)!= RTNORM)
+			return;
+		pSizeApr=aSizeApr;
+		if ( acedGetReal(_T("\nР’РІРµРґРёС‚Рµ С€РёСЂРёРЅСѓ РѕС‚РІРµС‚РІР»РµРЅРёСЏ: "),&aSizeAotv)!= RTNORM)
+			return;
+		pSizeAotv=aSizeAotv;
+
+		pBasepoint=asPnt3d(pt1);
+		wyeie.add_new(pSizeApr,
+			pSizeBpr,
+			pSizeAotv,
+			pSizeBotv,
+			pLengthPl,
+			pVectpr,
+			pVectotv,
+			pBasepoint,
+			pThisRoundpr,
+			pThisRoundotv,
+			pThis1D);
+		wyeie.add_new(pSizeApr,
+			pSizeBpr,
+			pSizeAotv,
+			pSizeBotv,
+			pLengthPl,
+			pVectpr,
+			pVectotv,
+			pBasepoint,
+			pThisRoundpr,
+			false,
+			pThis1D);
+		wyeie.add_new(pSizeApr,
+			pSizeBpr,
+			pSizeAotv,
+			pSizeBotv,
+			pLengthPl,
+			pVectpr,
+			pVectotv,
+			pBasepoint,
+			false,
+			false,
+			pThis1D);
+		wyeie.add_new(pSizeApr,
+			pSizeBpr,
+			pSizeAotv,
+			pSizeBotv,
+			pLengthPl,
+			pVectpr,
+			pVectotv,
+			pBasepoint,
+			false,
+			true,
+			pThis1D);
+		// Add your code for command Ventilation_ARX.TVS_WYE here
+	}
+
+	// - Ventilation_ARX.TVS_CONNECT command (do not rename)
+	static void Ventilation_ARXTVS_CONNECTW(void)
+	{
+		// Add your code for command Ventilation_ARX.TVS_CONNECT here
+
+		double Lx,Ly, startangle;
+		ads_name vozd1,vozd2, eName;
+		ACHAR handle[17];
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt1,*pEnt2 = NULL;
+		AcDbObjectId id;
+		TVS_WYE wyie;
+		TVS_TAP * Tapie;
+		TVS_Pipe * Pipi1,*Pipi2;
+		double NewSiseA, NewRadius;
+		resbuf *rb = NULL;
+		bool ft=false;
+		while (ft==false)
 		{
-			{if (id!=AcDbObjectId::kNull)
-			{
-				if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
 
+			if (acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ 1-С‹Р№ РІРѕР·РґСѓС…РѕРІРѕРґ:"), vozd1,pt1)== RTCAN)
+				return;
+
+
+
+			if (acdbGetObjectId(id,vozd1)==eOk)
+			{
+
+				acdbGetObjectId(id,vozd1);
+
+				{if (id!=AcDbObjectId::kNull)
 				{
-					if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+					if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
+					{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+					{	
+						//acutPrintf(_T("\nPipe 1...РѕРє"));
+						ft=true;
+
+					}
+					}
+
+					else {
+						acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+
+						return;
+					}
+					pEnt1->close();	
+				}
+				}
+
+
+			}
+		}
+		ft=false;
+		while (ft==false)
+		{
+			if (acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ 2-С‹Р№ РІРѕР·РґСѓС…РѕРІРѕРґ:"), vozd2,pt2)== RTCAN)
+				return;
+
+			if (acdbGetObjectId(id,vozd2)==eOk)
+			{
+
+				acdbGetObjectId(id,vozd2);
+
+				{if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt2,id,AcDb::kForWrite)==eOk)
+					{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
+					{	
+						if (Pipi1!=Pipi2)
+						{
+							//acutPrintf(_T("\nPipe 2...РѕРє"));
+							ft=true;
+						}
+						else
+						{
+							acutPrintf(_T("\nР’С‹Р±РѕР°РЅ С‚РѕС‚ Р¶Рµ РІРѕР·РґСѓС…РѕРІРѕРґ"));
+
+						}
+
+					}
+					}
+
+					else {
+						acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+
+						return;
+					}
+
+					pEnt2->close();	
+				}
+				}
+
+
+			}
+
+
+		}
+
+		ConnectWithWye(pEnt1,pEnt2,pt1,pt2);
+	}
+
+	static void Ventilation_ARXTVS_CONNECTT(void)
+	{
+		// Add your code for command Ventilation_ARX.TVS_CONNECT here
+
+		double Lx,Ly, startangle;
+		ads_name vozd1,vozd2, eName;
+		ACHAR handle[17];
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt1,*pEnt2 = NULL;
+		AcDbObjectId id;
+		TVS_WYE wyie;
+		TVS_TAP * Tapie;
+		TVS_Pipe * Pipi1,*Pipi2;
+		double NewSiseA, NewRadius;
+		resbuf *rb = NULL;
+		bool ft=false;
+		while (ft==false)
+		{
+
+			if (acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ 1-С‹Р№ РІРѕР·РґСѓС…РѕРІРѕРґ:"), vozd1,pt1)== RTCAN)
+				return;
+
+
+
+			if (acdbGetObjectId(id,vozd1)==eOk)
+			{
+
+				acdbGetObjectId(id,vozd1);
+
+				{if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
+					{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+					{	
+						//acutPrintf(_T("\nPipe 1...РѕРє"));
+						ft=true;
+
+					}
+					}
+
+					else {
+						acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+
+						return;
+					}
+					pEnt1->close();	
+				}
+				}
+
+
+			}
+		}
+		ft=false;
+		while (ft==false)
+		{
+			if (acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ 2-С‹Р№ РІРѕР·РґСѓС…РѕРІРѕРґ:"), vozd2,pt2)== RTCAN)
+				return;
+
+			if (acdbGetObjectId(id,vozd2)==eOk)
+			{
+
+				acdbGetObjectId(id,vozd2);
+
+				{if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt2,id,AcDb::kForWrite)==eOk)
+					{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
+					{	
+						if (Pipi1!=Pipi2)
+						{
+							//acutPrintf(_T("\nPipe 2...РѕРє"));
+							ft=true;
+						}
+						else
+						{
+							acutPrintf(_T("\nР’С‹Р±РѕР°РЅ С‚РѕС‚ Р¶Рµ РІРѕР·РґСѓС…РѕРІРѕРґ"));
+
+						}
+
+					}
+					}
+
+					else {
+						acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+
+						return;
+					}
+
+					pEnt2->close();	
+				}
+				}
+
+
+			}
+
+
+		}
+
+		ConnectWithTap(pEnt1,pEnt2,pt1,pt2);
+	}
+
+
+	// - Ventilation_ARX.TVS_DUCT command (do not rename)
+	static void Ventilation_ARXTVS_DUCT(void)
+	{
+
+
+		// Add your code for command TVSTVS_Vent_ARX.MyCommand1 here
+
+		//AcGePoint3d * gg=new AcGePoint3d;
+		double Pi=3.14159265358979323846;
+		AcDbEntity *pEnt;
+		ads_point pt1,pt2,pt3;
+		TVS_Pipe *pipi;
+		TVS_Pipe pipie;
+		TVS_TAP tapie;
+		ads_real sa,sb;
+		AcDbObjectId id = AcDbObjectId::kNull;
+		ads_name eName;
+		double pSizeA=250, pSizeB=0, X1, X2, Y1, Y2,pSwectangle,radius=150, tapradius;
+		AcGePoint3d A1, A2, A3, pCenterpoint,lastpipi;
+		AcGeVector3d pnormvect, pstartvect;
+		bool pThisRound=false;
+
+		if (acedGetReal(_T("\nР’РІРµРґРёС‚Рµ С€РёСЂРёРЅСѓ:"),&sa) != RTNORM)
+		{
+			return;}
+		if (acedGetReal(_T("\nР’РІРµРґРёС‚Рµ РІС‹СЃРѕС‚Сѓ:"),&sb) != RTNORM)
+		{
+			return;}
+		pSizeA=sa;
+		pSizeB=sb;
+
+
+
+		if (acedGetPoint(NULL,_T("\nРЈРєР°Р¶РёС‚Рµ РїРµСЂРІСѓСЋ С‚РѕС‡РєСѓ: "),pt1) != RTNORM)
+			return;
+		A1=asPnt3d(pt1);
+		if (acedGetPoint(pt1,_T("\nРЈРєР°Р¶РёС‚Рµ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ: "),pt2) != RTNORM)
+			return;
+		A2=asPnt3d(pt2);
+		pipi=pipie.add_new(A1,A2,pSizeA,pSizeB,false,pThisRound);
+
+		pnormvect=AcGeVector3d(0,0,1);
+		pt1[0]=A2.x;
+		pt1[1]=A2.y;
+		pt1[2]=A2.z;
+
+
+		///////////
+		for (; ;)
+		{
+			if (acedGetPoint(pt1,_T("\nРЈРєР°Р¶РёС‚Рµ СЃР»РµРґСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ: "),pt2) != RTNORM)
+				return;
+			A3=asPnt3d(pt2);
+			if	(pThisRound==true)
+			{
+				if (pSizeA<355)
+				{
+					tapradius=pSizeA+pSizeA/2;
+					radius=pSizeA;
+				} 
+				else
+				{
+					tapradius=pSizeA/2+pSizeA/2;
+					radius=pSizeA/2;
+				}
+			}
+			else
+			{
+				tapradius=radius+pSizeA/2;
+			}
+			Givecenterpoint(A1,A2,A3,tapradius,pCenterpoint,pSwectangle,pstartvect);
+			if (correctpipes(A1,A2,A3,pSwectangle,pSizeA,radius,lastpipi,pThisRound)==true)
+			{
+				tapie.add_new(pSizeA,pSizeB,radius,pnormvect,pstartvect,pCenterpoint,pSwectangle,false,pThisRound);
+				drawTapDirect(A1,A2,A3);
+				id=pipi->id();
+				acdbGetAdsName(eName,id);
+				//acdbEntDel(ename);
+				//pipi=pipie.add_new(A1,lastpipi,pSizeA,pSizeB);
+				acdbGetObjectId(id,eName);
+				acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite);
+				pipi->assertWriteEnabled();
+				pipi->LastPoint=lastpipi;
+				pipi->close();
+				pipi=pipie.add_new(A2,A3,pSizeA,pSizeB,false,pThisRound);
+				A1=A2;
+				A2=A3;
+
+				pt1[0]=A2.x;
+				pt1[1]=A2.y;
+				pt1[2]=A2.z;
+
+			}
+
+			//pstartvect= AcGeVector3d(1,0,0);
+			//pSwectangle=1.7;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		}
+		// Add your code for command Ventilation_ARX.TVS_DUCT here
+	}
+
+	// - Ventilation_ARX.TVS_1D2D command (do not rename)
+	static void Ventilation_ARXTVS_1D2D(void)
+	{
+
+
+		ads_name sset, eName;
+		ACHAR  resultss [512];
+		ACHAR  results1 [512]=_T("2");
+		ACHAR  results2 [512]=_T("2d");
+
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt = NULL;
+		AcDbObjectId id;
+		TVS_Pipe * Pipi;
+		TVS_TAP * Tapie;
+		TVS_WYE* Wyeie;
+		TVS_TRANS * Transie;
+
+		double NewSiseA;
+		bool p1d;
+		resbuf *rb = NULL;
+
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
+		acedInitGet(RSG_NOZERO, _T("1 2 1d 2d"));
+		if ( acedGetKword(_T("\nРџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ РІ [1d/2d]<2d>:"),  resultss)!= RTNORM)
+			return;
+
+		if (wcscmp(resultss,results1)==0||wcscmp(resultss,results2)==0)
+		{
+			p1d=false;
+		}
+		else
+		{
+			p1d=true;
+		}
+
+
+
+		long len = 0;
+
+		acedSSLength(sset, &len);
+		//consoleprint(double(len),_T("\nL: "));
+		for (long i = 0; i < len; i++)
+		{             
+
+
+			if (NULL != (acedSSName(sset,i,eName)))
+			{
+
+				//consoleprint(double(i),_T("\nd"));
+
+
+				acdbGetObjectId(id,eName);
+				if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+					{
+
+
+						if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+						{	
+							Pipi->assertWriteEnabled();
+
+
+							Pipi->This1D=p1d;
+
+						}
+
+						if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+						{	
+							Tapie->assertWriteEnabled();
+							Tapie->This1D=p1d;
+
+						}
+
+						if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+						{	
+							Wyeie->assertWriteEnabled();
+							Wyeie->This1D=p1d;
+
+						}
+
+						if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+						{	
+							Transie->assertWriteEnabled();
+							Transie->This1D=p1d;
+
+						}
+
+
+						pEnt->close();
+					}
+
+				}
+			}
+
+
+		}
+		// Add your code for command Ventilation_ARX.TVS_1D2D here
+	}
+
+	// - Ventilation_ARX.TVS_SPEC command (do not rename)
+	static void Ventilation_ARXTVS_Specification(void)
+	{
+		ads_name sset, eName;
+		AcGeDoubleArray PipPar;
+		AcGeDoubleArray PipArr;
+		AcGeDoubleArray PipArrRound;
+		AcGeDoubleArray PipArrRect;
+		AcArray <SPEC> VRnd;
+		AcArray <SPEC> VRct;
+		AcArray <SPEC> TRct;
+		AcArray <SPEC> TRnd;
+
+		AcArray <SPEC> WPRctORct;
+		AcArray <SPEC> WPRctORnd;
+		AcArray <SPEC> WPRndORct;
+		AcArray <SPEC> WPRndORnd;
+
+
+		AcArray <SPEC> TRctRct;
+		AcArray <SPEC> TRndRct;
+		AcArray <SPEC> TRndRnd;
+		double sA, sB, sWa,sA2,sB2, drad, prad, prad2;
+
+
+		SPEC spc;
+		PipPar.setLogicalLength(3);
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt = NULL;
+		AcDbObjectId id;
+		TVS_Pipe * Pipi;
+		TVS_TAP * Tapie;
+		TVS_WYE* Wyeie;
+		TVS_TRANS * Transie;
+
+		double NewSiseA;
+		bool p1d;
+		resbuf *rb = NULL;
+
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
+
+		AcGePoint3d pb=AcGePoint3d(0,0,0);
+		if(acedGetPoint(NULL,_T("\nРЈРєР°Р¶РёС‚Рµ С‚РѕС‡РєСѓ РІСЃС‚Р°РІРєРё СЃРїРµС†РёС„РёРєР°С†РёРё:"),pt1)!=RTNORM )
+			return;
+		pb=asPnt3d(pt1);
+		long len = 0;
+
+		acedSSLength(sset, &len);
+		//consoleprint(double(len),_T("\nL: "));
+		for (long i = 0; i < len; i++)
+		{             
+
+
+			if (NULL != (acedSSName(sset,i,eName)))
+			{
+
+				//consoleprint(double(i),_T("\nd"));
+
+
+				acdbGetObjectId(id,eName);
+				if (id!=AcDbObjectId::kNull)
+				{
+					acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead);
+					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+					{	
+						if (Pipi->ThisRound==true)
+						{
+							if (Pipi->SizeA>Pipi->SizeB)
+							{
+								sA=Pipi->SizeA;
+								sB=Pipi->SizeB;
+							} 
+							else
+							{
+								sA=Pipi->SizeB;
+								sB=Pipi->SizeA;
+							}
+							spc.add(sA,
+								sB,
+								true,
+								Pipi->Length);
+							VRnd.append(spc);
+						}
+						else
+						{
+							if (Pipi->SizeA>Pipi->SizeB)
+							{
+								sA=Pipi->SizeA;
+								sB=Pipi->SizeB;
+							} 
+							else
+							{
+								sA=Pipi->SizeB;
+								sB=Pipi->SizeA;
+							}
+
+							spc.add(sA,
+								sB,
+								false,
+								Pipi->Length);
+							VRct.append(spc);
+						}
+
+
+
+
+					}
+
+					if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+					{	
+
+						if (Tapie->ThisRound==true)
+						{
+
+
+							sA=Tapie->SizeA;
+							sB=Tapie->SizeB;
+							sWa=5*floor((Tapie->Swectangle+(2*M_PI/180))/5*180/M_PI);
+							//consoleprint(sWa,_T("\nSWA:"));
+							//consoleprint(Tapie->Swectangle,_T("\nTapie->Swectangle:"));
+							spc.add(sA,
+								sB,
+								true,
+								1,
+								sWa);
+
+							if (Tapie->Swectangle>(M_PI/4+0.01))
+
+
+								spc.Length2= M_PI*(length2p(Tapie->pMass[0],Tapie->pMass[1])*2+length2p(Tapie->pMass[5],Tapie->pMass[6]))*Tapie->SizeA/1000000;
+
+
+							else
+
+								spc.Length2= M_PI*(length2p(Tapie->pMass45[0],Tapie->pMass45[1])+length2p(Tapie->pMass45[3],Tapie->pMass45[4]))*Tapie->SizeA/1000000;
+
+							TRnd.append(spc);
+						}
+						else
+						{
+
+							sA=Tapie->SizeA;
+							sB=Tapie->SizeB;
+
+							sWa=5*floor(((Tapie->Swectangle)+(2*M_PI/180))/5*180/M_PI);
+							//consoleprint(sWa,_T("\nSWA:"));
+							//consoleprint(Tapie->Swectangle,_T("\nTapie->Swectangle:"));
+							//consoleprint((180*M_PI/100),_T("\n(180*M_PI/100):"));
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								sWa);
+
+							spc.Length2= (Tapie->Swectangle)/(2*M_PI) 
+								*(2*(M_PI*(Tapie->Radius+Tapie->SizeA)*(Tapie->Radius+Tapie->SizeA)/1000000
+								-M_PI*(Tapie->Radius)*(Tapie->Radius)/1000000) 
+								+2*M_PI*(Tapie->SizeA+Tapie->Radius)/1000*Tapie->SizeB/1000
+								+2*M_PI*(Tapie->Radius)/1000*Tapie->SizeB/1000);
+							//  							consoleprint(spc.Length2,_T("\nspc.Length2"));
+							//  							consoleprint((Tapie->Swectangle)/(2*M_PI),_T("\n(Tapie->Swectangle)/(2*M_PI)"));
+							//  							consoleprint(M_PI*(Tapie->Radius+Tapie->SizeA)*(Tapie->Radius+Tapie->SizeA)/4000000,_T("\nM_PI*(Tapie->Radius+Tapie->SizeA)*(Tapie->Radius+Tapie->SizeA)/4000000 "));
+							//  							consoleprint(M_PI*(Tapie->Radius)*(Tapie->Radius)/4000000 ,_T("\nM_PI*(Tapie->Radius)*(Tapie->Radius)/4000000 "));
+							//  							consoleprint(M_PI*(Tapie->SizeA+Tapie->Radius)/1000*Tapie->SizeB/1000,_T("\nM_PI*(Tapie->SizeA+Tapie->Radius)/1000*Tapie->SizeB/1000 "));
+							//  							consoleprint(M_PI*(Tapie->Radius)/1000*Tapie->SizeB/1000,_T("\nM_PI*(Tapie->Radius)/1000*Tapie->SizeB/1000 "));
+							// 
+
+							TRct.append(spc);
+						}
+
+					}
+
+					if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+					{	
+
+						sA=Wyeie->SizeApr;
+						sB=Wyeie->SizeBpr;
+						sA2=Wyeie->SizeAotv;
+						sB2=Wyeie->SizeBotv;
+
+
+						if ((Wyeie->ThisRoundpr==true)&&(Wyeie->ThisRoundotv==true))
+						{
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Wyeie->LengthPl,
+								sA2,
+								sB2);
+							if (sA>=sA2)
+							{
+								drad=sA/2-sqrt((sA/2)*(sA/2)-(sA2/2)*(sA2/2));
+
+							}
+							else
+								drad=sA/2;
+							spc.Length2=(sA2+Wyeie->LengthPl*2)*M_PI*sA/1000000 ///С†РёР»РёРЅРґСЂ РїСЂРѕС…РѕРґР°
+								+(Wyeie->LengthPl+drad)*M_PI*sA2/1000000 ;  ///С†РёР»РёРЅРґСЂ РѕС‚РІРѕРґР°
+							WPRndORnd.append(spc);
+						}
+
+						if ((Wyeie->ThisRoundpr==true)&&(Wyeie->ThisRoundotv==false))
+						{
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Wyeie->LengthPl,
+								sA2,
+								sB2);
+
+							if (sA>=sB2)
+							{
+								drad=sA/2-sqrt((sA/2)*(sA/2)-(sB2/2)*(sB2/2));
+
+							}
+							else
+								drad=sA/2;
+
+							spc.Length2=(sA2+Wyeie->LengthPl*2)*M_PI*sA/1000000 ///С†РёР»РёРЅРґСЂ РїСЂРѕС…РѕРґР°
+								+(Wyeie->LengthPl+drad)*(sB2+sA2)/500000;   ///РїСЂРёР·РјР° РѕС‚РІРѕРґР°
+							WPRndORct.append(spc);
+						}
+
+						if ((Wyeie->ThisRoundpr==false)&&(Wyeie->ThisRoundotv==false))
+						{
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Wyeie->LengthPl,
+								sA2,
+								sB2);
+
+							spc.Length2=(sA2+Wyeie->LengthPl*2)*(sB+sA)/500000 ///РїСЂРёР·РјР° РїСЂРѕС…РѕРґР°
+								+(Wyeie->LengthPl)*(sB2+sA2)/500000;   ///РїСЂРёР·РјР° РѕС‚РІРѕРґР°
+							WPRctORct.append(spc);
+						}
+
+						if ((Wyeie->ThisRoundpr==false)&&(Wyeie->ThisRoundotv==true))
+						{
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Wyeie->LengthPl,
+								sA2,
+								sB2);
+
+							spc.Length2=(sA2+Wyeie->LengthPl*2)*(sB+sA)/500000 ///РїСЂРёР·РјР° РїСЂРѕС…РѕРґР°
+								+(Wyeie->LengthPl)*M_PI*sA2/1000000;  ///С†РёР»РёРЅРґСЂ РѕС‚РІРѕРґР°
+							WPRctORnd.append(spc);
+						}
+
+
+
+					}
+
+					if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+					{	
+
+						sA=Transie->SizeAp1;
+						sB=Transie->SizeBp1;
+						sA2=Transie->SizeAp2;
+						sB2=Transie->SizeBp2;
+
+						//РєСЂСѓРіР»С‹Р№ РєСЂСѓРіР»С‹Р№
+						if ((Transie->ThisRoundp1==true)&&(Transie->ThisRoundp2==true))
+						{
+
+							if (Transie->SizeAp1>Transie->SizeAp2)
+							{
+								sA=Transie->SizeAp1;
+								sB=Transie->SizeBp1;
+								sA2=Transie->SizeAp2;
+								sB2=Transie->SizeBp2;
+							}
+
+							else
+							{
+								sA=Transie->SizeAp2;
+								sB=Transie->SizeBp2;
+								sA2=Transie->SizeAp1;
+								sB2=Transie->SizeBp1;
+							}
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Transie->LengthTr,
+								sA2,
+								sB2);
+
+							drad=sqrt(Transie->LengthTr*Transie->LengthTr+(sA/2-sA2/2)*(sA/2-sA2/2))/1000;
+							spc.Length2=drad*M_PI*(sA/2+sA2/2)/1000;
+							TRndRnd.append(spc);
+						}
+
+
+
+						//РєСЂСѓРіР»С‹Р№ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅ
+						if ((Transie->ThisRoundp1==true)&&(Transie->ThisRoundp2==false))
+						{
+
+							if (Transie->SizeAp2>Transie->SizeBp2)
+							{
+								sA=Transie->SizeAp1;
+								sB=Transie->SizeBp1;
+								sA2=Transie->SizeAp2;
+								sB2=Transie->SizeBp2;
+							}
+
+							else
+							{
+								sA=Transie->SizeAp1;
+								sB=Transie->SizeBp1;
+								sA2=Transie->SizeBp2;
+								sB2=Transie->SizeAp2;
+							}
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Transie->LengthTr,
+								sA2,
+								sB2);
+							prad=(sA2+sB2)/M_PI;
+							drad=sqrt(Transie->LengthTr*Transie->LengthTr+(sA/2-prad)*(sA/2-prad))/1000;
+							spc.Length2=drad*M_PI*(sA/2+prad)/1000;
+							TRndRct.append(spc);
+						}
+
+
+						// РїСЂСЏРјРѕСѓРіРѕР»СЊРЅ РєСЂСѓРіР»С‹Р№
+						if ((Transie->ThisRoundp1==false)&&(Transie->ThisRoundp2==true))
+						{
+
+							if (Transie->SizeAp1>Transie->SizeBp1)
+							{
+								sA=Transie->SizeAp2;
+								sB=Transie->SizeBp2;
+								sA2=Transie->SizeAp1;
+								sB2=Transie->SizeBp1;
+							}
+
+							else
+							{
+								sA=Transie->SizeAp2;
+								sB=Transie->SizeBp2;
+								sA2=Transie->SizeBp1;
+								sB2=Transie->SizeAp1;
+							}
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Transie->LengthTr,
+								sA2,
+								sB2);
+							prad=(sA2+sB2)/M_PI;
+							drad=sqrt(Transie->LengthTr*Transie->LengthTr+(sA/2-prad)*(sA/2-prad))/1000;
+							spc.Length2=drad*M_PI*(sA/2+prad)/1000;
+							TRndRct.append(spc);
+						}
+
+						// РїСЂСЏРјРѕСѓРіРѕР»СЊРЅ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅ
+						if ((Transie->ThisRoundp1==false)&&(Transie->ThisRoundp2==false))
+						{
+
+							if (Transie->SizeAp1>Transie->SizeBp1)
+							{
+
+
+								if (Transie->SizeAp1>Transie->SizeAp2)
+								{
+
+									sA=Transie->SizeAp1;
+									sB=Transie->SizeBp1;
+									sA2=Transie->SizeAp2;
+									sB2=Transie->SizeBp2;
+								}
+								else
+								{
+									if (Transie->SizeAp2>Transie->SizeBp2)
+									{
+										sA=Transie->SizeAp2;
+										sB=Transie->SizeBp2;
+										sA2=Transie->SizeAp1;
+										sB2=Transie->SizeBp1;
+									} 
+									else
+									{
+										sA=Transie->SizeBp2;
+										sB=Transie->SizeAp2;
+										sA2=Transie->SizeBp1;
+										sB2=Transie->SizeAp1;
+									}
+								}
+							}
+
+							else
+							{
+								if (Transie->SizeBp1>Transie->SizeBp2)
+								{
+									sA=Transie->SizeBp1;
+									sB=Transie->SizeAp1;
+									sA2=Transie->SizeBp2;
+									sB2=Transie->SizeAp2;
+								} 
+								else
+								{
+									if (Transie->SizeBp2>Transie->SizeAp2)
+									{
+										sA=Transie->SizeBp2;
+										sB=Transie->SizeAp2;
+										sA2=Transie->SizeBp1;
+										sB2=Transie->SizeAp1;
+									} 
+									else
+									{
+										sA=Transie->SizeAp2;
+										sB=Transie->SizeBp2;
+										sA2=Transie->SizeAp1;
+										sB2=Transie->SizeBp1;
+									}
+								}		
+
+
+
+
+							}
+
+							spc.add(sA,
+								sB,
+								false,
+								1,
+								Transie->LengthTr,
+								sA2,
+								sB2);
+							prad=(sA2+sB2)/M_PI;
+							prad2=(sA+sB)/M_PI;
+							drad=sqrt(Transie->LengthTr*Transie->LengthTr+(prad2-prad)*(prad2-prad))/1000;
+							spc.Length2=drad*M_PI*(prad2+prad)/1000;
+							TRctRct.append(spc);
+						}
+
+					}
+
+
+					pEnt->close();
+
+				}
+			}
+
+
+		}
+
+
+
+
+		double buf1,buf2,buf3,buf4;
+		long j;
+
+		//РџРѕРґСЃС‡РµС‚ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹С… РІРѕР·РґСѓС…РѕРІРѕРґРѕРІ (РїРµСЂРµРјРµРЅРЅР°СЏ VRct)
+		long lenP=VRct.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((VRct[i].SizeA>VRct[j].SizeA)||((VRct[i].SizeA==VRct[j].SizeA)&&(VRct[i].SizeB>VRct[j].SizeB)))
+					{
+						buf1 = VRct[i].SizeA;
+						buf2 = VRct[i].SizeB;
+						buf3 = VRct[i].Length;
+
+						VRct[i].SizeA=VRct[j].SizeA;
+						VRct[i].SizeB=VRct[j].SizeB;
+						VRct[i].Length=VRct[j].Length;
+
+						VRct[j].SizeA=buf1;
+						VRct[j].SizeB=buf2;
+						VRct[j].Length=buf3;
+					}
+
+					AcArray<SPEC> VRct2;
+					VRct2.append(VRct[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((VRct2[j].SizeA==VRct[i].SizeA)&&(VRct2[j].SizeB==VRct[i].SizeB))
+
+							VRct2[j].Length=VRct2[j].Length+VRct[i].Length;
+
+
+						else 
+						{
+							VRct2.append(VRct[i]);
+							j++;
+
+						}
+
+					}
+					VRct=VRct2;
+					lenP=VRct.logicalLength();
+
+		}
+
+
+
+
+
+
+
+
+		//РџРѕРґСЃС‡РµС‚ РєСЂСѓРіР»С‹С… РІРѕР·РґСѓС…РѕРІРѕРґРѕРІ РІРѕР·РґСѓС…РѕРІРѕРґРѕРІ (РїРµСЂРµРјРµРЅРЅР°СЏ VRnd)
+
+		lenP=VRnd.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if (VRnd[i].SizeA>VRnd[j].SizeA)
+					{
+						buf1 = VRnd[i].SizeA;
+						buf2 = VRnd[i].SizeB;
+						buf3 = VRnd[i].Length;
+
+						VRnd[i].SizeA=VRnd[j].SizeA;
+						VRnd[i].SizeB=VRnd[j].SizeB;
+						VRnd[i].Length=VRnd[j].Length;
+
+						VRnd[j].SizeA=buf1;
+						VRnd[j].SizeB=buf2;
+						VRnd[j].Length=buf3;
+					}
+
+					AcArray<SPEC> VRnd2;
+					VRnd2.append(VRnd[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((VRnd2[j].SizeA==VRnd[i].SizeA)&&(VRnd2[j].SizeB==VRnd[i].SizeB))
+
+							VRnd2[j].Length=VRnd2[j].Length+VRnd[i].Length;
+
+						else 
+						{
+							VRnd2.append(VRnd[i]);
+							j++;
+						}
+
+					}
+					VRnd=VRnd2;
+					lenP=VRnd.logicalLength();
+
+
+
+
+		}
+
+
+		//РџРѕРґСЃС‡РµС‚ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹С… РѕС‚РІРѕРґРѕРІ (РїРµСЂРµРјРµРЅРЅР°СЏ TRct)
+		lenP=TRct.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((TRct[i].Swectangle>TRct[j].Swectangle)||
+						((TRct[i].Swectangle==TRct[j].Swectangle)&&
+						((TRct[i].SizeA>TRct[j].SizeA)||((TRct[i].SizeA==TRct[j].SizeA)&&(TRct[i].SizeB>TRct[j].SizeB)))))
+					{
+						buf1 = TRct[i].SizeA;
+						buf2 = TRct[i].SizeB;
+						buf3 = TRct[i].Swectangle;
+						buf4 = TRct[i].Length2;
+
+						TRct[i].SizeA=TRct[j].SizeA;
+						TRct[i].SizeB=TRct[j].SizeB;
+						TRct[i].Swectangle=TRct[j].Swectangle;
+						TRct[i].Length2=TRct[j].Length2;
+
+						TRct[j].SizeA=buf1;
+						TRct[j].SizeB=buf2;
+						TRct[j].Swectangle=buf3;
+						TRct[j].Length2=buf4;
+
+					}
+
+					AcArray<SPEC> TRct2;
+					TRct2.append(TRct[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((TRct2[j].SizeA==TRct[i].SizeA)&&(TRct2[j].SizeB==TRct[i].SizeB)&&(TRct2[j].Swectangle==TRct[i].Swectangle))
+
+							TRct2[j].Length=TRct2[j].Length+TRct[i].Length;
+
+						else 
+						{
+							TRct2.append(TRct[i]);
+							j++;
+						}
+
+					}
+					TRct=TRct2;
+					lenP=TRct.logicalLength();
+
+
+
+		}
+
+
+
+		//РџРѕРґСЃС‡РµС‚ РєСЂСѓРіР»С‹С… РѕС‚РІРѕРґРѕРІ (РїРµСЂРµРјРµРЅРЅР°СЏ TRnd)
+		lenP=TRnd.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((TRnd[i].Swectangle>TRnd[j].Swectangle)||
+						((TRnd[i].Swectangle==TRnd[j].Swectangle)&&
+						((TRnd[i].SizeA>TRnd[j].SizeA)||((TRnd[i].SizeA==TRnd[j].SizeA)&&(TRnd[i].SizeB>TRnd[j].SizeB)))))
+					{
+						buf1 = TRnd[i].SizeA;
+						buf2 = TRnd[i].SizeB;
+						buf3 = TRnd[i].Swectangle;
+						buf4 = TRnd[i].Length2;
+
+
+
+						TRnd[i].SizeA=TRnd[j].SizeA;
+						TRnd[i].SizeB=TRnd[j].SizeB;
+						TRnd[i].Swectangle=TRnd[j].Swectangle;
+						TRnd[i].Length2=TRnd[j].Length2;
+
+						TRnd[j].SizeA=buf1;
+						TRnd[j].SizeB=buf2;
+						TRnd[j].Swectangle=buf3;
+						TRnd[j].Length2=buf4;
+					}
+
+					AcArray<SPEC> TRnd2;
+					TRnd2.append(TRnd[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((TRnd2[j].SizeA==TRnd[i].SizeA)&&(TRnd2[j].SizeB==TRnd[i].SizeB)&&(TRnd2[j].Swectangle==TRnd[i].Swectangle))
+
+							TRnd2[j].Length=TRnd2[j].Length+TRnd[i].Length;
+
+						else 
+						{
+							TRnd2.append(TRnd[i]);
+							j++;
+						}
+
+					}
+					TRnd=TRnd2;
+					lenP=TRnd.logicalLength();
+
+
+
+		}
+
+
+
+
+		SPEC buff;
+
+		//РџРѕРґСЃС‡РµС‚ С‚СЂРѕР№РЅРёРєРѕРІ РїСЂСЏРј РїСЂСЏРј (РїРµСЂРµРјРµРЅРЅР°СЏ WPRctORct)
+		lenP=WPRctORct.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((WPRctORct[i].Swectangle>WPRctORct[j].Swectangle)||
+						((WPRctORct[i].Swectangle==WPRctORct[j].Swectangle)&&
+						((WPRctORct[i].SizeA>WPRctORct[j].SizeA)||
+						((WPRctORct[i].SizeA==WPRctORct[j].SizeA)&&
+						((WPRctORct[i].SizeB>WPRctORct[j].SizeB)||
+						((WPRctORct[i].SizeB==WPRctORct[j].SizeB)&&
+						((WPRctORct[i].SizeA2>WPRctORct[j].SizeA2)||
+						((WPRctORct[i].SizeA2==WPRctORct[j].SizeA2)&&
+						((WPRctORct[i].SizeA3>WPRctORct[j].SizeA3)
+						)
+						)
+						)
+						)
+						)
+						)
+						)
+						)	
+						)
+					{
+
+
+						buff=WPRctORct[i];
+						WPRctORct[i]=WPRctORct[j];
+						WPRctORct[j]=buff;
+
+
+
+					}
+
+					AcArray<SPEC> WPRctORct2;
+					WPRctORct2.append(WPRctORct[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((WPRctORct2[j].Swectangle==WPRctORct[i].Swectangle)&&
+							(WPRctORct2[j].SizeA==WPRctORct[i].SizeA)&&
+							(WPRctORct2[j].SizeB==WPRctORct[i].SizeB)&&
+							(WPRctORct2[j].SizeA2==WPRctORct[i].SizeA2)&&
+							(WPRctORct2[j].SizeA3==WPRctORct[i].SizeA3)
+
+							)
+
+							WPRctORct2[j].Length=WPRctORct2[j].Length+WPRctORct[i].Length;
+
+						else 
+						{
+							WPRctORct2.append(WPRctORct[i]);
+							j++;
+						}
+
+					}
+					WPRctORct=WPRctORct2;
+					lenP=WPRctORct.logicalLength();
+
+
+
+		}
+
+
+
+
+
+		//РџРѕРґСЃС‡РµС‚ С‚СЂРѕР№РЅРёРєРѕРІ РїСЂСЏРј РєСЂСѓРіР» (РїРµСЂРµРјРµРЅРЅР°СЏ WPRctORnd)
+		lenP=WPRctORnd.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((WPRctORnd[i].Swectangle>WPRctORnd[j].Swectangle)||
+						((WPRctORnd[i].Swectangle==WPRctORnd[j].Swectangle)&&
+						((WPRctORnd[i].SizeA>WPRctORnd[j].SizeA)||
+						((WPRctORnd[i].SizeA==WPRctORnd[j].SizeA)&&
+						((WPRctORnd[i].SizeB>WPRctORnd[j].SizeB)||
+						((WPRctORnd[i].SizeB==WPRctORnd[j].SizeB)&&
+						((WPRctORnd[i].SizeA2>WPRctORnd[j].SizeA2)||
+						((WPRctORnd[i].SizeA2==WPRctORnd[j].SizeA2)&&
+						((WPRctORnd[i].SizeA3>WPRctORnd[j].SizeA3)
+						)
+						)
+						)
+						)
+						)
+						)
+						)
+						)	
+						)
+					{
+
+
+						buff=WPRctORnd[i];
+						WPRctORnd[i]=WPRctORnd[j];
+						WPRctORnd[j]=buff;
+
+
+
+					}
+
+					AcArray<SPEC> WPRctORnd2;
+					WPRctORnd2.append(WPRctORnd[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((WPRctORnd2[j].Swectangle==WPRctORnd[i].Swectangle)&&
+							(WPRctORnd2[j].SizeA==WPRctORnd[i].SizeA)&&
+							(WPRctORnd2[j].SizeB==WPRctORnd[i].SizeB)&&
+							(WPRctORnd2[j].SizeA2==WPRctORnd[i].SizeA2)&&
+							(WPRctORnd2[j].SizeA3==WPRctORnd[i].SizeA3)
+
+							)
+
+							WPRctORnd2[j].Length=WPRctORnd2[j].Length+WPRctORnd[i].Length;
+
+						else 
+						{
+							WPRctORnd2.append(WPRctORnd[i]);
+							j++;
+						}
+
+					}
+					WPRctORnd=WPRctORnd2;
+					lenP=WPRctORnd.logicalLength();
+
+
+
+		}
+
+
+		//РџРѕРґСЃС‡РµС‚ С‚СЂРѕР№РЅРёРєРѕРІ РєСЂСѓРіР» РєСЂСѓРіР» (РїРµСЂРµРјРµРЅРЅР°СЏ WPRndORnd)
+		lenP=WPRndORnd.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((WPRndORnd[i].Swectangle>WPRndORnd[j].Swectangle)||
+						((WPRndORnd[i].Swectangle==WPRndORnd[j].Swectangle)&&
+						((WPRndORnd[i].SizeA>WPRndORnd[j].SizeA)||
+						((WPRndORnd[i].SizeA==WPRndORnd[j].SizeA)&&
+						((WPRndORnd[i].SizeB>WPRndORnd[j].SizeB)||
+						((WPRndORnd[i].SizeB==WPRndORnd[j].SizeB)&&
+						((WPRndORnd[i].SizeA2>WPRndORnd[j].SizeA2)||
+						((WPRndORnd[i].SizeA2==WPRndORnd[j].SizeA2)&&
+						((WPRndORnd[i].SizeA3>WPRndORnd[j].SizeA3)
+						)
+						)
+						)
+						)
+						)
+						)
+						)
+						)	
+						)
+					{
+
+
+						buff=WPRndORnd[i];
+						WPRndORnd[i]=WPRndORnd[j];
+						WPRndORnd[j]=buff;
+
+
+
+					}
+
+					AcArray<SPEC> WPRndORnd2;
+					WPRndORnd2.append(WPRndORnd[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((WPRndORnd2[j].Swectangle==WPRndORnd[i].Swectangle)&&
+							(WPRndORnd2[j].SizeA==WPRndORnd[i].SizeA)&&
+							(WPRndORnd2[j].SizeB==WPRndORnd[i].SizeB)&&
+							(WPRndORnd2[j].SizeA2==WPRndORnd[i].SizeA2)&&
+							(WPRndORnd2[j].SizeA3==WPRndORnd[i].SizeA3)
+
+							)
+
+							WPRndORnd2[j].Length=WPRndORnd2[j].Length+WPRndORnd[i].Length;
+
+						else 
+						{
+							WPRndORnd2.append(WPRndORnd[i]);
+							j++;
+						}
+
+					}
+					WPRndORnd=WPRndORnd2;
+					lenP=WPRndORnd.logicalLength();
+
+
+
+		}
+
+
+		//РџРѕРґСЃС‡РµС‚ С‚СЂРѕР№РЅРёРєРѕРІ РєСЂСѓРіР» РїСЂСЏРј  (РїРµСЂРµРјРµРЅРЅР°СЏ WPRndORct)
+		lenP=WPRndORct.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((WPRndORct[i].Swectangle>WPRndORct[j].Swectangle)||
+						((WPRndORct[i].Swectangle==WPRndORct[j].Swectangle)&&
+						((WPRndORct[i].SizeA>WPRndORct[j].SizeA)||
+						((WPRndORct[i].SizeA==WPRndORct[j].SizeA)&&
+						((WPRndORct[i].SizeB>WPRndORct[j].SizeB)||
+						((WPRndORct[i].SizeB==WPRndORct[j].SizeB)&&
+						((WPRndORct[i].SizeA2>WPRndORct[j].SizeA2)||
+						((WPRndORct[i].SizeA2==WPRndORct[j].SizeA2)&&
+						((WPRndORct[i].SizeA3>WPRndORct[j].SizeA3)
+						)
+						)
+						)
+						)
+						)
+						)
+						)
+						)	
+						)
+					{
+
+
+						buff=WPRndORct[i];
+						WPRndORct[i]=WPRndORct[j];
+						WPRndORct[j]=buff;
+
+
+
+					}
+
+					AcArray<SPEC> WPRndORct2;
+					WPRndORct2.append(WPRndORct[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((WPRndORct2[j].Swectangle==WPRndORct[i].Swectangle)&&
+							(WPRndORct2[j].SizeA==WPRndORct[i].SizeA)&&
+							(WPRndORct2[j].SizeB==WPRndORct[i].SizeB)&&
+							(WPRndORct2[j].SizeA2==WPRndORct[i].SizeA2)&&
+							(WPRndORct2[j].SizeA3==WPRndORct[i].SizeA3)
+
+							)
+
+							WPRndORct2[j].Length=WPRndORct2[j].Length+WPRndORct[i].Length;
+
+						else 
+						{
+							WPRndORct2.append(WPRndORct[i]);
+							j++;
+						}
+
+					}
+					WPRndORct=WPRndORct2;
+					lenP=WPRndORct.logicalLength();
+
+
+
+		}
+
+
+
+
+		//РџРѕРґСЃС‡РµС‚ РїРµСЂРµС…РѕРґ РєСЂСѓРіР» РєСЂСѓРіР» (РїРµСЂРµРјРµРЅРЅР°СЏ TRndRnd)
+		lenP=TRndRnd.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((TRndRnd[i].Swectangle>TRndRnd[j].Swectangle)||
+						((TRndRnd[i].Swectangle==TRndRnd[j].Swectangle)&&
+						((TRndRnd[i].SizeA>TRndRnd[j].SizeA)||
+						((TRndRnd[i].SizeA==TRndRnd[j].SizeA)&&
+						((TRndRnd[i].SizeB>TRndRnd[j].SizeB)||
+						((TRndRnd[i].SizeB==TRndRnd[j].SizeB)&&
+						((TRndRnd[i].SizeA2>TRndRnd[j].SizeA2)||
+						((TRndRnd[i].SizeA2==TRndRnd[j].SizeA2)&&
+						((TRndRnd[i].SizeA3>TRndRnd[j].SizeA3)
+						)
+						)
+						)
+						)
+						)
+						)
+						)
+						)	
+						)
+					{
+
+
+						buff=TRndRnd[i];
+						TRndRnd[i]=TRndRnd[j];
+						TRndRnd[j]=buff;
+
+
+
+					}
+
+					AcArray<SPEC> TRndRnd2;
+					TRndRnd2.append(TRndRnd[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((TRndRnd2[j].Swectangle==TRndRnd[i].Swectangle)&&
+							(TRndRnd2[j].SizeA==TRndRnd[i].SizeA)&&
+							(TRndRnd2[j].SizeB==TRndRnd[i].SizeB)&&
+							(TRndRnd2[j].SizeA2==TRndRnd[i].SizeA2)&&
+							(TRndRnd2[j].SizeA3==TRndRnd[i].SizeA3)
+
+							)
+
+							TRndRnd2[j].Length=TRndRnd2[j].Length+TRndRnd[i].Length;
+
+						else 
+						{
+							TRndRnd2.append(TRndRnd[i]);
+							j++;
+						}
+
+					}
+					TRndRnd=TRndRnd2;
+					lenP=TRndRnd.logicalLength();
+
+
+
+		}
+
+
+
+		//РџРѕРґСЃС‡РµС‚ РїРµСЂРµС…РѕРґ РєСЂСѓРіР» РїСЂСЏРј(РїРµСЂРµРјРµРЅРЅР°СЏ TRndRct)
+		lenP=TRndRct.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((TRndRct[i].Swectangle>TRndRct[j].Swectangle)||
+						((TRndRct[i].Swectangle==TRndRct[j].Swectangle)&&
+						((TRndRct[i].SizeA>TRndRct[j].SizeA)||
+						((TRndRct[i].SizeA==TRndRct[j].SizeA)&&
+						((TRndRct[i].SizeB>TRndRct[j].SizeB)||
+						((TRndRct[i].SizeB==TRndRct[j].SizeB)&&
+						((TRndRct[i].SizeA2>TRndRct[j].SizeA2)||
+						((TRndRct[i].SizeA2==TRndRct[j].SizeA2)&&
+						((TRndRct[i].SizeA3>TRndRct[j].SizeA3)
+						)
+						)
+						)
+						)
+						)
+						)
+						)
+						)	
+						)
+					{
+
+
+						buff=TRndRct[i];
+						TRndRct[i]=TRndRct[j];
+						TRndRct[j]=buff;
+
+
+
+					}
+
+					AcArray<SPEC> TRndRct2;
+					TRndRct2.append(TRndRct[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((TRndRct2[j].Swectangle==TRndRct[i].Swectangle)&&
+							(TRndRct2[j].SizeA==TRndRct[i].SizeA)&&
+							(TRndRct2[j].SizeB==TRndRct[i].SizeB)&&
+							(TRndRct2[j].SizeA2==TRndRct[i].SizeA2)&&
+							(TRndRct2[j].SizeA3==TRndRct[i].SizeA3)
+
+							)
+
+							TRndRct2[j].Length=TRndRct2[j].Length+TRndRct[i].Length;
+
+						else 
+						{
+							TRndRct2.append(TRndRct[i]);
+							j++;
+						}
+
+					}
+					TRndRct=TRndRct2;
+					lenP=TRndRct.logicalLength();
+
+
+
+		}
+
+
+
+		//РџРѕРґСЃС‡РµС‚ РїРµСЂРµС…РѕРґ РїСЂСЏРј РїСЂСЏРј(РїРµСЂРµРјРµРЅРЅР°СЏ TRctRct)
+		lenP=TRctRct.logicalLength();
+		if (lenP>0)
+		{
+
+			for (long i=0;i<lenP;i++)
+
+				for (long j = i+1; j < lenP; j++)
+
+					if ((TRctRct[i].Swectangle>TRctRct[j].Swectangle)||
+						((TRctRct[i].Swectangle==TRctRct[j].Swectangle)&&
+						((TRctRct[i].SizeA>TRctRct[j].SizeA)||
+						((TRctRct[i].SizeA==TRctRct[j].SizeA)&&
+						((TRctRct[i].SizeB>TRctRct[j].SizeB)||
+						((TRctRct[i].SizeB==TRctRct[j].SizeB)&&
+						((TRctRct[i].SizeA2>TRctRct[j].SizeA2)||
+						((TRctRct[i].SizeA2==TRctRct[j].SizeA2)&&
+						((TRctRct[i].SizeA3>TRctRct[j].SizeA3)
+						)
+						)
+						)
+						)
+						)
+						)
+						)
+						)	
+						)
+					{
+
+
+						buff=TRctRct[i];
+						TRctRct[i]=TRctRct[j];
+						TRctRct[j]=buff;
+
+
+
+					}
+
+					AcArray<SPEC> TRctRct2;
+					TRctRct2.append(TRctRct[0]);
+					j=0;
+					for (long i=1;i<lenP;i++)
+
+					{
+						if ((TRctRct2[j].Swectangle==TRctRct[i].Swectangle)&&
+							(TRctRct2[j].SizeA==TRctRct[i].SizeA)&&
+							(TRctRct2[j].SizeB==TRctRct[i].SizeB)&&
+							(TRctRct2[j].SizeA2==TRctRct[i].SizeA2)&&
+							(TRctRct2[j].SizeA3==TRctRct[i].SizeA3)
+
+							)
+
+							TRctRct2[j].Length=TRctRct2[j].Length+TRctRct[i].Length;
+
+						else 
+						{
+							TRctRct2.append(TRctRct[i]);
+							j++;
+						}
+
+					}
+					TRctRct=TRctRct2;
+					lenP=TRctRct.logicalLength();
+
+
+
+		}
+
+
+
+		//РѕС‚СЂРёСЃРѕРІРєР° СЃРїРµС†
+		ACHAR buffer[512], buffer1[512], buffer2[512] ;
+
+		double pArea=0;
+		double pSumArea=0;
+
+
+
+
+		if ((VRct.logicalLength()>0)||
+			(VRnd.logicalLength()>0)	
+			)
+		{
+			pb=AddSpecLine(pb,_T("Р’РѕР·РґСѓС…РѕРІРѕРґС‹:"));
+		}
+
+
+
+		if (VRnd.logicalLength()!=0)
+		{
+			//РѕС‚СЂРёСЃРѕРІРєР° РєСЂСѓРіР»С‹С…
+
+			for (long i=0;i<VRnd.logicalLength();i++)
+			{
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+				VRnd[i].Area=ceil(VRnd[i].Length/1000)*M_PI*VRnd[i].SizeA/1000;
+				pArea=VRnd[i].Area+pArea;
+				//
+
+
+				wcscpy_s(buffer1,_T("%%C"));
+				acdbRToS(VRnd[i].SizeA,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+				acdbRToS(ceil(VRnd[i].Length/100)/10,2,1,buffer2);
+				acdbRToS(VRnd[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("Рј"),buffer2,_T("Рј2"),buffer);
+
+			}
+			//acdbRToS(pArea,2,2,buffer);
+			//pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			//pSumArea=pSumArea+pArea;
+			//pArea=0;
+		}
+
+
+
+		//РѕС‚СЂРёСЃРѕРІРєР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹С…
+		if (VRct.logicalLength()!=0)
+		{
+			/*pb=AddSpecLine(pb,_T("РџСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹Рµ РІРѕР·РґСѓС…РѕРІРѕРґС‹:"));*/
+			for (long i=0;i<VRct.logicalLength();i++)
+			{
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+				VRct[i].Area=ceil(VRct[i].Length/1000)*2*(VRct[i].SizeA+VRct[i].SizeB)/1000;
+				pArea=VRct[i].Area+pArea;
+				//	
+				acdbRToS(VRct[i].SizeA,2,2,buffer1);
+				acdbRToS(VRct[i].SizeB,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				acdbRToS(ceil(VRct[i].Length/100)/10,2,1,buffer2);
+				acdbRToS(VRct[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("Рј"),buffer2,_T("Рј2"),buffer);
+
+			}
+
+		}
+
+
+
+		if ((VRct.logicalLength()>0)||
+			(VRnd.logicalLength()>0)	
+			)
+		{
+			acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;
+		}
+
+
+		/////РѕС‚РІРѕРґС‹
+
+		if ((TRct.logicalLength()>0)||
+			(TRnd.logicalLength()>0)	
+			)
+		{
+			pb=AddSpecLine(pb,_T("РћС‚РІРѕРґС‹:"));
+		}
+
+
+
+		double pl1,pl2;
+		//РѕС‚СЂРёСЃРѕРІРєР° РєСЂСѓРіР»С‹С… РѕС‚РІРѕРґРѕРІ
+		if (TRnd.logicalLength()!=0)
+		{
+
+			for (long i=0;i<TRnd.logicalLength();i++)
+			{
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				TRnd[i].Area=ceil(TRnd[i].Length)*TRnd[i].Length2;
+				pArea=TRnd[i].Area+pArea;
+
+				//
+
+
+				wcscpy_s(buffer1,_T("%%C"));
+				acdbRToS(TRnd[i].SizeA,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+
+				acdbRToS(TRnd[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" ("));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("%%d)"));
+
+				acdbRToS(ceil(TRnd[i].Length),2,2,buffer2);
+				acdbRToS(TRnd[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+
+		}
+
+
+
+
+		//РѕС‚СЂРёСЃРѕРІРєР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹С… РѕС‚РІРѕРґРѕРІ
+		if (TRct.logicalLength()!=0)
+		{
+			//pb=AddSpecLine(pb,_T("РџСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹Рµ РѕС‚РІРѕРґС‹:"));
+			for (long i=0;i<TRct.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				TRct[i].Area=ceil(TRct[i].Length)*TRct[i].Length2;
+				pArea=TRct[i].Area+pArea;
+
+				//
+
+				acdbRToS(TRct[i].SizeA,2,2,buffer1);
+				acdbRToS(TRct[i].SizeB,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				acdbRToS(TRct[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" ("));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("%%d)"));
+
+				acdbRToS(ceil(TRct[i].Length),2,2,buffer2);
+				acdbRToS(TRct[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+
+		}
+
+
+		if ((TRct.logicalLength()>0)||
+			(TRnd.logicalLength()>0)	
+			)
+		{
+			acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;
+		}
+
+
+
+
+		/////С‚СЂРѕР№РЅРёРєРё
+
+
+		if ((WPRctORct.logicalLength()>0)||
+			(WPRctORnd.logicalLength()>0)||
+			(WPRndORct.logicalLength()>0)||
+			(WPRndORnd.logicalLength()>0)
+			)
+		{
+			pb=AddSpecLine(pb,_T("РўСЂРѕР№РЅРёРєРё:"));
+		}
+
+
+
+
+
+		//РѕС‚СЂРёСЃРѕРІРєР° С‚СЂРѕР№РЅРёРєР°  РєСЂСѓРіР» РєСЂСѓРіР»
+		if (WPRndORnd.logicalLength()!=0)
+		{
+
+			for (long i=0;i<WPRndORnd.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				WPRndORnd[i].Area=ceil(WPRndORnd[i].Length)*WPRndORnd[i].Length2;
+				pArea=WPRndORnd[i].Area+pArea;
+
+				//
+				wcscpy_s(buffer1,_T("%%c"));
+				acdbRToS(WPRndORnd[i].SizeA,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+
+
+				wcscat_s(buffer1,_T("x%%c"));
+				acdbRToS(WPRndORnd[i].SizeA2,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+
+
+
+
+				acdbRToS(WPRndORnd[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" (L="));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("РјРј)"));
+
+				acdbRToS(ceil(WPRndORnd[i].Length),2,2,buffer2);
+				acdbRToS(WPRndORnd[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+			/*	acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;*/
+
+
+
+		}
+
+
+
+		//РѕС‚СЂРёСЃРѕРІРєР° С‚СЂРѕР№РЅРёРєР°  РєСЂСѓРіР» РїСЂСЏРј
+		if (WPRndORct.logicalLength()!=0)
+		{
+			//pb=AddSpecLine(pb,_T("РўСЂРѕР№РЅРёРє РєСЂСѓРіР»-РїСЂСЏРј:"));
+			for (long i=0;i<WPRndORct.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				WPRndORct[i].Area=ceil(WPRndORct[i].Length)*WPRndORct[i].Length2;
+				pArea=WPRndORct[i].Area+pArea;
+
+				//
+				wcscpy_s(buffer1,_T("%%c"));
+				acdbRToS(WPRndORct[i].SizeA,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+
+
+				wcscat_s(buffer1,_T("x("));
+				acdbRToS(WPRndORct[i].SizeA2,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+				acdbRToS(WPRndORct[i].SizeA3,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+
+
+
+
+				acdbRToS(WPRndORct[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" (L="));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("РјРј)"));
+
+				acdbRToS(ceil(WPRndORct[i].Length),2,2,buffer2);
+				acdbRToS(WPRndORct[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+			/*	acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;*/
+
+
+
+		}
+
+
+
+
+
+
+
+		//РѕС‚СЂРёСЃРѕРІРєР° С‚СЂРѕР№РЅРёРєР°  РїСЂСЏРј РєСЂСѓРіР»
+		if (WPRctORnd.logicalLength()!=0)
+		{
+			//pb=AddSpecLine(pb,_T("РўСЂРѕР№РЅРёРє РїСЂСЏРј-РєСЂСѓРіР»:"));
+			for (long i=0;i<WPRctORnd.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				WPRctORnd[i].Area=ceil(WPRctORnd[i].Length)*WPRctORnd[i].Length2;
+				pArea=WPRctORnd[i].Area+pArea;
+
+				//
+				wcscpy_s(buffer1,_T("("));
+				acdbRToS(WPRctORnd[i].SizeA,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+				acdbRToS(WPRctORnd[i].SizeB,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+
+
+				wcscat_s(buffer1,_T("x%%c"));
+				acdbRToS(WPRctORnd[i].SizeA2,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+
+
+
+
+				acdbRToS(WPRctORnd[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" (L="));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("РјРј)"));
+
+				acdbRToS(ceil(WPRctORnd[i].Length),2,2,buffer2);
+				acdbRToS(WPRctORnd[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+			// 			acdbRToS(pArea,2,2,buffer);
+			// 			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			// 			pSumArea=pSumArea+pArea;
+			// 			pArea=0;
+
+
+
+		}
+
+		//РѕС‚СЂРёСЃРѕРІРєР° С‚СЂРѕР№РЅРёРєР° РїСЂСЏРј РїСЂСЏРј 
+		if (WPRctORct.logicalLength()!=0)
+		{
+			//pb=AddSpecLine(pb,_T("РўСЂРѕР№РЅРёРє РџСЂСЏРј-РџСЂСЏРј:"));
+			for (long i=0;i<WPRctORct.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				WPRctORct[i].Area=ceil(WPRctORct[i].Length)*WPRctORct[i].Length2;
+				pArea=WPRctORct[i].Area+pArea;
+
+				//
+				wcscpy_s(buffer1,_T("("));
+				acdbRToS(WPRctORct[i].SizeA,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+				acdbRToS(WPRctORct[i].SizeB,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+
+				wcscat_s(buffer1,_T("x("));
+				acdbRToS(WPRctORct[i].SizeA2,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+				acdbRToS(WPRctORct[i].SizeA3,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+
+
+
+				acdbRToS(WPRctORct[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" (L="));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("РјРј)"));
+
+				acdbRToS(ceil(WPRctORct[i].Length),2,2,buffer2);
+				acdbRToS(WPRctORct[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+
+
+
+
+		}
+
+		if ((WPRctORct.logicalLength()>0)||
+			(WPRctORnd.logicalLength()>0)||
+			(WPRndORct.logicalLength()>0)||
+			(WPRndORnd.logicalLength()>0)
+			)
+		{
+			acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;
+		}
+
+
+
+
+
+
+
+
+		//РїРµСЂРµС…РѕРґС‹
+
+		if ((TRndRnd.logicalLength()>0)||
+			(TRndRct.logicalLength()>0)||
+			(TRctRct.logicalLength()>0)
+			)
+		{
+			pb=AddSpecLine(pb,_T("РџРµСЂРµС…РѕРґС‹:"));
+		}
+
+		//РѕС‚СЂРёСЃРѕРІРєР° РїРµСЂРµС…РѕРґР°  РєСЂСѓРіР» РєСЂСѓРіР»
+		if (TRndRnd.logicalLength()!=0)
+		{
+
+			for (long i=0;i<TRndRnd.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				TRndRnd[i].Area=ceil(TRndRnd[i].Length)*TRndRnd[i].Length2;
+				pArea=TRndRnd[i].Area+pArea;
+
+				//
+				wcscpy_s(buffer1,_T("%%c"));
+				acdbRToS(TRndRnd[i].SizeA,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+
+
+				wcscat_s(buffer1,_T("x%%c"));
+				acdbRToS(TRndRnd[i].SizeA2,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+
+
+
+
+				acdbRToS(TRndRnd[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" (L="));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("РјРј)"));
+
+				acdbRToS(ceil(TRndRnd[i].Length),2,2,buffer2);
+				acdbRToS(TRndRnd[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+			/*	acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;*/
+
+		}
+		//РѕС‚СЂРёСЃРѕРІРєР° РїРµСЂРµС…РѕРґР°  РєСЂСѓРіР» РїСЂСЏРј
+		if (TRndRct.logicalLength()!=0)
+		{
+			//pb=AddSpecLine(pb,_T("РўСЂРѕР№РЅРёРє РєСЂСѓРіР»-РїСЂСЏРј:"));
+			for (long i=0;i<TRndRct.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				TRndRct[i].Area=ceil(TRndRct[i].Length)*TRndRct[i].Length2;
+				pArea=TRndRct[i].Area+pArea;
+
+				//
+				wcscpy_s(buffer1,_T("%%c"));
+				acdbRToS(TRndRct[i].SizeA,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+
+
+				wcscat_s(buffer1,_T("x("));
+				acdbRToS(TRndRct[i].SizeA2,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+				acdbRToS(TRndRct[i].SizeA3,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+
+
+
+
+				acdbRToS(TRndRct[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" (L="));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("РјРј)"));
+
+				acdbRToS(ceil(TRndRct[i].Length),2,2,buffer2);
+				acdbRToS(TRndRct[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+			/*	acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;*/
+
+
+
+		}
+
+
+
+		//РѕС‚СЂРёСЃРѕРІРєР° РїРµСЂРµС…РѕРґР° РїСЂСЏРј РїСЂСЏРј 
+		if (TRctRct.logicalLength()!=0)
+		{
+			//pb=AddSpecLine(pb,_T("РўСЂРѕР№РЅРёРє РџСЂСЏРј-РџСЂСЏРј:"));
+			for (long i=0;i<TRctRct.logicalLength();i++)
+			{
+
+				//РїРѕРґС‰РµС‚ РїР»РѕС‰Р°РґРё
+
+
+				TRctRct[i].Area=ceil(TRctRct[i].Length)*TRctRct[i].Length2;
+				pArea=TRctRct[i].Area+pArea;
+
+				//
+				wcscpy_s(buffer1,_T("("));
+				acdbRToS(TRctRct[i].SizeA,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+				acdbRToS(TRctRct[i].SizeB,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+
+				wcscat_s(buffer1,_T("x("));
+				acdbRToS(TRctRct[i].SizeA2,2,2,buffer2);
+				wcscat_s(buffer1,buffer2);
+				acdbRToS(TRctRct[i].SizeA3,2,2,buffer);
+				wcscat_s(buffer1,_T("x"));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+
+
+
+				acdbRToS(TRctRct[i].Swectangle,2,2,buffer);
+				wcscat_s(buffer1,_T(" (L="));
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("РјРј)"));
+
+				acdbRToS(ceil(TRctRct[i].Length),2,2,buffer2);
+				acdbRToS(TRctRct[i].Area,2,2,buffer);
+				pb=AddSpecLine(pb,buffer1,_T("С€С‚"),buffer2,_T("Рј2"),buffer);
+
+			}
+
+
+
+
+		}
+
+
+
+
+
+
+		if ((TRndRnd.logicalLength()>0)||
+			(TRndRct.logicalLength()>0)||
+			(TRctRct.logicalLength()>0)
+			)
+		{
+			acdbRToS(pArea,2,2,buffer);
+			pb=AddSpecLine(pb,_T("Р’СЃРµРіРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+			pSumArea=pSumArea+pArea;
+			pArea=0;
+		}
+
+
+		//РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ
+		acdbRToS(pSumArea,2,2,buffer);
+		pb=AddSpecLine(pb,_T("РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ:"),_T(""),_T(""),_T("Рј2"),buffer);
+
+
+	} 
+
+
+
+
+	// - Ventilation_ARX.TVS_Show command (do not rename)
+	static void Ventilation_ARXTVS_Show(void)
+	{
+
+		acutRelRb(acutBuildList(RTSTR,_T("(TVS_TEST2)"),RTNONE,RTNONE));
+		//acedCommand(RTSTR,_T("(TVS_TEST2)"),RTNONE,RTNONE);
+		// Add your code for command Ventilation_ARX.TVS_Show here
+	}
+
+	// - Ventilation_ARX.TVS_CUT command (do not rename)
+	static void Ventilation_ARXTVS_CUT(void)
+	{
+		AcGePoint3d pCut;
+		double Lx,Ly, startangle;
+		ads_name vozd1,vozd2, eName;
+		ACHAR handle[17];
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt1,*pEnt2 = NULL;
+		AcDbObjectId id;
+		TVS_WYE wyie;
+		TVS_TAP * Tapie;
+		TVS_Pipe * Pipi1,*Pipi2;
+		double NewSiseA, NewRadius;
+		resbuf *rb = NULL;
+		AcGeLine3d Line;
+		bool ft=false, s2=false;
+		AcCmColor pColor;
+		AcDb::LineWeight pWeight;
+		AcDbObjectId pLayer;
+		AcDbObjectId pLineType;
+
+		while (ft==false)
+		{
+
+			if (acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ РІРѕР·РґСѓС…РѕРІРѕРґ:"), vozd1,pt1)== RTCAN)
+				return;
+
+			pCut=asPnt3d(pt1);
+
+			if (acdbGetObjectId(id,vozd1)==eOk)
+			{
+
+				acdbGetObjectId(id,vozd1);
+
+				{if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
+					{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
 					{	
 						Line.set(Pipi1->FirstPoint,Pipi1->LastPoint);
 						pCut=Line.closestPointTo(pCut);
-						SizeA=Pipi1->SizeA;
-						SizeB=Pipi1->SizeB;
-						Flow=Pipi1->Flow;
-						ft=true;
-						pstatus=1;
-					}
 
-					if ( (Tapie = TVS_TAP::cast(pEnt1)) != NULL )
-					{	
-						//Line.set(Tapie->MC,Tapie->LastPoint);
-						//pCut=Line.closestPointTo(pCut);
-						pCut=Tapie->MiddlePoint;
-						SizeA=Tapie->SizeA;
-						SizeB=Tapie->SizeB;
-						Flow=Tapie->Flow;
-						ft=true;
-						pstatus=2;
-					}
 
-					if ( (wyie = TVS_WYE::cast(pEnt1)) != NULL )
-					{	
-						Line.set(wyie->pA1,wyie->pA3);
-						pCut=Line.closestPointTo(pCut);
-						SizeA=wyie->SizeApr;
-						SizeB=wyie->SizeBpr;
-						SizeA2=wyie->SizeAotv;
-						SizeB2=wyie->SizeBotv;
-						Flow=wyie->LengthPl;
-						ft=true;
-						pstatus=3;
-					}
-
-					if ( (Transie = TVS_TRANS::cast(pEnt1)) != NULL )
-					{	
-						Line.set(Transie->FirstPoint,Transie->LastPoint);
-						pCut=Line.closestPointTo(pCut);
-						SizeA=Transie->get_SizeAp1();
-						SizeB=Transie->SizeBp1;
-						SizeA2=Transie->SizeAp2;
-						SizeB2=Transie->SizeBp2;
-						Flow=Transie->LengthTr;
-						ft=true;
-						pstatus=4;
-					}
-					pEnt1->close();
-					AcDbBlockReference * br;
-					if ( ( br= AcDbBlockReference::cast(pEnt1)) != NULL )
-					{	
-						AcDbObjectId objBTRId = br->blockTableRecord();
-						AcDbObjectPointer<AcDbBlockTableRecord> pBTR(objBTRId,AcDb::kForRead);
-						
-						 ACHAR * pName;
-						pBTR->getName(pName);
-						pBTR->close();
-							
-						if (!CheckAtt(pName,TagType)&&!CheckAtt(pName,TagSize))
+						if ((length2p(pCut,Pipi1->FirstPoint)<=(Pipi1->Length-1))
+							&&(length2p(pCut,Pipi1->LastPoint)<=(Pipi1->Length-1)))
 						{
+
+
+							Pipi2=Pipi1->add_new(pCut,
+								Pipi1->LastPoint,
+								Pipi1->SizeA,
+								Pipi1->SizeB,
+								Pipi1->This1D,
+								Pipi1->ThisRound
+								);
+							Pipi1->put_Lastpoint(pCut);
+							s2=true	;
+							pColor=Pipi1->color();
+							pWeight=Pipi1->lineWeight();
+							pLayer=Pipi1->layerId();
+							pLineType=Pipi1->linetypeId();
+						}
+						Pipi1->close();
+
+						if (s2==true)
+						{
+
+							if (acdbOpenAcDbEntity(pEnt2,Pipi2->id(),AcDb::kForWrite)==eOk)
+							{	
+
+
+
+
+								Pipi2->setColor(pColor);
+								Pipi2->setLineWeight(pWeight);
+								Pipi2->setLayer(pLayer);
+								Pipi2->setLinetype(pLineType);
+
+								Pipi2->put_Wipeout(Pipi1->Wipeout);
+								Pipi2->close();
+
+							}
+
+
+							s2=false;
+							ft=true;
+						}
+
+
+					}
+					}
+
+					else {
+						acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+
+
+					}
+
+				}
+				}
+
+
+			}
+		}
+
+
+
+		// Add your code for command Ventilation_ARX.TVS_CUT here
+	}
+
+	// - Ventilation_ARX.TVS_Change command (do not rename)
+
+
+
+
+
+	static void Ventilation_ARXTVS_Change(void)
+	{
+
+		ads_name sset;
+
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
+
+
+
+
+		Change(sset);
+
+
+
+
+
+
+
+		// Add your code for command Ventilation_ARX.TVS_Change here
+	}
+
+
+
+
+
+
+	static Acad::ErrorStatus postToDatabase(AcDbVoidPtrArray eSet)
+	{
+		Acad::ErrorStatus es;
+		AcDbBlockTable *pBtbl;
+		AcDbBlockTableRecord *pBtblr;
+		es =acdbHostApplicationServices()->workingDatabase()
+			->getSymbolTable(pBtbl, AcDb::kForRead);
+		if (es != Acad::eOk)
+		{
+			acutPrintf(L"\nFailed to open block table");
+			return es;
+		}
+		es=pBtbl->getAt(ACDB_MODEL_SPACE, pBtblr,AcDb::kForWrite);
+		if (es != Acad::eOk)
+		{
+			acutPrintf(L"\nFailed to open block table record");
+			es =pBtbl->close();
+			if (es != Acad::eOk)
+			{
+				acutPrintf(L"\nFailed to close block table");
+			}
+			return es;
+		}
+
+		es =pBtbl->close();
+		if (es != Acad::eOk)
+		{
+			acutPrintf(L"\nFailed to close block table");
+			return es;
+		}
+
+		for(int i=0; i < eSet.length(); i++)
+		{
+			AcDbObjectId ObjId;
+			AcDbEntity *pNewEnt=AcDbEntity::cast((AcRxObject*)eSet[i]);
+			es=pBtblr->appendAcDbEntity(ObjId, pNewEnt);
+			if (es != Acad::eOk)
+			{
+				acutPrintf(L"\nFailed to append entity");
+			}
+
+			es=pNewEnt->close();
+			if (es != Acad::eOk)
+			{
+				acutPrintf(L"\nFailed to close entity");
+			}
+		}
+
+		es=pBtblr->close();
+		if (es != Acad::eOk)
+		{
+			acutPrintf(L"\nFailed to close block table record");
+		}
+		return es;
+	}
+
+
+
+
+
+
+	// - Ventilation_ARX.TVS_ERASE command (do not rename)
+	static void Ventilation_ARXTVS_ERASE(void)
+	{
+
+		ads_name sset, eName;
+		ACHAR  resultss [512];
+		ACHAR  results1 [512]=_T("2");
+		ACHAR  results2 [512]=_T("2d");
+
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt = NULL;
+		AcDbObjectId id;
+		TVS_Pipe * Pipi;
+		TVS_TAP * Tapie;
+		TVS_WYE* Wyeie;
+		TVS_TRANS * Transie;
+
+		double NewSiseA;
+		bool p1d;
+		resbuf *rb = NULL;
+
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
+
+
+
+		long len = 0;
+
+		acedSSLength(sset, &len);
+		//consoleprint(double(len),_T("\nL: "));
+		for (long i = 0; i < len; i++)
+		{             
+
+
+			if (NULL != (acedSSName(sset,i,eName)))
+			{
+
+				//consoleprint(double(i),_T("\nd"));
+
+
+				acdbGetObjectId(id,eName);
+
+				bool g=false;
+				if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
+					{
+
+
+						if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
+						{	
+
+							AcDbVoidPtrArray eSet;
+							Acad::ErrorStatus es=pEnt->explode(eSet);
+							pEnt->close();
+
+							//delete the original entity
+							acdbEntDel(eName);
+
+							// Add the new entities to the db
+							es=postToDatabase(eSet);
+							g=true;
+						}
+
+						if ( (Tapie = TVS_TAP::cast(pEnt)) != NULL )
+						{	
+							AcDbVoidPtrArray eSet;
+							Acad::ErrorStatus es=pEnt->explode(eSet);
+							pEnt->close();
+
+							//delete the original entity
+							acdbEntDel(eName);
+
+							// Add the new entities to the db
+							es=postToDatabase(eSet);
+							g=true;
+						}
+
+						if ( (Wyeie = TVS_WYE::cast(pEnt)) != NULL )
+						{	
+							AcDbVoidPtrArray eSet;
+							Acad::ErrorStatus es=pEnt->explode(eSet);
+							pEnt->close();
+
+							//delete the original entity
+							acdbEntDel(eName);
+
+							// Add the new entities to the db
+							es=postToDatabase(eSet);
+							g=true;
+						}
+
+						if ( (Transie = TVS_TRANS::cast(pEnt)) != NULL )
+						{	
+							AcDbVoidPtrArray eSet;
+							Acad::ErrorStatus es=pEnt->explode(eSet);
+							pEnt->close();
+
+							//delete the original entity
+							acdbEntDel(eName);
+
+							// Add the new entities to the db
+							es=postToDatabase(eSet);
+							g=true;
+						}
+
+
+						if (g==false)pEnt->close();
+						g=false;
+					}
+
+				}
+			}
+
+
+		}
+		// Add your code for command Ventilation_ARX.TVS_1D2D here
+
+
+
+
+
+
+		// Add your code for command Ventilation_ARX.TVS_ERASE here
+	}
+
+	static void Ventilation_ARXTVSSomeParts(void)
+	{
+		ads_name ent;
+		bool  Astat=false, status=false;
+		//acedInitGet(RSG_NONULL);
+		ads_point pt1,pt2;
+		AcDbObjectId id;
+		AcDbEntity *pEnt;
+		AcDbLine*pLine;
+		AcGePoint3d pstart,pend;
+		while (status==false)
+		{
+
+			Astat=acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ Р»РёРЅРёСЋ: "), ent,pt1) ;
+			if (Astat==true)
+			{
+
+
+				if (acdbGetObjectId(id,ent)==eOk)
+				{
+					{if (id!=AcDbObjectId::kNull)
+					{
+						if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
+
+						{
+							if ( (pLine = AcDbLine::cast(pEnt)) != NULL )
+							{	
+								status=true;
+								pLine->getStartPoint(pstart);
+								pLine->getEndPoint(pend);
+							}
+							pLine->close();
+						}
+					}
+					}
+				}
+			}
+		}
+		int * quantity=new int;
+		if (acedGetInt (_T("\nРљРѕР»РёС‡РµСЃС‚РІРѕ СЃРµРіРјРµРЅС‚РѕРІ: "), quantity)!= RTNORM) return ;
+		double pDist=pstart.distanceTo(pend);
+		for (int i = 1; i < *quantity+1; i++)
+		{
+			//AcGePoint3d base=AcGePoint3d(((*quantity-i)*pstart.x+i*pend.x)/(*quantity),((*quantity-i)*pstart.y+i*pend.y)/(*quantity),((*quantity-i)*pstart.z+i*pend.z)/(*quantity));
+			AcGePoint3d base=AcGePoint3d(((*quantity*2-2*i+1)*pstart.x+(2*i-1)*pend.x)/(*quantity*2),((*quantity*2-2*i+1)*pstart.y+(2*i-1)*pend.y)/(*quantity*2),((*quantity*2-2*i+1)*pstart.z+(2*i-1)*pend.z)/(*quantity*2));
+			SPEClist::printLine(AcGePoint3d(base.x-200,base.y,base.z),AcGePoint3d(base.x+200,base.y,base.z));
+			SPEClist::printLine(AcGePoint3d(base.x,base.y+200,base.z),AcGePoint3d(base.x,base.y-200,base.z));
+		}
+		delete quantity;
+	}
+
+	static void Ventilation_ARXTVS_LEAD(void)
+	{
+
+		int pstatus;
+		double SizeA,SizeB,Flow,SizeA2, SizeB2;
+		AcGePoint3d pCut;
+		double Lx,Ly, startangle;
+		ads_name vozd1,vozd2, eName;
+		ACHAR handle[17];
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt1,*pEnt2 = NULL;
+		AcDbObjectId id;
+		TVS_WYE *wyie;
+		TVS_TAP * Tapie;
+		TVS_Pipe * Pipi1,*Pipi2;
+		TVS_TRANS * Transie;
+		double NewSiseA, NewRadius;
+		resbuf *rb = NULL;
+		AcGeLine3d Line;
+		bool ft=false, s2=false;
+		AcCmColor pColor;
+		AcDb::LineWeight pWeight;
+		AcDbObjectId pLayer;
+		AcDbObjectId pLineType;
+
+		ACHAR atrType[512];
+		ACHAR atrSize[512];
+
+		int Astat;
+		bool  Astat2=false;
+		ACHAR resultss[512],resultss2[512];
+		while (ft==false)
+		{
+
+			Astat2=false;
+			while (Astat2==false)
+			{
+				Astat2=true;
+				acedInitGet(RSG_NONULL, _T("Р¤РѕСЂРјР°С‚ Р¤ a"));
+				Astat=acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ РІРѕР·РґСѓС…РѕРІРѕРґ РёР»Рё [Р¤РѕСЂРјР°С‚]: "), vozd1,pt1) ;
+				switch (Astat)
+				{
+				case RTCAN:
+					return;
+					break;
+				case RTKWORD:
+					acedGetInput(resultss);
+					break;
+				}
+
+				if (Astat==RTKWORD)
+				{
+					acedInitGet(RSG_NONULL, _T("Р”Р° РќРµС‚ Рґ РЅ y n l"));
+					if (acedGetKword(_T("\nРЈРєР°Р·С‹РІР°С‚СЊ СЂР°СЃС…РѕРґ? [Р”Р°/РќРµС‚]: "), resultss2)== RTCAN)
+						return;
+
+					if ((wcscmp(resultss2,_T("Р”Р°"))==0)||(wcscmp(resultss2,_T("Рґ"))==0)||(wcscmp(resultss2,_T("y"))==0)||(wcscmp(resultss2,_T("l"))==0))
+
+						globalMlead=2;
+					else globalMlead=1;
+					Astat2=false;
+					Astat=0;
+					wcscpy_s(resultss,_T(""));
+				}
+
+			}
+
+
+
+
+			pCut=asPnt3d(pt1);
+
+			if (acdbGetObjectId(id,vozd1)==eOk)
+			{
+				{if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt1,id,AcDb::kForWrite)==eOk)
+
+					{
+						if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+						{	
+							Line.set(Pipi1->FirstPoint,Pipi1->LastPoint);
+							pCut=Line.closestPointTo(pCut);
+							SizeA=Pipi1->SizeA;
+							SizeB=Pipi1->SizeB;
+							Flow=Pipi1->Flow;
+							ft=true;
+							pstatus=1;
+						}
+
+						if ( (Tapie = TVS_TAP::cast(pEnt1)) != NULL )
+						{	
+							//Line.set(Tapie->MC,Tapie->LastPoint);
+							//pCut=Line.closestPointTo(pCut);
+							pCut=Tapie->MiddlePoint;
+							SizeA=Tapie->SizeA;
+							SizeB=Tapie->SizeB;
+							Flow=Tapie->Flow;
+							ft=true;
+							pstatus=2;
+						}
+
+						if ( (wyie = TVS_WYE::cast(pEnt1)) != NULL )
+						{	
+							Line.set(wyie->pA1,wyie->pA3);
+							pCut=Line.closestPointTo(pCut);
+							SizeA=wyie->SizeApr;
+							SizeB=wyie->SizeBpr;
+							SizeA2=wyie->SizeAotv;
+							SizeB2=wyie->SizeBotv;
+							Flow=wyie->LengthPl;
+							ft=true;
+							pstatus=3;
+						}
+
+						if ( (Transie = TVS_TRANS::cast(pEnt1)) != NULL )
+						{	
+							Line.set(Transie->FirstPoint,Transie->LastPoint);
+							pCut=Line.closestPointTo(pCut);
+							SizeA=Transie->get_SizeAp1();
+							SizeB=Transie->SizeBp1;
+							SizeA2=Transie->SizeAp2;
+							SizeB2=Transie->SizeBp2;
+							Flow=Transie->LengthTr;
+							ft=true;
+							pstatus=4;
+						}
+						pEnt1->close();
+						AcDbBlockReference * br;
+						if ( ( br= AcDbBlockReference::cast(pEnt1)) != NULL )
+						{	
+							AcDbObjectId objBTRId = br->blockTableRecord();
+							AcDbObjectPointer<AcDbBlockTableRecord> pBTR(objBTRId,AcDb::kForRead);
+
+							ACHAR * pName;
+							pBTR->getName(pName);
+							pBTR->close();
+
+
 							if(GetAtt(pEnt1,TagType,atrType)&&GetAtt(pEnt1,TagSize,atrSize))
 							{
-							
-							pCut=AcGePoint3d(asPnt3d(pt1));
-							ft=true;
-							pstatus=5;
+
+								pCut=AcGePoint3d(asPnt3d(pt1));
+								ft=true;
+								pstatus=5;
 							}
+
+							// 						Line.set(Transie->FirstPoint,Transie->LastPoint);
+							// 						pCut=Line.closestPointTo(pCut);
+							// 						SizeA=Transie->get_SizeAp1();
+							// 						SizeB=Transie->SizeBp1;
+							// 						SizeA2=Transie->SizeAp2;
+							// 						SizeB2=Transie->SizeBp2;
+							// 						Flow=Transie->LengthTr;
+							// 						ft=true;
+
+
 						}
-// 						Line.set(Transie->FirstPoint,Transie->LastPoint);
-// 						pCut=Line.closestPointTo(pCut);
-// 						SizeA=Transie->get_SizeAp1();
-// 						SizeB=Transie->SizeBp1;
-// 						SizeA2=Transie->SizeAp2;
-// 						SizeB2=Transie->SizeBp2;
-// 						Flow=Transie->LengthTr;
-// 						ft=true;
-					
-						
+
 					}
-					
+
+
+					else {
+						acutPrintf(_T("\nРћР±СЊРµРєС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
+
+
+					}
+
+				}
 				}
 
-
-				else {
-					acutPrintf(_T("\nОбьект заблокирован"));
-
-
-				}
 
 			}
+		}
+
+
+
+
+
+
+
+
+		pt1[0]=pCut.x;
+		pt1[1]=pCut.y;
+		pt1[2]=pCut.z;
+		if(acedGetPoint(pt1,_T("\nРЈРєР°Р¶РёС‚Рµ 2 С‚РѕС‡РєСѓ:"),pt2)==RTCAN)
+			return;
+
+
+
+		///////РўРµРєСЃС‚
+		AcDbMText *mText=new AcDbMText();
+		ACHAR buffer[512], buffer1[512], buffer2[512] ;
+		if (pstatus==1||pstatus==2)
+		{
+
+			if (globalMlead==1)
+			{
+				if (SizeB==0)
+				{
+
+					wcscpy_s(buffer1,_T("%%C"));
+					acdbRToS(SizeA,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+				else
+				{
+					acdbRToS(SizeA,2,2,buffer1);
+					wcscat_s(buffer1,_T("x"));
+					acdbRToS(SizeB,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+			}
+
+			if (globalMlead==2)
+			{
+				if (SizeB==0)
+				{
+
+					wcscpy_s(buffer1,_T("%%C"));
+					acdbRToS(SizeA,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+				else
+				{
+					acdbRToS(SizeA,2,2,buffer1);
+					wcscat_s(buffer1,_T("x"));
+					acdbRToS(SizeB,2,2,buffer);
+					wcscat_s(buffer1,buffer);
+				}
+
+				wcscat_s(buffer1,_T("\\PL"));
+				acdbRToS(Flow,2,2,buffer);
+				wcscat_s(buffer1,buffer);
 			}
 
 
 		}
-	}
-
-
-
-
-
-
-
-
-	pt1[0]=pCut.x;
-	pt1[1]=pCut.y;
-	pt1[2]=pCut.z;
-	if(acedGetPoint(pt1,_T("\nУкажите 2 точку:"),pt2)==RTCAN)
-		return;
-
-
-
-	///////Текст
-	AcDbMText *mText=new AcDbMText();
-	ACHAR buffer[512], buffer1[512], buffer2[512] ;
-	if (pstatus==1||pstatus==2)
-	{
-
-		if (globalMlead==1)
+		if (pstatus==3||pstatus==4)
 		{
+
 			if (SizeB==0)
 			{
 
 				wcscpy_s(buffer1,_T("%%C"));
 				acdbRToS(SizeA,2,2,buffer);
 				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("x"));
 			}
 			else
 			{
-				acdbRToS(SizeA,2,2,buffer1);
-				wcscat_s(buffer1,_T("x"));
-				acdbRToS(SizeB,2,2,buffer);
-				wcscat_s(buffer1,buffer);
-			}
-		}
-
-		if (globalMlead==2)
-		{
-			if (SizeB==0)
-			{
-
-				wcscpy_s(buffer1,_T("%%C"));
+				wcscpy_s(buffer1,_T("("));
 				acdbRToS(SizeA,2,2,buffer);
 				wcscat_s(buffer1,buffer);
-			}
-			else
-			{
-				acdbRToS(SizeA,2,2,buffer1);
 				wcscat_s(buffer1,_T("x"));
 				acdbRToS(SizeB,2,2,buffer);
 				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")x"));
 			}
 
-			wcscat_s(buffer1,_T("\\PL"));
-			acdbRToS(Flow,2,2,buffer);
-			wcscat_s(buffer1,buffer);
+			if (SizeB2==0)
+			{
+
+				wcscat_s(buffer1,_T("%%C"));
+				acdbRToS(SizeA2,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+			}
+			else
+			{
+				wcscat_s(buffer1,_T("("));
+				acdbRToS(SizeA2,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T("x"));
+				acdbRToS(SizeB2,2,2,buffer);
+				wcscat_s(buffer1,buffer);
+				wcscat_s(buffer1,_T(")"));
+			}
+
 		}
 
-
-	}
-	if (pstatus==3||pstatus==4)
-	{
-
-		if (SizeB==0)
+		if (pstatus==5)
 		{
+			wcscpy_s(buffer1,_T(""));
+			if (wcscmp(atrType,_T(""))!=0) wcscpy_s(buffer1,atrType);
+			if ((wcscmp(atrType,_T(""))!=0)&&(wcscmp(atrSize,_T(""))!=0)) wcscat_s(buffer1,_T("-"));
+			if (wcscmp(atrSize,_T(""))!=0) wcscat_s(buffer1,atrSize);
+			if (wcscmp(buffer1,_T(""))==0) GetAtt(pEnt1,TagName,buffer1);
+			if (wcscmp(buffer1,_T(""))==0) SPEC::getBlockName(pEnt1,buffer1);
 
-			wcscpy_s(buffer1,_T("%%C"));
-			acdbRToS(SizeA,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("x"));
+		}
+
+		AcDb::LineWeight lw;
+		double texth,textw;
+		AcDbDatabase *db=acdbHostApplicationServices()->workingDatabase();
+		AcGePoint3d ptEnd1=asPnt3d(pt2);
+		AcGeVector3d vec;
+		AcGePoint3d ptStart(pCut);
+		if (ptStart.x<ptEnd1.x)
+		{
+			vec=AcGeVector3d(0,1,0);
+			//mText->setAttachment(AcDbMText::kBottomLeft);
 		}
 		else
 		{
-			wcscpy_s(buffer1,_T("("));
-			acdbRToS(SizeA,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("x"));
-			acdbRToS(SizeB,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")x"));
+			vec=AcGeVector3d(0,-1,0);
+			//mText->setAttachment(AcDbMText::kBottomRight);
 		}
 
-		if (SizeB2==0)
+
+
+
+		mText->setContents(buffer1);
+
+		//mText->getColumnHeight(0,texth);
+		//mText->getColumnWidth(textw);
+		mText->setLocation(ptEnd1);
+		mText->setColor(pEnt1->color());
+		mText->setLineWeight(AcDb::kLnWt025);
+
+		//РјСѓР»СЊС‚РёРІС‹РЅРѕСЃРєР°
+		AcDbMLeader *pEnt=new AcDbMLeader();
+
+		pEnt->setLineWeight(AcDb::kLnWt025);
+		pEnt->setColor(pEnt1->color());
+
+		//pEnt->setTextLocation(ptEnd1);
+		int i;
+		// 		AcGePoint3d ptEnd1(AcGePoint3d(pCut.x+500,
+		// 		pCut.y+500, pCut.z));
+
+
+		pEnt->setContentType(AcDbMLeaderStyle::kMTextContent);
+		pEnt->addLeader(i);
+		pEnt->addLeaderLine(ptStart,i);
+		pEnt->addLastVertex(i,ptEnd1);
+		//pEnt->setEnableDogleg(false);
+		//pEnt->setDoglegLength(10);
+		//pEnt->setDoglegDirection(i,vec);
+		pEnt->setMText(mText);
+		//pEnt->setBlockConnectionType(AcDbMLeaderStyle::kConnectBase);
+		////////////////////////////////////////////////////////////////
+
+		//		......Got the inserted content block and arrow block for the Mleader
+
+		///////////////////////////////////////////////////////////////// 
+		// 			pEnt->setArrowSymbolId(arrowDefId);   // 'arrowDefId' inputs the ID of  arrow block to be inserted
+		// 		pEnt->setBlockContentId(blkDefId);       // 'blkDefId' inputs the ID of  content block to be inserted
+
+		PostToModelSpace(pEnt);
+		//PostToModelSpace(mText);
+
+		if (acdbOpenAcDbEntity(pEnt1,pEnt->id(),AcDb::kForWrite)==eOk)	
 		{
 
-			wcscat_s(buffer1,_T("%%C"));
-			acdbRToS(SizeA2,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-		}
-		else
-		{
-			wcscat_s(buffer1,_T("("));
-			acdbRToS(SizeA2,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T("x"));
-			acdbRToS(SizeB2,2,2,buffer);
-			wcscat_s(buffer1,buffer);
-			wcscat_s(buffer1,_T(")"));
+			pEnt->setLastVertex(i,ptEnd1);
+			// 		pEnt->mtext()->setColor(db->cecolor());
+			// 		
+			// 		pEnt->getLeaderLineWeight(i,lw);
+			// 		pEnt->mtext()->setLineWeight(lw);
+			// 		pEnt->setColor(db->cecolor());
+			pEnt->close();
+
 		}
 
+
+
+		return static void();
 	}
 
-	if (pstatus==5)
+	static void setZ()
 	{
-		wcscpy_s(buffer1,atrType);
-		wcscat_s(buffer1,_T("-"));
-		wcscat_s(buffer1,atrSize);
+		throw std::logic_error("The method or operation is not implemented.");
 	}
 
-	AcDb::LineWeight lw;
-	double texth,textw;
-	AcDbDatabase *db=acdbHostApplicationServices()->workingDatabase();
-	AcGePoint3d ptEnd1=asPnt3d(pt2);
-	AcGeVector3d vec;
-	AcGePoint3d ptStart(pCut);
-	if (ptStart.x<ptEnd1.x)
+	static void UpDown( TVS_Pipe * pPipe, int stat )
 	{
-		vec=AcGeVector3d(0,1,0);
-		//mText->setAttachment(AcDbMText::kBottomLeft);
-	}
-	else
-	{
-		vec=AcGeVector3d(0,-1,0);
-		//mText->setAttachment(AcDbMText::kBottomRight);
-	}
-
-
-
-
-	mText->setContents(buffer1);
-
-	//mText->getColumnHeight(0,texth);
-	//mText->getColumnWidth(textw);
-	mText->setLocation(ptEnd1);
-	mText->setColor(pEnt1->color());
-	mText->setLineWeight(AcDb::kLnWt025);
-
-	//мультивыноска
-	AcDbMLeader *pEnt=new AcDbMLeader();
-
-	pEnt->setLineWeight(AcDb::kLnWt025);
-	pEnt->setColor(pEnt1->color());
-
-	//pEnt->setTextLocation(ptEnd1);
-	int i;
-	// 		AcGePoint3d ptEnd1(AcGePoint3d(pCut.x+500,
-	// 		pCut.y+500, pCut.z));
-
-
-	pEnt->setContentType(AcDbMLeaderStyle::kMTextContent);
-	pEnt->addLeader(i);
-	pEnt->addLeaderLine(ptStart,i);
-	pEnt->addLastVertex(i,ptEnd1);
-	//pEnt->setEnableDogleg(false);
-	//pEnt->setDoglegLength(10);
-	//pEnt->setDoglegDirection(i,vec);
-	pEnt->setMText(mText);
-	//pEnt->setBlockConnectionType(AcDbMLeaderStyle::kConnectBase);
-	////////////////////////////////////////////////////////////////
-
-	//		......Got the inserted content block and arrow block for the Mleader
-
-	///////////////////////////////////////////////////////////////// 
-	// 			pEnt->setArrowSymbolId(arrowDefId);   // 'arrowDefId' inputs the ID of  arrow block to be inserted
-	// 		pEnt->setBlockContentId(blkDefId);       // 'blkDefId' inputs the ID of  content block to be inserted
-
-	PostToModelSpace(pEnt);
-	//PostToModelSpace(mText);
-
-	if (acdbOpenAcDbEntity(pEnt1,pEnt->id(),AcDb::kForWrite)==eOk)	
-	{
-
-		pEnt->setLastVertex(i,ptEnd1);
-		// 		pEnt->mtext()->setColor(db->cecolor());
-		// 		
-		// 		pEnt->getLeaderLineWeight(i,lw);
-		// 		pEnt->mtext()->setLineWeight(lw);
-		// 		pEnt->setColor(db->cecolor());
-		pEnt->close();
-
-	}
-
-
-
-	return static void();
-}
-
-static void setZ()
-{
-	throw std::logic_error("The method or operation is not implemented.");
-}
-
-static void UpDown( TVS_Pipe * pPipe, int stat )
-{
-	AcDbEntity * pEnt;
-	double startZ, nextZ, Axis;
+		AcDbEntity * pEnt;
+		double startZ, nextZ, Axis;
 
 
 		double x = pPipe->LastPoint.x-pPipe->FirstPoint.x;
@@ -6063,7 +6067,7 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 		pTap->put_Form(stat);
 		pTap->close();
 		pTap->draw();
-		
+
 
 		double plecho1=abs(length2p(pTap->MA,pTap->MiddlePoint));
 		double plecho2=abs(length2p(pTap->MC,pTap->MiddlePoint));
@@ -6072,136 +6076,150 @@ static void UpDown( TVS_Pipe * pPipe, int stat )
 		AcGePoint3d p1,p2,p3,p4,p5,p6,p7;
 		p2=pPipe->LastPoint;
 		p1=shortlength(pPipe->FirstPoint,p2,plecho1);
-		
+
 
 		acdbOpenAcDbEntity(pEnt,pPipe->id(),AcDb::kForWrite);
 		pPipe->put_Lastpoint(p1);
 		pPipe->close();
 
 
-	
-}
 
-static void Ventilation_ARXTVS_Flex(void)
-{
-	TVS_Pipe* pEnt=new TVS_Pipe();
-	
-	pEnt->FirstPoint=AcGePoint3d(0,0,0);
-	pEnt->LastPoint=AcGePoint3d(3000,0,0);
-	pEnt->SizeA=100;
-	pEnt->SizeB=200;
-	pEnt->This1D=false;
-	pEnt->ThisRound=false;
-	pEnt->Flow=0;
-	pEnt->Direct=0;
-	pEnt->Elev=0;
-	pEnt->Wipeout=false;
-	pEnt->Param=0;
-	pEnt->Grani=false;
-	pEnt->ElevDown=0;
-	pEnt->ElevUp=0;
-	pEnt->IsPipe=false;
-	pEnt->Form=0;
-	pEnt->setFlex(true);
-	//TCHAR * pPipe->Tag2=new TCHAR
+	}
 
-	//pPipe->Tag2=ACRX_T("");
-	pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
-	//pPipe->ShowText=pShowText;
-	//pPipe->SetText();
-	// Post to Database
-	AcDbBlockTable *pBlockTable;
-	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
-		AcDb::kForRead);
+	static void Ventilation_ARXTVS_Flex(void)
+	{
+		TVS_Pipe* pEnt=new TVS_Pipe();
 
-	AcDbBlockTableRecord *pBlockTableRecord;
-	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,AcDb::kForWrite);
-	pBlockTable->close();
+		pEnt->FirstPoint=AcGePoint3d(0,0,0);
+		pEnt->LastPoint=AcGePoint3d(3000,0,0);
+		pEnt->SizeA=100;
+		pEnt->SizeB=200;
+		pEnt->This1D=false;
+		pEnt->ThisRound=false;
+		pEnt->Flow=0;
+		pEnt->Direct=0;
+		pEnt->Elev=0;
+		pEnt->Wipeout=false;
+		pEnt->Param=0;
+		pEnt->Grani=false;
+		pEnt->ElevDown=0;
+		pEnt->ElevUp=0;
+		pEnt->IsPipe=false;
+		pEnt->Form=0;
+		pEnt->setFlex(true);
+		//TCHAR * pPipe->Tag2=new TCHAR
 
-	AcDbObjectId retId = AcDbObjectId::kNull;
-	pBlockTableRecord->appendAcDbEntity(retId, pEnt);
-	pBlockTableRecord->close();
-	pEnt->close();
+		//pPipe->Tag2=ACRX_T("");
+		pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
+		//pPipe->ShowText=pShowText;
+		//pPipe->SetText();
+		// Post to Database
+		AcDbBlockTable *pBlockTable;
+		acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
+			AcDb::kForRead);
 
+		AcDbBlockTableRecord *pBlockTableRecord;
+		pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,AcDb::kForWrite);
+		pBlockTable->close();
 
-}
+		AcDbObjectId retId = AcDbObjectId::kNull;
+		pBlockTableRecord->appendAcDbEntity(retId, pEnt);
+		pBlockTableRecord->close();
+		pEnt->close();
 
 
-static void Ventilation_ARXTVS_SPEC(void)
-{
-	AcDbBlockReference * br;
-	TVS_Entity * Ent;
-	AcDbEntity *pEnt = NULL;
-		ads_name sset, eName;
-			AcDbObjectId id;
-	if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
-		return;
-	ads_point pt1;
-	AcGePoint3d pb=AcGePoint3d(0,0,0);
-	if(acedGetPoint(NULL,_T("\nУкажите точку вставки спецификации:"),pt1)!=RTNORM )
-		return;
-	pb=asPnt3d(pt1);
-	long len = 0;
-	SPEClist speclist, speclistflex;
-	SpecWithAttrlist specatrlist;
-	acedSSLength(sset, &len);
-	//consoleprint(double(len),_T("\nL: "));
-	for (long i = 0; i < len; i++)
-	{             
+	}
+
+	static void  fillspecification(ads_name &sset, SPEClist &speclist,SPEClist &speclistflex,SpecWithAttrlist &specatrlist,ACHAR * grad, ACHAR * d)
+	{
+		long len = 0;
+		AcDbBlockReference * br;
+		TVS_Entity * Ent;
+		AcDbEntity *pEnt = NULL;
+		ads_name  eName;
+		AcDbObjectId id;
+		acedSSLength(sset, &len);
+		//consoleprint(double(len),_T("\nL: "));
+		for (long i = 0; i < len; i++)
+		{             
 
 
-		if (NULL != (acedSSName(sset,i,eName)))
-		{
-
-			//consoleprint(double(i),_T("\nd"));
-
-			
-			acdbGetObjectId(id,eName);
-			if (id!=AcDbObjectId::kNull)
+			if (NULL != (acedSSName(sset,i,eName)))
 			{
-				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
-				{
-				
-				if ( (Ent = TVS_Entity::cast(pEnt)) != NULL )
-				
-				{
 
-				if (Ent->isDuctFlex())
+				//consoleprint(double(i),_T("\nd"));
+
+
+				acdbGetObjectId(id,eName);
+				if (id!=AcDbObjectId::kNull)
 				{
-					SPEC spec;
-					if(spec.add(pEnt)==true)
+					if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
 					{
-						speclistflex.append(spec);
+
+						if ( (Ent = TVS_Entity::cast(pEnt)) != NULL )
+
+						{
+
+							if (Ent->isDuctFlex())
+							{
+								SPEC spec;
+								wcscpy_s(spec.grad,grad);
+								wcscpy_s(spec.d,d);
+								if(spec.add(pEnt)==true)
+								{
+									speclistflex.append(spec);
+								}
+							}
+
+							else
+							{
+								SPEC spec;
+								wcscpy_s(spec.grad,grad);
+								wcscpy_s(spec.d,d);
+								if(spec.add(pEnt)==true)
+								{
+									speclist.append(spec);
+								}
+							}
+						}
+						pEnt->close();
+						if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
+						{
+							SPEC spec;
+							wcscpy_s(spec.grad,grad);
+							wcscpy_s(spec.d,d);
+							if(spec.addBlock(pEnt)==true)
+							{
+								specatrlist.append(spec);
+							}
+						}
+
 					}
 				}
-				
-				else
-				{
-					SPEC spec;
-					if(spec.add(pEnt)==true)
-					{
-						speclist.append(spec);
-					}
-				}
-				}
-				pEnt->close();
-				if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
-				{
-					SPEC spec;
-					if(spec.addBlock(pEnt)==true)
-					{
-						specatrlist.append(spec);
-					}
-				}
-				
-				}
+			}
 		}
 	}
-	}
+	static void Ventilation_ARXTVS_SPEC(void)
+	{
+
+		ads_name sset, eName;
+	
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
+		ads_point pt1;
+		AcGePoint3d pb=AcGePoint3d(0,0,0);
+		if(acedGetPoint(NULL,_T("\nРЈРєР°Р¶РёС‚Рµ С‚РѕС‡РєСѓ РІСЃС‚Р°РІРєРё СЃРїРµС†РёС„РёРєР°С†РёРё:"),pt1)!=RTNORM )
+			return;
+		pb=asPnt3d(pt1);
+		
+		SPEClist speclist, speclistflex;
+		SpecWithAttrlist specatrlist;
+	fillspecification(sset,speclist,speclistflex,specatrlist,L"%%d",L"%%c");
 		if (speclist.specList.physicalLength()!=0)
 		{
-				//speclist.print();
+			//speclist.print();
 			speclist.printSPDSForm(pb);
+		
 		}
 		if (speclistflex.specList.physicalLength()!=0)
 		{
@@ -6215,297 +6233,330 @@ static void Ventilation_ARXTVS_SPEC(void)
 			specatrlist.printSPDSForm(pb);
 		}
 
-}
+	}
 
-static bool GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR  *pVal)
-{
 
-	AcDbDatabase *pCurDb;
-	AcDbBlockTable* pBlkTbl;
-	AcDbBlockTableRecord* pBlkRec;
-	AcDbObjectId attId;
-	Acad::ErrorStatus es;
-	AcDbBlockReference * br;
-	AcDbAttributeDefinition* pAttDef;
-	// location of the AttributeDefinition in the
-	// block definition
-	ACHAR* pName;
+	static void Ventilation_ARXTVS_EXCELSPEC(void)
+	{
+
+		ads_name sset, eName;
+
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
 	
+	
+		long idx=1;
 
-			if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForWrite)==eOk)
+		SPEClist speclist, speclistflex;
+		SpecWithAttrlist specatrlist;
+		
+		fillspecification(sset,speclist,speclistflex,specatrlist,L"В°",L"вЊЂ");
+		CMSExcel* m_msExcel=new CMSExcel;
+		acedSetStatusBarProgressMeter(_T("Р­РєСЃРїРѕСЂС‚ РІ Excel"),0,100);
+		
+		if(m_msExcel->NewExcelBook(false)==E_FAIL) {acutPrintf(_T("\n РћС€РёР±РєР°")); acedRestoreStatusBar();delete m_msExcel; return;}
+			acedRestoreStatusBar();
+		if (speclist.specList.physicalLength()!=0)
+		{
+			//speclist.print();
+			
+			speclist.printToExel(m_msExcel, idx);
+			idx++;
+		}
+		if (speclistflex.specList.physicalLength()!=0)
+		{
+			//speclist.print();
+			speclistflex.printToExel(m_msExcel,idx);
+			idx++;
+		}
 
-			{
-				if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
-				{	
+ 		if (specatrlist.specList.physicalLength()!=0)
+ 		{
+ 			//speclist.print();
+ 			specatrlist.printToExel(m_msExcel,idx);
+			idx++;
+	}
 
-				
+		m_msExcel->SetVisible(true);
+	}
 
- 				 						AcDbObjectIterator *pAttrIter = br->attributeIterator();
- 				 						if (pAttrIter) {
- 				 							for (pAttrIter->start();!pAttrIter->done();pAttrIter->step()) {
- 				 								AcDbObjectId objAttrId = pAttrIter->objectId();
- 				 								AcDbObjectPointer<AcDbAttribute> pAttr(objAttrId,AcDb::kForRead);
- 				 							
-					 								if ((es = pAttr.openStatus()) == Acad::eOk) {
-					 									//
-					 									// Здесь можно получить информацию об атрибуте
-					 									//
 
-														if (wcscmp(tag,pAttr->tagConst())==0) {
-															//	pAttDef->close();
-															pAttr->close();
-															pEnt->close();
-															acutPrintf(_T("\nАтрибут: Tag=%s Value=%s "),
-																LPCTSTR(pAttr->tagConst()),LPCTSTR(pAttr->textStringConst()));
-															ACHAR  tempachar[512];
-															wcscpy_s(pVal,512,pAttr->textStringConst());
-															return true;
-														}
+	static bool GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR  *pVal)
+	{
 
-					 						pAttr->close();
-					 								} else {
-					 									acutPrintf(_T("\nНе удалось открыть атрибут блока! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
-					 								}
-											}
-										}
+		AcDbDatabase *pCurDb;
+		AcDbBlockTable* pBlkTbl;
+		AcDbBlockTableRecord* pBlkRec;
+		AcDbObjectId attId;
+		Acad::ErrorStatus es;
+		AcDbBlockReference * br;
+		AcDbAttributeDefinition* pAttDef;
+		// location of the AttributeDefinition in the
+		// block definition
+		ACHAR* pName;
+
+
+		if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForWrite)==eOk)
+
+		{
+			if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
+			{	
+
+
+
+				AcDbObjectIterator *pAttrIter = br->attributeIterator();
+				if (pAttrIter) {
+					for (pAttrIter->start();!pAttrIter->done();pAttrIter->step()) {
+						AcDbObjectId objAttrId = pAttrIter->objectId();
+						AcDbObjectPointer<AcDbAttribute> pAttr(objAttrId,AcDb::kForRead);
+
+						if ((es = pAttr.openStatus()) == Acad::eOk) {
+							//
+							// Р—РґРµСЃСЊ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°С‚СЂРёР±СѓС‚Рµ
+							//
+
+							if (wcscmp(tag,pAttr->tagConst())==0) {
+								//	pAttDef->close();
+								pAttr->close();
+								pEnt->close();
+								acutPrintf(_T("\nРђС‚СЂРёР±СѓС‚: Tag=%s Value=%s "),
+									LPCTSTR(pAttr->tagConst()),LPCTSTR(pAttr->textStringConst()));
+								ACHAR  tempachar[512];
+								wcscpy_s(pVal,512,pAttr->textStringConst());
+								return true;
+							}
+
+							pAttr->close();
+						} else {
+							acutPrintf(_T("\nРќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ Р°С‚СЂРёР±СѓС‚ Р±Р»РѕРєР°! РћС€РёР±РєР°: %s", LPCTSTR(acadErrorStatusText(es))));
+						}
+					}
 				}
+			}
 			pEnt->close();
-			}
-
-	
-
-
-
-
-
-
-
-	
-
-	
-	return false;
-
 		}
-	
 
 
 
-static bool CheckAtt(ACHAR* pName,ACHAR* tag)
-{
-	AcDbDatabase *pCurDb;
-	AcDbBlockTable* pBlkTbl;
-	AcDbBlockTableRecord* pBlkRec;
-	AcDbObjectId attId;
-	Acad::ErrorStatus es;
-
-	AcDbAttributeDefinition* pAttDef;
-	// location of the AttributeDefinition in the
-	// block definition
 
 
-	pCurDb =
-		acdbHostApplicationServices()->workingDatabase();
 
-	es =
-		pCurDb->getBlockTable(pBlkTbl, AcDb::kForRead);
 
-	if(!pBlkTbl->has(pName))
-	{
-		acutPrintf(L"\nBlock definition TEST does not exist");
-		pBlkTbl->close();
+
+
+
+
+
 		return false;
+
 	}
 
-	es = pBlkTbl->getAt(pName, pBlkRec, AcDb::kForWrite);
-	// create a AttributeDefinition
 
-			AcDbBlockTableRecordIterator *pIterBTR = NULL;
-	if ((es = pBlkRec->newIterator(pIterBTR)) == Acad::eOk) {
-		 								for (;!pIterBTR->done();pIterBTR->step()) {
-		 									AcDbObjectId objSubId;
-		 									if ((es = pIterBTR->getEntityId(objSubId)) == Acad::eOk) {
-		 										AcDbObjectPointer<AcDbEntity> pSubEnt(objSubId,AcDb::kForRead);
-		 										if ((es = pSubEnt.openStatus()) == Acad::eOk) {
-		 											//
-		 											// Здесь можно работать с примитивами в блоке
-		 											//
-		 											//buf=pSubEnt->isA()->name();
-//		 											acutPrintf(_T("\nПримитив: %s"),LPCTSTR(pSubEnt->isA()->name()));
-		 											AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
 
-													if (pAttdef) {
-		 											//
-		 											// Если это определение атрибута сделаем отдельную обработку
-		 											//
-		 											//acutPrintf(pAttdef->textStringConst());
-// 													acutPrintf(_T("\nTag1=%s"),LPCTSTR(pAttdef->tagConst()));
-// 													acutPrintf(_T("\nTag2=%s"),LPCTSTR(tag));
-												//	const ACHAR* tagconst=LPCTSTR(pAttdef->tagConst());
-													if (wcscmp(tag,pAttdef->tagConst())==0) {
-												//	pAttDef->close();
-													pBlkRec->close();
-													pBlkTbl->close();
-														
-														return false;
-													}
-// 														acutPrintf(_T("-> Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
-// 															LPCTSTR(pAttdef->tagConst()), LPCTSTR(pAttdef->textStringConst()),
-// 															LPCTSTR((pAttdef->isConstant()?_T("Yes"):_T("No"))),
-// 															LPCTSTR((pAttdef->isPreset()?_T("Yes"):_T("No"))),
-// 															LPCTSTR((pAttdef->isInvisible()?_T("Yes"):_T("No"))),
-// 															LPCTSTR((pAttdef->isVerifiable()?_T("Yes"):_T("No")))
-// 															);
-		 											}
-		 										} else {
-													acutPrintf(_T("\nНе удалось открыть примитив в блоке! Ошибка: %s",
-		 												LPCTSTR(acadErrorStatusText(es))));
-		 										}
-		 									} else {
-		 										acutPrintf(_T("\nНе удалось получить AcDbObjectId примитва в блоке! Ошибка: %s",
-		 											LPCTSTR(acadErrorStatusText(es))));
-		 									}
-		 								}
-		 							} else {
-		 								acutPrintf(_T("\nНе удалось создать итератор для записи таблицы блоков! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
-		 							}
-		 						
 
-	//pAttDef->close();
-	pBlkRec->close();
-	pBlkTbl->close();
-	return true;
-}
-
-static void AddNewAtt(ACHAR* pName,ACHAR* tag)
-{
-	AcDbDatabase *pCurDb;
-	AcDbBlockTable* pBlkTbl;
-	AcDbBlockTableRecord* pBlkRec;
-	AcDbObjectId attId;
-	Acad::ErrorStatus es;
-
-	AcDbAttributeDefinition* pAttDef;
-	// location of the AttributeDefinition in the
-	// block definition
-	AcGePoint3d attLoc(1.2, -0.5, 0);
-
-	// specify the text,tag and prompt
-	ACHAR text[] = {L"NEW VALUE ADDED"};
-	
-	ACHAR prompt[] = {L"Enter a new value"};
-
-	pCurDb =
-		acdbHostApplicationServices()->workingDatabase();
-
-	es =
-		pCurDb->getBlockTable(pBlkTbl, AcDb::kForRead);
-
-	if(!pBlkTbl->has(pName))
+	static bool CheckAtt(ACHAR* pName,ACHAR* tag)
 	{
-		acutPrintf(L"\nBlock definition TEST does not exist");
-			pBlkTbl->close();
-		return;
-	}
+		AcDbDatabase *pCurDb;
+		AcDbBlockTable* pBlkTbl;
+		AcDbBlockTableRecord* pBlkRec;
+		AcDbObjectId attId;
+		Acad::ErrorStatus es;
 
-	es = pBlkTbl->getAt(pName, pBlkRec, AcDb::kForWrite);
-	// create a AttributeDefinition
-	pAttDef = new AcDbAttributeDefinition(attLoc, text,
-		tag, prompt);
-
-	// append the AttributeDefinition to the definition
-	es = pBlkRec->appendAcDbEntity(attId, pAttDef);
-
-	pAttDef->close();
-	pBlkRec->close();
-	pBlkTbl->close();
-}
+		AcDbAttributeDefinition* pAttDef;
+		// location of the AttributeDefinition in the
+		// block definition
 
 
+		pCurDb =
+			acdbHostApplicationServices()->workingDatabase();
 
+		es =
+			pCurDb->getBlockTable(pBlkTbl, AcDb::kForRead);
 
-
-static void Ventilation_ARXTVS_AddAtrib(void)
-{
-	int pstatus;
-	double SizeA,SizeB,Flow,SizeA2, SizeB2;
-	AcGePoint3d pCut;
-	double Lx,Ly, startangle;
-	ads_name ads_ent,vozd2, eName;
-	ACHAR handle[17];
-	ads_point pt1,pt2;
-	ads_real sise=0;
-	AcDbEntity *pEnt,*pEnt2 = NULL;
-	AcDbObjectId id;
-	TVS_WYE *wyie;
-	TVS_TAP * Tapie;
-	TVS_Pipe * Pipi1,*Pipi2;
-	TVS_TRANS * Transie;
-	double NewSiseA, NewRadius;
-	resbuf *rb = NULL;
-	AcGeLine3d Line;
-	bool ft=false, s2=false;
-	AcCmColor pColor;
-	AcDb::LineWeight pWeight;
-	AcDbObjectId pLayer;
-	AcDbObjectId pLineType;
-	AcDbBlockReference * br;
-	
-	int Astat;
-	bool  Astat2=false;
-	ACHAR resultss[512],resultss2[512];
-	while (ft==false)
-	{
-
-		Astat2=false;
-		while (Astat2==false)
+		if(!pBlkTbl->has(pName))
 		{
-			Astat2=true;
-			Astat=acedEntSel (_T("\nВыберете блок для добавления атрибутов: "), ads_ent,pt1) ;
-			switch (Astat)
-			{
-			case RTCAN:
-				return;
-				break;
+			acutPrintf(L"\nBlock definition TEST does not exist");
+			pBlkTbl->close();
+			return false;
+		}
 
+		es = pBlkTbl->getAt(pName, pBlkRec, AcDb::kForWrite);
+		// create a AttributeDefinition
+
+		AcDbBlockTableRecordIterator *pIterBTR = NULL;
+		if ((es = pBlkRec->newIterator(pIterBTR)) == Acad::eOk) {
+			for (;!pIterBTR->done();pIterBTR->step()) {
+				AcDbObjectId objSubId;
+				if ((es = pIterBTR->getEntityId(objSubId)) == Acad::eOk) {
+					AcDbObjectPointer<AcDbEntity> pSubEnt(objSubId,AcDb::kForRead);
+					if ((es = pSubEnt.openStatus()) == Acad::eOk) {
+						//
+						// Р—РґРµСЃСЊ РјРѕР¶РЅРѕ СЂР°Р±РѕС‚Р°С‚СЊ СЃ РїСЂРёРјРёС‚РёРІР°РјРё РІ Р±Р»РѕРєРµ
+						//
+						//buf=pSubEnt->isA()->name();
+						//		 											acutPrintf(_T("\nРџСЂРёРјРёС‚РёРІ: %s"),LPCTSTR(pSubEnt->isA()->name()));
+						AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
+
+						if (pAttdef) {
+							//
+							// Р•СЃР»Рё СЌС‚Рѕ РѕРїСЂРµРґРµР»РµРЅРёРµ Р°С‚СЂРёР±СѓС‚Р° СЃРґРµР»Р°РµРј РѕС‚РґРµР»СЊРЅСѓСЋ РѕР±СЂР°Р±РѕС‚РєСѓ
+							//
+							//acutPrintf(pAttdef->textStringConst());
+							// 													acutPrintf(_T("\nTag1=%s"),LPCTSTR(pAttdef->tagConst()));
+							// 													acutPrintf(_T("\nTag2=%s"),LPCTSTR(tag));
+							//	const ACHAR* tagconst=LPCTSTR(pAttdef->tagConst());
+							if (wcscmp(tag,pAttdef->tagConst())==0) {
+								//	pAttDef->close();
+								pBlkRec->close();
+								pBlkTbl->close();
+
+								return false;
+							}
+							// 														acutPrintf(_T("-> Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
+							// 															LPCTSTR(pAttdef->tagConst()), LPCTSTR(pAttdef->textStringConst()),
+							// 															LPCTSTR((pAttdef->isConstant()?_T("Yes"):_T("No"))),
+							// 															LPCTSTR((pAttdef->isPreset()?_T("Yes"):_T("No"))),
+							// 															LPCTSTR((pAttdef->isInvisible()?_T("Yes"):_T("No"))),
+							// 															LPCTSTR((pAttdef->isVerifiable()?_T("Yes"):_T("No")))
+							// 															);
+						}
+					} else {
+						acutPrintf(_T("\nРќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ РїСЂРёРјРёС‚РёРІ РІ Р±Р»РѕРєРµ! РћС€РёР±РєР°: %s",
+							LPCTSTR(acadErrorStatusText(es))));
+					}
+				} else {
+					acutPrintf(_T("\nРќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ AcDbObjectId РїСЂРёРјРёС‚РІР° РІ Р±Р»РѕРєРµ! РћС€РёР±РєР°: %s",
+						LPCTSTR(acadErrorStatusText(es))));
+				}
 			}
-
-	
-
+		} else {
+			acutPrintf(_T("\nРќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РёС‚РµСЂР°С‚РѕСЂ РґР»СЏ Р·Р°РїРёСЃРё С‚Р°Р±Р»РёС†С‹ Р±Р»РѕРєРѕРІ! РћС€РёР±РєР°: %s", LPCTSTR(acadErrorStatusText(es))));
 		}
 
 
-		ACHAR *pName;
-		if (acdbGetObjectId(id,ads_ent)==eOk)
+		//pAttDef->close();
+		pBlkRec->close();
+		pBlkTbl->close();
+		return true;
+	}
+
+	static void AddNewAtt(ACHAR* pName,ACHAR* tag)
+	{
+		AcDbDatabase *pCurDb;
+		AcDbBlockTable* pBlkTbl;
+		AcDbBlockTableRecord* pBlkRec;
+		AcDbObjectId attId;
+		Acad::ErrorStatus es;
+
+		AcDbAttributeDefinition* pAttDef;
+		// location of the AttributeDefinition in the
+		// block definition
+		AcGePoint3d attLoc(1.2, -0.5, 0);
+
+		// specify the text,tag and prompt
+		ACHAR text[] = {L""};
+
+		ACHAR prompt[] = {L"Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ"};
+
+		pCurDb =
+			acdbHostApplicationServices()->workingDatabase();
+
+		es =
+			pCurDb->getBlockTable(pBlkTbl, AcDb::kForRead);
+
+		if(!pBlkTbl->has(pName))
 		{
-			{if (id!=AcDbObjectId::kNull)
+			acutPrintf(L"\nBlock definition TEST does not exist");
+			pBlkTbl->close();
+			return;
+
+		}
+
+		es = pBlkTbl->getAt(pName, pBlkRec, AcDb::kForWrite);
+		// create a AttributeDefinition
+		pAttDef = new AcDbAttributeDefinition(attLoc, text,
+			tag, prompt);
+		pAttDef->setInvisible(true);
+		pAttDef->setLockPositionInBlock(true);
+		// append the AttributeDefinition to the definition
+		es = pBlkRec->appendAcDbEntity(attId, pAttDef);
+
+		pAttDef->close();
+		pBlkRec->close();
+		pBlkTbl->close();
+		//delete pAttDef;
+	}
+
+
+
+	static void Ventilation_ARXTVS_TEST(void)
+	{
+
+
+//SPEClist spec;
+//spec.printToExel(1);
+
+
+
+// 		CAcModuleResourceOverride resourceOverride;
+// 		CDatabase cdbMyDB;
+// 		cdbMyDB.Open(L"New Excel Data Source");
+// 		cdbMyDB.ExecuteSQL(L"CREATE TABLE mydata (FirstName TEXT,LastName TEXT)"); 
+// 		cdbMyDB.ExecuteSQL(L"INSERT INTO mydata (FirstName,LastName) VALUES('Kaev','Artem');");
+// 		cdbMyDB.Close(); 
+	}
+
+	static void Ventilation_ARXTVS_AddAtrib(void)
+	{
+		ads_point pt1;
+		ads_name ent;
+	Acad::ErrorStatus es;
+
+
+
+
+		int Astat;
+		bool  Astat2=false;
+		ACHAR resultss[512],resultss2[512];
+		
+			Astat2=false;
+			while (Astat2==false)
 			{
-				if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForWrite)==eOk)
-
+				Astat=acedEntSel (_T("\nР’С‹Р±РµСЂРµС‚Рµ Р±Р»РѕРє РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ Р°С‚СЂРёР±СѓС‚РѕРІ: "), ent,pt1) ;
+				switch (Astat)
 				{
-					if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
-					{	
+				case RTCAN:
+					return;
+					break;
 
-// 						es = br->getName(pBlkName);
-// 						AcDbAttribute *atrib=new AcDbAttribute(AcGePoint3d(0,0,0),_T("hui32"),_T("11"));
-// 						
-// 					
-// 						acutPrintf(_T("%d"),br->appendAttribute(atrib));
-					
-						ACHAR *buf;
+				}
+					AcDbObjectId idBlkRef;    
+				acdbGetObjectId(idBlkRef,ent);
 
-						AcDbObjectId objBTRId = br->blockTableRecord();
-						AcDbObjectPointer<AcDbBlockTableRecord> pBTR(objBTRId,AcDb::kForRead);
-						
-						pBTR->getName(pName);
-						pBTR->close();
-						
+				AcDbObjectPointer<AcDbBlockReference> pBlkRef(idBlkRef,AcDb::kForRead);
+				if ((es = pBlkRef.openStatus()) == Acad::eOk) {
+					Astat2=true;
 
-						
+
+					ACHAR pName[512];
+					pBlkRef->close();
+
+					if(SPEC::getBlockName(pBlkRef,pName))
+					{
+
+
+
+
+
+						if (CheckAtt(pName,TagPos))
+						{
+							AddNewAtt(pName,TagPos);
+						}
 						if (CheckAtt(pName,TagName))
 						{
 							AddNewAtt(pName,TagName);
 						}
-						
+
 						if (CheckAtt(pName,TagType))
 						{
 							AddNewAtt(pName,TagType);
@@ -6514,150 +6565,72 @@ static void Ventilation_ARXTVS_AddAtrib(void)
 						{
 							AddNewAtt(pName,TagSize);
 						}
+						if (CheckAtt(pName,TagArticle))
+						{
+							AddNewAtt(pName,TagArticle);
+						}
 						if (CheckAtt(pName,TagManufacture))
 						{
 							AddNewAtt(pName,TagManufacture);
 						}
+						if (CheckAtt(pName,TagMass))
+						{
+							AddNewAtt(pName,TagMass);
+						}	
+						if (CheckAtt(pName,TagCommit))
+						{
+							AddNewAtt(pName,TagCommit);
+						}
+
+
+
+
+						acedCommandS(RTSTR,_T("_ATTSYNC"),RTSTR,_T("_Name"),RTSTR,pName,RTNONE);
+						return;
+				}
+
+
+			
+
+
+
 						
-// 					
-// 						 Acad::ErrorStatus es;
-// 						if ((es = pBTR.openStatus()) == Acad::eOk) {
-// 							AcDbBlockTableRecordIterator *pIterBTR = NULL;
-// 							if ((es = pBTR->newIterator(pIterBTR)) == Acad::eOk) {
-// 								for (;!pIterBTR->done();pIterBTR->step()) {
-// 									AcDbObjectId objSubId;
-// 									if ((es = pIterBTR->getEntityId(objSubId)) == Acad::eOk) {
-// 										AcDbObjectPointer<AcDbEntity> pSubEnt(objSubId,AcDb::kForRead);
-// 										if ((es = pSubEnt.openStatus()) == Acad::eOk) {
-// 											//
-// 											// Здесь можно работать с примитивами в блоке
-// 											//
-// 											//buf=pSubEnt->isA()->name();
-// 											acutPrintf(_T("\nПримитив: %s"),LPCTSTR(pSubEnt->isA()->name()));
-// 											AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
-// 											//
-// 											// Если это определение атрибута сделаем отдельную обработку
-// 											//
-// 											//acutPrintf(pAttdef->textStringConst());
-// 											if (pAttdef) {
-// 												acutPrintf(_T("-> Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
-// 													LPCTSTR(pAttdef->tagConst()), LPCTSTR(pAttdef->textStringConst()),
-// 													LPCTSTR((pAttdef->isConstant()?_T("Yes"):_T("No"))),
-// 													LPCTSTR((pAttdef->isPreset()?_T("Yes"):_T("No"))),
-// 													LPCTSTR((pAttdef->isInvisible()?_T("Yes"):_T("No"))),
-// 													LPCTSTR((pAttdef->isVerifiable()?_T("Yes"):_T("No")))
-// 													);
-// 											}
-// 										} else {
-//											acutPrintf(_T("\nНе удалось открыть примитив в блоке! Ошибка: %s",
-// 												LPCTSTR(acadErrorStatusText(es))));
-// 										}
-// 									} else {
-// 										acutPrintf(_T("\nНе удалось получить AcDbObjectId примитва в блоке! Ошибка: %s",
-// 											LPCTSTR(acadErrorStatusText(es))));
-// 									}
-// 								}
-// 							} else {
-// 								acutPrintf(_T("\nНе удалось создать итератор для записи таблицы блоков! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
-// 							}
-// 						} else {
-// 							acutPrintf(_T("\nНе удалось открыть запись таблицы блоков! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
-// 						}
-						//
-// 						//  Получаем информацию о неконстантных атрибутах в блоке
-// 						//
-// 						AcDbObjectIterator *pAttrIter = br->attributeIterator();
-// 						if (pAttrIter) {
-// 							for (pAttrIter->start();!pAttrIter->done();pAttrIter->step()) {
-// 								AcDbObjectId objAttrId = pAttrIter->objectId();
-// 								AcDbObjectPointer<AcDbAttribute> pAttr(objAttrId,AcDb::kForRead);
-// 								if ((es = pAttr.openStatus()) == Acad::eOk) {
-// 									//
-// 									// Здесь можно получить информацию об атрибуте
-// 									//
-// 									acutPrintf(_T("\nАтрибут: Tag=%s Value=%s IsConst=%s IsPreset=%s IsInvisible=%s isVerifiable=%s"),
-// 										LPCTSTR(pAttr->tagConst()), LPCTSTR(pAttr->textStringConst()),
-// 										LPCTSTR((pAttr->isConstant()?_T("Yes"):_T("No"))),
-// 										LPCTSTR((pAttr->isPreset()?_T("Yes"):_T("No"))),
-// 										LPCTSTR((pAttr->isInvisible()?_T("Yes"):_T("No"))),
-// 										LPCTSTR((pAttr->isVerifiable()?_T("Yes"):_T("No")))
-// 										);
-// 								} else {
-// 									acutPrintf(_T("\nНе удалось открыть атрибут блока! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
-// 								}
-// 							}
-// 						}
-// 				
-// 			
 
+						
+			
+		
 
-
-
-
-
-
-										
-
-
-
-
-				
-
-
-					pEnt->close();
-					acedCommandS(RTSTR,_T("_ATTSYNC"),RTSTR,_T("_Name"),RTSTR,pName,RTNONE);
-					return;
-					ft=true;
-
-					}
-
-
-					pEnt->close();
-					
-				}
-
-
-				else {
-					acutPrintf(_T("\nОбьект заблокирован"));
-
-
-				}
-
-			}
-			}
-
-
-		}
 	}
-
-}
-// void fAddAttribute()
-// {
-// 	try
-// 	{
-// 		// Получаем объект ActiveX приложения AutoCAD, увеличивая счетчик использования
-// 		IAcadApplicationPtr pAcadApp = acedGetAcadWinApp()->GetIDispatch(TRUE);
-// 		// Теперь получим активный документ
-// 		IAcadDocument * pActiveDoc;
-// 		pAcadApp->get_ActiveDocument(&pActiveDoc);
-// 		IAcadBlockPtr pBlock = NULL;
-// 		TCHAR *pBlkName = _T("некоторое_имя_блока ");
-// 		// Создаём ActiveX-совместимую 3D-точку
-// 		AcAxPoint3d axInsPnt(0,0,0);
-// 		// Добавим имя блока
-// 		pBlock = pActiveDoc->Wblock()->Add(axInsPnt.asVariantPtr(),_bstr_t(pBlkName));
-// 		// Добавим атрибут к блоку
-// 		IAcadAttributePtr pAttDef;
-// 		pAttDef = pBlock->AddAttribute(1.0, (AcAttributeMode)0 ,
-// 			_bstr_t("Укажите имя сотрудника "), axInsPnt.asVariantPtr(),
-// 			_bstr_t("имя_сотрудника"),_bstr_t(""));
-// 		// Атрибут добавлен
-// 	}
-// 	catch(_com_error &es)
-// 	{
-// 		acutPrintf(L"\nОшибка : %s", es.ErrorMessage());
-// 	}
-//
+			}
+	}
+			
+	// void fAddAttribute()
+	// {
+	// 	try
+	// 	{
+	// 		// РџРѕР»СѓС‡Р°РµРј РѕР±СЉРµРєС‚ ActiveX РїСЂРёР»РѕР¶РµРЅРёСЏ AutoCAD, СѓРІРµР»РёС‡РёРІР°СЏ СЃС‡РµС‚С‡РёРє РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
+	// 		IAcadApplicationPtr pAcadApp = acedGetAcadWinApp()->GetIDispatch(TRUE);
+	// 		// РўРµРїРµСЂСЊ РїРѕР»СѓС‡РёРј Р°РєС‚РёРІРЅС‹Р№ РґРѕРєСѓРјРµРЅС‚
+	// 		IAcadDocument * pActiveDoc;
+	// 		pAcadApp->get_ActiveDocument(&pActiveDoc);
+	// 		IAcadBlockPtr pBlock = NULL;
+	// 		TCHAR *pBlkName = _T("РЅРµРєРѕС‚РѕСЂРѕРµ_РёРјСЏ_Р±Р»РѕРєР° ");
+	// 		// РЎРѕР·РґР°С‘Рј ActiveX-СЃРѕРІРјРµСЃС‚РёРјСѓСЋ 3D-С‚РѕС‡РєСѓ
+	// 		AcAxPoint3d axInsPnt(0,0,0);
+	// 		// Р”РѕР±Р°РІРёРј РёРјСЏ Р±Р»РѕРєР°
+	// 		pBlock = pActiveDoc->Wblock()->Add(axInsPnt.asVariantPtr(),_bstr_t(pBlkName));
+	// 		// Р”РѕР±Р°РІРёРј Р°С‚СЂРёР±СѓС‚ Рє Р±Р»РѕРєСѓ
+	// 		IAcadAttributePtr pAttDef;
+	// 		pAttDef = pBlock->AddAttribute(1.0, (AcAttributeMode)0 ,
+	// 			_bstr_t("РЈРєР°Р¶РёС‚Рµ РёРјСЏ СЃРѕС‚СЂСѓРґРЅРёРєР° "), axInsPnt.asVariantPtr(),
+	// 			_bstr_t("РёРјСЏ_СЃРѕС‚СЂСѓРґРЅРёРєР°"),_bstr_t(""));
+	// 		// РђС‚СЂРёР±СѓС‚ РґРѕР±Р°РІР»РµРЅ
+	// 	}
+	// 	catch(_com_error &es)
+	// 	{
+	// 		acutPrintf(L"\nРћС€РёР±РєР° : %s", es.ErrorMessage());
+	// 	}
+	//
 
 } ;
 
@@ -6665,6 +6638,7 @@ static void Ventilation_ARXTVS_AddAtrib(void)
 IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_PIPE, TVS_PIPE, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DRAW, TVS_DRAW, ACRX_CMD_TRANSPARENT, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_TEST, TVS_TEST, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_TRANS, TVS_TRANS, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_WYE, TVS_WYE, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECTT, TVS_CONNECTT, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
@@ -6672,6 +6646,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DUCT, TVS_DUCT, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_1D2D, TVS_1D2D, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SPEC, TVS_SPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_EXCELSPEC, TVS_EXCELSPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Specification, TVS_Specification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Flex, TVS_Flex, ACRX_CMD_TRANSPARENT, NULL)

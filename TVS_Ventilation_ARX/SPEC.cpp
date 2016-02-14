@@ -1,10 +1,11 @@
-
+Ôªø
 #include "StdAfx.h"
 #include "SPEC.h"
+
 #include <cmath>
 #include<iostream>
 using namespace std;
-#define d "%%c"
+
 #define None 0
 #define PipeRound 1
 #define PipeRect 2
@@ -37,6 +38,8 @@ void SPEC::setAcharType(int val)
 
 SPEC::SPEC(void)
 {
+	wcscpy_s(d,_T("%%c"));
+	wcscpy_s(grad,_T("%%d"));
 }
 
 SPEC::~SPEC(void)
@@ -71,7 +74,7 @@ bool SPEC::add(AcDbEntity * pEnt)
 	Swectangle=0;
 	Length=0;
 	Area=0;
-	
+
 
 
 	if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForRead)==eOk)
@@ -79,259 +82,260 @@ bool SPEC::add(AcDbEntity * pEnt)
 		if(Ent = TVS_Entity::cast(pEnt))
 		{
 
-		
-		#pragma region Pipe
-		if(pPipe = TVS_Pipe::cast(pEnt))
-		{
-		
-			SizeA=pPipe->get_SizeA();
-			SizeB=pPipe->get_SizeB();
-			Length=pPipe->get_Length();
-			setUnit1(_T("Ï"));
-			setUnit2(_T("Ï2"));
-			if (pPipe->DuctType==DuctTypeFlex)
+
+#pragma region Pipe
+			if(pPipe = TVS_Pipe::cast(pEnt))
 			{
-				status=PipeRound;
-				setName(_T("¬ÓÁ‰ÛıÓ‚Ó‰ „Ë·ÍËÈ"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=Length*M_PI*SizeA/1000000;
-				setParam1(Length/1000, TypeDouble1);
-				setParam2(Area, TypeDouble2);
-			}
-			else
-			{
-		if (SizeB==0) 
-			{
-					status=PipeRound;
-				setName(_T("¬ÓÁ‰ÛıÓ‚Ó‰ ÍÛ„Î˚È"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=Length*M_PI*SizeA/1000000;
-					
-			}
-		else 
-			{ 
-				status=PipeRect;
-			setName(_T("¬ÓÁ‰ÛıÓ‚Ó‰ ÔˇÏÓÛ„ÓÎ¸Ì˚È"));
-			if (SizeB>SizeA)
-			{
-				SizeB=pPipe->SizeA;
-				SizeA=pPipe->SizeB;
-			}
-			setLable(max(SizeA,SizeB));
-			appendLable(_T("x"));
-			appendLable(min(SizeA,SizeB));
-			Area=Length*(SizeB+SizeA)*2/1000000;
-			}
-		setParam1(Length/1000, TypeDouble1);
-		setParam2(Area, TypeDouble2);
-		}
-		}
-	#pragma endregion
 
-		#pragma region Tap
-		if(pTap = TVS_TAP::cast(pEnt))
-		{
-			
-
-
-
-			if (pTap->DuctType==DuctTypeFlex)
-			{
-				SizeA=pTap->get_SizeA();
-				SizeB=pTap->get_SizeB();
-
-				setUnit1(_T("Ï"));
-				setUnit2(_T("Ï2"));
-
-				status=PipeRound;
-				setName(_T("¬ÓÁ‰ÛıÓ‚Ó‰ „Ë·ÍËÈ"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Length=M_PI*pTap->Radius*pTap->Swectangle/2/M_PI/1000;
-				Area=Length*M_PI*SizeA/1000;
-
-				setParam1(Length, TypeDouble1);
-				setParam2(Area, TypeDouble2);
-			}
-			else
-			{
-				Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
-				SizeA=pTap->get_SizeA();
-				SizeB=pTap->get_SizeB();
-
-				setUnit1(_T("¯Ú"));
-				setUnit2(_T("Ï2"));
-
-			if (SizeB==0) 
-			{
-				status=TapRound;
-				setName(_T("ŒÚ‚Ó‰ ÍÛ„Î˚È"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=M_PI*2*SizeA*pTap->Radius/1000000*pTap->Swectangle;
-				if ((pTap->RadiusTypeRound==TypeRoundTap_TapSection)&&(SizeA<=355))
+				SizeA=pPipe->get_SizeA();
+				SizeB=pPipe->get_SizeB();
+				Length=pPipe->get_Length();
+				setUnit1(_T("–º"));
+				setUnit2(_T("–º2"));
+				if (pPipe->DuctType==DuctTypeFlex)
 				{
-					Area=Area+M_PI*SizeA*2/10000;
+					status=PipeRound;
+					setName(_T("–í–æ–∑–¥—É—Ö–æ–≤–æ–¥ –≥–∏–±–∫–∏–π"));
+					setLable(d);
+					appendLable(SizeA);
+					Area=Length*M_PI*SizeA/1000000;
+					setParam1(Length/1000, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+				else
+				{
+					if (SizeB==0) 
+					{
+						status=PipeRound;
+						setName(_T("–í–æ–∑–¥—É—Ö–æ–≤–æ–¥ –∫—Ä—É–≥–ª—ã–π"));
+						setLable(d);
+						appendLable(SizeA);
+						Area=Length*M_PI*SizeA/1000000;
+
+					}
+					else 
+					{ 
+						status=PipeRect;
+						setName(_T("–í–æ–∑–¥—É—Ö–æ–≤–æ–¥ –ø—Ä—è–º–æ—É–≥–æ–ª—å–Ω—ã–π"));
+						if (SizeB>SizeA)
+						{
+							SizeB=pPipe->SizeA;
+							SizeA=pPipe->SizeB;
+						}
+						setLable(max(SizeA,SizeB));
+						appendLable(_T("x"));
+						appendLable(min(SizeA,SizeB));
+						Area=Length*(SizeB+SizeA)*2/1000000;
+					}
+					setParam1(Length/1000, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+			}
+#pragma endregion
+
+#pragma region Tap
+			if(pTap = TVS_TAP::cast(pEnt))
+			{
+
+
+
+
+				if (pTap->DuctType==DuctTypeFlex)
+				{
+					SizeA=pTap->get_SizeA();
+					SizeB=pTap->get_SizeB();
+
+					setUnit1(_T("–º"));
+					setUnit2(_T("–º2"));
+
+					status=PipeRound;
+					setName(_T("–í–æ–∑–¥—É—Ö–æ–≤–æ–¥ –≥–∏–±–∫–∏–π"));
+					setLable(d);
+					appendLable(SizeA);
+					Length=M_PI*pTap->Radius*pTap->Swectangle/2/M_PI/1000;
+					Area=Length*M_PI*SizeA/1000;
+
+					setParam1(Length, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+				else
+				{
+					Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
+					SizeA=pTap->get_SizeA();
+					SizeB=pTap->get_SizeB();
+
+					setUnit1(_T("—à—Ç"));
+					setUnit2(_T("–º2"));
+
+					if (SizeB==0) 
+					{
+						status=TapRound;
+						setName(_T("–û—Ç–≤–æ–¥ –∫—Ä—É–≥–ª—ã–π"));
+						setLable(d);
+						appendLable(SizeA);
+						Area=M_PI*2*SizeA*pTap->Radius/1000000*pTap->Swectangle;
+						if ((pTap->RadiusTypeRound==TypeRoundTap_TapSection)&&(SizeA<=355))
+						{
+							Area=Area+M_PI*SizeA*2/10000;
+						}
+
+					}
+					else 
+					{ 
+						status=TapRect;
+						setName(_T("–û—Ç–≤–æ–¥ –ø—Ä—è–º–æ—É–≥–æ–ª—å–Ω—ã–π"));
+						setLable(SizeA);
+						appendLable(_T("x"));
+						appendLable(SizeB);
+						Area=(pTap->Swectangle)/(2*M_PI) 
+							*(2*(M_PI*(pTap->Radius+pTap->SizeA)*(pTap->Radius+pTap->SizeA)/1000000
+							-M_PI*(pTap->Radius)*(pTap->Radius)/1000000) 
+							+2*M_PI*(pTap->SizeA+pTap->Radius)/1000*pTap->SizeB/1000
+							+2*M_PI*(pTap->Radius)/1000*pTap->SizeB/1000);
+					}
+					appendLable(_T("("));
+					appendLable(Swectangle);
+					appendLable(grad);
+					appendLable(_T(")"));
+					setParam1(1, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+			}
+#pragma endregion
+#pragma region Wye
+			if(pWye = TVS_WYE::cast(pEnt))
+			{
+				status=Wye;
+				SizeA=pWye->get_SizeApr();
+				SizeB=pWye->get_SizeBpr();
+				SizeA2=pWye->get_SizeAotv();
+				SizeA3=pWye->get_SizeBotv();
+				Swectangle=pWye->LengthPl;
+				setUnit1(_T("—à—Ç"));
+				setUnit2(_T("–º2"));
+
+				if (SizeB==0) 
+				{
+					setName(_T("–¢—Ä–æ–π–Ω–∏–∫"));
+					setLable(d);
+					appendLable(SizeA);
+					Area=(SizeA2+pWye->LengthPl*2)*M_PI*SizeA/1000000;
+				}
+				else 
+				{ 
+					setName(_T("–¢—Ä–æ–π–Ω–∏–∫"));
+					setLable(SizeA);
+					appendLable(_T("x"));
+					appendLable(SizeB);
+					Area=(SizeA2+pWye->LengthPl*2)*(SizeA+SizeB)/500000; 
+				}
+				appendLable(_T("-"));
+				if (SizeA3==0) 
+				{
+					appendLable(d);
+					appendLable(SizeA2);
+					Area=Area+(pWye->LengthPl)*M_PI*SizeA2/1000000-sCircle(SizeA2/1000);
+				}
+				else 
+				{ 
+					setName(_T("–¢—Ä–æ–π–Ω–∏–∫"));
+					appendLable(SizeA2);
+					appendLable(_T("x"));
+					appendLable(SizeA3);
+					Area=Area+(pWye->LengthPl)*(SizeA2+SizeA3)/500000-SizeA2*SizeA3/1000000; 
 				}
 
+				appendLable(_T(" (L="));
+				appendLable(pWye->LengthPl);
+				appendLable(_T(" –º–º)"));
+				setParam1(1, TypeDouble1);
+				setParam2(Area, TypeDouble2);
 			}
-			else 
-			{ 
-					status=TapRect;
-				setName(_T("ŒÚ‚Ó‰ ÔˇÏÓÛ„ÓÎ¸Ì˚È"));
-				setLable(SizeA);
-				appendLable(_T("x"));
-				appendLable(SizeB);
-				Area=(pTap->Swectangle)/(2*M_PI) 
-					*(2*(M_PI*(pTap->Radius+pTap->SizeA)*(pTap->Radius+pTap->SizeA)/1000000
-					-M_PI*(pTap->Radius)*(pTap->Radius)/1000000) 
-					+2*M_PI*(pTap->SizeA+pTap->Radius)/1000*pTap->SizeB/1000
-					+2*M_PI*(pTap->Radius)/1000*pTap->SizeB/1000);
-			}
-			appendLable(_T("("));
-			appendLable(Swectangle);
-			appendLable(_T("%%d)"));
-			setParam1(1, TypeDouble1);
-			setParam2(Area, TypeDouble2);
-		}
-		}
-		#pragma endregion
-		#pragma region Wye
-		if(pWye = TVS_WYE::cast(pEnt))
-		{
-			status=Wye;
-			SizeA=pWye->get_SizeApr();
-			SizeB=pWye->get_SizeBpr();
-			SizeA2=pWye->get_SizeAotv();
-			SizeA3=pWye->get_SizeBotv();
-			Swectangle=pWye->LengthPl;
-			setUnit1(_T("¯Ú"));
-			setUnit2(_T("Ï2"));
-			
-			if (SizeB==0) 
-			{
-				setName(_T("“ÓÈÌËÍ"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=(SizeA2+pWye->LengthPl*2)*M_PI*SizeA/1000000;
-			}
-			else 
-			{ 
-				setName(_T("“ÓÈÌËÍ"));
-				setLable(SizeA);
-				appendLable(_T("x"));
-				appendLable(SizeB);
-				Area=(SizeA2+pWye->LengthPl*2)*(SizeA+SizeB)/500000; 
-			}
-			appendLable(_T("-"));
-			if (SizeA3==0) 
-			{
-				appendLable(_T(d));
-				appendLable(SizeA2);
-				Area=Area+(pWye->LengthPl)*M_PI*SizeA2/1000000-sCircle(SizeA2/1000);
-			}
-			else 
-			{ 
-				setName(_T("“ÓÈÌËÍ"));
-				appendLable(SizeA2);
-				appendLable(_T("x"));
-				appendLable(SizeA3);
-				Area=Area+(pWye->LengthPl)*(SizeA2+SizeA3)/500000-SizeA2*SizeA3/1000000; 
-			}
-
-			appendLable(_T(" (L="));
-			appendLable(pWye->LengthPl);
-			appendLable(_T(" ÏÏ)"));
-			setParam1(1, TypeDouble1);
-			setParam2(Area, TypeDouble2);
-		}
 #pragma endregion
-		#pragma region Trans
-		if(pTrans = TVS_TRANS::cast(pEnt))
-		{
-			status=Trans;
-			Swectangle=pTrans->LengthTr;
-			SizeA=pTrans->get_SizeAp1();
-			SizeB=pTrans->get_SizeBp1();
-			SizeA2=pTrans->get_SizeAp2();
-			SizeA3=pTrans->get_SizeBp2();
-			if (SizeB==0)
+#pragma region Trans
+			if(pTrans = TVS_TRANS::cast(pEnt))
 			{
-				if (SizeA3==0)
+				status=Trans;
+				Swectangle=pTrans->LengthTr;
+				SizeA=pTrans->get_SizeAp1();
+				SizeB=pTrans->get_SizeBp1();
+				SizeA2=pTrans->get_SizeAp2();
+				SizeA3=pTrans->get_SizeBp2();
+				if (SizeB==0)
 				{
-					if (SizeA<SizeA2)
+					if (SizeA3==0)
 					{
+						if (SizeA<SizeA2)
+						{
+							SizeA=pTrans->get_SizeAp2();
+							SizeB=pTrans->get_SizeBp2();
+							SizeA2=pTrans->get_SizeAp1();
+							SizeA3=pTrans->get_SizeBp1();
+						}
+					}
+				}
+				else
+				{
+					if ((SizeA3==0)||(SizeA<SizeA2))
+					{
+
 						SizeA=pTrans->get_SizeAp2();
 						SizeB=pTrans->get_SizeBp2();
 						SizeA2=pTrans->get_SizeAp1();
 						SizeA3=pTrans->get_SizeBp1();
 					}
+
 				}
-			}
-			else
-			{
-				if ((SizeA3==0)||(SizeA<SizeA2))
+
+				setUnit1(_T("—à—Ç"));
+				setUnit2(_T("–º2"));
+				double radp1, radp2;
+				if (SizeB==0) 
 				{
-					
-						SizeA=pTrans->get_SizeAp2();
-						SizeB=pTrans->get_SizeBp2();
-						SizeA2=pTrans->get_SizeAp1();
-						SizeA3=pTrans->get_SizeBp1();
+					setName(_T("–ü–µ—Ä–µ—Ö–æ–¥"));
+					setLable(d);
+					appendLable(SizeA);
+					radp1=SizeA/2;
 				}
-
-			}
-
-			setUnit1(_T("¯Ú"));
-			setUnit2(_T("Ï2"));
-			double radp1, radp2;
-			if (SizeB==0) 
-			{
-				setName(_T("œÂÂıÓ‰"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				radp1=SizeA/2;
-			}
-			else 
-			{ 
-				setName(_T("œÂÂıÓ‰"));
-				setLable(SizeA);
-				appendLable(_T("x"));
-				appendLable(SizeB);
+				else 
+				{ 
+					setName(_T("–ü–µ—Ä–µ—Ö–æ–¥"));
+					setLable(SizeA);
+					appendLable(_T("x"));
+					appendLable(SizeB);
 					radp1=(SizeB+SizeA)/(M_PI);
+				}
+				appendLable(_T("-"));
+				if (SizeA3==0) 
+				{
+					appendLable(d);
+					appendLable(SizeA2);
+					radp2=SizeA2/2;
+
+				}
+				else 
+				{ 
+
+					appendLable(SizeA2);
+					appendLable(_T("x"));
+					appendLable(SizeA3);
+					radp2=(SizeA2+SizeA3)/(M_PI);
+
+				}
+				double dobr=sqrt(pow(radp1-radp2,2)+pow(pTrans->LengthTr,2));
+				Area=M_PI*(radp1+radp2)*dobr/1000000;
+				appendLable(_T(" (L="));
+				appendLable(pTrans->LengthTr);
+				appendLable(_T(" –º–º)"));
+				setParam1(1, TypeDouble1);
+				setParam2(Area, TypeDouble2);
 			}
-			appendLable(_T("-"));
-			if (SizeA3==0) 
-			{
-				appendLable(_T(d));
-				appendLable(SizeA2);
-				radp2=SizeA2/2;
-				
-			}
-			else 
-			{ 
-				
-				appendLable(SizeA2);
-				appendLable(_T("x"));
-				appendLable(SizeA3);
-				radp2=(SizeA2+SizeA3)/(M_PI);
-				
-			}
-			double dobr=sqrt(pow(radp1-radp2,2)+pow(pTrans->LengthTr,2));
-	Area=M_PI*(radp1+radp2)*dobr/1000000;
-			appendLable(_T(" (L="));
-			appendLable(pTrans->LengthTr);
-			appendLable(_T(" ÏÏ)"));
-			setParam1(1, TypeDouble1);
-			setParam2(Area, TypeDouble2);
-		}
 #pragma endregion
-		//if (status!=None) printResult();
-	
-		
-		pEnt->close();
-		return true;
+			//if (status!=None) printResult();
+
+
+			pEnt->close();
+			return true;
 		}
 		pEnt->close();	
 	}
@@ -353,7 +357,7 @@ void SPEC::setLable(const ACHAR * pAchar)
 void SPEC::setLable(double val)
 {
 	acdbRToS(val,2,2,lable);
-
+	
 }
 
 void SPEC::appendLable( const ACHAR * pAchar )
@@ -384,13 +388,13 @@ void SPEC::printResult()
 {
 	setParamChars();
 	acutPrintf(_T("\n%s %s  %s  %s  %s  %s"), name,lable,param1char, unit1, param2char, unit2);
-// 	acutPrintf(_T("%s "),param1char);
-// 	acutPrintf(_T("%s "),unit1);
-// 	acutPrintf(_T("%s "),param2char);
-// 	acutPrintf(_T("%s"),unit2);
+	// 	acutPrintf(_T("%s "),param1char);
+	// 	acutPrintf(_T("%s "),unit1);
+	// 	acutPrintf(_T("%s "),param2char);
+	// 	acutPrintf(_T("%s"),unit2);
 
 
-	
+
 
 }
 
@@ -410,10 +414,10 @@ void SPEC::printResultChar()
 const ACHAR * SPEC::toChar( double val )
 {
 	const ACHAR* str=new ACHAR[512];
-	 ACHAR  buffer[512];
-acdbRToS(val,2,2,buffer);
-str=buffer;
-return buffer;
+	ACHAR  buffer[512];
+	acdbRToS(val,2,2,buffer);
+	str=buffer;
+	return buffer;
 }
 
 
@@ -465,23 +469,23 @@ bool SPEC::GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR  *pVal)
 
 					if ((es = pAttr.openStatus()) == Acad::eOk) {
 						//
-						// «‰ÂÒ¸ ÏÓÊÌÓ ÔÓÎÛ˜ËÚ¸ ËÌÙÓÏ‡ˆË˛ Ó· ‡ÚË·ÛÚÂ
+						// –ó–¥–µ—Å—å –º–æ–∂–Ω–æ –ø–æ–ª—É—á–∏—Ç—å –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é –æ–± –∞—Ç—Ä–∏–±—É—Ç–µ
 						//
 
 						if (wcscmp(tag,pAttr->tagConst())==0) {
 							//	pAttDef->close();
 							pAttr->close();
 							pEnt->close();
-							//acutPrintf(_T("\n¿ÚË·ÛÚ: Tag=%s Value=%s "),
+							//acutPrintf(_T("\n–ê—Ç—Ä–∏–±—É—Ç: Tag=%s Value=%s "),
 							//	LPCTSTR(pAttr->tagConst()),LPCTSTR(pAttr->textStringConst()));
-	
+
 							wcscpy_s(pVal,512,pAttr->textStringConst());
 							return true;
 						}
 
 						pAttr->close();
 					} else {
-						acutPrintf(_T("\nÕÂ Û‰‡ÎÓÒ¸ ÓÚÍ˚Ú¸ ‡ÚË·ÛÚ ·ÎÓÍ‡! Œ¯Ë·Í‡: %s", LPCTSTR(acadErrorStatusText(es))));
+						acutPrintf(_T("\n–ù–µ —É–¥–∞–ª–æ—Å—å –æ—Ç–∫—Ä—ã—Ç—å –∞—Ç—Ä–∏–±—É—Ç –±–ª–æ–∫–∞! –û—à–∏–±–∫–∞: %s", LPCTSTR(acadErrorStatusText(es))));
 					}
 				}
 			}
@@ -507,30 +511,94 @@ bool SPEC::addBlock(AcDbEntity * pEnt)
 {
 	ACHAR sType[512];
 	ACHAR sSize[512];
-	if(GetAtt(pEnt,TagName,sName)&&GetAtt(pEnt,TagType,sType)&&GetAtt(pEnt,TagSize,sSize))
+	if(GetAtt(pEnt,TagName,sName)&&GetAtt(pEnt,TagSize,sSize)&&GetAtt(pEnt,TagType,sType))
 	{
 		wcscpy_s(sPos,_T(""));
 		//wcscpy_s(sName,_T(""));
 		wcscpy_s(sTypeSize,_T(""));
 		wcscpy_s(sArticle,_T(""));
 		wcscpy_s(sManufacture,_T(""));
-		wcscpy_s(sUnit,_T("¯Ú"));
+		wcscpy_s(sUnit,_T("—à—Ç"));
 		wcscpy_s(sValue,_T(""));
 		wcscpy_s(sMass,_T(""));
 		wcscpy_s(sCommit,_T(""));
 
-		wcscpy_s(sTypeSize,sType);
-		wcscat_s(sTypeSize,_T("-"));
-		wcscat_s(sTypeSize,sSize);
+		if (wcscmp(sType,_T(""))!=0) wcscpy_s(sTypeSize,sType);
+		if ((wcscmp(sType,_T(""))!=0)&&(wcscmp(sSize,_T(""))!=0)) wcscat_s(sTypeSize,_T("-"));
+		if (wcscmp(sSize,_T(""))!=0) wcscat_s(sTypeSize,sSize);
 
+		GetAtt(pEnt,TagPos,sPos);
 		GetAtt(pEnt,TagManufacture,sManufacture);
+		GetAtt(pEnt,TagMass,sMass);
 		GetAtt(pEnt,TagArticle,sArticle);
+		GetAtt(pEnt,TagCommit,sCommit);
 		setParam1(1, TypeInt);
 		setParam2(0, TypeInt);
+		if ((wcscmp(sPos,_T(""))==0)&&
+			(wcscmp(sName,_T(""))==0)&&
+			(wcscmp(sTypeSize,_T(""))==0)&&
+			(wcscmp(sArticle,_T(""))==0)&&
+			(wcscmp(sManufacture,_T(""))==0)&&
+			(wcscmp(sMass,_T(""))==0)&&
+			(wcscmp(sCommit,_T(""))==0)
+			) getBlockName(pEnt,sName);
 		return true;
 	}
 	else return false;
 }
+
+
+bool SPEC::getBlockName(AcDbEntity* pEnt , ACHAR *pName)
+{
+
+	Acad::ErrorStatus es;
+
+
+	AcDbObjectPointer<AcDbBlockReference> pBlkRef(pEnt->id(),AcDb::kForRead);
+	if ((es = pBlkRef.openStatus()) != Acad::eOk) {
+		acutPrintf(_T("\n–û—à–∏–±–∫–∞ –æ—Ç–∫—Ä—ã—Ç–∏—è BlockReference: %s"), acadErrorStatusText(es)); return false;
+	}
+	AcDbBlockTableRecordPointer pBTR(pBlkRef->blockTableRecord(),AcDb::kForRead);
+	if ((es = pBTR.openStatus()) != Acad::eOk) {
+		acutPrintf(_T("\n–û—à–∏–±–∫–∞ –æ—Ç–∫—Ä—ã—Ç–∏—è BlockTableRecord: %s"), acadErrorStatusText(es)); return false;
+	}
+	const ACHAR* sBTRName = NULL; pBTR->getName(sBTRName); 
+	if (sBTRName) wcscpy_s(pName,512,sBTRName);
+
+	
+	///DynBlock
+
+	
+
+
+	AcDbDynBlockReference dynblkRef(pEnt->id());
+	if (!dynblkRef.isDynamicBlock()) {
+
+		acutPrintf(_T("\n–≠—Ç–æ –Ω–µ –¥–∏–Ω–∞–º–∏—á–µ—Å–∫–∏–π –±–ª–æ–∫!")); return true;
+
+	}
+
+	AcDbBlockTableRecordPointer pDynBTR(dynblkRef.dynamicBlockTableRecord(),AcDb::kForRead);
+
+	if ((es = pDynBTR.openStatus()) != Acad::eOk) {
+
+		acutPrintf(_T("\n–û—à–∏–±–∫–∞ –æ—Ç–∫—Ä—ã—Ç–∏—è Dyn BlockTableRecord: %s"), acadErrorStatusText(es)); return true;
+
+	}
+
+	const ACHAR* sDynBTRName = NULL; pDynBTR->getName(sDynBTRName); 
+
+	if (sDynBTRName) wcscpy_s(pName,512,sDynBTRName);
+
+
+
+
+
+
+
+	return true;
+}
+
 
 void SPEC:: add(double pSizeA,
 				double pSizeB,
@@ -566,8 +634,8 @@ SPEClist::~SPEClist(void)
 
 void SPEClist::append(SPEC line)
 {
-// 	acutPrintf(_T("\n123"));
-// 	print();
+	// 	acutPrintf(_T("\n123"));
+	// 	print();
 	if (specList.logicalLength()==0)
 	{
 		specList.append(line);
@@ -618,22 +686,22 @@ int SPEClist::checkRelevations(SPEC param1, SPEC param2)
 	parameters2[5]=param2.Swectangle;
 	int i=0;
 
-while (i<6)
-{
-	if (parameters1[i]<parameters2[i])
+	while (i<6)
 	{
-		return Less;
+		if (parameters1[i]<parameters2[i])
+		{
+			return Less;
+		}
+		if (parameters1[i]>parameters2[i])
+		{
+			return Larger;
+		}
+		i++;
 	}
-	if (parameters1[i]>parameters2[i])
-	{
-		return Larger;
-	}
-	i++;
-}
 
 
-return Equal;
-	
+	return Equal;
+
 }
 
 void SPEClist::print()
@@ -658,46 +726,46 @@ void SPEClist::printSPDSForm(AcGePoint3d &cent)
 	int otstupX=100;
 	int otstupY=150;
 	int length = specList.logicalLength();
-		AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7;
-curcnt=cent;
+	AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7;
+	curcnt=cent;
 
 
 
-//zagolovok
-pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-printText(pos1,_T("Õ‡ËÏÂÌÓ‚‡ÌËÂ"));
-printText(pos2,_T("–‡ÁÏÂ"));
-printText(pos3,_T("≈‰ÂÌËˆ‡"));
-printText(pos4,_T(" ÓÎ-‚Ó"));
-printText(pos5,_T("≈‰ÂÌËˆ‡2"));
-printText(pos6,_T(" ÓÎ-‚Ó"));
-curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-
-//print all table text
-	for (int i =0; i<length;i++)
-	{
+	//zagolovok
 	pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-	specList[i].setParamChars();
-	printText(pos1,specList[i].name);
-	printText(pos2,specList[i].lable);
-	printText(pos3,specList[i].unit1);
-	printText(pos4,specList[i].param1char);
-	printText(pos5,specList[i].unit2);
-	printText(pos6,specList[i].param2char);
+	printText(pos1,_T("–ù–∞–∏–º–µ–Ω–æ–≤–∞–Ω–∏–µ"));
+	printText(pos2,_T("–†–∞–∑–º–µ—Ä"));
+	printText(pos3,_T("–ï–¥–µ–Ω–∏—Ü–∞"));
+	printText(pos4,_T("–ö–æ–ª-–≤–æ"));
+	printText(pos5,_T("–ï–¥–µ–Ω–∏—Ü–∞2"));
+	printText(pos6,_T("–ö–æ–ª-–≤–æ"));
 	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-}
 
-/// total
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+		pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+		specList[i].setParamChars();
+		printText(pos1,specList[i].name);
+		printText(pos2,specList[i].lable);
+		printText(pos3,specList[i].unit1);
+		printText(pos4,specList[i].param1char);
+		printText(pos5,specList[i].unit2);
+		printText(pos6,specList[i].param2char);
+		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
+	}
+
+	/// total
 	double summlenght=0, summArea=0;
 	ACHAR  sA[512];
 
@@ -706,18 +774,18 @@ curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 		//summlenght+=specList[i].param1;
 		summArea+=specList[i].param2;
 	}
-		acdbRToS(summArea,2,2,sA);
+	acdbRToS(summArea,2,2,sA);
 	//pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
 	//pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
 	//pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
 	//pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-	printText(pos5,_T("»ÚÓ„Ó:"));
-	//printText(pos2,_T("–‡ÁÏÂ"));
-	//printText(pos3,_T("≈‰ÂÌËˆ‡"));
-	//printText(pos4,_T(" ÓÎ-‚Ó"));
-	//printText(pos5,_T("≈‰ÂÌËˆ‡2"));
+	printText(pos5,_T("–ò—Ç–æ–≥–æ:"));
+	//printText(pos2,_T("–†–∞–∑–º–µ—Ä"));
+	//printText(pos3,_T("–ï–¥–µ–Ω–∏—Ü–∞"));
+	//printText(pos4,_T("–ö–æ–ª-–≤–æ"));
+	//printText(pos5,_T("–ï–¥–µ–Ω–∏—Ü–∞2"));
 	printText(pos6,sA);
 	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 
@@ -726,25 +794,25 @@ curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 	double TableLenght=39500;
 	double Hight=length*800;
 	//vertical Lines
-	
-AcGePoint3d start,end;
-for each (int c in columnswidth)
-{
+
+	AcGePoint3d start,end;
+	for each (int c in columnswidth)
+	{
 		start=AcGePoint3d(cent.x+c,cent.y+rowhight,cent.z);
 		end=AcGePoint3d(cent.x+c,cent.y-rowhight*(length+1),cent.z);
 		printLine(start,end);
-}
+	}
 	//horizontal Lines
 
-for (int i =-1; i<length+2;i++)
-{
-	start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
-	end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
-	printLine(start,end);
-}
-cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
-print();
-acutPrintf(_T("\n»ÚÓ„Ó Ï2: %s"),sA);
+	for (int i =-1; i<length+2;i++)
+	{
+		start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
+		end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
+		printLine(start,end);
+	}
+	cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
+	print();
+	acutPrintf(_T("\n–ò—Ç–æ–≥–æ –º2: %s"),sA);
 }
 
 void SPEClist::printText( AcGePoint3d cent, const ACHAR * pAchar )
@@ -795,6 +863,80 @@ void SPEClist::printLine( AcGePoint3d start, AcGePoint3d end )
 }
 
 
+bool SPEClist::printToExel(CMSExcel* m_msExcel,long &idx)
+{
+	
+
+
+	
+	int length = specList.logicalLength();
+	ACHAR*col1={L"A"};
+	ACHAR*col2={L"B"};
+	ACHAR*col3={L"C"};
+	ACHAR*col4={L"D"};
+	ACHAR*col5={L"E"};
+	ACHAR*col6={L"F"};
+	ACHAR*col7={L"G"};
+	ACHAR*col8={L"H"};
+	ACHAR*col9={L"I"};
+
+	//m_msExcel->SetExcelCellFormat(L"A1:i20000",L"Text");
+
+
+
+	m_msExcel->printExelText(col2,idx,_T("–ù–∞–∏–º–µ–Ω–æ–≤–∞–Ω–∏–µ"));
+	m_msExcel->printExelText(col3,idx,_T("–†–∞–∑–º–µ—Ä"));
+	m_msExcel->printExelText(col6,idx,_T("–ï–¥–µ–Ω–∏—Ü–∞"));
+	m_msExcel->printExelText(col7,idx,_T("–ö–æ–ª-–≤–æ"));
+	m_msExcel->printExelText(col8,idx,_T("–ï–¥–µ–Ω–∏—Ü–∞2"));
+	m_msExcel->printExelText(col9,idx,_T("–ö–æ–ª-–≤–æ"));
+
+
+ acedSetStatusBarProgressMeter(_T("–≠–∫—Å–ø–æ—Ä—Ç –¥–∞–Ω–Ω—ã—Ö –≤ Excel"),0,length);
+	idx++;
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+
+		 acedSetStatusBarProgressMeterPos( i);
+		specList[i].setParamChars();
+
+		m_msExcel->printExelText(col2,idx,specList[i].name);
+		m_msExcel->printExelText(col3,idx,specList[i].lable);
+		m_msExcel->printExelText(col6,idx,specList[i].unit1);
+		m_msExcel->printExelText(col7,idx,specList[i].param1char);
+		m_msExcel->printExelText(col8,idx,specList[i].unit2);
+		m_msExcel->printExelText(col9,idx,specList[i].param2char);
+
+
+
+		idx++;
+	}
+		acedRestoreStatusBar();
+
+	/// total
+	double summlenght=0, summArea=0;
+	ACHAR  sA[512];
+
+	for (int i =0; i<length;i++)
+	{
+		//summlenght+=specList[i].param1;
+		summArea+=specList[i].param2;
+	}
+	acdbRToS(summArea,2,2,sA);
+
+	m_msExcel->printExelText(col8,idx,_T("–ò—Ç–æ–≥–æ:"));
+	m_msExcel->printExelText(col9,idx,sA);
+
+	idx++;
+
+	return true;
+}
+
+
+
+
+
 SpecWithAttrlist::SpecWithAttrlist(void)
 {
 
@@ -810,9 +952,13 @@ SpecWithAttrlist::~SpecWithAttrlist(void)
 int SpecWithAttrlist::checkRelevations(SPEC param1, SPEC param2)
 {
 	int ret;
-	ret=checkCharRelevations(param1.sName,param2.sName);
+	ret=checkCharRelevations(param1.sPos,param2.sPos);
+	if(ret==Equal) ret=checkCharRelevations(param1.sName,param2.sName);
 	if(ret==Equal) ret=checkCharRelevations(param1.sTypeSize,param2.sTypeSize);
-return ret;
+	if(ret==Equal) ret=checkCharRelevations(param1.sArticle,param2.sArticle);
+	if(ret==Equal) ret=checkCharRelevations(param1.sManufacture,param2.sManufacture);
+	if(ret==Equal) ret=checkCharRelevations(param1.sCommit,param2.sCommit);
+	return ret;
 }
 
 int SpecWithAttrlist::checkCharRelevations(ACHAR * param1, ACHAR * param2)
@@ -825,19 +971,43 @@ int SpecWithAttrlist::checkCharRelevations(ACHAR * param1, ACHAR * param2)
 void SpecWithAttrlist::printSPDSForm(AcGePoint3d &cent)
 {
 
-		//int columnswidth[9]={2000,13000,6000,3500,4500,2000,2000,2500,4000};
-		int columnswidth[10]={0, 2000,15000,21000,24500,29000,31000,33000,35500,39500};
-		int columndistanse[9]={0,2000,15000,21000,24500,29000,31000,33000,35500};
-		int rowhight=800;
-		int otstupX=100;
-		int otstupY=150;
-		int length = specList.logicalLength();
-		AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7,pos8,pos9;
-		curcnt=cent;
+	//int columnswidth[9]={2000,13000,6000,3500,4500,2000,2000,2500,4000};
+	int columnswidth[10]={0, 2000,15000,21000,24500,29000,31000,33000,35500,39500};
+	int columndistanse[9]={0,2000,15000,21000,24500,29000,31000,33000,35500};
+	int rowhight=800;
+	int otstupX=100;
+	int otstupY=150;
+	int length = specList.logicalLength();
+	AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7,pos8,pos9;
+	curcnt=cent;
 
 
 
-		//zagolovok
+	//zagolovok
+	pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos7=AcGePoint3d(curcnt.x+columndistanse[6]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos8=AcGePoint3d(curcnt.x+columndistanse[7]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos9=AcGePoint3d(curcnt.x+columndistanse[8]+otstupX,curcnt.y+otstupY,curcnt.z);
+	printText(pos1,_T("–ü–æ–∑–∏—Ü–∏—è"));
+	printText(pos2,_T("–ù–∞–∏–º–µ–Ω–æ–≤–∞–Ω–∏–µ"));
+	printText(pos3,_T("–¢–∏–ø–æ—Ä–∞–∑–º–µ—Ä"));
+	printText(pos4,_T("–ê—Ä—Ç–∏–∫—É–ª"));
+	printText(pos5,_T("–ò–∑–≥–æ—Ç–æ–≤–∏—Ç–µ–ª—å"));
+	printText(pos6,_T("–ï–¥–µ–Ω–∏—Ü–∞"));
+	printText(pos7,_T("–ö–æ–ª-–≤–æ"));
+	printText(pos8,_T("–ú–∞—Å—Å–∞"));
+	printText(pos9,_T("–ü—Ä–∏–º–µ—á–∞–Ω–∏–µ"));
+	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
+
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+
 		pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
@@ -847,103 +1017,144 @@ void SpecWithAttrlist::printSPDSForm(AcGePoint3d &cent)
 		pos7=AcGePoint3d(curcnt.x+columndistanse[6]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos8=AcGePoint3d(curcnt.x+columndistanse[7]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos9=AcGePoint3d(curcnt.x+columndistanse[8]+otstupX,curcnt.y+otstupY,curcnt.z);
-		printText(pos1,_T("œÓÁ."));
-		printText(pos2,_T("Õ‡ËÏÂÌÓ‚‡ÌËÂ"));
-		printText(pos3,_T("“ËÔÓ‡ÁÏÂ"));
-		printText(pos4,_T("¿ÚËÍÛÎ"));
-		printText(pos5,_T("»Á„ÓÚÓ‚ËÚÂÎ¸"));
-		printText(pos6,_T("≈‰."));
-		printText(pos7,_T(" ÓÎ-‚Ó"));
-		printText(pos8,_T("Ã‡ÒÒ‡"));
-		printText(pos9,_T("œËÏÂ˜."));
+		//specList[i].setParamChars();
+		//printText(pos1,specList[i].name);
+		specList[i].setParamChars();
+		if(wcscmp(specList[i].sPos,_T(""))!=0) printText(pos1,specList[i].sPos);
+		if(wcscmp(specList[i].sName,_T(""))!=0) printText(pos2,specList[i].sName);
+		if(wcscmp(specList[i].sTypeSize,_T(""))!=0) printText(pos3,specList[i].sTypeSize);
+		if(wcscmp(specList[i].sArticle,_T(""))!=0) printText(pos4,specList[i].sArticle);
+		if(wcscmp(specList[i].sManufacture,_T(""))!=0) printText(pos5,specList[i].sManufacture);
+		if(wcscmp(specList[i].sUnit,_T(""))!=0) printText(pos6,specList[i].sUnit);
+
+		printText(pos7,specList[i].param1char);
+		if(wcscmp(specList[i].sMass,_T(""))!=0) printText(pos8,specList[i].sMass);
+		if(wcscmp(specList[i].sCommit,_T(""))!=0) printText(pos9,specList[i].sCommit);
 		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-
-		//print all table text
-		for (int i =0; i<length;i++)
-		{
-
-			pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos7=AcGePoint3d(curcnt.x+columndistanse[6]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos8=AcGePoint3d(curcnt.x+columndistanse[7]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos9=AcGePoint3d(curcnt.x+columndistanse[8]+otstupX,curcnt.y+otstupY,curcnt.z);
-			//specList[i].setParamChars();
-			//printText(pos1,specList[i].name);
-			specList[i].setParamChars();
-			if(wcscmp(specList[i].sName,_T(""))!=0) printText(pos2,specList[i].sName);
-			if(wcscmp(specList[i].sTypeSize,_T(""))!=0) printText(pos3,specList[i].sTypeSize);
-			if(wcscmp(specList[i].sArticle,_T(""))!=0) printText(pos4,specList[i].sArticle);
-			if(wcscmp(specList[i].sManufacture,_T(""))!=0) printText(pos5,specList[i].sManufacture);
-			if(wcscmp(specList[i].sUnit,_T(""))!=0) printText(pos6,specList[i].sUnit);
-			
-			printText(pos7,specList[i].param1char);
-			if(wcscmp(specList[i].sMass,_T(""))!=0) printText(pos8,specList[i].sMass);
-			if(wcscmp(specList[i].sCommit,_T(""))!=0) printText(pos9,specList[i].sCommit);
-			curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-		}
-
-// 		/// total
-// 		double summlenght=0, summArea=0;
-// 		ACHAR  sA[512];
-// 
-// 		for (int i =0; i<length;i++)
-// 		{
-// 			//summlenght+=specList[i].param1;
-// 			summArea+=specList[i].param2;
-// 		}
-// 		acdbRToS(summArea,2,2,sA);
-// 		//pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		//pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		//pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		//pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		printText(pos5,_T("»ÚÓ„Ó:"));
-// 		//printText(pos2,_T("–‡ÁÏÂ"));
-// 		//printText(pos3,_T("≈‰ÂÌËˆ‡"));
-// 		//printText(pos4,_T(" ÓÎ-‚Ó"));
-// 		//printText(pos5,_T("≈‰ÂÌËˆ‡2"));
-// 		printText(pos6,sA);
-// 		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-
-		///print table
-
-		double TableLenght=39500;
-		double Hight=length*800;
-		//vertical Lines
-
-		AcGePoint3d start,end;
-		for each (int c in columnswidth)
-		{
-			start=AcGePoint3d(cent.x+c,cent.y+rowhight,cent.z);
-			end=AcGePoint3d(cent.x+c,cent.y-rowhight*(length+1),cent.z);
-			printLine(start,end);
-		}
-		//horizontal Lines
-
-		for (int i =-1; i<length+2;i++)
-		{
-			start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
-			end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
-			printLine(start,end);
-		}
-		cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
-		print();
-		//acutPrintf(_T("\n»ÚÓ„Ó Ï2: %s"),sA);
 	}
 
+	// 		/// total
+	// 		double summlenght=0, summArea=0;
+	// 		ACHAR  sA[512];
+	// 
+	// 		for (int i =0; i<length;i++)
+	// 		{
+	// 			//summlenght+=specList[i].param1;
+	// 			summArea+=specList[i].param2;
+	// 		}
+	// 		acdbRToS(summArea,2,2,sA);
+	// 		//pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		//pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		//pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		//pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		printText(pos5,_T("–ò—Ç–æ–≥–æ:"));
+	// 		//printText(pos2,_T("–†–∞–∑–º–µ—Ä"));
+	// 		//printText(pos3,_T("–ï–¥–µ–Ω–∏—Ü–∞"));
+	// 		//printText(pos4,_T("–ö–æ–ª-–≤–æ"));
+	// 		//printText(pos5,_T("–ï–¥–µ–Ω–∏—Ü–∞2"));
+	// 		printText(pos6,sA);
+	// 		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 
-	void SpecWithAttrlist::print()
+	///print table
+
+	double TableLenght=39500;
+	double Hight=length*800;
+	//vertical Lines
+
+	AcGePoint3d start,end;
+	for each (int c in columnswidth)
 	{
-		length=specList.logicalLength();
-		for (int i=0; i<length;i++)
-		{
-			specList[i].printResultChar();
-		}
+		start=AcGePoint3d(cent.x+c,cent.y+rowhight,cent.z);
+		end=AcGePoint3d(cent.x+c,cent.y-rowhight*(length+1),cent.z);
+		printLine(start,end);
 	}
+	//horizontal Lines
+
+	for (int i =-1; i<length+2;i++)
+	{
+		start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
+		end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
+		printLine(start,end);
+	}
+	cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
+	print();
+	//acutPrintf(_T("\n–ò—Ç–æ–≥–æ –º2: %s"),sA);
+}
+
+
+bool SpecWithAttrlist::printToExel(CMSExcel* m_msExcel,long &idx)
+{
+
+	ACHAR*col1={L"A"};
+	ACHAR*col2={L"B"};
+	ACHAR*col3={L"C"};
+	ACHAR*col4={L"D"};
+	ACHAR*col5={L"E"};
+	ACHAR*col6={L"F"};
+	ACHAR*col7={L"G"};
+	ACHAR*col8={L"H"};
+	ACHAR*col9={L"I"};
+
+	
+	int length = specList.logicalLength();
+
+
+	m_msExcel->printExelText(col1,idx,_T("–ü–æ–∑–∏—Ü–∏—è"));
+	m_msExcel->printExelText(col2,idx,_T("–ù–∞–∏–º–µ–Ω–æ–≤–∞–Ω–∏–µ"));
+	m_msExcel->printExelText(col3,idx,_T("–¢–∏–ø–æ—Ä–∞–∑–º–µ—Ä"));
+	m_msExcel->printExelText(col4,idx,_T("–ê—Ä—Ç–∏–∫—É–ª"));
+	m_msExcel->printExelText(col5,idx,_T("–ò–∑–≥–æ—Ç–æ–≤–∏—Ç–µ–ª—å"));
+	m_msExcel->printExelText(col6,idx,_T("–ï–¥–µ–Ω–∏—Ü–∞"));
+	m_msExcel->printExelText(col7,idx,_T("–ö–æ–ª-–≤–æ"));
+	m_msExcel->printExelText(col8,idx,_T("–ú–∞—Å—Å–∞"));
+	m_msExcel->printExelText(col9,idx,_T("–ü—Ä–∏–º–µ—á–∞–Ω–∏–µ"));
+
+	int status;
+	 acedSetStatusBarProgressMeter(_T("–≠–∫—Å–ø–æ—Ä—Ç –¥–∞–Ω–Ω—ã—Ö –≤ Excel"),0,length);
+	 
+	idx++;
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+
+		specList[i].setParamChars();
+
+		
+	
+	 acedSetStatusBarProgressMeterPos( i);
+	
+		if(wcscmp(specList[i].sPos,_T(""))!=0) m_msExcel->printExelText(col1,idx,specList[i].sPos);
+		if(wcscmp(specList[i].sName,_T(""))!=0) m_msExcel->printExelText(col2,idx,specList[i].sName);
+		if(wcscmp(specList[i].sTypeSize,_T(""))!=0) m_msExcel->printExelText(col3,idx,specList[i].sTypeSize);
+		if(wcscmp(specList[i].sArticle,_T(""))!=0) m_msExcel->printExelText(col4,idx,specList[i].sArticle);
+		if(wcscmp(specList[i].sManufacture,_T(""))!=0) m_msExcel->printExelText(col5,idx,specList[i].sManufacture);
+		if(wcscmp(specList[i].sUnit,_T(""))!=0) m_msExcel->printExelText(col6,idx,specList[i].sUnit);
+		if(wcscmp(specList[i].param1char,_T(""))!=0) m_msExcel->printExelText(col7,idx,specList[i].param1char);
+		if(wcscmp(specList[i].sMass,_T(""))!=0) m_msExcel->printExelText(col8,idx,specList[i].sMass);
+		if(wcscmp(specList[i].sCommit,_T(""))!=0) m_msExcel->printExelText(col9,idx,specList[i].sCommit);
+
+
+
+		idx++;
+	}
+
+
+	acedRestoreStatusBar();
+
+	idx++;
+
+	return true;
+}
+
+void SpecWithAttrlist::print()
+{
+	length=specList.logicalLength();
+	for (int i=0; i<length;i++)
+	{
+		specList[i].printResultChar();
+	}
+}
 
 
