@@ -1,24 +1,28 @@
-#pragma once
+Ôªø#pragma once
 #include "Resource.h"
 #include "dbmain.h"
 #include "rxmfcapi.h"
 #include <vector>
 using namespace std;
 #include "StdAfx.h"
+#include "Func.h"
 #include "../TVS_Ventilation_DBX/TVS_Entity.h"
 #include "../TVS_Ventilation_DBX/TVS_Tap.h"
 #include "../TVS_Ventilation_DBX/TVS_Pipe.h"
 #include "../TVS_Ventilation_DBX/TVS_Wye.h"
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
+#include "MSExcel.h"
 
-#define TagPos _T("œŒ«»÷»ﬂ")
-#define TagName _T("»Ãﬂ")
-#define TagType _T("“»œ")
-#define TagSize _T("–¿«Ã≈–")
-#define TagArticle _T("¿–“» ”À")
-#define TagManufacture _T("œ–Œ»«¬Œƒ»“≈À‹")
-#define TagMass _T("Ã¿——¿")
-#define TagCommit _T("œ–»Ã≈◊¿Õ»≈")
+#define TagPos _T("–ü–û–ó–ò–¶–ò–Ø")
+#define TagName _T("–ò–ú–Ø")
+#define TagType _T("–¢–ò–ü")
+#define TagSize _T("–†–ê–ó–ú–ï–†")
+#define TagArticle _T("–ê–†–¢–ò–ö–£–õ")
+#define TagManufacture _T("–ü–†–û–ò–ó–í–û–î–ò–¢–ï–õ–¨")
+#define TagMass _T("–ú–ê–°–°–ê")
+#define TagCommit _T("–ü–†–ò–ú–ï–ß–ê–ù–ò–ï")
+
+
 
 class SPEC
 {
@@ -27,6 +31,8 @@ private:
 	ACHAR achartype[512];
 
 public:
+		ACHAR d[512];
+			ACHAR grad[512];
 	SPEC(void);
 	~SPEC(void);
 ACHAR name[512];
@@ -100,8 +106,8 @@ ACHAR sValue[512];
 ACHAR sMass[512];
 ACHAR sCommit[512];
 bool addBlock(AcDbEntity * pEnt);
-bool getBlockName(AcDbEntity * pEnt, ACHAR *pVal);
 
+static bool getBlockName(AcDbEntity* pEnt , ACHAR *pName);
 };
 
 class SPEClist
@@ -110,15 +116,17 @@ class SPEClist
 		SPEClist(void);
 		~SPEClist(void);
 		AcArray <SPEC> specList;
-virtual		void append (SPEC line);
+		void append (SPEC line);
 		int length;
-virtual		int checkRelevations(SPEC param1, SPEC param2);
+		virtual int checkRelevations(SPEC param1, SPEC param2);
 
 		void print();
 		
-		void printSPDSForm(AcGePoint3d &cent);
-		void printText(AcGePoint3d cent, const ACHAR * pAchar);
+		virtual void printSPDSForm(AcGePoint3d &cent);
+		virtual void printText(AcGePoint3d cent, const ACHAR * pAchar);
 	static	void printLine(AcGePoint3d start, AcGePoint3d end);
+	virtual bool printToExel(CMSExcel* m_msExcel,long &idx);
+	
 };
 
 class SpecWithAttrlist : public SPEClist
@@ -130,6 +138,7 @@ public:
 int checkRelevations(SPEC param1, SPEC param2); //First vs two
 int checkCharRelevations(ACHAR * param1, ACHAR * param2);
 void printSPDSForm(AcGePoint3d &cent);
+bool printToExel(CMSExcel* m_msExcel,long &idx);
 void print();
 };
 

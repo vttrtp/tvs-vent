@@ -89,6 +89,8 @@
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="GripPoints.cpp" />
     <ClCompile Include="hangeZdg.cpp" />
+    <ClCompile Include="MSExcel.cpp" />
+    <ClCompile Include="OLEMethod.cpp" />
     <ClCompile Include="PipeSizeDiallog.cpp" />
     <ClCompile Include="SPEC.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -108,6 +110,9 @@
     <ClInclude Include="Func.h" />
     <ClInclude Include="GripPoints.h" />
     <ClInclude Include="hangeZdg.h" />
+    <ClInclude Include="MSExcel.h" />
+    <ClInclude Include="Office.h" />
+    <ClInclude Include="OLEMethod.h" />
     <ClInclude Include="PipeSizeDiallog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SPEC.h" />
@@ -120,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

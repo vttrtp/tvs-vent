@@ -7,6 +7,12 @@
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
 #include "SPEC.h"
 #include "dgAllEdit.h"
+
+#include "stdafx.h"
+#include "afxwin.h"
+#include <iostream>
+#include "afxdb.h"
+
 #define globalElevUp 1
 #define globalElevmid 2
 #define globalElevdown 3

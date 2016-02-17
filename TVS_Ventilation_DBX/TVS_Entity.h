@@ -280,6 +280,7 @@ public:
 	int getDuctType();
 	virtual void setDuctType(int pDuctType);
 	void setNewParameters();
+	void ClearEntitylist();
 	bool isDuctFlex();
 } ;
 

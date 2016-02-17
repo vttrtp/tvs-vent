@@ -1,10 +1,11 @@
-
+п»ї
 #include "StdAfx.h"
 #include "SPEC.h"
+
 #include <cmath>
 #include<iostream>
 using namespace std;
-#define d "%%c"
+
 #define None 0
 #define PipeRound 1
 #define PipeRect 2
@@ -37,6 +38,8 @@ void SPEC::setAcharType(int val)
 
 SPEC::SPEC(void)
 {
+	wcscpy_s(d,_T("%%c"));
+	wcscpy_s(grad,_T("%%d"));
 }
 
 SPEC::~SPEC(void)
@@ -71,7 +74,7 @@ bool SPEC::add(AcDbEntity * pEnt)
 	Swectangle=0;
 	Length=0;
 	Area=0;
-	
+
 
 
 	if (acdbOpenAcDbEntity(pEnt,pEnt->id(),AcDb::kForRead)==eOk)
@@ -79,259 +82,260 @@ bool SPEC::add(AcDbEntity * pEnt)
 		if(Ent = TVS_Entity::cast(pEnt))
 		{
 
-		
-		#pragma region Pipe
-		if(pPipe = TVS_Pipe::cast(pEnt))
-		{
-		
-			SizeA=pPipe->get_SizeA();
-			SizeB=pPipe->get_SizeB();
-			Length=pPipe->get_Length();
-			setUnit1(_T("м"));
-			setUnit2(_T("м2"));
-			if (pPipe->DuctType==DuctTypeFlex)
+
+#pragma region Pipe
+			if(pPipe = TVS_Pipe::cast(pEnt))
 			{
-				status=PipeRound;
-				setName(_T("Воздуховод гибкий"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=Length*M_PI*SizeA/1000000;
-				setParam1(Length/1000, TypeDouble1);
-				setParam2(Area, TypeDouble2);
-			}
-			else
-			{
-		if (SizeB==0) 
-			{
-					status=PipeRound;
-				setName(_T("Воздуховод круглый"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=Length*M_PI*SizeA/1000000;
-					
-			}
-		else 
-			{ 
-				status=PipeRect;
-			setName(_T("Воздуховод прямоугольный"));
-			if (SizeB>SizeA)
-			{
-				SizeB=pPipe->SizeA;
-				SizeA=pPipe->SizeB;
-			}
-			setLable(max(SizeA,SizeB));
-			appendLable(_T("x"));
-			appendLable(min(SizeA,SizeB));
-			Area=Length*(SizeB+SizeA)*2/1000000;
-			}
-		setParam1(Length/1000, TypeDouble1);
-		setParam2(Area, TypeDouble2);
-		}
-		}
-	#pragma endregion
 
-		#pragma region Tap
-		if(pTap = TVS_TAP::cast(pEnt))
-		{
-			
-
-
-
-			if (pTap->DuctType==DuctTypeFlex)
-			{
-				SizeA=pTap->get_SizeA();
-				SizeB=pTap->get_SizeB();
-
-				setUnit1(_T("м"));
-				setUnit2(_T("м2"));
-
-				status=PipeRound;
-				setName(_T("Воздуховод гибкий"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Length=M_PI*pTap->Radius*pTap->Swectangle/2/M_PI/1000;
-				Area=Length*M_PI*SizeA/1000;
-
-				setParam1(Length, TypeDouble1);
-				setParam2(Area, TypeDouble2);
-			}
-			else
-			{
-				Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
-				SizeA=pTap->get_SizeA();
-				SizeB=pTap->get_SizeB();
-
-				setUnit1(_T("шт"));
-				setUnit2(_T("м2"));
-
-			if (SizeB==0) 
-			{
-				status=TapRound;
-				setName(_T("Отвод круглый"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=M_PI*2*SizeA*pTap->Radius/1000000*pTap->Swectangle;
-				if ((pTap->RadiusTypeRound==TypeRoundTap_TapSection)&&(SizeA<=355))
+				SizeA=pPipe->get_SizeA();
+				SizeB=pPipe->get_SizeB();
+				Length=pPipe->get_Length();
+				setUnit1(_T("Рј"));
+				setUnit2(_T("Рј2"));
+				if (pPipe->DuctType==DuctTypeFlex)
 				{
-					Area=Area+M_PI*SizeA*2/10000;
+					status=PipeRound;
+					setName(_T("Р’РѕР·РґСѓС…РѕРІРѕРґ РіРёР±РєРёР№"));
+					setLable(d);
+					appendLable(SizeA);
+					Area=Length*M_PI*SizeA/1000000;
+					setParam1(Length/1000, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+				else
+				{
+					if (SizeB==0) 
+					{
+						status=PipeRound;
+						setName(_T("Р’РѕР·РґСѓС…РѕРІРѕРґ РєСЂСѓРіР»С‹Р№"));
+						setLable(d);
+						appendLable(SizeA);
+						Area=Length*M_PI*SizeA/1000000;
+
+					}
+					else 
+					{ 
+						status=PipeRect;
+						setName(_T("Р’РѕР·РґСѓС…РѕРІРѕРґ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹Р№"));
+						if (SizeB>SizeA)
+						{
+							SizeB=pPipe->SizeA;
+							SizeA=pPipe->SizeB;
+						}
+						setLable(max(SizeA,SizeB));
+						appendLable(_T("x"));
+						appendLable(min(SizeA,SizeB));
+						Area=Length*(SizeB+SizeA)*2/1000000;
+					}
+					setParam1(Length/1000, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+			}
+#pragma endregion
+
+#pragma region Tap
+			if(pTap = TVS_TAP::cast(pEnt))
+			{
+
+
+
+
+				if (pTap->DuctType==DuctTypeFlex)
+				{
+					SizeA=pTap->get_SizeA();
+					SizeB=pTap->get_SizeB();
+
+					setUnit1(_T("Рј"));
+					setUnit2(_T("Рј2"));
+
+					status=PipeRound;
+					setName(_T("Р’РѕР·РґСѓС…РѕРІРѕРґ РіРёР±РєРёР№"));
+					setLable(d);
+					appendLable(SizeA);
+					Length=M_PI*pTap->Radius*pTap->Swectangle/2/M_PI/1000;
+					Area=Length*M_PI*SizeA/1000;
+
+					setParam1(Length, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+				else
+				{
+					Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
+					SizeA=pTap->get_SizeA();
+					SizeB=pTap->get_SizeB();
+
+					setUnit1(_T("С€С‚"));
+					setUnit2(_T("Рј2"));
+
+					if (SizeB==0) 
+					{
+						status=TapRound;
+						setName(_T("РћС‚РІРѕРґ РєСЂСѓРіР»С‹Р№"));
+						setLable(d);
+						appendLable(SizeA);
+						Area=M_PI*2*SizeA*pTap->Radius/1000000*pTap->Swectangle;
+						if ((pTap->RadiusTypeRound==TypeRoundTap_TapSection)&&(SizeA<=355))
+						{
+							Area=Area+M_PI*SizeA*2/10000;
+						}
+
+					}
+					else 
+					{ 
+						status=TapRect;
+						setName(_T("РћС‚РІРѕРґ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅС‹Р№"));
+						setLable(SizeA);
+						appendLable(_T("x"));
+						appendLable(SizeB);
+						Area=(pTap->Swectangle)/(2*M_PI) 
+							*(2*(M_PI*(pTap->Radius+pTap->SizeA)*(pTap->Radius+pTap->SizeA)/1000000
+							-M_PI*(pTap->Radius)*(pTap->Radius)/1000000) 
+							+2*M_PI*(pTap->SizeA+pTap->Radius)/1000*pTap->SizeB/1000
+							+2*M_PI*(pTap->Radius)/1000*pTap->SizeB/1000);
+					}
+					appendLable(_T("("));
+					appendLable(Swectangle);
+					appendLable(grad);
+					appendLable(_T(")"));
+					setParam1(1, TypeDouble1);
+					setParam2(Area, TypeDouble2);
+				}
+			}
+#pragma endregion
+#pragma region Wye
+			if(pWye = TVS_WYE::cast(pEnt))
+			{
+				status=Wye;
+				SizeA=pWye->get_SizeApr();
+				SizeB=pWye->get_SizeBpr();
+				SizeA2=pWye->get_SizeAotv();
+				SizeA3=pWye->get_SizeBotv();
+				Swectangle=pWye->LengthPl;
+				setUnit1(_T("С€С‚"));
+				setUnit2(_T("Рј2"));
+
+				if (SizeB==0) 
+				{
+					setName(_T("РўСЂРѕР№РЅРёРє"));
+					setLable(d);
+					appendLable(SizeA);
+					Area=(SizeA2+pWye->LengthPl*2)*M_PI*SizeA/1000000;
+				}
+				else 
+				{ 
+					setName(_T("РўСЂРѕР№РЅРёРє"));
+					setLable(SizeA);
+					appendLable(_T("x"));
+					appendLable(SizeB);
+					Area=(SizeA2+pWye->LengthPl*2)*(SizeA+SizeB)/500000; 
+				}
+				appendLable(_T("-"));
+				if (SizeA3==0) 
+				{
+					appendLable(d);
+					appendLable(SizeA2);
+					Area=Area+(pWye->LengthPl)*M_PI*SizeA2/1000000-sCircle(SizeA2/1000);
+				}
+				else 
+				{ 
+					setName(_T("РўСЂРѕР№РЅРёРє"));
+					appendLable(SizeA2);
+					appendLable(_T("x"));
+					appendLable(SizeA3);
+					Area=Area+(pWye->LengthPl)*(SizeA2+SizeA3)/500000-SizeA2*SizeA3/1000000; 
 				}
 
+				appendLable(_T(" (L="));
+				appendLable(pWye->LengthPl);
+				appendLable(_T(" РјРј)"));
+				setParam1(1, TypeDouble1);
+				setParam2(Area, TypeDouble2);
 			}
-			else 
-			{ 
-					status=TapRect;
-				setName(_T("Отвод прямоугольный"));
-				setLable(SizeA);
-				appendLable(_T("x"));
-				appendLable(SizeB);
-				Area=(pTap->Swectangle)/(2*M_PI) 
-					*(2*(M_PI*(pTap->Radius+pTap->SizeA)*(pTap->Radius+pTap->SizeA)/1000000
-					-M_PI*(pTap->Radius)*(pTap->Radius)/1000000) 
-					+2*M_PI*(pTap->SizeA+pTap->Radius)/1000*pTap->SizeB/1000
-					+2*M_PI*(pTap->Radius)/1000*pTap->SizeB/1000);
-			}
-			appendLable(_T("("));
-			appendLable(Swectangle);
-			appendLable(_T("%%d)"));
-			setParam1(1, TypeDouble1);
-			setParam2(Area, TypeDouble2);
-		}
-		}
-		#pragma endregion
-		#pragma region Wye
-		if(pWye = TVS_WYE::cast(pEnt))
-		{
-			status=Wye;
-			SizeA=pWye->get_SizeApr();
-			SizeB=pWye->get_SizeBpr();
-			SizeA2=pWye->get_SizeAotv();
-			SizeA3=pWye->get_SizeBotv();
-			Swectangle=pWye->LengthPl;
-			setUnit1(_T("шт"));
-			setUnit2(_T("м2"));
-			
-			if (SizeB==0) 
-			{
-				setName(_T("Тройник"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				Area=(SizeA2+pWye->LengthPl*2)*M_PI*SizeA/1000000;
-			}
-			else 
-			{ 
-				setName(_T("Тройник"));
-				setLable(SizeA);
-				appendLable(_T("x"));
-				appendLable(SizeB);
-				Area=(SizeA2+pWye->LengthPl*2)*(SizeA+SizeB)/500000; 
-			}
-			appendLable(_T("-"));
-			if (SizeA3==0) 
-			{
-				appendLable(_T(d));
-				appendLable(SizeA2);
-				Area=Area+(pWye->LengthPl)*M_PI*SizeA2/1000000-sCircle(SizeA2/1000);
-			}
-			else 
-			{ 
-				setName(_T("Тройник"));
-				appendLable(SizeA2);
-				appendLable(_T("x"));
-				appendLable(SizeA3);
-				Area=Area+(pWye->LengthPl)*(SizeA2+SizeA3)/500000-SizeA2*SizeA3/1000000; 
-			}
-
-			appendLable(_T(" (L="));
-			appendLable(pWye->LengthPl);
-			appendLable(_T(" мм)"));
-			setParam1(1, TypeDouble1);
-			setParam2(Area, TypeDouble2);
-		}
 #pragma endregion
-		#pragma region Trans
-		if(pTrans = TVS_TRANS::cast(pEnt))
-		{
-			status=Trans;
-			Swectangle=pTrans->LengthTr;
-			SizeA=pTrans->get_SizeAp1();
-			SizeB=pTrans->get_SizeBp1();
-			SizeA2=pTrans->get_SizeAp2();
-			SizeA3=pTrans->get_SizeBp2();
-			if (SizeB==0)
+#pragma region Trans
+			if(pTrans = TVS_TRANS::cast(pEnt))
 			{
-				if (SizeA3==0)
+				status=Trans;
+				Swectangle=pTrans->LengthTr;
+				SizeA=pTrans->get_SizeAp1();
+				SizeB=pTrans->get_SizeBp1();
+				SizeA2=pTrans->get_SizeAp2();
+				SizeA3=pTrans->get_SizeBp2();
+				if (SizeB==0)
 				{
-					if (SizeA<SizeA2)
+					if (SizeA3==0)
 					{
+						if (SizeA<SizeA2)
+						{
+							SizeA=pTrans->get_SizeAp2();
+							SizeB=pTrans->get_SizeBp2();
+							SizeA2=pTrans->get_SizeAp1();
+							SizeA3=pTrans->get_SizeBp1();
+						}
+					}
+				}
+				else
+				{
+					if ((SizeA3==0)||(SizeA<SizeA2))
+					{
+
 						SizeA=pTrans->get_SizeAp2();
 						SizeB=pTrans->get_SizeBp2();
 						SizeA2=pTrans->get_SizeAp1();
 						SizeA3=pTrans->get_SizeBp1();
 					}
+
 				}
-			}
-			else
-			{
-				if ((SizeA3==0)||(SizeA<SizeA2))
+
+				setUnit1(_T("С€С‚"));
+				setUnit2(_T("Рј2"));
+				double radp1, radp2;
+				if (SizeB==0) 
 				{
-					
-						SizeA=pTrans->get_SizeAp2();
-						SizeB=pTrans->get_SizeBp2();
-						SizeA2=pTrans->get_SizeAp1();
-						SizeA3=pTrans->get_SizeBp1();
+					setName(_T("РџРµСЂРµС…РѕРґ"));
+					setLable(d);
+					appendLable(SizeA);
+					radp1=SizeA/2;
 				}
-
-			}
-
-			setUnit1(_T("шт"));
-			setUnit2(_T("м2"));
-			double radp1, radp2;
-			if (SizeB==0) 
-			{
-				setName(_T("Переход"));
-				setLable(_T(d));
-				appendLable(SizeA);
-				radp1=SizeA/2;
-			}
-			else 
-			{ 
-				setName(_T("Переход"));
-				setLable(SizeA);
-				appendLable(_T("x"));
-				appendLable(SizeB);
+				else 
+				{ 
+					setName(_T("РџРµСЂРµС…РѕРґ"));
+					setLable(SizeA);
+					appendLable(_T("x"));
+					appendLable(SizeB);
 					radp1=(SizeB+SizeA)/(M_PI);
+				}
+				appendLable(_T("-"));
+				if (SizeA3==0) 
+				{
+					appendLable(d);
+					appendLable(SizeA2);
+					radp2=SizeA2/2;
+
+				}
+				else 
+				{ 
+
+					appendLable(SizeA2);
+					appendLable(_T("x"));
+					appendLable(SizeA3);
+					radp2=(SizeA2+SizeA3)/(M_PI);
+
+				}
+				double dobr=sqrt(pow(radp1-radp2,2)+pow(pTrans->LengthTr,2));
+				Area=M_PI*(radp1+radp2)*dobr/1000000;
+				appendLable(_T(" (L="));
+				appendLable(pTrans->LengthTr);
+				appendLable(_T(" РјРј)"));
+				setParam1(1, TypeDouble1);
+				setParam2(Area, TypeDouble2);
 			}
-			appendLable(_T("-"));
-			if (SizeA3==0) 
-			{
-				appendLable(_T(d));
-				appendLable(SizeA2);
-				radp2=SizeA2/2;
-				
-			}
-			else 
-			{ 
-				
-				appendLable(SizeA2);
-				appendLable(_T("x"));
-				appendLable(SizeA3);
-				radp2=(SizeA2+SizeA3)/(M_PI);
-				
-			}
-			double dobr=sqrt(pow(radp1-radp2,2)+pow(pTrans->LengthTr,2));
-	Area=M_PI*(radp1+radp2)*dobr/1000000;
-			appendLable(_T(" (L="));
-			appendLable(pTrans->LengthTr);
-			appendLable(_T(" мм)"));
-			setParam1(1, TypeDouble1);
-			setParam2(Area, TypeDouble2);
-		}
 #pragma endregion
-		//if (status!=None) printResult();
-	
-		
-		pEnt->close();
-		return true;
+			//if (status!=None) printResult();
+
+
+			pEnt->close();
+			return true;
 		}
 		pEnt->close();	
 	}
@@ -353,7 +357,7 @@ void SPEC::setLable(const ACHAR * pAchar)
 void SPEC::setLable(double val)
 {
 	acdbRToS(val,2,2,lable);
-
+	
 }
 
 void SPEC::appendLable( const ACHAR * pAchar )
@@ -384,13 +388,13 @@ void SPEC::printResult()
 {
 	setParamChars();
 	acutPrintf(_T("\n%s %s  %s  %s  %s  %s"), name,lable,param1char, unit1, param2char, unit2);
-// 	acutPrintf(_T("%s "),param1char);
-// 	acutPrintf(_T("%s "),unit1);
-// 	acutPrintf(_T("%s "),param2char);
-// 	acutPrintf(_T("%s"),unit2);
+	// 	acutPrintf(_T("%s "),param1char);
+	// 	acutPrintf(_T("%s "),unit1);
+	// 	acutPrintf(_T("%s "),param2char);
+	// 	acutPrintf(_T("%s"),unit2);
 
 
-	
+
 
 }
 
@@ -410,10 +414,10 @@ void SPEC::printResultChar()
 const ACHAR * SPEC::toChar( double val )
 {
 	const ACHAR* str=new ACHAR[512];
-	 ACHAR  buffer[512];
-acdbRToS(val,2,2,buffer);
-str=buffer;
-return buffer;
+	ACHAR  buffer[512];
+	acdbRToS(val,2,2,buffer);
+	str=buffer;
+	return buffer;
 }
 
 
@@ -465,23 +469,23 @@ bool SPEC::GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR  *pVal)
 
 					if ((es = pAttr.openStatus()) == Acad::eOk) {
 						//
-						// Здесь можно получить информацию об атрибуте
+						// Р—РґРµСЃСЊ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°С‚СЂРёР±СѓС‚Рµ
 						//
 
 						if (wcscmp(tag,pAttr->tagConst())==0) {
 							//	pAttDef->close();
 							pAttr->close();
 							pEnt->close();
-							//acutPrintf(_T("\nАтрибут: Tag=%s Value=%s "),
+							//acutPrintf(_T("\nРђС‚СЂРёР±СѓС‚: Tag=%s Value=%s "),
 							//	LPCTSTR(pAttr->tagConst()),LPCTSTR(pAttr->textStringConst()));
-	
+
 							wcscpy_s(pVal,512,pAttr->textStringConst());
 							return true;
 						}
 
 						pAttr->close();
 					} else {
-						acutPrintf(_T("\nНе удалось открыть атрибут блока! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
+						acutPrintf(_T("\nРќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ Р°С‚СЂРёР±СѓС‚ Р±Р»РѕРєР°! РћС€РёР±РєР°: %s", LPCTSTR(acadErrorStatusText(es))));
 					}
 				}
 			}
@@ -507,87 +511,94 @@ bool SPEC::addBlock(AcDbEntity * pEnt)
 {
 	ACHAR sType[512];
 	ACHAR sSize[512];
-	if(GetAtt(pEnt,TagName,sName)&&GetAtt(pEnt,TagType,sType)&&GetAtt(pEnt,TagSize,sSize))
+	if(GetAtt(pEnt,TagName,sName)&&GetAtt(pEnt,TagSize,sSize)&&GetAtt(pEnt,TagType,sType))
 	{
-		if ((wcscmp(sName,_T(""))==0)&&(wcscmp(sType,_T(""))==0)&&(wcscmp(sSize,_T(""))==0))
-		{
-			getBlockName(pEnt,sName);
-		}
-
 		wcscpy_s(sPos,_T(""));
 		//wcscpy_s(sName,_T(""));
 		wcscpy_s(sTypeSize,_T(""));
 		wcscpy_s(sArticle,_T(""));
 		wcscpy_s(sManufacture,_T(""));
-		wcscpy_s(sUnit,_T("шт"));
+		wcscpy_s(sUnit,_T("С€С‚"));
 		wcscpy_s(sValue,_T(""));
 		wcscpy_s(sMass,_T(""));
 		wcscpy_s(sCommit,_T(""));
 
-		wcscpy_s(sTypeSize,sType);
-		if ((wcscmp(sType,_T(""))!=0)&&(wcscmp(sSize,_T(""))!=0))
-		{
-			wcscat_s(sTypeSize,_T("-"));
-		}
-		
-		wcscat_s(sTypeSize,sSize);
+		if (wcscmp(sType,_T(""))!=0) wcscpy_s(sTypeSize,sType);
+		if ((wcscmp(sType,_T(""))!=0)&&(wcscmp(sSize,_T(""))!=0)) wcscat_s(sTypeSize,_T("-"));
+		if (wcscmp(sSize,_T(""))!=0) wcscat_s(sTypeSize,sSize);
 
 		GetAtt(pEnt,TagPos,sPos);
 		GetAtt(pEnt,TagManufacture,sManufacture);
-		GetAtt(pEnt,TagArticle,sArticle);
 		GetAtt(pEnt,TagMass,sMass);
+		GetAtt(pEnt,TagArticle,sArticle);
 		GetAtt(pEnt,TagCommit,sCommit);
 		setParam1(1, TypeInt);
 		setParam2(0, TypeInt);
+		if ((wcscmp(sPos,_T(""))==0)&&
+			(wcscmp(sName,_T(""))==0)&&
+			(wcscmp(sTypeSize,_T(""))==0)&&
+			(wcscmp(sArticle,_T(""))==0)&&
+			(wcscmp(sManufacture,_T(""))==0)&&
+			(wcscmp(sMass,_T(""))==0)&&
+			(wcscmp(sCommit,_T(""))==0)
+			) getBlockName(pEnt,sName);
 		return true;
 	}
 	else return false;
 }
 
 
-bool SPEC::getBlockName( AcDbEntity * pEnt, ACHAR *pVal )
+bool SPEC::getBlockName(AcDbEntity* pEnt , ACHAR *pName)
 {
 
-	AcDbBlockReference *pInsert = AcDbBlockReference::cast(pEnt);
-	if (!pInsert)
-	{
-		acutPrintf(L"\nВыбрали не вставку блока.\n");
-		pEnt->close();
-		return false;
-	}
-
-	// Получаем objectID определения блока.
-	AcDbObjectId blockDefId = pInsert->blockTableRecord();
-
-	// Закрываем вставку блока.
-	pInsert->close();
-
-	// Открываем определение блока.
-	AcDbBlockTableRecord *pBlkRecord;
 	Acad::ErrorStatus es;
-	if (Acad::eOk != (es = acdbOpenObject(pBlkRecord,
-		blockDefId,
-		AcDb::kForRead)))
-	{
-		acutPrintf(L"\nНельзя получить доступ к определению блока.\n");
-		return false;
+
+
+	AcDbObjectPointer<AcDbBlockReference> pBlkRef(pEnt->id(),AcDb::kForRead);
+	if ((es = pBlkRef.openStatus()) != Acad::eOk) {
+		acutPrintf(_T("\nРћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ BlockReference: %s"), acadErrorStatusText(es)); return false;
+	}
+	AcDbBlockTableRecordPointer pBTR(pBlkRef->blockTableRecord(),AcDb::kForRead);
+	if ((es = pBTR.openStatus()) != Acad::eOk) {
+		acutPrintf(_T("\nРћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ BlockTableRecord: %s"), acadErrorStatusText(es)); return false;
+	}
+	const ACHAR* sBTRName = NULL; pBTR->getName(sBTRName); 
+	if (sBTRName) wcscpy_s(pName,512,sBTRName);
+
+	
+	///DynBlock
+
+	
+
+
+	AcDbDynBlockReference dynblkRef(pEnt->id());
+	if (!dynblkRef.isDynamicBlock()) {
+
+		acutPrintf(_T("\nР­С‚Рѕ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№ Р±Р»РѕРє!")); return true;
+
 	}
 
-	// Получаем имя определения блока.
-	ACHAR * pname;
+	AcDbBlockTableRecordPointer pDynBTR(dynblkRef.dynamicBlockTableRecord(),AcDb::kForRead);
 
-	es = pBlkRecord->getName(pname);
-	wcscpy_s(pVal,512,pname);
-	pBlkRecord->close();
-	acutPrintf(pVal);
-	if ((Acad::eOk != es) || !pVal)
-	{
-		acutPrintf(L"\nНе можем получить имя блока.\n");
-		return false;
+	if ((es = pDynBTR.openStatus()) != Acad::eOk) {
+
+		acutPrintf(_T("\nРћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ Dyn BlockTableRecord: %s"), acadErrorStatusText(es)); return true;
+
 	}
-	pBlkRecord->close();
+
+	const ACHAR* sDynBTRName = NULL; pDynBTR->getName(sDynBTRName); 
+
+	if (sDynBTRName) wcscpy_s(pName,512,sDynBTRName);
+
+
+
+
+
+
+
 	return true;
 }
+
 
 void SPEC:: add(double pSizeA,
 				double pSizeB,
@@ -623,8 +634,8 @@ SPEClist::~SPEClist(void)
 
 void SPEClist::append(SPEC line)
 {
-// 	acutPrintf(_T("\n123"));
-// 	print();
+	// 	acutPrintf(_T("\n123"));
+	// 	print();
 	if (specList.logicalLength()==0)
 	{
 		specList.append(line);
@@ -675,22 +686,22 @@ int SPEClist::checkRelevations(SPEC param1, SPEC param2)
 	parameters2[5]=param2.Swectangle;
 	int i=0;
 
-while (i<6)
-{
-	if (parameters1[i]<parameters2[i])
+	while (i<6)
 	{
-		return Less;
+		if (parameters1[i]<parameters2[i])
+		{
+			return Less;
+		}
+		if (parameters1[i]>parameters2[i])
+		{
+			return Larger;
+		}
+		i++;
 	}
-	if (parameters1[i]>parameters2[i])
-	{
-		return Larger;
-	}
-	i++;
-}
 
 
-return Equal;
-	
+	return Equal;
+
 }
 
 void SPEClist::print()
@@ -715,46 +726,46 @@ void SPEClist::printSPDSForm(AcGePoint3d &cent)
 	int otstupX=100;
 	int otstupY=150;
 	int length = specList.logicalLength();
-		AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7;
-curcnt=cent;
+	AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7;
+	curcnt=cent;
 
 
 
-//zagolovok
-pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
-pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-printText(pos1,_T("Наименование"));
-printText(pos2,_T("Размер"));
-printText(pos3,_T("Еденица"));
-printText(pos4,_T("Кол-во"));
-printText(pos5,_T("Еденица2"));
-printText(pos6,_T("Кол-во"));
-curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-
-//print all table text
-	for (int i =0; i<length;i++)
-	{
+	//zagolovok
 	pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-	specList[i].setParamChars();
-	printText(pos1,specList[i].name);
-	printText(pos2,specList[i].lable);
-	printText(pos3,specList[i].unit1);
-	printText(pos4,specList[i].param1char);
-	printText(pos5,specList[i].unit2);
-	printText(pos6,specList[i].param2char);
+	printText(pos1,_T("РќР°РёРјРµРЅРѕРІР°РЅРёРµ"));
+	printText(pos2,_T("Р Р°Р·РјРµСЂ"));
+	printText(pos3,_T("Р•РґРµРЅРёС†Р°"));
+	printText(pos4,_T("РљРѕР»-РІРѕ"));
+	printText(pos5,_T("Р•РґРµРЅРёС†Р°2"));
+	printText(pos6,_T("РљРѕР»-РІРѕ"));
 	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-}
 
-/// total
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+		pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+		pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+		specList[i].setParamChars();
+		printText(pos1,specList[i].name);
+		printText(pos2,specList[i].lable);
+		printText(pos3,specList[i].unit1);
+		printText(pos4,specList[i].param1char);
+		printText(pos5,specList[i].unit2);
+		printText(pos6,specList[i].param2char);
+		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
+	}
+
+	/// total
 	double summlenght=0, summArea=0;
 	ACHAR  sA[512];
 
@@ -763,18 +774,18 @@ curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 		//summlenght+=specList[i].param1;
 		summArea+=specList[i].param2;
 	}
-		acdbRToS(summArea,2,2,sA);
+	acdbRToS(summArea,2,2,sA);
 	//pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
 	//pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
 	//pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
 	//pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
 	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-	printText(pos5,_T("Итого:"));
-	//printText(pos2,_T("Размер"));
-	//printText(pos3,_T("Еденица"));
-	//printText(pos4,_T("Кол-во"));
-	//printText(pos5,_T("Еденица2"));
+	printText(pos5,_T("РС‚РѕРіРѕ:"));
+	//printText(pos2,_T("Р Р°Р·РјРµСЂ"));
+	//printText(pos3,_T("Р•РґРµРЅРёС†Р°"));
+	//printText(pos4,_T("РљРѕР»-РІРѕ"));
+	//printText(pos5,_T("Р•РґРµРЅРёС†Р°2"));
 	printText(pos6,sA);
 	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 
@@ -783,25 +794,25 @@ curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 	double TableLenght=39500;
 	double Hight=length*800;
 	//vertical Lines
-	
-AcGePoint3d start,end;
-for each (int c in columnswidth)
-{
+
+	AcGePoint3d start,end;
+	for each (int c in columnswidth)
+	{
 		start=AcGePoint3d(cent.x+c,cent.y+rowhight,cent.z);
 		end=AcGePoint3d(cent.x+c,cent.y-rowhight*(length+1),cent.z);
 		printLine(start,end);
-}
+	}
 	//horizontal Lines
 
-for (int i =-1; i<length+2;i++)
-{
-	start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
-	end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
-	printLine(start,end);
-}
-cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
-print();
-acutPrintf(_T("\nИтого м2: %s"),sA);
+	for (int i =-1; i<length+2;i++)
+	{
+		start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
+		end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
+		printLine(start,end);
+	}
+	cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
+	print();
+	acutPrintf(_T("\nРС‚РѕРіРѕ Рј2: %s"),sA);
 }
 
 void SPEClist::printText( AcGePoint3d cent, const ACHAR * pAchar )
@@ -852,6 +863,80 @@ void SPEClist::printLine( AcGePoint3d start, AcGePoint3d end )
 }
 
 
+bool SPEClist::printToExel(CMSExcel* m_msExcel,long &idx)
+{
+	
+
+
+	
+	int length = specList.logicalLength();
+	ACHAR*col1={L"A"};
+	ACHAR*col2={L"B"};
+	ACHAR*col3={L"C"};
+	ACHAR*col4={L"D"};
+	ACHAR*col5={L"E"};
+	ACHAR*col6={L"F"};
+	ACHAR*col7={L"G"};
+	ACHAR*col8={L"H"};
+	ACHAR*col9={L"I"};
+
+	//m_msExcel->SetExcelCellFormat(L"A1:i20000",L"Text");
+
+
+
+	m_msExcel->printExelText(col2,idx,_T("РќР°РёРјРµРЅРѕРІР°РЅРёРµ"));
+	m_msExcel->printExelText(col3,idx,_T("Р Р°Р·РјРµСЂ"));
+	m_msExcel->printExelText(col6,idx,_T("Р•РґРµРЅРёС†Р°"));
+	m_msExcel->printExelText(col7,idx,_T("РљРѕР»-РІРѕ"));
+	m_msExcel->printExelText(col8,idx,_T("Р•РґРµРЅРёС†Р°2"));
+	m_msExcel->printExelText(col9,idx,_T("РљРѕР»-РІРѕ"));
+
+
+ acedSetStatusBarProgressMeter(_T("Р­РєСЃРїРѕСЂС‚ РґР°РЅРЅС‹С… РІ Excel"),0,length);
+	idx++;
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+
+		 acedSetStatusBarProgressMeterPos( i);
+		specList[i].setParamChars();
+
+		m_msExcel->printExelText(col2,idx,specList[i].name);
+		m_msExcel->printExelText(col3,idx,specList[i].lable);
+		m_msExcel->printExelText(col6,idx,specList[i].unit1);
+		m_msExcel->printExelText(col7,idx,specList[i].param1char);
+		m_msExcel->printExelText(col8,idx,specList[i].unit2);
+		m_msExcel->printExelText(col9,idx,specList[i].param2char);
+
+
+
+		idx++;
+	}
+		acedRestoreStatusBar();
+
+	/// total
+	double summlenght=0, summArea=0;
+	ACHAR  sA[512];
+
+	for (int i =0; i<length;i++)
+	{
+		//summlenght+=specList[i].param1;
+		summArea+=specList[i].param2;
+	}
+	acdbRToS(summArea,2,2,sA);
+
+	m_msExcel->printExelText(col8,idx,_T("РС‚РѕРіРѕ:"));
+	m_msExcel->printExelText(col9,idx,sA);
+
+	idx++;
+
+	return true;
+}
+
+
+
+
+
 SpecWithAttrlist::SpecWithAttrlist(void)
 {
 
@@ -872,10 +957,8 @@ int SpecWithAttrlist::checkRelevations(SPEC param1, SPEC param2)
 	if(ret==Equal) ret=checkCharRelevations(param1.sTypeSize,param2.sTypeSize);
 	if(ret==Equal) ret=checkCharRelevations(param1.sArticle,param2.sArticle);
 	if(ret==Equal) ret=checkCharRelevations(param1.sManufacture,param2.sManufacture);
-	if(ret==Equal) ret=checkCharRelevations(param1.sMass,param2.sMass);
 	if(ret==Equal) ret=checkCharRelevations(param1.sCommit,param2.sCommit);
-	
-return ret;
+	return ret;
 }
 
 int SpecWithAttrlist::checkCharRelevations(ACHAR * param1, ACHAR * param2)
@@ -888,19 +971,43 @@ int SpecWithAttrlist::checkCharRelevations(ACHAR * param1, ACHAR * param2)
 void SpecWithAttrlist::printSPDSForm(AcGePoint3d &cent)
 {
 
-		//int columnswidth[9]={2000,13000,6000,3500,4500,2000,2000,2500,4000};
-		int columnswidth[10]={0, 2000,15000,21000,24500,29000,31000,33000,35500,39500};
-		int columndistanse[9]={0,2000,15000,21000,24500,29000,31000,33000,35500};
-		int rowhight=800;
-		int otstupX=100;
-		int otstupY=150;
-		int length = specList.logicalLength();
-		AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7,pos8,pos9;
-		curcnt=cent;
+	//int columnswidth[9]={2000,13000,6000,3500,4500,2000,2000,2500,4000};
+	int columnswidth[10]={0, 2000,15000,21000,24500,29000,31000,33000,35500,39500};
+	int columndistanse[9]={0,2000,15000,21000,24500,29000,31000,33000,35500};
+	int rowhight=800;
+	int otstupX=100;
+	int otstupY=150;
+	int length = specList.logicalLength();
+	AcGePoint3d curcnt, pos1, pos2, pos3,pos4,pos5,pos6,pos7,pos8,pos9;
+	curcnt=cent;
 
 
 
-		//zagolovok
+	//zagolovok
+	pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos7=AcGePoint3d(curcnt.x+columndistanse[6]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos8=AcGePoint3d(curcnt.x+columndistanse[7]+otstupX,curcnt.y+otstupY,curcnt.z);
+	pos9=AcGePoint3d(curcnt.x+columndistanse[8]+otstupX,curcnt.y+otstupY,curcnt.z);
+	printText(pos1,_T("РџРѕР·РёС†РёСЏ"));
+	printText(pos2,_T("РќР°РёРјРµРЅРѕРІР°РЅРёРµ"));
+	printText(pos3,_T("РўРёРїРѕСЂР°Р·РјРµСЂ"));
+	printText(pos4,_T("РђСЂС‚РёРєСѓР»"));
+	printText(pos5,_T("РР·РіРѕС‚РѕРІРёС‚РµР»СЊ"));
+	printText(pos6,_T("Р•РґРµРЅРёС†Р°"));
+	printText(pos7,_T("РљРѕР»-РІРѕ"));
+	printText(pos8,_T("РњР°СЃСЃР°"));
+	printText(pos9,_T("РџСЂРёРјРµС‡Р°РЅРёРµ"));
+	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
+
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+
 		pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
@@ -910,104 +1017,144 @@ void SpecWithAttrlist::printSPDSForm(AcGePoint3d &cent)
 		pos7=AcGePoint3d(curcnt.x+columndistanse[6]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos8=AcGePoint3d(curcnt.x+columndistanse[7]+otstupX,curcnt.y+otstupY,curcnt.z);
 		pos9=AcGePoint3d(curcnt.x+columndistanse[8]+otstupX,curcnt.y+otstupY,curcnt.z);
-		printText(pos1,_T("Поз."));
-		printText(pos2,_T("Наименование"));
-		printText(pos3,_T("Типоразмер"));
-		printText(pos4,_T("Артикул"));
-		printText(pos5,_T("Изготовитель"));
-		printText(pos6,_T("Ед."));
-		printText(pos7,_T("Кол-во"));
-		printText(pos8,_T("Масса"));
-		printText(pos9,_T("Примеч."));
+		//specList[i].setParamChars();
+		//printText(pos1,specList[i].name);
+		specList[i].setParamChars();
+		if(wcscmp(specList[i].sPos,_T(""))!=0) printText(pos1,specList[i].sPos);
+		if(wcscmp(specList[i].sName,_T(""))!=0) printText(pos2,specList[i].sName);
+		if(wcscmp(specList[i].sTypeSize,_T(""))!=0) printText(pos3,specList[i].sTypeSize);
+		if(wcscmp(specList[i].sArticle,_T(""))!=0) printText(pos4,specList[i].sArticle);
+		if(wcscmp(specList[i].sManufacture,_T(""))!=0) printText(pos5,specList[i].sManufacture);
+		if(wcscmp(specList[i].sUnit,_T(""))!=0) printText(pos6,specList[i].sUnit);
+
+		printText(pos7,specList[i].param1char);
+		if(wcscmp(specList[i].sMass,_T(""))!=0) printText(pos8,specList[i].sMass);
+		if(wcscmp(specList[i].sCommit,_T(""))!=0) printText(pos9,specList[i].sCommit);
 		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-
-		//print all table text
-		for (int i =0; i<length;i++)
-		{
-
-			pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos7=AcGePoint3d(curcnt.x+columndistanse[6]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos8=AcGePoint3d(curcnt.x+columndistanse[7]+otstupX,curcnt.y+otstupY,curcnt.z);
-			pos9=AcGePoint3d(curcnt.x+columndistanse[8]+otstupX,curcnt.y+otstupY,curcnt.z);
-			//specList[i].setParamChars();
-			//printText(pos1,specList[i].name);
-			specList[i].setParamChars();
-			if(wcscmp(specList[i].sPos,_T(""))!=0) printText(pos1,specList[i].sPos);
-			if(wcscmp(specList[i].sName,_T(""))!=0) printText(pos2,specList[i].sName);
-			if(wcscmp(specList[i].sTypeSize,_T(""))!=0) printText(pos3,specList[i].sTypeSize);
-			if(wcscmp(specList[i].sArticle,_T(""))!=0) printText(pos4,specList[i].sArticle);
-			if(wcscmp(specList[i].sManufacture,_T(""))!=0) printText(pos5,specList[i].sManufacture);
-			if(wcscmp(specList[i].sUnit,_T(""))!=0) printText(pos6,specList[i].sUnit);
-			
-			printText(pos7,specList[i].param1char);
-			if(wcscmp(specList[i].sMass,_T(""))!=0) printText(pos8,specList[i].sMass);
-			if(wcscmp(specList[i].sCommit,_T(""))!=0) printText(pos9,specList[i].sCommit);
-			curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-		}
-
-// 		/// total
-// 		double summlenght=0, summArea=0;
-// 		ACHAR  sA[512];
-// 
-// 		for (int i =0; i<length;i++)
-// 		{
-// 			//summlenght+=specList[i].param1;
-// 			summArea+=specList[i].param2;
-// 		}
-// 		acdbRToS(summArea,2,2,sA);
-// 		//pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		//pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		//pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		//pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
-// 		printText(pos5,_T("Итого:"));
-// 		//printText(pos2,_T("Размер"));
-// 		//printText(pos3,_T("Еденица"));
-// 		//printText(pos4,_T("Кол-во"));
-// 		//printText(pos5,_T("Еденица2"));
-// 		printText(pos6,sA);
-// 		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
-
-		///print table
-
-		double TableLenght=39500;
-		double Hight=length*800;
-		//vertical Lines
-
-		AcGePoint3d start,end;
-		for each (int c in columnswidth)
-		{
-			start=AcGePoint3d(cent.x+c,cent.y+rowhight,cent.z);
-			end=AcGePoint3d(cent.x+c,cent.y-rowhight*(length+1),cent.z);
-			printLine(start,end);
-		}
-		//horizontal Lines
-
-		for (int i =-1; i<length+2;i++)
-		{
-			start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
-			end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
-			printLine(start,end);
-		}
-		cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
-		print();
-		//acutPrintf(_T("\nИтого м2: %s"),sA);
 	}
 
+	// 		/// total
+	// 		double summlenght=0, summArea=0;
+	// 		ACHAR  sA[512];
+	// 
+	// 		for (int i =0; i<length;i++)
+	// 		{
+	// 			//summlenght+=specList[i].param1;
+	// 			summArea+=specList[i].param2;
+	// 		}
+	// 		acdbRToS(summArea,2,2,sA);
+	// 		//pos1=AcGePoint3d(curcnt.x+columndistanse[0]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		//pos2=AcGePoint3d(curcnt.x+columndistanse[1]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		//pos3=AcGePoint3d(curcnt.x+columndistanse[2]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		//pos4=AcGePoint3d(curcnt.x+columndistanse[3]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		pos5=AcGePoint3d(curcnt.x+columndistanse[4]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
+	// 		printText(pos5,_T("РС‚РѕРіРѕ:"));
+	// 		//printText(pos2,_T("Р Р°Р·РјРµСЂ"));
+	// 		//printText(pos3,_T("Р•РґРµРЅРёС†Р°"));
+	// 		//printText(pos4,_T("РљРѕР»-РІРѕ"));
+	// 		//printText(pos5,_T("Р•РґРµРЅРёС†Р°2"));
+	// 		printText(pos6,sA);
+	// 		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 
-	void SpecWithAttrlist::print()
+	///print table
+
+	double TableLenght=39500;
+	double Hight=length*800;
+	//vertical Lines
+
+	AcGePoint3d start,end;
+	for each (int c in columnswidth)
 	{
-		length=specList.logicalLength();
-		for (int i=0; i<length;i++)
-		{
-			specList[i].printResultChar();
-		}
+		start=AcGePoint3d(cent.x+c,cent.y+rowhight,cent.z);
+		end=AcGePoint3d(cent.x+c,cent.y-rowhight*(length+1),cent.z);
+		printLine(start,end);
 	}
+	//horizontal Lines
+
+	for (int i =-1; i<length+2;i++)
+	{
+		start=AcGePoint3d(cent.x,cent.y-rowhight*i,cent.z);
+		end=AcGePoint3d(cent.x+TableLenght,cent.y-rowhight*i,cent.z);
+		printLine(start,end);
+	}
+	cent=AcGePoint3d(cent.x,cent.y-rowhight*(length+3),cent.z);
+	print();
+	//acutPrintf(_T("\nРС‚РѕРіРѕ Рј2: %s"),sA);
+}
+
+
+bool SpecWithAttrlist::printToExel(CMSExcel* m_msExcel,long &idx)
+{
+
+	ACHAR*col1={L"A"};
+	ACHAR*col2={L"B"};
+	ACHAR*col3={L"C"};
+	ACHAR*col4={L"D"};
+	ACHAR*col5={L"E"};
+	ACHAR*col6={L"F"};
+	ACHAR*col7={L"G"};
+	ACHAR*col8={L"H"};
+	ACHAR*col9={L"I"};
+
+	
+	int length = specList.logicalLength();
+
+
+	m_msExcel->printExelText(col1,idx,_T("РџРѕР·РёС†РёСЏ"));
+	m_msExcel->printExelText(col2,idx,_T("РќР°РёРјРµРЅРѕРІР°РЅРёРµ"));
+	m_msExcel->printExelText(col3,idx,_T("РўРёРїРѕСЂР°Р·РјРµСЂ"));
+	m_msExcel->printExelText(col4,idx,_T("РђСЂС‚РёРєСѓР»"));
+	m_msExcel->printExelText(col5,idx,_T("РР·РіРѕС‚РѕРІРёС‚РµР»СЊ"));
+	m_msExcel->printExelText(col6,idx,_T("Р•РґРµРЅРёС†Р°"));
+	m_msExcel->printExelText(col7,idx,_T("РљРѕР»-РІРѕ"));
+	m_msExcel->printExelText(col8,idx,_T("РњР°СЃСЃР°"));
+	m_msExcel->printExelText(col9,idx,_T("РџСЂРёРјРµС‡Р°РЅРёРµ"));
+
+	int status;
+	 acedSetStatusBarProgressMeter(_T("Р­РєСЃРїРѕСЂС‚ РґР°РЅРЅС‹С… РІ Excel"),0,length);
+	 
+	idx++;
+	//print all table text
+	for (int i =0; i<length;i++)
+	{
+
+		specList[i].setParamChars();
+
+		
+	
+	 acedSetStatusBarProgressMeterPos( i);
+	
+		if(wcscmp(specList[i].sPos,_T(""))!=0) m_msExcel->printExelText(col1,idx,specList[i].sPos);
+		if(wcscmp(specList[i].sName,_T(""))!=0) m_msExcel->printExelText(col2,idx,specList[i].sName);
+		if(wcscmp(specList[i].sTypeSize,_T(""))!=0) m_msExcel->printExelText(col3,idx,specList[i].sTypeSize);
+		if(wcscmp(specList[i].sArticle,_T(""))!=0) m_msExcel->printExelText(col4,idx,specList[i].sArticle);
+		if(wcscmp(specList[i].sManufacture,_T(""))!=0) m_msExcel->printExelText(col5,idx,specList[i].sManufacture);
+		if(wcscmp(specList[i].sUnit,_T(""))!=0) m_msExcel->printExelText(col6,idx,specList[i].sUnit);
+		if(wcscmp(specList[i].param1char,_T(""))!=0) m_msExcel->printExelText(col7,idx,specList[i].param1char);
+		if(wcscmp(specList[i].sMass,_T(""))!=0) m_msExcel->printExelText(col8,idx,specList[i].sMass);
+		if(wcscmp(specList[i].sCommit,_T(""))!=0) m_msExcel->printExelText(col9,idx,specList[i].sCommit);
+
+
+
+		idx++;
+	}
+
+
+	acedRestoreStatusBar();
+
+	idx++;
+
+	return true;
+}
+
+void SpecWithAttrlist::print()
+{
+	length=specList.logicalLength();
+	for (int i=0; i<length;i++)
+	{
+		specList[i].printResultChar();
+	}
+}
 
 
