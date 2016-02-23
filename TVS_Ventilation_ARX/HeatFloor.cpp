@@ -11,7 +11,7 @@ bool HeatFloor::pt_in_polygon( const AcGePoint3d &test,const AcGePoint3dArray &p
 	if (polygon.logicalLength()<3) return false;
 
 	
-	AcGePoint3d pred_pt=polygon.at(0); 
+	AcGePoint3d pred_pt=polygon.at(polygon.logicalLength()-1); 
 	pred_pt.x-=test.x;
 	pred_pt.y-=test.y;
 

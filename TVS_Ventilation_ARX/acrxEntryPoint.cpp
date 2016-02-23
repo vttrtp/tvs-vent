@@ -6739,7 +6739,7 @@ public:
 					isOk=true;
 					
 					 pLine->getStretchPoints(arr);
-
+					 
 					 for each (AcGePoint3d var in arr)
 					 {
 						 acutPrintf(_T("\n %10.2f %10.2f %10.2f"), var.x,var.y,var.z );
@@ -6749,7 +6749,10 @@ public:
 		}
 
 
+		AcGeLine3d ln;
+		ln.
 
+		isOk=false;
 		while (isOk==false)
 		{
 			acadStatus=acedGetPoint(pt1,_T("\nУкажите точку:"),pt1);

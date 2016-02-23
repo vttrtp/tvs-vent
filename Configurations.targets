@@ -1,10 +1,10 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<AcadDir Condition="'$(Platform)'=='x64'">E:\Cash\acad 2016\AutoCAD 2016\</AcadDir>
-		<AcadDir Condition="'$(Platform)'=='Win32'">E:\Cash\acad 2016\AutoCAD 2016\</AcadDir>
+		<AcadDir Condition="'$(Platform)'=='x64'">C:\Program Files\Autodesk\AutoCAD 2016\</AcadDir>
+		<AcadDir Condition="'$(Platform)'=='Win32'">C:\Program Files\Autodesk\AutoCAD 2016\</AcadDir>
 		<AcadExe Condition="'$(ArxAppType)'=='dbx' or '$(ArxAppType)'=='dbxnet' or '$(ArxAppType)'=='arx' or '$(ArxAppType)'=='arxnet'">acad.exe</AcadExe>
 		<AcadExe Condition="'$(ArxAppType)'=='crx' or '$(ArxAppType)'=='crxnet'">accoreconsole.exe</AcadExe>
-		<ArxSdkDir>E:\Cash\ObjectARX 2015\</ArxSdkDir>
+		<ArxSdkDir>C:\ObjectARX 2015\</ArxSdkDir>
 
 		<ArxSdkIncs Condition="'$(Platform)'=='Win32'">$(ArxSdkDir)\inc;$(ArxSdkDir)\inc-win32</ArxSdkIncs>
 		<ArxSdkIncs Condition="'$(Platform)'=='x64'">$(ArxSdkDir)\inc;$(ArxSdkDir)\inc-x64</ArxSdkIncs>
