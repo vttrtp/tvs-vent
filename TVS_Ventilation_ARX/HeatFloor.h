@@ -1,22 +1,29 @@
 #pragma once
 #include "StdAfx.h"
 
-class HeatFloor
-{
-public:
-	AcArray <HFPoint> HFPoints;
-	HeatFloor(void);
-	~HeatFloor(void);
-};
+
+
+
+
+
 
 class HFPoint
 {
 public:
-	HFPoint();
-	~HFPoint();
-	AcGePoint3dArray points;
+	HFPoint(void);
+	~HFPoint(void);
+	//AcGePoint3dArray points;
 
-private:
+
 
 };
 
+class HeatFloor
+{
+public:
+	AcArray <HFPoint> HFPoints;
+
+		bool pt_in_polygon(const AcGePoint3d &test,const AcGePoint3dArray &polygon);
+	HeatFloor(void);
+	~HeatFloor(void);
+};

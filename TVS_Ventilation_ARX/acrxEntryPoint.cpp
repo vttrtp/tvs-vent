@@ -31,6 +31,7 @@
 #include "PipeSizeDiallog.h"
 #include "hangeZdg.h"
 #include "MSExcel.h"	
+#include "HeatFloor.h"
 
 #import "acax20ENU.tlb" 
 #include <rxmfcapi.h>
@@ -6711,7 +6712,7 @@ public:
 		ads_point pt1;
 		bool isOk=false;
 		int acadStatus;
-
+		AcGePoint3dArray arr;
 
 
 		double length=0;
@@ -6736,7 +6737,7 @@ public:
 				if (pLine.openStatus () == Acad::eOk)
 				{
 					isOk=true;
-					AcGePoint3dArray arr;
+					
 					 pLine->getStretchPoints(arr);
 
 					 for each (AcGePoint3d var in arr)
@@ -6747,6 +6748,35 @@ public:
 			}
 		}
 
+
+
+		while (isOk==false)
+		{
+			acadStatus=acedGetPoint(pt1,_T("\nУкажите точку:"),pt1);
+			switch (acadStatus)
+			{
+			case RTCAN:
+				return;
+				break;
+
+			}
+			if (acadStatus=RTNORM)
+			{
+				AcGePoint3d pt=asPnt3d(pt1);
+				HeatFloor HF;
+				if (HF.pt_in_polygon(pt,arr))
+				{
+					acutPrintf(_T("\nВнутри"));
+				} 
+				else
+				{
+					acutPrintf(_T("\nСнаружи"));
+				}
+
+
+
+			}
+		}
 
 // 		ads_real  len;
 // 		isOk=false;
