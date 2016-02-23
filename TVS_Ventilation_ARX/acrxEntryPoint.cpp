@@ -6703,6 +6703,78 @@ public:
 
 	}
 
+
+	static void Ventilation_ARXTVS_HEATFLOOR(void)
+	{
+
+		 ads_name eName,ent;
+		ads_point pt1;
+		bool isOk=false;
+		int acadStatus;
+
+
+
+		double length=0;
+
+		isOk=false;
+		while (isOk==false)
+		{
+			acadStatus=acedEntSel (_T("\nВыбирите полилинию для построения ТП: "), ent,pt1) ;
+			switch (acadStatus)
+			{
+			case RTCAN:
+				return;
+				break;
+
+			}
+			if (acadStatus=RTNORM)
+			{
+				AcDbObjectId pId;    
+				acdbGetObjectId(pId,ent);
+
+				AcDbObjectPointer<AcDbPolyline>pLine (pId, AcDb::kForRead);
+				if (pLine.openStatus () == Acad::eOk)
+				{
+					isOk=true;
+					AcGePoint3dArray arr;
+					 pLine->getStretchPoints(arr);
+
+					 for each (AcGePoint3d var in arr)
+					 {
+						 acutPrintf(_T("\n %10.2f %10.2f %10.2f"), var.x,var.y,var.z );
+					 }
+				}
+			}
+		}
+
+
+// 		ads_real  len;
+// 		isOk=false;
+// 		while (isOk==false)
+// 		{
+// 			double newLength;
+// 
+// 			acadStatus=acedGetReal (_T("\nВведите Требуемую длину: "), &len) ;
+// 			switch (acadStatus)
+// 			{
+// 			case RTCAN:
+// 				return;
+// 				break;
+// 
+// 			}
+// 			if (acadStatus=RTNORM)
+// 			{
+// 				newLength=len;
+// 				isOk=true;
+// 			}
+// 
+// 		}
+// 		ads_real scale=len/length;
+// 		acedCommandS(RTSTR,_T("_SCALE"),RTPICKS,sset,RTSTR,_T(""),RTPOINT,pt1,RTREAL,scale,RTNONE);
+		return;
+
+	}
+
 } ;
 
 //-----------------------------------------------------------------------------
@@ -6730,6 +6802,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AddAtrib, TVS_AddAtrib, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVSSomeParts, TVSSomeParts, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SETTINGS, TVS_SETTINGS, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_HEATFLOOR, TVS_HEATFLOOR, ACRX_CMD_TRANSPARENT, NULL)
 
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyCommand, MyCommandLocal, ACRX_CMD_MODAL, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyPickFirst, MyPickFirstLocal, ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET, NULL)

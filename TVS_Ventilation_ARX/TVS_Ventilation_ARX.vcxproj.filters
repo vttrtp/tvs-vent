@@ -57,6 +57,9 @@
     <ClCompile Include="MSExcel.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="HeatFloor.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -102,6 +105,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="MSExcel.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatFloor.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

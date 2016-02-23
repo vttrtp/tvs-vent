@@ -89,6 +89,7 @@
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="GripPoints.cpp" />
     <ClCompile Include="hangeZdg.cpp" />
+    <ClCompile Include="HeatFloor.cpp" />
     <ClCompile Include="MSExcel.cpp" />
     <ClCompile Include="OLEMethod.cpp" />
     <ClCompile Include="PipeSizeDiallog.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Func.h" />
     <ClInclude Include="GripPoints.h" />
     <ClInclude Include="hangeZdg.h" />
+    <ClInclude Include="HeatFloor.h" />
     <ClInclude Include="MSExcel.h" />
     <ClInclude Include="Office.h" />
     <ClInclude Include="OLEMethod.h" />
