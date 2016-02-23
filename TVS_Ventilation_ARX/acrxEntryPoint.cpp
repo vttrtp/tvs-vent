@@ -6749,8 +6749,7 @@ public:
 		}
 
 
-		AcGeLine3d ln;
-		ln.
+	
 
 		isOk=false;
 		while (isOk==false)
