@@ -2977,3 +2977,22 @@ int func::whyIsGrose( TVS_Entity* pEnt1,TVS_Entity* pEnt2 )
 	}
 
 }
+
+void func::drawEntity( AcDbEntity *pEnt )
+{
+	pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
+
+	AcDbBlockTable *pBlockTable;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
+		AcDb::kForRead);
+
+	AcDbBlockTableRecord *pBlockTableRecord;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,AcDb::kForWrite);
+	pBlockTable->close();
+
+	AcDbObjectId retId = AcDbObjectId::kNull;
+	pBlockTableRecord->appendAcDbEntity(retId, pEnt);
+	pBlockTableRecord->close();
+	pEnt->close();
+	//return pEnt;
+}

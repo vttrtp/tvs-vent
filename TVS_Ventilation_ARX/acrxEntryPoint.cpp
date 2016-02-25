@@ -6498,8 +6498,14 @@ public:
 
 	static void Ventilation_ARXTVS_TEST(void)
 	{
-
-
+		AcGeLine3d lin1=AcGeLine3d(AcGePoint3d(0,0,0),AcGePoint3d(2,0,0));
+		AcGeLine3d lin2=AcGeLine3d(AcGePoint3d(3,0,0),AcGePoint3d(0,3,0));
+		AcGePoint3d pnt;
+		double b = 0;
+		double a = 3/b;
+		bool intresect=lin1.intersectWith(lin2,pnt);
+		if (intresect) acutPrintf(_T("\n Да"));
+		else acutPrintf(_T("\n Нет"));
 		//SPEClist spec;
 		//spec.printToExel(1);
 
@@ -6748,37 +6754,41 @@ public:
 			}
 		}
 
+		HeatFloor HF;
+		AcGePoint3dArray res;
+	HF.getSimilarInsideFigureAtDistance(arr,200,res);
 
-	
+// 		isOk=false;
+// 		while (isOk==false)
+// 		{
+// 			acadStatus=acedGetPoint(pt1,_T("\nУкажите точку:"),pt1);
+// 			switch (acadStatus)
+// 			{
+// 			case RTCAN:
+// 				return;
+// 				break;
+// 
+// 			}
+// 			if (acadStatus=RTNORM)
+// 			{
+// 				AcGePoint3d pt=asPnt3d(pt1);
+// 				HeatFloor HF;
+// 				if (HF.pt_in_polygon(pt,arr))
+// 				{
+// 					acutPrintf(_T("\nВнутри"));
+// 				} 
+// 				else
+// 				{
+// 					acutPrintf(_T("\nСнаружи"));
+// 				}
+// 
+// 
+// 
+// 			}
+// 		}
 
-		isOk=false;
-		while (isOk==false)
-		{
-			acadStatus=acedGetPoint(pt1,_T("\nУкажите точку:"),pt1);
-			switch (acadStatus)
-			{
-			case RTCAN:
-				return;
-				break;
-
-			}
-			if (acadStatus=RTNORM)
-			{
-				AcGePoint3d pt=asPnt3d(pt1);
-				HeatFloor HF;
-				if (HF.pt_in_polygon(pt,arr))
-				{
-					acutPrintf(_T("\nВнутри"));
-				} 
-				else
-				{
-					acutPrintf(_T("\nСнаружи"));
-				}
 
 
-
-			}
-		}
 
 // 		ads_real  len;
 // 		isOk=false;

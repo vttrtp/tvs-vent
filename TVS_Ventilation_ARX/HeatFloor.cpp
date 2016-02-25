@@ -1,7 +1,123 @@
-#pragma once
-#include "stdafx.h"
+#include "StdAfx.h"
+#include "resource.h"
+#include "Func.h"
+#include "tdbl.h"
+#include "dbmleader.h"
+#include "PipeSizeDiallog.h"
+#include "hangeZdg.h"
+#include "MSExcel.h"	
 #include "HeatFloor.h"
 
+#import "acax20ENU.tlb" 
+#include <rxmfcapi.h>
+#include <axpnt3d.h>
+
+void HeatFloor::GetParallelLinesAPredeterminedDistance( AcGePoint3d const &L1S,AcGePoint3d const &L1E, double const &distance,AcGePoint3d &L2S,AcGePoint3d &L2E,AcGePoint3d &L3S,AcGePoint3d &L3E )
+{
+// 	double X1,X2,Y1,Y2;
+// 	X1=L1E.x-L1S.x;
+// 	Y1=L1E.y-L1S.y;
+// 	double Length=L1S.distanceTo(L1E);
+// 	X2=Y1*distance/Length;
+// 	Y2=X1*distance/Length;
+// 	L2S=AcGePoint3d(L1S.x-X2,L1S.y+Y2,L1S.z);
+// 	L2E=AcGePoint3d(L1E.x-X2,L1E.y+Y2,L1S.z);
+// 	L3E=AcGePoint3d(L1E.x+X2,L1E.y-Y2,L1S.z);
+// 	L3S=AcGePoint3d(L1S.x+X2,L1S.y-Y2,L1S.z);
+	AcGeVector3d vect = AcGeVector3d(L1E.x-L1S.x,L1E.y-L1S.y,0);
+	vect.normalize();
+	AcGeVector3d vectRight,vectLeft;
+	vect=vect*distance;
+	vectRight=vect.rotateBy(M_PI/2,AcGeVector3d(0,0,1));
+	vectLeft=vect.rotateBy(M_PI,AcGeVector3d(0,0,1));
+	 	L2S=AcGePoint3d(L1S.x+vectRight.x,L1S.y+vectRight.y,L1S.z);
+	 	L2E=AcGePoint3d(L1E.x+vectRight.x,L1E.y+vectRight.y,L1S.z);
+		L3S=AcGePoint3d(L1S.x+vectLeft.x,L1S.y+vectLeft.y,L1S.z);
+		L3E=AcGePoint3d(L1E.x+vectLeft.x,L1E.y+vectLeft.y,L1S.z);
+}
+
+
+
+bool HeatFloor::getSimilarInsideFigureAtDistance( const AcGePoint3dArray  &arr,double const &distance,AcGePoint3dArray &result )
+{
+	if (arr.logicalLength()<3) return false;
+
+	AcGePoint3d L1S,L1E,L2S,L2E,L3S,L3E,intersectPoint;
+	AcGeLine3d leftLine1, leftLine2,rightLine1, rightLine2,startLine,endLine;
+	L1S=arr.at(arr.logicalLength()-1);
+	startLine=AcGeLine3d(arr.at(arr.logicalLength()-1),arr.at(0));
+
+		
+		
+// 		AcGePoint3d midPnt2,midPnt3;
+// 		getMidPoint(L2S,L2E,midPnt2);
+// 		getMidPoint(L3S,L3E,midPnt3);
+
+
+
+	AcGePoint3dArray leftarr;
+		AcGePoint3dArray  rightarr,insidearr;
+		
+		
+		for (long i=0;i<arr.logicalLength();i++)
+		{
+
+			L1E=arr.at(i);
+
+			GetParallelLinesAPredeterminedDistance(L1S,L1E, distance,L2S,L2E,L3S,L3E );
+			rightLine1=AcGeLine3d(L2S,L2E);
+			leftLine1=AcGeLine3d(L3S,L3E);
+			L1S=arr.at(i);
+			if (i!=(arr.logicalLength()-1)) L1E=arr.at(i+1);
+			else L1E=arr.at(0);
+			GetParallelLinesAPredeterminedDistance(L1S,L1E, distance,L2S,L2E,L3S,L3E );
+			endLine=AcGeLine3d(L1S,L1E);
+		
+			rightLine2=AcGeLine3d(L2S,L2E);
+			leftLine2=AcGeLine3d(L3S,L3E);
+			if (rightLine1.intersectWith(rightLine2,intersectPoint)) {rightarr.append(intersectPoint); if(pt_in_polygon(intersectPoint,arr)) insidearr.append(intersectPoint);}
+			if (leftLine1.intersectWith(leftLine2,intersectPoint)) {leftarr.append(intersectPoint);  if(pt_in_polygon(intersectPoint,arr)) insidearr.append(intersectPoint);}
+		}
+
+			AcGePoint3d tmp;
+	AcDbPolyline *plineright=new AcDbPolyline;
+	plineright->setClosed(true);
+	for (long i=0;i<(rightarr.logicalLength());i++)
+	{
+		tmp=rightarr.at(i);
+	plineright->addVertexAt(i,AcGePoint2d(tmp.x,tmp.y));
+	}
+	
+	
+	AcDbPolyline *plineleft=new AcDbPolyline;
+	plineleft->setClosed(true);
+	for (long i=0;i<(leftarr.logicalLength());i++)
+	{
+		tmp=leftarr.at(i);
+		plineleft->addVertexAt(i,AcGePoint2d(tmp.x,tmp.y));
+	}
+	double area1,area2;
+	plineright->getArea(area1);
+	plineleft->getArea(area2);
+	if (area2>area1) func::drawEntity(plineright);
+	else func::drawEntity(plineleft);
+	
+	AcDbPolyline *plineinside=new AcDbPolyline;
+	plineinside->setClosed(true);
+	plineinside->setColorIndex(1);
+	for (long i=0;i<(insidearr.logicalLength());i++)
+	{
+		tmp=insidearr.at(i);
+		plineinside->addVertexAt(i,AcGePoint2d(tmp.x,tmp.y));
+	}
+
+	func::drawEntity(plineinside);
+}
+
+void HeatFloor::getMidPoint( AcGePoint3d const &pt1,AcGePoint3d const &pt2,AcGePoint3d &midPnt )
+{
+	midPnt=AcGePoint3d((pt1.x+pt2.x)/2,(pt1.y+pt2.y)/2,pt1.z);
+}
 
 bool HeatFloor::pt_in_polygon( const AcGePoint3d &test,const AcGePoint3dArray &polygon )
 {
