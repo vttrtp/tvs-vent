@@ -6745,7 +6745,20 @@ public:
 					isOk=true;
 					
 					 pLine->getStretchPoints(arr);
-					 
+					 AcDbVoidPtrArray arr1;
+					 pLine->getOffsetCurves(200,arr1);
+					HeatFloor hf;
+					time_t seconds;
+					time(&seconds);
+					srand (  seconds);
+					hf.setContour(pLine);
+					hf.setStartPoint(AcGePoint3d(0,0,0));
+					hf.step=200;
+					hf.getOffset(pLine);
+					hf.drawHFLoop();
+					//hf.drawOffset(pLine);
+				
+
 					 for each (AcGePoint3d var in arr)
 					 {
 						 acutPrintf(_T("\n %10.2f %10.2f %10.2f"), var.x,var.y,var.z );
@@ -6756,7 +6769,7 @@ public:
 
 		HeatFloor HF;
 		AcGePoint3dArray res;
-	HF.getSimilarInsideFigureAtDistance(arr,200,res);
+	//HF.getSimilarInsideFigureAtDistance(arr,200,res);
 
 // 		isOk=false;
 // 		while (isOk==false)

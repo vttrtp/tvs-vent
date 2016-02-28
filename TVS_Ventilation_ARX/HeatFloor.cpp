@@ -7,10 +7,97 @@
 #include "hangeZdg.h"
 #include "MSExcel.h"	
 #include "HeatFloor.h"
+#include <mmsystem.h>
 
 #import "acax20ENU.tlb" 
 #include <rxmfcapi.h>
 #include <axpnt3d.h>
+
+void HeatFloor::drawHFLoop()
+{
+
+if (polySet.logicalLength()>0)
+{
+	for each (AcDbPolyline * var in polySet)
+	{
+		var->setClosed(true);
+		drawEntity(var);
+	}
+}
+}
+
+
+void HeatFloor::getOffset(AcDbPolyline *pLine)
+{
+
+	AcDbVoidPtrArray offset;
+	AcDbPolyline *pln=0;
+	polySet.removeAll();
+
+	
+	pln=pLine;
+	for (int i=0;i<5000;i++)
+	{
+		if(getInsideOffset(pln,offset)==-1) return;
+		//acutPrintf(_T("\n иру: %d"),getInsideOffset(pLine,offset));
+		if(getMaxOffset(offset,pln)==false) { return;};
+
+		polySet.append(pln);
+		}
+
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void HeatFloor::drawOffset(AcDbPolyline *pLine)
+{
+	
+	AcDbVoidPtrArray arr;
+	pLine->getOffsetCurves(200,arr);
+	
+	indexofrecursion++;
+		if(indexofrecursion>5000) return;
+	for (long i=0;i<arr.logicalLength();i++)
+	{
+		AcDbPolyline *pPoly = NULL;
+	
+	pPoly = (AcDbPolyline*)(arr[i]);
+
+	AcDbText pText;
+	
+	for (int j=0;j<pPoly->numVerts();j++)
+	{
+		AcDbText *pText=new AcDbText;
+		ACHAR cNum[512];
+		acdbRToS(j,2,0,cNum);
+		pText->setTextString(cNum);
+		pText->setHeight(50);
+		AcGePoint2d pos;
+		pPoly->getPointAt(j,pos);
+		pText->setPosition(AcGePoint3d(pos.x,pos.y,0));
+		drawEntity(pText);
+	}
+	 
+	pPoly->setColorIndex(std::rand() % 255);
+	func::drawEntity(pPoly);
+	drawOffset(pPoly);
+	}
+}
 
 void HeatFloor::GetParallelLinesAPredeterminedDistance( AcGePoint3d const &L1S,AcGePoint3d const &L1E, double const &distance,AcGePoint3d &L2S,AcGePoint3d &L2E,AcGePoint3d &L3S,AcGePoint3d &L3E )
 {
@@ -46,7 +133,7 @@ bool HeatFloor::getSimilarInsideFigureAtDistance( const AcGePoint3dArray  &arr,d
 	AcGeLine3d leftLine1, leftLine2,rightLine1, rightLine2,startLine,endLine;
 	L1S=arr.at(arr.logicalLength()-1);
 	startLine=AcGeLine3d(arr.at(arr.logicalLength()-1),arr.at(0));
-
+	AcGeLine3d curLine;
 		
 		
 // 		AcGePoint3d midPnt2,midPnt3;
@@ -161,8 +248,97 @@ bool HeatFloor::pt_in_polygon( const AcGePoint3d &test,const AcGePoint3dArray &p
 	return w!=0;
 }
 
+int HeatFloor::getInsideOffset(AcDbPolyline* offset, AcDbVoidPtrArray &result)
+{
+	AcDbVoidPtrArray rightArrS, leftArrS;
+	double pStep=step;
+	Acad::ErrorStatus er,el;
+	er=offset->getOffsetCurves(pStep,rightArrS);
+	el=offset->getOffsetCurves(-pStep,leftArrS);
+	for (int i=0; i<10000;i++)
+	{
+		AcDbVoidPtrArray rightArr, leftArr;
+
+		er=offset->getOffsetCurves(pStep,rightArr);
+		el=offset->getOffsetCurves(-pStep,leftArr);
+		if ((rightArr.logicalLength()==0)&&(leftArr.logicalLength()==0)) return -1;
+		if (rightArr.logicalLength()==0){ result= rightArrS; return i;};
+		if (leftArr.logicalLength()==0){ result= leftArrS; return i;};
+		pStep+=step;
+	}
+	return -1;
+}
+
+bool HeatFloor::getMaxOffset( AcDbVoidPtrArray offset, AcDbPolyline * &result)
+{
+	AcDbVoidPtrArray temp=NULL;
+	AcDbPolyline *pPolyMax = NULL;
+	AcDbPolyline *pPoly = NULL;
+	if (offset.logicalLength()==0) return false;
+	pPolyMax = (AcDbPolyline*)(offset[0]);
+	long maxStep=getInsideOffset(pPolyMax,temp);
+	for (long i=0;i<offset.logicalLength();i++)
+	{
+		
+
+		pPoly = (AcDbPolyline*)(offset[i]);
+		if(getInsideOffset(pPoly,temp)>maxStep) pPolyMax=pPoly;
+
+	}
+	result = pPolyMax;
+	return true;
+}
+
+void HeatFloor::setPolySet()
+{
+	AcArray<AcArray<AcDbPolyline >> polyTree;
+	indexofrecursion=0;
+
+	AcDbVoidPtrArray arr;
+	contour->getOffsetCurves(step,arr);
+	
+
+	indexofrecursion++;
+	if(indexofrecursion>5000) return;
+	for (long i=0;i<arr.logicalLength();i++)
+	{
+		AcDbPolyline *pPoly = NULL;
+
+		pPoly = (AcDbPolyline*)(arr[i]);
+
+		AcDbText pText;
+
+		for (int j=0;j<pPoly->numVerts();j++)
+		{
+			AcDbText *pText=new AcDbText;
+			ACHAR cNum[512];
+			acdbRToS(j,2,0,cNum);
+			pText->setTextString(cNum);
+			pText->setHeight(50);
+			AcGePoint2d pos;
+			pPoly->getPointAt(j,pos);
+			pText->setPosition(AcGePoint3d(pos.x,pos.y,0));
+			drawEntity(pText);
+		}
+}
+
+	
+}
+
+void HeatFloor::setContour( AcDbPolyline*pln)
+{
+	contour=pln;
+}
+
+void HeatFloor::setStartPoint(const AcGePoint3d &pnt)
+{
+	contour->getClosestPointTo(pnt,startPoint);
+
+}
+
 HeatFloor::HeatFloor(void)
 {
+	indexofrecursion=0;
 }
 
 
