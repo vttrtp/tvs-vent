@@ -33,14 +33,15 @@ void HeatFloor::getOffset(AcDbPolyline *pLine)
 	AcDbVoidPtrArray offset;
 	AcDbPolyline *pln=0;
 	polySet.removeAll();
-
-	
+	getMaxStep(pLine);
+	int idx=curStep/step;
 	pln=pLine;
-	for (int i=0;i<5000;i++)
+	for (int i=0;i<idx;i++)
 	{
-		if(getInsideOffset(pln,offset)==-1) return;
+		indexofrecursion++;
+		if(getInsideOffset(pln,offset)==false) return;
 		//acutPrintf(_T("\n иру: %d"),getInsideOffset(pLine,offset));
-		if(getMaxOffset(offset,pln)==false) { return;};
+		if(getMaxOffset(offset,pln)==false) return;
 
 		polySet.append(pln);
 		}
@@ -248,45 +249,82 @@ bool HeatFloor::pt_in_polygon( const AcGePoint3d &test,const AcGePoint3dArray &p
 	return w!=0;
 }
 
-int HeatFloor::getInsideOffset(AcDbPolyline* offset, AcDbVoidPtrArray &result)
+bool HeatFloor::getInsideOffset(AcDbPolyline* offset, AcDbVoidPtrArray &result)
 {
+	indexofrecursion1++;
 	AcDbVoidPtrArray rightArrS, leftArrS;
-	double pStep=step;
+	double pStep=curStep+step;
 	Acad::ErrorStatus er,el;
-	er=offset->getOffsetCurves(pStep,rightArrS);
-	el=offset->getOffsetCurves(-pStep,leftArrS);
-	for (int i=0; i<10000;i++)
-	{
-		AcDbVoidPtrArray rightArr, leftArr;
+	er=offset->getOffsetCurves(step,rightArrS);
+	el=offset->getOffsetCurves(-step,leftArrS);
 
+		AcDbVoidPtrArray rightArr, leftArr;
+		
 		er=offset->getOffsetCurves(pStep,rightArr);
 		el=offset->getOffsetCurves(-pStep,leftArr);
-		if ((rightArr.logicalLength()==0)&&(leftArr.logicalLength()==0)) return -1;
-		if (rightArr.logicalLength()==0){ result= rightArrS; return i;};
-		if (leftArr.logicalLength()==0){ result= leftArrS; return i;};
-		pStep+=step;
-	}
+		if ((rightArr.logicalLength()==0)&&(leftArr.logicalLength()==0)) return false;
+		if (rightArr.logicalLength()==0){ result= rightArrS; return true;};
+		if (leftArr.logicalLength()==0){ result= leftArrS; return true;};
+		
+	
 	return -1;
 }
 
 bool HeatFloor::getMaxOffset( AcDbVoidPtrArray offset, AcDbPolyline * &result)
 {
-	AcDbVoidPtrArray temp=NULL;
-	AcDbPolyline *pPolyMax = NULL;
-	AcDbPolyline *pPoly = NULL;
+	
+
 	if (offset.logicalLength()==0) return false;
-	pPolyMax = (AcDbPolyline*)(offset[0]);
-	long maxStep=getInsideOffset(pPolyMax,temp);
+	AcDbVoidPtrArray rightArr, leftArr;
+
+	AcDbPolyline *pPoly = NULL;
+indexofrecursion2++;
 	for (long i=0;i<offset.logicalLength();i++)
 	{
-		
+		indexofrecursion3++;
 
 		pPoly = (AcDbPolyline*)(offset[i]);
-		if(getInsideOffset(pPoly,temp)>maxStep) pPolyMax=pPoly;
+		pPoly->getOffsetCurves((curStep-step),leftArr);
+		pPoly->getOffsetCurves(-(curStep-step),rightArr);
+
+		if ((rightArr.logicalLength()>0)&&(leftArr.logicalLength()>0))
+		{
+			curStep-=step;result=pPoly; return true;
+		}
 
 	}
-	result = pPolyMax;
-	return true;
+	
+
+}
+
+bool HeatFloor::getMaxStep(const AcDbPolyline* offset)
+{
+	
+
+	
+	AcDbVoidPtrArray rightArrS, leftArrS;
+	double pStep=step;
+	Acad::ErrorStatus er,el;
+	er=offset->getOffsetCurves(pStep,rightArrS);
+	el=offset->getOffsetCurves(-pStep,leftArrS);
+
+	for (int i=0; i<10000;i++)
+	{
+		AcDbVoidPtrArray rightArr, leftArr;
+		indexofrecursion2++;
+		er=offset->getOffsetCurves(pStep,rightArr);
+		el=offset->getOffsetCurves(-pStep,leftArr);
+		if ((rightArr.logicalLength()==0)&&(leftArr.logicalLength()==0)) return false;
+		if (rightArr.logicalLength()==0){curStep=i*step; return true;};
+		if (leftArr.logicalLength()==0){curStep=i*step;  return true;};
+		pStep+=step;
+	}
+
+
+
+	return false;
+
+
 }
 
 void HeatFloor::setPolySet()
@@ -339,6 +377,9 @@ void HeatFloor::setStartPoint(const AcGePoint3d &pnt)
 HeatFloor::HeatFloor(void)
 {
 	indexofrecursion=0;
+	indexofrecursion1=0;
+	indexofrecursion2=0;
+	indexofrecursion3=0;
 }
 
 
