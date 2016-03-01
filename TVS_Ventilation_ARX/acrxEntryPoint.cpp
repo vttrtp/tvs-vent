@@ -6760,7 +6760,10 @@ public:
 					acutPrintf(_T("\n %d"), hf.indexofrecursion2);
 					acutPrintf(_T("\n %d"), hf.indexofrecursion3);
 					//hf.drawOffset(pLine);
-				
+				acutPrintf(_T("\n %d"), hf.indexofrecursion);
+				acutPrintf(_T("\n %d"), hf.indexofrecursion1);
+				acutPrintf(_T("\n %d"), hf.indexofrecursion2);
+				acutPrintf(_T("\n %d"), hf.indexofrecursion3);
 
 					 for each (AcGePoint3d var in arr)
 					 {

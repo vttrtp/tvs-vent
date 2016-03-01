@@ -26,8 +26,10 @@ class HeatFloor
 {
 public:
 	int indexofrecursion;
+	int indexofrecursion1;
 	int indexofrecursion2;
 	int indexofrecursion3;
+	
 	AcDbPolyline * loop;
 	AcGePoint3d startPoint;
 	AcDbPolyline * contour;
@@ -48,7 +50,8 @@ public:
 	bool pt_in_polygon(const AcGePoint3d &test,const AcGePoint3dArray &polygon);
 
 private:
-	
-	int getInsideOffset( AcDbPolyline* offset, AcDbVoidPtrArray &result);
+	int curStep;
+	bool getInsideOffset( AcDbPolyline* offset, AcDbVoidPtrArray &result);
 	bool getMaxOffset( AcDbVoidPtrArray offset, AcDbPolyline * &result);
+	bool getMaxStep(const AcDbPolyline* offset);
 };
