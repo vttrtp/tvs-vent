@@ -250,6 +250,7 @@ bool HeatFloor::pt_in_polygon( const AcGePoint3d &test,const AcGePoint3dArray &p
 
 int HeatFloor::getInsideOffset(AcDbPolyline* offset, AcDbVoidPtrArray &result)
 {
+	indexofrecursion++;
 	AcDbVoidPtrArray rightArrS, leftArrS;
 	double pStep=step;
 	Acad::ErrorStatus er,el;
@@ -257,6 +258,7 @@ int HeatFloor::getInsideOffset(AcDbPolyline* offset, AcDbVoidPtrArray &result)
 	el=offset->getOffsetCurves(-pStep,leftArrS);
 	for (int i=0; i<10000;i++)
 	{
+		indexofrecursion2++;
 		AcDbVoidPtrArray rightArr, leftArr;
 
 		er=offset->getOffsetCurves(pStep,rightArr);
@@ -280,7 +282,7 @@ bool HeatFloor::getMaxOffset( AcDbVoidPtrArray offset, AcDbPolyline * &result)
 	for (long i=0;i<offset.logicalLength();i++)
 	{
 		
-
+		indexofrecursion3++;
 		pPoly = (AcDbPolyline*)(offset[i]);
 		if(getInsideOffset(pPoly,temp)>maxStep) pPolyMax=pPoly;
 
@@ -339,6 +341,8 @@ void HeatFloor::setStartPoint(const AcGePoint3d &pnt)
 HeatFloor::HeatFloor(void)
 {
 	indexofrecursion=0;
+	indexofrecursion2=0;
+	indexofrecursion3=0;
 }
 
 

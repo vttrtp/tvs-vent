@@ -26,6 +26,8 @@ class HeatFloor
 {
 public:
 	int indexofrecursion;
+	int indexofrecursion2;
+	int indexofrecursion3;
 	AcDbPolyline * loop;
 	AcGePoint3d startPoint;
 	AcDbPolyline * contour;

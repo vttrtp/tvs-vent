@@ -6756,6 +6756,9 @@ public:
 					hf.step=200;
 					hf.getOffset(pLine);
 					hf.drawHFLoop();
+					acutPrintf(_T("\n %d"), hf.indexofrecursion);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion2);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion3);
 					//hf.drawOffset(pLine);
 				
 
