@@ -36,7 +36,8 @@
 #import "acax20ENU.tlb" 
 #include <rxmfcapi.h>
 #include <axpnt3d.h>
-
+#include "stdafx.h"
+using namespace System;
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
@@ -6498,6 +6499,17 @@ public:
 
 	static void Ventilation_ARXTVS_TEST(void)
 	{
+
+
+		
+
+
+
+
+
+
+
+
 		AcGeLine3d lin1=AcGeLine3d(AcGePoint3d(0,0,0),AcGePoint3d(2,0,0));
 		AcGeLine3d lin2=AcGeLine3d(AcGePoint3d(3,0,0),AcGePoint3d(0,3,0));
 		AcGePoint3d pnt;
@@ -6713,7 +6725,7 @@ public:
 
 	static void Ventilation_ARXTVS_HEATFLOOR(void)
 	{
-
+		
 		 ads_name eName,ent;
 		ads_point pt1;
 		bool isOk=false;

@@ -31,6 +31,14 @@
 #pragma warning(disable: 4786 4996)
 //#pragma warning(disable: 4098)
 
+
+
+// #using <mscorlib.dll>
+// #using <System.dll>
+// 
+// #using <System.Drawing.dll>
+// 
+// #using <system.windows.forms.dll>
 //-----------------------------------------------------------------------------
 #define STRICT
 
