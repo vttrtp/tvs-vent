@@ -59,11 +59,11 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <MinimalRebuild Condition="'$(Configuration)'=='Debug' and '$(CLRSupport)'=='false'">true</MinimalRebuild>
+      <MinimalRebuild Condition="'$(Configuration)'=='Debug' and '$(CLRSupport)'=='false'">false</MinimalRebuild>
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseOfMfc)'=='Dynamic'">_AFXEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
@@ -72,11 +72,16 @@
       <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Autodesk\AutoCAD 2016;$(ArxSdkDir)\inc-$(Platform);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\$(Configuration)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsManaged>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">SyncCThrow</ExceptionHandling>
+      <SmallerTypeCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</SmallerTypeCheck>
     </ClCompile>
     <Link>
     </Link>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <NoEntryPoint Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</NoEntryPoint>
     </Link>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;%(AdditionalDependencies)</AdditionalDependencies>
