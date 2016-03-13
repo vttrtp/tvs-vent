@@ -48,6 +48,22 @@
 #endif
 
 
+
+
+//#include <windows.h>
+
+#using <mscorlib.dll>
+#using <System.dll>
+#using <System.Core.dll>
+#using <accoremgd.dll>
+#using <acmgd.dll>
+#using <acdbmgd.dll>
+#using <AcCui.dll>
+#include <vcclr.h>
+
+
+
+
 //- ObjectARX and OMF headers needs this
 #include <map>
 
