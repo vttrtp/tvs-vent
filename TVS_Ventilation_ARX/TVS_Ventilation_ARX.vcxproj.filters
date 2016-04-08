@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Protect">
+      <UniqueIdentifier>{56d7092c-4da1-4b1d-a6e8-19b0fd5c3c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protect\Файлы исходного кода">
+      <UniqueIdentifier>{1596895f-5f4d-48c7-8bdd-20f02fde9165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protect\Заголовочные файлы">
+      <UniqueIdentifier>{63fb9e37-75ff-4029-bd5d-8f814b37fc61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -59,6 +68,24 @@
     </ClCompile>
     <ClCompile Include="HeatFloor.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\diskid.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\RsaGeneration.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\Regedit.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\jsoncpp.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\httpRequest.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\Protection.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +136,27 @@
     </ClInclude>
     <ClInclude Include="HeatFloor.h">
       <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\diskid.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\RsaGeneration.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\Regedit.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\json.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\httpRequest.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\Protection.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\HeaderGen.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

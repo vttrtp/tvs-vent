@@ -26,7 +26,7 @@
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>false</CLRSupport>
     <UseOfMfc>Dynamic</UseOfMfc>
     <UseOfAtl>false</UseOfAtl>
     <PlatformToolset>v110</PlatformToolset>
@@ -59,14 +59,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <IncludePath>$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win64\include;$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL;</IncludePath>
+    <LibraryPath>$(SolutionDir)..\codegenerator\$(IntDir);$(ProjectDir)..\..\OpenSSL-Win64\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)..\..\codegenerator\TVSPL;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x86-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\OpenSSL-Win32\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x86-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win64\include;$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(ProjectDir)..\..\OpenSSL-Win64\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <MinimalRebuild Condition="'$(Configuration)'=='Debug' and '$(CLRSupport)'=='false'">false</MinimalRebuild>
+      <MinimalRebuild Condition="'$(Configuration)'=='Debug' and '$(CLRSupport)'=='false'">true</MinimalRebuild>
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(UseOfMfc)'=='Dynamic'">_AFXEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseOfMfc)'=='Dynamic'">_AFXEXT;CURL_STATICLIB;DCURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
@@ -77,26 +87,37 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\$(Configuration)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ProgramDatabase</DebugInformationFormat>
-      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Async</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Sync</ExceptionHandling>
       <SmallerTypeCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SmallerTypeCheck>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
       <OmitFramePointers Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</OmitFramePointers>
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Sync</ExceptionHandling>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
     </Link>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;ssleay32.lib;libcurl_a.lib;libeay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <NoEntryPoint Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</NoEntryPoint>
     </Link>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;ssleay32.lib;libcurl_a.lib;libeay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkLibraryDependencies>
     </ProjectReference>
+    <Link>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;$(SolutionDir)..\codegenerator\$(IntDir)TVSPL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\codegenerator\TVSPL\diskid.cpp" />
+    <ClCompile Include="..\..\codegenerator\TVSPL\httpRequest.cpp" />
+    <ClCompile Include="..\..\codegenerator\TVSPL\jsoncpp.cpp" />
+    <ClCompile Include="..\..\codegenerator\TVSPL\Protection.cpp" />
+    <ClCompile Include="..\..\codegenerator\TVSPL\Regedit.cpp" />
+    <ClCompile Include="..\..\codegenerator\TVSPL\RsaGeneration.cpp" />
     <ClCompile Include="acrxEntryPoint.cpp" />
     <ClCompile Include="dgAllEdit.cpp" />
     <ClCompile Include="DocData.cpp" />
@@ -119,6 +140,13 @@
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\codegenerator\TVSPL\diskid.h" />
+    <ClInclude Include="..\..\codegenerator\TVSPL\HeaderGen.h" />
+    <ClInclude Include="..\..\codegenerator\TVSPL\httpRequest.h" />
+    <ClInclude Include="..\..\codegenerator\TVSPL\json.h" />
+    <ClInclude Include="..\..\codegenerator\TVSPL\Protection.h" />
+    <ClInclude Include="..\..\codegenerator\TVSPL\Regedit.h" />
+    <ClInclude Include="..\..\codegenerator\TVSPL\RsaGeneration.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="dgAllEdit.h" />
     <ClInclude Include="DocData.h" />

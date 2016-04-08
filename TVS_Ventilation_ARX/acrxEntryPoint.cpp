@@ -37,8 +37,9 @@
 #include <rxmfcapi.h>
 #include <axpnt3d.h>
 
-using namespace System::Security::Cryptography;
-
+#include <diskid.h>
+#include <protection.h>
+#include "Regedit.h"
 
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
@@ -69,6 +70,7 @@ public:
 
 	virtual AcRx::AppRetCode On_kInitAppMsg (void *pkt) {
 		// TODO: Load dependencies here
+		
 		tdbl *pdbl=new tdbl;
 		pdbl->InitApplication();
 		delete pdbl;
@@ -2522,11 +2524,13 @@ public:
 
 	static void Ventilation_ARXTVS_SETTINGS(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		changesize();
 	}
 
 	static void Ventilation_ARXTVS_DRAW(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		int index;
 		AcDbObjectId id;
 		TVS_Pipe::GetParamsForDraw(id,index);
@@ -2784,7 +2788,9 @@ public:
 	// ----- Ventilation_ARX.TVS_PIPE command
 	static void Ventilation_ARXTVS_PIPE(void)
 	{
-
+		
+		if(ActivationErrorMessage()!=pError_Ok) return;
+		
 		ads_point pt1,pt2;
 		int reg;
 		int Astat;
@@ -2967,7 +2973,7 @@ public:
 	// - Ventilation_ARX.TVS_TRANS command (do not rename)
 	static void Ventilation_ARXTVS_TRANS(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_point pt1,pt2;
 		double pSizeAp1=500;
 		double pSizeBp1=0;
@@ -3015,7 +3021,7 @@ public:
 	// - Ventilation_ARX.TVS_WYE command (do not rename)
 	static void Ventilation_ARXTVS_WYE(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_point pt1;
 		TVS_WYE wyeie;
 		ads_real aSizeAotv,aSizeApr;
@@ -3091,6 +3097,7 @@ public:
 	// - Ventilation_ARX.TVS_CONNECT command (do not rename)
 	static void Ventilation_ARXTVS_CONNECTW(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		// Add your code for command Ventilation_ARX.TVS_CONNECT here
 
 		double Lx,Ly, startangle;
@@ -3193,6 +3200,7 @@ public:
 
 	static void Ventilation_ARXTVS_CONNECTT(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		// Add your code for command Ventilation_ARX.TVS_CONNECT here
 
 		double Lx,Ly, startangle;
@@ -3297,7 +3305,7 @@ public:
 	// - Ventilation_ARX.TVS_DUCT command (do not rename)
 	static void Ventilation_ARXTVS_DUCT(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 
 		// Add your code for command TVSTVS_Vent_ARX.MyCommand1 here
 
@@ -3413,6 +3421,7 @@ public:
 	static void Ventilation_ARXTVS_1D2D(void)
 	{
 
+		if(ActivationErrorMessage()!=pError_Ok) return;
 
 		ads_name sset, eName;
 		ACHAR  resultss [512];
@@ -3515,6 +3524,7 @@ public:
 	// - Ventilation_ARX.TVS_SPEC command (do not rename)
 	static void Ventilation_ARXTVS_Specification(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name sset, eName;
 		AcGeDoubleArray PipPar;
 		AcGeDoubleArray PipArr;
@@ -5288,7 +5298,7 @@ public:
 	// - Ventilation_ARX.TVS_Show command (do not rename)
 	static void Ventilation_ARXTVS_Show(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		acutRelRb(acutBuildList(RTSTR,_T("(TVS_TEST2)"),RTNONE,RTNONE));
 		//acedCommand(RTSTR,_T("(TVS_TEST2)"),RTNONE,RTNONE);
 		// Add your code for command Ventilation_ARX.TVS_Show here
@@ -5297,6 +5307,7 @@ public:
 	// - Ventilation_ARX.TVS_CUT command (do not rename)
 	static void Ventilation_ARXTVS_CUT(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		AcGePoint3d pCut;
 		double Lx,Ly, startangle;
 		ads_name vozd1,vozd2, eName;
@@ -5414,7 +5425,7 @@ public:
 
 	static void Ventilation_ARXTVS_Change(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name sset;
 
 		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
@@ -5503,7 +5514,7 @@ public:
 	// - Ventilation_ARX.TVS_ERASE command (do not rename)
 	static void Ventilation_ARXTVS_ERASE(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name sset, eName;
 		ACHAR  resultss [512];
 		ACHAR  results1 [512]=_T("2");
@@ -5629,6 +5640,7 @@ public:
 
 	static void Ventilation_ARXTVSSomeParts(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name ent;
 		bool  Astat=false, status=false;
 		//acedInitGet(RSG_NONULL);
@@ -5685,7 +5697,7 @@ public:
 
 	static void Ventilation_ARXTVS_LEAD(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		int pstatus;
 		double SizeA,SizeB,Flow,SizeA2, SizeB2;
 		AcGePoint3d pCut;
@@ -6097,6 +6109,7 @@ public:
 
 	static void Ventilation_ARXTVS_Flex(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		TVS_Pipe* pEnt=new TVS_Pipe();
 
 		pEnt->FirstPoint=AcGePoint3d(0,0,0);
@@ -6210,7 +6223,7 @@ public:
 	}
 	static void Ventilation_ARXTVS_SPEC(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name sset, eName;
 
 		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
@@ -6247,7 +6260,7 @@ public:
 
 	static void Ventilation_ARXTVS_EXCELSPEC(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name sset, eName;
 
 		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
@@ -6501,6 +6514,16 @@ public:
 
 	static void Ventilation_ARXTVS_TEST(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
+		string ensrcretHHDId;
+	protection::gethddIDFromSecret(ensrcretHHDId);
+
+
+		
+		acutPrintf(_T("\n%s"),conversion::charToWchar(ensrcretHHDId.c_str()));
+
+
+
 
 		AcGeLine3d lin1=AcGeLine3d(AcGePoint3d(0,0,0),AcGePoint3d(2,0,0));
 		AcGeLine3d lin2=AcGeLine3d(AcGePoint3d(3,0,0),AcGePoint3d(0,3,0));
@@ -6525,6 +6548,7 @@ public:
 
 	static void Ventilation_ARXTVS_AddAtrib(void)
 	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_point pt1;
 		ads_name ent;
 		Acad::ErrorStatus es;
@@ -6650,7 +6674,7 @@ public:
 	//
 	static void Ventilation_ARXTVS_SCALE(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name sset, eName,ent;
 		ads_point pt1;
 		bool isOk=false;
@@ -6717,7 +6741,7 @@ public:
 
 	static void Ventilation_ARXTVS_HEATFLOOR(void)
 	{
-
+		if(ActivationErrorMessage()!=pError_Ok) return;
 		 ads_name eName,ent;
 		ads_point pt1;
 		bool isOk=false;

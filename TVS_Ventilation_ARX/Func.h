@@ -8,7 +8,7 @@
 #include "SPEC.h"
 #include "dgAllEdit.h"
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "afxwin.h"
 #include <iostream>
 #include "afxdb.h"
@@ -226,4 +226,5 @@ int TVSClassCheck (AcDbEntity* pEnt);
 int whyIsGrose (TVS_Entity* pEnt1,TVS_Entity* pEnt2);
 
 void drawEntity(AcDbEntity *pent);
+int ActivationErrorMessage();
 };
