@@ -43,7 +43,7 @@ public:
 	AcArray <HFPoint> HFPoints;
 	void drawHFLoop();
 	void getOffset(AcDbPolyline *pLine);
-	void drawOffset(AcDbPolyline *pLine);
+	void drawOffset(AcDbPolyline *pLine, const int &step);
 	void GetParallelLinesAPredeterminedDistance(AcGePoint3d const &L1S,AcGePoint3d const &L1E, double const &distance,AcGePoint3d &L2S,AcGePoint3d &L2E,AcGePoint3d &L3S,AcGePoint3d &L3E);
 	bool getSimilarInsideFigureAtDistance(const AcGePoint3dArray  &arr,double const &distance,AcGePoint3dArray &result);
     void getMidPoint(AcGePoint3d const &pt1,AcGePoint3d const &pt2,AcGePoint3d &midPnt);

@@ -6711,7 +6711,7 @@ public:
 	}
 
 
-	static void Ventilation_ARXTVS_HEATFLOOR(void)
+	static void Ventilation_ARXTVS_HEATFLOOR150(void)
 	{
 
 		 ads_name eName,ent;
@@ -6746,20 +6746,20 @@ public:
 					
 					 pLine->getStretchPoints(arr);
 					 AcDbVoidPtrArray arr1;
-					 pLine->getOffsetCurves(200,arr1);
+					 pLine->getOffsetCurves(150,arr1);
 					HeatFloor hf;
 					time_t seconds;
 					time(&seconds);
 					srand (  seconds);
 					hf.setContour(pLine);
 					hf.setStartPoint(AcGePoint3d(0,0,0));
-					hf.step=200;
+					hf.step=150;
 					hf.getOffset(pLine);
-					hf.drawHFLoop();
+					//hf.drawHFLoop();
 					acutPrintf(_T("\n %d"), hf.indexofrecursion);
 					acutPrintf(_T("\n %d"), hf.indexofrecursion2);
 					acutPrintf(_T("\n %d"), hf.indexofrecursion3);
-					//hf.drawOffset(pLine);
+					hf.drawOffset(pLine,150);
 				acutPrintf(_T("\n %d"), hf.indexofrecursion);
 				acutPrintf(_T("\n %d"), hf.indexofrecursion1);
 				acutPrintf(_T("\n %d"), hf.indexofrecursion2);
@@ -6836,6 +6836,131 @@ public:
 
 	}
 
+
+	static void Ventilation_ARXTVS_HEATFLOOR200(void)
+	{
+
+		ads_name eName,ent;
+		ads_point pt1;
+		bool isOk=false;
+		int acadStatus;
+		AcGePoint3dArray arr;
+
+
+		double length=0;
+
+		isOk=false;
+		while (isOk==false)
+		{
+			acadStatus=acedEntSel (_T("\nВыбирите полилинию для построения ТП: "), ent,pt1) ;
+			switch (acadStatus)
+			{
+			case RTCAN:
+				return;
+				break;
+
+			}
+			if (acadStatus=RTNORM)
+			{
+				AcDbObjectId pId;    
+				acdbGetObjectId(pId,ent);
+
+				AcDbObjectPointer<AcDbPolyline>pLine (pId, AcDb::kForRead);
+				if (pLine.openStatus () == Acad::eOk)
+				{
+					isOk=true;
+
+					pLine->getStretchPoints(arr);
+					AcDbVoidPtrArray arr1;
+					pLine->getOffsetCurves(200,arr1);
+					HeatFloor hf;
+					time_t seconds;
+					time(&seconds);
+					srand (  seconds);
+					hf.setContour(pLine);
+					hf.setStartPoint(AcGePoint3d(0,0,0));
+					hf.step=200;
+					hf.getOffset(pLine);
+					//hf.drawHFLoop();
+					acutPrintf(_T("\n %d"), hf.indexofrecursion);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion2);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion3);
+					hf.drawOffset(pLine, 200);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion1);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion2);
+					acutPrintf(_T("\n %d"), hf.indexofrecursion3);
+
+					for each (AcGePoint3d var in arr)
+					{
+						acutPrintf(_T("\n %10.2f %10.2f %10.2f"), var.x,var.y,var.z );
+					}
+				}
+			}
+		}
+
+		HeatFloor HF;
+		AcGePoint3dArray res;
+		//HF.getSimilarInsideFigureAtDistance(arr,200,res);
+
+		// 		isOk=false;
+		// 		while (isOk==false)
+		// 		{
+		// 			acadStatus=acedGetPoint(pt1,_T("\nУкажите точку:"),pt1);
+		// 			switch (acadStatus)
+		// 			{
+		// 			case RTCAN:
+		// 				return;
+		// 				break;
+		// 
+		// 			}
+		// 			if (acadStatus=RTNORM)
+		// 			{
+		// 				AcGePoint3d pt=asPnt3d(pt1);
+		// 				HeatFloor HF;
+		// 				if (HF.pt_in_polygon(pt,arr))
+		// 				{
+		// 					acutPrintf(_T("\nВнутри"));
+		// 				} 
+		// 				else
+		// 				{
+		// 					acutPrintf(_T("\nСнаружи"));
+		// 				}
+		// 
+		// 
+		// 
+		// 			}
+		// 		}
+
+
+
+
+		// 		ads_real  len;
+		// 		isOk=false;
+		// 		while (isOk==false)
+		// 		{
+		// 			double newLength;
+		// 
+		// 			acadStatus=acedGetReal (_T("\nВведите Требуемую длину: "), &len) ;
+		// 			switch (acadStatus)
+		// 			{
+		// 			case RTCAN:
+		// 				return;
+		// 				break;
+		// 
+		// 			}
+		// 			if (acadStatus=RTNORM)
+		// 			{
+		// 				newLength=len;
+		// 				isOk=true;
+		// 			}
+		// 
+		// 		}
+		// 		ads_real scale=len/length;
+		// 		acedCommandS(RTSTR,_T("_SCALE"),RTPICKS,sset,RTSTR,_T(""),RTPOINT,pt1,RTREAL,scale,RTNONE);
+		return;
+
+	}
 } ;
 
 //-----------------------------------------------------------------------------
@@ -6863,8 +6988,8 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AddAtrib, TVS_AddAtrib, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVSSomeParts, TVSSomeParts, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SETTINGS, TVS_SETTINGS, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
-	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_HEATFLOOR, TVS_HEATFLOOR, ACRX_CMD_TRANSPARENT, NULL)
-
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_HEATFLOOR150, TVS_HEATFLOOR150, ACRX_CMD_TRANSPARENT, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_HEATFLOOR200, TVS_HEATFLOOR200, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyCommand, MyCommandLocal, ACRX_CMD_MODAL, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MyPickFirst, MyPickFirstLocal, ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, TVSMyGroup, MySessionCmd, MySessionCmdLocal, ACRX_CMD_MODAL | ACRX_CMD_SESSION, NULL)
