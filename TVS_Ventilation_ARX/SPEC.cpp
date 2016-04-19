@@ -425,6 +425,7 @@ void SPEC::setParamChars()
 {
 	acdbRToS(param1,2,param1Type,param1char);
 	acdbRToS(param2,2,param2Type,param2char);
+	acdbRToS(param1,2,param1Type,sValue);
 }
 
 
@@ -509,8 +510,7 @@ bool SPEC::GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR  *pVal)
 }
 bool SPEC::addBlock(AcDbEntity * pEnt)
 {
-	ACHAR sType[512];
-	ACHAR sSize[512];
+
 	if(GetAtt(pEnt,TagName,sName)&&GetAtt(pEnt,TagSize,sSize)&&GetAtt(pEnt,TagType,sType))
 	{
 		wcscpy_s(sPos,_T(""));

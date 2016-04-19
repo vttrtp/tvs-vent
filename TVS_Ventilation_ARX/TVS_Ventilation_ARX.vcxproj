@@ -76,7 +76,7 @@
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseOfMfc)'=='Dynamic'">_AFXEXT;CURL_STATICLIB;DCURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
@@ -118,7 +118,14 @@
     <ClCompile Include="..\..\codegenerator\TVSPL\Protection.cpp" />
     <ClCompile Include="..\..\codegenerator\TVSPL\Regedit.cpp" />
     <ClCompile Include="..\..\codegenerator\TVSPL\RsaGeneration.cpp" />
+    <ClCompile Include="..\GridCtrl_src\GridCell.cpp" />
+    <ClCompile Include="..\GridCtrl_src\GridCellBase.cpp" />
+    <ClCompile Include="..\GridCtrl_src\GridCtrl.cpp" />
+    <ClCompile Include="..\GridCtrl_src\GridDropTarget.cpp" />
+    <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp" />
+    <ClCompile Include="..\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="acrxEntryPoint.cpp" />
+    <ClCompile Include="BLCKMNGRDLG.cpp" />
     <ClCompile Include="dgAllEdit.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="Func.cpp" />
@@ -126,6 +133,11 @@
     <ClCompile Include="hangeZdg.cpp" />
     <ClCompile Include="HeatFloor.cpp" />
     <ClCompile Include="MSExcel.cpp" />
+    <ClCompile Include="NewCellTypes\GridCellCheck.cpp" />
+    <ClCompile Include="NewCellTypes\GridCellCombo.cpp" />
+    <ClCompile Include="NewCellTypes\GridCellDateTime.cpp" />
+    <ClCompile Include="NewCellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="NewCellTypes\GridURLCell.cpp" />
     <ClCompile Include="OLEMethod.cpp" />
     <ClCompile Include="PipeSizeDiallog.cpp" />
     <ClCompile Include="SPEC.cpp" />
@@ -147,6 +159,15 @@
     <ClInclude Include="..\..\codegenerator\TVSPL\Protection.h" />
     <ClInclude Include="..\..\codegenerator\TVSPL\Regedit.h" />
     <ClInclude Include="..\..\codegenerator\TVSPL\RsaGeneration.h" />
+    <ClInclude Include="..\GridCtrl_src\CellRange.h" />
+    <ClInclude Include="..\GridCtrl_src\GridCell.h" />
+    <ClInclude Include="..\GridCtrl_src\GridCellBase.h" />
+    <ClInclude Include="..\GridCtrl_src\GridCtrl.h" />
+    <ClInclude Include="..\GridCtrl_src\GridDropTarget.h" />
+    <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h" />
+    <ClInclude Include="..\GridCtrl_src\MemDC.h" />
+    <ClInclude Include="..\GridCtrl_src\TitleTip.h" />
+    <ClInclude Include="BLCKMNGRDLG.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="dgAllEdit.h" />
     <ClInclude Include="DocData.h" />
@@ -155,6 +176,11 @@
     <ClInclude Include="hangeZdg.h" />
     <ClInclude Include="HeatFloor.h" />
     <ClInclude Include="MSExcel.h" />
+    <ClInclude Include="NewCellTypes\GridCellCheck.h" />
+    <ClInclude Include="NewCellTypes\GridCellCombo.h" />
+    <ClInclude Include="NewCellTypes\GridCellDateTime.h" />
+    <ClInclude Include="NewCellTypes\GridCellNumeric.h" />
+    <ClInclude Include="NewCellTypes\GridURLCell.h" />
     <ClInclude Include="Office.h" />
     <ClInclude Include="OLEMethod.h" />
     <ClInclude Include="PipeSizeDiallog.h" />

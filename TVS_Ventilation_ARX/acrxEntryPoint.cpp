@@ -32,7 +32,7 @@
 #include "hangeZdg.h"
 #include "MSExcel.h"	
 #include "HeatFloor.h"
-
+#include "BLCKMNGRDLG.h"
 #import "acax20ENU.tlb" 
 #include <rxmfcapi.h>
 #include <axpnt3d.h>
@@ -6151,7 +6151,49 @@ public:
 
 
 	}
+	static void  fillspecification(ads_name &sset, SpecWithAttrlist &specatrlist,ACHAR * grad, ACHAR * d)
+	{
+		long len = 0;
+		AcDbBlockReference * br;
+		TVS_Entity * Ent;
+		AcDbEntity *pEnt = NULL;
+		ads_name  eName;
+		AcDbObjectId id;
+		acedSSLength(sset, &len);
+		//consoleprint(double(len),_T("\nL: "));
+		for (long i = 0; i < len; i++)
+		{             
 
+
+			if (NULL != (acedSSName(sset,i,eName)))
+			{
+
+				//consoleprint(double(i),_T("\nd"));
+
+
+				acdbGetObjectId(id,eName);
+				if (id!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt,id,AcDb::kForRead)==eOk)
+					{
+
+							pEnt->close();
+						if ( (br = AcDbBlockReference::cast(pEnt)) != NULL )
+						{
+							SPEC spec;
+							wcscpy_s(spec.grad,grad);
+							wcscpy_s(spec.d,d);
+							if(spec.addBlock(pEnt)==true)
+							{
+								specatrlist.append(spec);
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
 	static void  fillspecification(ads_name &sset, SPEClist &speclist,SPEClist &speclistflex,SpecWithAttrlist &specatrlist,ACHAR * grad, ACHAR * d)
 	{
 		long len = 0;
@@ -6514,36 +6556,75 @@ public:
 
 	static void Ventilation_ARXTVS_TEST(void)
 	{
+
+
+
 		if(ActivationErrorMessage()!=pError_Ok) return;
-		string ensrcretHHDId;
-	protection::gethddIDFromSecret(ensrcretHHDId);
+		ads_name sset, eName;
 
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
+	
 
+//		SPEClist speclist, speclistflex;
+		SpecWithAttrlist specatrlist;
+		fillspecification(sset,specatrlist,L"%%d",L"%%c");
 		
-		acutPrintf(_T("\n%s"),conversion::charToWchar(ensrcretHHDId.c_str()));
+
+		if (specatrlist.specList.physicalLength()!=0)
+		{
+			//speclist.print();
+		
+			CAcModuleResourceOverride resourceOverride;
+			BLCKMNGRDLG dlg;
+			dlg.blckList=specatrlist;
+			dlg.DoModal();
+		}
 
 
 
 
-		AcGeLine3d lin1=AcGeLine3d(AcGePoint3d(0,0,0),AcGePoint3d(2,0,0));
-		AcGeLine3d lin2=AcGeLine3d(AcGePoint3d(3,0,0),AcGePoint3d(0,3,0));
-		AcGePoint3d pnt;
-		double b = 0;
-		double a = 3/b;
-		bool intresect=lin1.intersectWith(lin2,pnt);
-		if (intresect) acutPrintf(_T("\n Да"));
-		else acutPrintf(_T("\n Нет"));
-		//SPEClist spec;
-		//spec.printToExel(1);
 
 
 
-		// 		CAcModuleResourceOverride resourceOverride;
-		// 		CDatabase cdbMyDB;
-		// 		cdbMyDB.Open(L"New Excel Data Source");
-		// 		cdbMyDB.ExecuteSQL(L"CREATE TABLE mydata (FirstName TEXT,LastName TEXT)"); 
-		// 		cdbMyDB.ExecuteSQL(L"INSERT INTO mydata (FirstName,LastName) VALUES('Kaev','Artem');");
-		// 		cdbMyDB.Close(); 
+
+
+
+
+
+
+
+
+// 		if(ActivationErrorMessage()!=pError_Ok) return;
+// 		string ensrcretHHDId;
+// 	protection::gethddIDFromSecret(ensrcretHHDId);
+// 
+// 
+// 		
+// 		acutPrintf(_T("\n%s"),conversion::charToWchar(ensrcretHHDId.c_str()));
+// 
+// 
+// 
+// 
+// 		AcGeLine3d lin1=AcGeLine3d(AcGePoint3d(0,0,0),AcGePoint3d(2,0,0));
+// 		AcGeLine3d lin2=AcGeLine3d(AcGePoint3d(3,0,0),AcGePoint3d(0,3,0));
+// 		AcGePoint3d pnt;
+// 		double b = 0;
+// 		double a = 3/b;
+// 		bool intresect=lin1.intersectWith(lin2,pnt);
+// 		if (intresect) acutPrintf(_T("\n Да"));
+// 		else acutPrintf(_T("\n Нет"));
+// 		//SPEClist spec;
+// 		//spec.printToExel(1);
+// 
+// 
+// 
+// 		// 		CAcModuleResourceOverride resourceOverride;
+// 		// 		CDatabase cdbMyDB;
+// 		// 		cdbMyDB.Open(L"New Excel Data Source");
+// 		// 		cdbMyDB.ExecuteSQL(L"CREATE TABLE mydata (FirstName TEXT,LastName TEXT)"); 
+// 		// 		cdbMyDB.ExecuteSQL(L"INSERT INTO mydata (FirstName,LastName) VALUES('Kaev','Artem');");
+// 		// 		cdbMyDB.Close(); 
 	}
 
 	static void Ventilation_ARXTVS_AddAtrib(void)

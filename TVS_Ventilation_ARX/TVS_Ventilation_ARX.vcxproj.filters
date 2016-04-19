@@ -22,6 +22,9 @@
     <Filter Include="Protect\Заголовочные файлы">
       <UniqueIdentifier>{63fb9e37-75ff-4029-bd5d-8f814b37fc61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Grid">
+      <UniqueIdentifier>{590ddde4-bb6e-4ca7-a95b-8bd640f33d58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -86,6 +89,42 @@
     </ClCompile>
     <ClCompile Include="..\..\codegenerator\TVSPL\Protection.cpp">
       <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="BLCKMNGRDLG.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellCheck.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellCombo.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellDateTime.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellNumeric.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridURLCell.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCell.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCellBase.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCtrl.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridDropTarget.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\TitleTip.cpp">
+      <Filter>Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +196,48 @@
     </ClInclude>
     <ClInclude Include="..\..\codegenerator\TVSPL\HeaderGen.h">
       <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="BLCKMNGRDLG.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellCheck.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellCombo.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellDateTime.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellNumeric.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridURLCell.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\CellRange.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCell.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCellBase.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCtrl.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridDropTarget.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\MemDC.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\TitleTip.h">
+      <Filter>Grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

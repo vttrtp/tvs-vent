@@ -99,6 +99,8 @@ bool GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR *pVal);
 ACHAR sPos[512];
 ACHAR sName[512];
 ACHAR sTypeSize[512];
+ACHAR sType[512];
+ACHAR sSize[512];
 ACHAR sArticle[512];
 ACHAR sManufacture[512];
 ACHAR sUnit[512];
