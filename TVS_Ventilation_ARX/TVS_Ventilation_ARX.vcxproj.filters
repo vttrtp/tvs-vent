@@ -90,9 +90,6 @@
     <ClCompile Include="..\..\codegenerator\TVSPL\Protection.cpp">
       <Filter>Protect\Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="BLCKMNGRDLG.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
     <ClCompile Include="NewCellTypes\GridCellCheck.cpp">
       <Filter>Grid</Filter>
     </ClCompile>
@@ -125,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="..\GridCtrl_src\TitleTip.cpp">
       <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="BLCKMNGRDLG.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,9 +197,6 @@
     <ClInclude Include="..\..\codegenerator\TVSPL\HeaderGen.h">
       <Filter>Protect\Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="BLCKMNGRDLG.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="NewCellTypes\GridCellCheck.h">
       <Filter>Grid</Filter>
     </ClInclude>
@@ -238,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\TitleTip.h">
       <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="BLCKMNGRDLG.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

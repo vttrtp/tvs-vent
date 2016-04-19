@@ -22,7 +22,9 @@ using namespace std;
 #define TagMass _T("МАССА")
 #define TagCommit _T("ПРИМЕЧАНИЕ")
 
-
+#define Less 0
+#define Equal 1
+#define Larger 2
 
 class SPEC
 {
@@ -107,8 +109,11 @@ ACHAR sUnit[512];
 ACHAR sValue[512];
 ACHAR sMass[512];
 ACHAR sCommit[512];
+AcDbEntity* sEnt;
+AcArray <AcDbEntity*> entityList;
 bool addBlock(AcDbEntity * pEnt);
-
+bool setAtribToEnt(AcDbEntity* pEnt, ACHAR* tag, ACHAR *pVal);
+bool setAtribListToEnt();
 static bool getBlockName(AcDbEntity* pEnt , ACHAR *pName);
 };
 

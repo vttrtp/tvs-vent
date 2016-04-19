@@ -16,9 +16,7 @@ using namespace std;
 #define TypeInt 0
 #define TypeDouble1 1
 #define TypeDouble2 2
-#define Less 0
-#define Equal 1
-#define Larger 2
+
 #pragma once
 
 void SPEC::setAcharType(int val)
@@ -542,11 +540,68 @@ bool SPEC::addBlock(AcDbEntity * pEnt)
 			(wcscmp(sMass,_T(""))==0)&&
 			(wcscmp(sCommit,_T(""))==0)
 			) getBlockName(pEnt,sName);
+		sEnt=pEnt;
+		entityList.append(sEnt);
 		return true;
 	}
 	else return false;
 }
 
+
+bool SPEC::setAtribToEnt(AcDbEntity* pEnt, ACHAR* tag, ACHAR  *pVal)
+{
+
+
+		Acad::ErrorStatus es;
+
+
+		AcDbObjectPointer<AcDbBlockReference> pBlkRef(pEnt->id(),AcDb::kForWrite);
+		if ((es = pBlkRef.openStatus()) != Acad::eOk) {
+			acutPrintf(_T("\nОшибка открытия BlockReference: %s"), acadErrorStatusText(es)); return false;
+		}
+		AcDbObjectIterator *pAttrIter = pBlkRef->attributeIterator();
+		if (pAttrIter) {
+			for (pAttrIter->start();!pAttrIter->done();pAttrIter->step()) {
+				AcDbObjectId objAttrId = pAttrIter->objectId();
+				AcDbObjectPointer<AcDbAttribute> pAttr(objAttrId,AcDb::kForWrite);
+
+				if ((es = pAttr.openStatus()) == Acad::eOk) {
+					//
+					// Здесь можно получить информацию об атрибуте
+					//
+
+					if (wcscmp(tag,pAttr->tagConst())==0) {
+
+
+						pAttr->setTextString(pVal);
+						return true;
+					}
+
+				} else {
+					acutPrintf(_T("\nНе удалось открыть атрибут блока! Ошибка: %s", LPCTSTR(acadErrorStatusText(es))));
+				}
+			}
+		}
+
+	}
+
+
+
+bool SPEC::setAtribListToEnt()
+{
+	for each (AcDbEntity* pEnt in entityList)
+	{
+		setAtribToEnt(pEnt, TagPos, sPos);
+		setAtribToEnt(pEnt, TagName, sName);
+		setAtribToEnt(pEnt, TagType, sType);
+		setAtribToEnt(pEnt, TagSize, sSize);
+		setAtribToEnt(pEnt, TagArticle, sArticle);
+		setAtribToEnt(pEnt, TagManufacture, sManufacture);
+		setAtribToEnt(pEnt, TagMass, sMass);
+		setAtribToEnt(pEnt, TagCommit, sCommit);
+	}
+	return true;
+}
 
 bool SPEC::getBlockName(AcDbEntity* pEnt , ACHAR *pName)
 {
@@ -651,6 +706,7 @@ void SPEClist::append(SPEC line)
 		{
 			specList[i].param1=specList[i].param1+line.param1;
 			specList[i].param2=specList[i].param2+line.param2;
+			specList[i].entityList.append(line.sEnt);
 			return;
 		}
 
@@ -954,9 +1010,11 @@ int SpecWithAttrlist::checkRelevations(SPEC param1, SPEC param2)
 	int ret;
 	ret=checkCharRelevations(param1.sPos,param2.sPos);
 	if(ret==Equal) ret=checkCharRelevations(param1.sName,param2.sName);
-	if(ret==Equal) ret=checkCharRelevations(param1.sTypeSize,param2.sTypeSize);
+	if(ret==Equal) ret=checkCharRelevations(param1.sType,param2.sType);
+	if(ret==Equal) ret=checkCharRelevations(param1.sSize,param2.sSize);
 	if(ret==Equal) ret=checkCharRelevations(param1.sArticle,param2.sArticle);
 	if(ret==Equal) ret=checkCharRelevations(param1.sManufacture,param2.sManufacture);
+	if(ret==Equal) ret=checkCharRelevations(param1.sMass,param2.sMass);
 	if(ret==Equal) ret=checkCharRelevations(param1.sCommit,param2.sCommit);
 	return ret;
 }
