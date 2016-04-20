@@ -54,6 +54,26 @@ LRESULT BLCKMNGRDLG::OnAcadKeepFocus (WPARAM, LPARAM) {
 
 void BLCKMNGRDLG::OnShowWindow(BOOL bShow, UINT nStatus)
 {
+
+// 	int width = 800,
+// 		height = min((blckList.specList.length()+1)*20+50,800);
+// // 	if (GetSystemMetrics(SM_CXSCREEN) > 800)
+// // 	{
+// // 		width = 1024;
+// // 		height = 768;
+// // 	}
+// // 	if (GetSystemMetrics(SM_CXSCREEN) > 1024)
+// // 	{
+// // 		width = 1280;
+// // 		height = 1024;
+// // 	}
+// 	MoveWindow((GetSystemMetrics(SM_CXSCREEN) / 2 - width / 2),
+// 		(GetSystemMetrics(SM_CYSCREEN) / 2 - height / 2), width, height);
+
+
+
+
+
 	int wide=50;
 	mGrid.SetFixedColumnCount(1);
 	mGrid.SetFixedRowCount(1);
