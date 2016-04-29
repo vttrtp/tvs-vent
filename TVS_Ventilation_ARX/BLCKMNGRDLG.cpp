@@ -1,149 +1,146 @@
-// BLCKMNGRDLG.cpp: файл реализации
+// (C) Copyright 2002-2007 by Autodesk, Inc. 
+//
+// Permission to use, copy, modify, and distribute this software in
+// object code form for any purpose and without fee is hereby granted, 
+// provided that the above copyright notice appears in all copies and 
+// that both that copyright notice and the limited warranty and
+// restricted rights notice below appear in all supporting 
+// documentation.
+//
+// AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS. 
+// AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
+// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC. 
+// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// UNINTERRUPTED OR ERROR FREE.
+//
+// Use, duplication, or disclosure by the U.S. Government is subject to 
+// restrictions set forth in FAR 52.227-19 (Commercial Computer
+// Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
+// (Rights in Technical Data and Computer Software), as applicable.
 //
 
-#include "stdafx.h"
+//-----------------------------------------------------------------------------
+//----- BLKMNGRDLG.cpp : Implementation of BLKMNGRDLG
+//-----------------------------------------------------------------------------
+#include "StdAfx.h"
+#include "resource.h"
 #include "BLCKMNGRDLG.h"
-#include "afxdialogex.h"
 
+//-----------------------------------------------------------------------------
+IMPLEMENT_DYNAMIC (BLCKMNGRDLG, CAdUiBaseDialog)
 
-
-
-
-#include "NewCellTypes/GridURLCell.h"
-#include "NewCellTypes/GridCellCombo.h"
-#include "NewCellTypes/GridCellCheck.h"
-#include "NewCellTypes/GridCellNumeric.h"
-#include "NewCellTypes/GridCellDateTime.h"
-
-// #ifdef _DEBUG
-// #define new DEBUG_NEW
-// #undef THIS_FILE
-// static char THIS_FILE[] = __FILE__;
-// #endif
-// 
-// #if defined(_WIN32_WCE) && (_WIN32_WCE <= 0x200)
-// #define MF_DISABLED 0
-// #define DT_END_ELLIPSIS 0
-// #endif
-
-// диалоговое окно BLCKMNGRDLG
-
-
-
-IMPLEMENT_DYNAMIC(BLCKMNGRDLG, CAdUiBaseDialog)
 BEGIN_MESSAGE_MAP(BLCKMNGRDLG, CAdUiBaseDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, OnAcadKeepFocus)
 	ON_WM_SHOWWINDOW()
+	ON_BN_CLICKED(IDOK, &BLCKMNGRDLG::OnBnClickedOk)
 END_MESSAGE_MAP()
 
-
-
-	BLCKMNGRDLG::BLCKMNGRDLG(CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog (BLCKMNGRDLG::IDD, pParent, hInstance) 
-
-{
+//-----------------------------------------------------------------------------
+BLCKMNGRDLG::BLCKMNGRDLG (CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog (BLCKMNGRDLG::IDD, pParent, hInstance) {
 }
 
-BLCKMNGRDLG::~BLCKMNGRDLG()
-{
-}
-
-void BLCKMNGRDLG::DoDataExchange(CDataExchange* pDX)
-{
-	CAdUiBaseDialog::DoDataExchange(pDX);
+//-----------------------------------------------------------------------------
+void BLCKMNGRDLG::DoDataExchange (CDataExchange *pDX) {
+	CAdUiBaseDialog::DoDataExchange (pDX) ;
 	DDX_Control(pDX, IDC_GRID, mGrid);
 }
 
-// обработчики сообщений BLCKMNGRDLG
+//-----------------------------------------------------------------------------
+//----- Needed for modeless dialogs to keep focus.
+//----- Return FALSE to not keep the focus, return TRUE to keep the focus
 LRESULT BLCKMNGRDLG::OnAcadKeepFocus (WPARAM, LPARAM) {
-
 	return (TRUE) ;
 }
+
 void BLCKMNGRDLG::OnShowWindow(BOOL bShow, UINT nStatus)
 {
-	CAdUiBaseDialog::OnShowWindow(bShow, nStatus);
 
-// 	// Add "About..." menu item to system menu.
-// 
-// 	// IDM_ABOUTBOX must be in the system command range.
-// 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-// 	ASSERT(IDM_ABOUTBOX < 0xF000);
-// 
-// #ifndef _WIN32_WCE
-// 	CMenu* pSysMenu = GetSystemMenu(FALSE);
-// 
-// 	if (pSysMenu != NULL)
-// 	{
-// 		CString strAboutMenu;
-// 		strAboutMenu.LoadString(IDS_ABOUTBOX);
-// 		if (!strAboutMenu.IsEmpty())
-// 		{
-// 			pSysMenu->AppendMenu(MF_SEPARATOR);
-// 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
-// 		}
-// 	}
-// #else - pulled this since it was causing some probs in CE 3.0 (Bjoern Ruff)
-// 	//    CSize ScreenSize;
-// 	//    ::SetWindowPos(m_hWnd, HWND_TOP,0,0, 
-// 	//                 GetSystemMetrics(SM_CXSCREEN), 
-// 	//                 GetSystemMetrics(SM_CYSCREEN) - 32, // 32 = kludge value
-// 	//                 SWP_SHOWWINDOW);
-// #endif
+// 	int width = 800,
+// 		height = min((blckList.specList.length()+1)*20+50,800);
+// // 	if (GetSystemMetrics(SM_CXSCREEN) > 800)
+// // 	{
+// // 		width = 1024;
+// // 		height = 768;
+// // 	}
+// // 	if (GetSystemMetrics(SM_CXSCREEN) > 1024)
+// // 	{
+// // 		width = 1280;
+// // 		height = 1024;
+// // 	}
+// 	MoveWindow((GetSystemMetrics(SM_CXSCREEN) / 2 - width / 2),
+// 		(GetSystemMetrics(SM_CYSCREEN) / 2 - height / 2), width, height);
 
-	int mUnit=50;
+
+
+
+
+	int wide=50;
+	mGrid.SetFixedColumnCount(1);
+	mGrid.SetFixedRowCount(1);
 	mGrid.SetRowCount(blckList.specList.length()+1);
 	mGrid.SetColumnCount(11);
-	mGrid.SetColumnWidth(0,mUnit/2);
-	mGrid.SetColumnWidth(1,mUnit);
-	mGrid.SetColumnWidth(2,mUnit*7);
-	mGrid.SetColumnWidth(3,mUnit*2);
-	mGrid.SetColumnWidth(4,mUnit*2);
-	mGrid.SetColumnWidth(5,mUnit*2);
-	mGrid.SetColumnWidth(6,mUnit);
-	mGrid.SetColumnWidth(7,mUnit);
-	mGrid.SetColumnWidth(8,mUnit);
-	mGrid.SetColumnWidth(9,mUnit);
-	mGrid.SetColumnWidth(10,mUnit);
+	mGrid.SetColumnWidth(0,wide/2);
+	mGrid.SetColumnWidth(1,wide);
+	mGrid.SetColumnWidth(2,wide*6);
+	mGrid.SetColumnWidth(3,wide*2);
+	mGrid.SetColumnWidth(4,wide*2);
+	mGrid.SetColumnWidth(5,wide*2);
+	mGrid.SetColumnWidth(6,wide*2);
+	mGrid.SetColumnWidth(7,wide);
+	mGrid.SetColumnWidth(8,wide);
+	mGrid.SetColumnWidth(9,wide);
+	mGrid.SetColumnWidth(10,wide*2);
 
-	mGrid.SetItemText(0,0,_T("№"));
-	mGrid.SetItemText(0,1,_T("Поз."));
-	mGrid.SetItemText(0,2,_T("Наименование"));
-	mGrid.SetItemText(0,3,_T("Тип"));
-	mGrid.SetItemText(0,4,_T("Размер"));
-	mGrid.SetItemText(0,5,_T("Артикул"));
-	mGrid.SetItemText(0,6,_T("Изготовитель"));
-	mGrid.SetItemText(0,7,_T("Еденица"));
-	mGrid.SetItemText(0,8,_T("Кол-во"));
-	mGrid.SetItemText(0,9,_T("Масса"));
-	mGrid.SetItemText(0,10,_T("Примечание"));
-	//mGrid.EnableDragAndDrop(TRUE);
-	//mGrid.GetDefaultCell(FALSE, FALSE)->SetBackClr(RGB(0xFF, 0xFF, 0xE0));
-	//mGrid.AutoSize();
-	// 
-	//mGrid.SetCompareFunction(CGridCtrl::pfnCellNumericCompare);
-
-	//mGrid.SetItemState(2,2, mGrid.GetItemState(2,2) | GVIS_READONLY);
-	mGrid.SetRowResize(0);
-	mGrid.SetFixedRowCount(1);
-	mGrid.SetFixedColumnCount(1);
-
-	for (int i=0; i<blckList.specList.length();i++)
+	mGrid.SetItemText(0,0, _T("№"));
+	mGrid.SetItemText(0,1, _T("Поз"));
+	mGrid.SetItemText(0,2, _T("Наименование"));
+	mGrid.SetItemText(0,3, _T("Тип"));
+	mGrid.SetItemText(0,4, _T("Размер"));
+	mGrid.SetItemText(0,5, _T("Артикул"));
+	mGrid.SetItemText(0,6, _T("Производитель"));
+	mGrid.SetItemText(0,7, _T("Еденица"));
+	mGrid.SetItemText(0,8, _T("Кол-во"));
+	mGrid.SetItemText(0,9, _T("Масса"));
+	mGrid.SetItemText(0,10, _T("Примечание"));
+	
+	for (int i = 0; i < blckList.specList.length(); i++)
 	{
-		int num=i+1;
-		
-		CString anum;
-		anum.Format(L"%i", num);
 		blckList.specList[i].setParamChars();
-		mGrid.SetItemText(i+1,0,anum);
-		mGrid.SetItemText(i+1,1,blckList.specList[i].sPos);
-		mGrid.SetItemText(i+1,2,blckList.specList[i].sName);
-		mGrid.SetItemText(i+1,3,blckList.specList[i].sType);
-		mGrid.SetItemText(i+1,4,blckList.specList[i].sSize);
-		mGrid.SetItemText(i+1,5,blckList.specList[i].sArticle);
-		mGrid.SetItemText(i+1,6,blckList.specList[i].sManufacture);
-		mGrid.SetItemText(i+1,7,blckList.specList[i].sUnit);
-		mGrid.SetItemText(i+1,8,blckList.specList[i].param1char);
-		mGrid.SetItemText(i+1,9,blckList.specList[i].sMass);
+		ACHAR  num[20];
+		acdbRToS(i+1,2,0,num);
+		mGrid.SetItemText(i+1,0, num);
+		mGrid.SetItemText(i+1,1, blckList.specList[i].sPos);
+		mGrid.SetItemText(i+1,2, blckList.specList[i].sName);
+		mGrid.SetItemText(i+1,3, blckList.specList[i].sType);
+		mGrid.SetItemText(i+1,4, blckList.specList[i].sSize);
+		mGrid.SetItemText(i+1,5, blckList.specList[i].sArticle);
+		mGrid.SetItemText(i+1,6, blckList.specList[i].sManufacture);
+		mGrid.SetItemText(i+1,7, blckList.specList[i].sUnit);
+		mGrid.SetItemText(i+1,8, blckList.specList[i].sValue);
+		mGrid.SetItemText(i+1,9, blckList.specList[i].sMass);
 		mGrid.SetItemText(i+1,10,blckList.specList[i].sCommit);
+		mGrid.SetItemState(i+1,7, mGrid.GetItemState(i+1,7) | GVIS_READONLY);
+		mGrid.SetItemState(i+1,8, mGrid.GetItemState(i+1,8) | GVIS_READONLY);
+		
 	}
-	return;  // return TRUE  unless you set the focus to a control
+}
+
+
+void BLCKMNGRDLG::OnBnClickedOk()
+{
+	for (int i = 0; i < blckList.specList.length(); i++)
+	{
+
+		wcscpy_s(blckList.specList[i].sPos,mGrid.GetItemText(i+1,1));
+		wcscpy_s(blckList.specList[i].sName,mGrid.GetItemText(i+1,2));
+		wcscpy_s(blckList.specList[i].sType,mGrid.GetItemText(i+1,3));
+		wcscpy_s(blckList.specList[i].sSize,mGrid.GetItemText(i+1,4));
+		wcscpy_s(blckList.specList[i].sArticle,mGrid.GetItemText(i+1,5));
+		wcscpy_s(blckList.specList[i].sManufacture,mGrid.GetItemText(i+1,6));
+		wcscpy_s(blckList.specList[i].sMass,mGrid.GetItemText(i+1,9));
+		wcscpy_s(blckList.specList[i].sCommit,mGrid.GetItemText(i+1,10));
+
+	}
+	this->OnOK();
+	// TODO: добавьте свой код обработчика уведомлений
 }

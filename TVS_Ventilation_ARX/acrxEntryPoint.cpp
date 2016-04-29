@@ -6062,7 +6062,7 @@ public:
 
 
 
-		return static void();
+		return;
 	}
 
 	static void setZ()
@@ -6185,6 +6185,7 @@ public:
 							wcscpy_s(spec.d,d);
 							if(spec.addBlock(pEnt)==true)
 							{
+								//spec.entityList.append(pEnt);
 								specatrlist.append(spec);
 							}
 						}
@@ -6552,7 +6553,41 @@ public:
 		//delete pAttDef;
 	}
 
+	static void Ventilation_ARXTVS_BLCKMNGR(void)
+	{
 
+
+
+		if(ActivationErrorMessage()!=pError_Ok) return;
+		ads_name sset, eName;
+
+		if ( acedSSGet(_T(""), NULL, NULL, NULL, sset)!= RTNORM)
+			return;
+
+
+		//		SPEClist speclist, speclistflex;
+		SpecWithAttrlist specatrlist;
+		fillspecification(sset,specatrlist,L"%%d",L"%%c");
+
+
+		if (specatrlist.specList.physicalLength()!=0)
+		{
+			//speclist.print();
+
+			CAcModuleResourceOverride resourceOverride;
+			BLCKMNGRDLG dlg;
+			dlg.blckList=specatrlist;
+			INT_PTR nRet = -1;
+			nRet=dlg.DoModal();
+			if(nRet!=IDOK) return;
+			SpecWithAttrlist specatrlistnew=dlg.blckList;
+			for (int i = 0; i < specatrlist.specList.length(); i++)
+			{
+				if(specatrlist.checkRelevations(specatrlist.specList[i],specatrlistnew.specList[i])!=Equal) specatrlistnew.specList[i].setAtribListToEnt();
+
+			}
+		}
+	}
 
 	static void Ventilation_ARXTVS_TEST(void)
 	{
@@ -6578,7 +6613,15 @@ public:
 			CAcModuleResourceOverride resourceOverride;
 			BLCKMNGRDLG dlg;
 			dlg.blckList=specatrlist;
-			dlg.DoModal();
+			INT_PTR nRet = -1;
+			nRet=dlg.DoModal();
+			if(nRet!=IDOK) return;
+			SpecWithAttrlist specatrlistnew=dlg.blckList;
+			for (int i = 0; i < specatrlist.specList.length(); i++)
+			{
+				if(specatrlist.checkRelevations(specatrlist.specList[i],specatrlistnew.specList[i])!=Equal) specatrlistnew.specList[i].setAtribListToEnt();
+
+			}
 		}
 
 
@@ -6956,6 +6999,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DUCT, TVS_DUCT, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_1D2D, TVS_1D2D, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SPEC, TVS_SPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_BLCKMNGR, TVS_BLCKMNGR, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_EXCELSPEC, TVS_EXCELSPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Specification, TVS_Specification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
