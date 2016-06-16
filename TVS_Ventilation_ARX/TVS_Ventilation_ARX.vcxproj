@@ -64,11 +64,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(ProjectDir)..\..\codegenerator\TVSPL;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x86-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\..\OpenSSL-Win32\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x86-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\..\OpenSSL-Win32\;$(ProjectDir)..\..\OpenSSL-Win32\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x86-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win64\include;$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
-    <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(ProjectDir)..\..\OpenSSL-Win64\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\..\OpenSSL-Win64\;$(ProjectDir)..\..\codegenerator\TVSPL;$(ProjectDir)..\..\OpenSSL-Win64\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -103,12 +103,16 @@
     </Link>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;ssleay32.lib;libcurl_a.lib;libeay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DelayLoadDLLs>
+      <EmbedManagedResourceFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libeay32.dll;ssleay32.dll;</EmbedManagedResourceFile>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;$(SolutionDir)..\codegenerator\$(IntDir)TVSPL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">libeay32.dll;ssleay32.dll;</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -197,6 +201,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\OpenSSL-Win64\libeay32.dll" />
+    <None Include="..\..\OpenSSL-Win64\ssleay32.dll" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

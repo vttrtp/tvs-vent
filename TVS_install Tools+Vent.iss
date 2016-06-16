@@ -36,6 +36,7 @@ Source: "{#SourcePath}\TVS\PackageContents.xml"; DestDir: "{app}\";  Flags: igno
 Source: "{#SourcePath}\TVS\Resources\*"; DestDir: "{app}\Contents\Resources";  Flags: ignoreversion  recursesubdirs
 Source: "{#SourcePath}\x64\Release\TVSTVS_Ventilation_ARX.arx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2015-2016\win64"; Flags: ignoreversion
 Source: "{#SourcePath}\x64\Release\TVSTVS_Ventilation_DBX.dbx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2015-2016\win64"; Flags: ignoreversion
+Source: "{#SourcePath}\TVS\x64\*"; DestDir: "{app}\Contents\TVS_VENT\2015-2016\win64"; Flags: ignoreversion
 Source: "{#SourcePath}\TVS\TVS_VENT\*"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\Resources"; Flags: ignoreversion recursesubdirs
 Source: "{#SourcePath}\TVS\TVS_TOOLS\*"; Components: TVS_TOOLS; DestDir: "{app}\Contents\TVS_TOOLS\Resources"; Flags: ignoreversion recursesubdirs 
 
@@ -43,6 +44,7 @@ Source: "{#SourcePath}\TVS\TVS_TOOLS\*"; Components: TVS_TOOLS; DestDir: "{app}\
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
+Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 
 [Types]
