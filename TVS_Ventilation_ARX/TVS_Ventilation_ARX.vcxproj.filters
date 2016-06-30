@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Protect">
+      <UniqueIdentifier>{56d7092c-4da1-4b1d-a6e8-19b0fd5c3c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protect\Файлы исходного кода">
+      <UniqueIdentifier>{1596895f-5f4d-48c7-8bdd-20f02fde9165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protect\Заголовочные файлы">
+      <UniqueIdentifier>{63fb9e37-75ff-4029-bd5d-8f814b37fc61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grid">
+      <UniqueIdentifier>{590ddde4-bb6e-4ca7-a95b-8bd640f33d58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -46,6 +58,72 @@
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="hangeZdg.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="GripPoints.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="OLEMethod.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="MSExcel.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatFloor.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\diskid.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\RsaGeneration.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\Regedit.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\jsoncpp.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\httpRequest.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\codegenerator\TVSPL\Protection.cpp">
+      <Filter>Protect\Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellCheck.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellCombo.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellDateTime.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellNumeric.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridURLCell.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCell.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCellBase.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCtrl.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridDropTarget.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\TitleTip.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="BLCKMNGRDLG.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,6 +161,84 @@
     <ClInclude Include="hangeZdg.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="GripPoints.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Office.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="OLEMethod.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="MSExcel.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatFloor.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\diskid.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\RsaGeneration.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\Regedit.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\json.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\httpRequest.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\Protection.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\codegenerator\TVSPL\HeaderGen.h">
+      <Filter>Protect\Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellCheck.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellCombo.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellDateTime.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellNumeric.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridURLCell.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\CellRange.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCell.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCellBase.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCtrl.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridDropTarget.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\MemDC.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\TitleTip.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="BLCKMNGRDLG.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TVS_Ventilation_ARX.rc">
@@ -91,5 +247,14 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="..\..\OpenSSL-Win64\libeay32.dll">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="..\..\OpenSSL-Win64\ssleay32.dll">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
   </ItemGroup>
 </Project>

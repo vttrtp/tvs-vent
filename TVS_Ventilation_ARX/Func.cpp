@@ -1,7 +1,6 @@
-
+#pragma once;
 #include "StdAfx.h"
 #include "Func.h"
-
 
 
 
@@ -1093,7 +1092,18 @@ void func::Change (ads_name &sset)
 
 
 
+bool vWipeoutLength=false;
+bool fWipeoutLength=true;
+double WipeoutLength=0;
+CString  sWipeoutLength;
 
+
+bool vDuctFlex=false;
+bool fDuctFlex=true;
+bool DuctFlex=0;
+BOOL  sDuctFlex;
+
+TVS_Entity* tvsEnt;
 
 
 acedSSLength(sset, &len);
@@ -1115,7 +1125,16 @@ acedSSLength(sset, &len);
 				{
 
 
+					if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+					{	
 
+						
+
+						rprov(vWipeoutLength,fWipeoutLength,tvsEnt->WipeoutLength,WipeoutLength);
+					rprov(vDuctFlex,fDuctFlex,tvsEnt->isDuctFlex(),DuctFlex);
+
+
+					}
 
 					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
 					{	
@@ -1200,7 +1219,7 @@ acedSSLength(sset, &len);
 
 
 
-
+	dgAllEdit dg;
 
 
 
@@ -1235,7 +1254,7 @@ acedSSLength(sset, &len);
 
 
 
-	dgAllEdit dg;
+	
 	dg.SizeA=sSizeA;
 	dg.SizeB=sSizeB;
 	dg.SizeA2=sSizeA2;
@@ -1261,6 +1280,12 @@ acedSSLength(sset, &len);
 	dg.TapRadiusConst=sTapRadiusConst;
 	dg.Swectangle=sSwectangle;
 
+
+	strfil(WipeoutLength,vWipeoutLength,sWipeoutLength);
+	dg.WipeoutLength=sWipeoutLength;
+
+		strfil(DuctFlex,vDuctFlex,sDuctFlex);
+	dg.DuctFlex=sDuctFlex;
 
 	if (firstPipe==false
 		&&firstTap==false
@@ -1320,6 +1345,12 @@ acedSSLength(sset, &len);
 	sequal(TapRadiusConst,sTapRadiusConst,dg.TapRadiusConst,cTapRadiusConst);
 	sequal(Swectangle,sSwectangle,dg.Swectangle,cSwectangle);
 
+
+	bool cWipeoutLength=true;
+	sequal(WipeoutLength,sWipeoutLength,dg.WipeoutLength,cWipeoutLength);
+
+	bool cDuctFlex=true;
+	sequal(DuctFlex,sDuctFlex,dg.DuctFlex,cDuctFlex);
 	///определение выравнивания
 	int Emode=0;//по центру
 	if (dg.ElevUp==1)//по верху
@@ -1353,7 +1384,16 @@ acedSSLength(sset, &len);
 
 
 
+					if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+					{	
 
+
+
+						if (cWipeoutLength==false) tvsEnt->put_WipeoutLength(WipeoutLength);
+							if (cDuctFlex==false) tvsEnt->setFlex(DuctFlex);
+
+
+					}
 
 
 					if ( (Pipi = TVS_Pipe::cast(pEnt)) != NULL )
@@ -1573,9 +1613,29 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
+	bool vWipeoutLength=false;
+	bool fWipeoutLength=true;
+	double WipeoutLength=0;
+	CString  sWipeoutLength;
+
+
+	bool vDuctFlex=false;
+	bool fDuctFlex=true;
+	bool DuctFlex=0;
+	BOOL  sDuctFlex;
+
+	TVS_Entity* tvsEnt;
+
+	if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+	{	
 
 
 
+		rprov(vWipeoutLength,fWipeoutLength,tvsEnt->WipeoutLength,WipeoutLength);
+
+		rprov(vDuctFlex,fDuctFlex,tvsEnt->isDuctFlex(),DuctFlex);
+
+	}
 
 
 
@@ -1660,7 +1720,7 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
-
+	dgAllEdit dg;
 
 
 	strfil(SizeA,vSizeA,sSizeA);
@@ -1694,7 +1754,7 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
-	dgAllEdit dg;
+	
 	dg.SizeA=sSizeA;
 	dg.SizeB=sSizeB;
 	dg.SizeA2=sSizeA2;
@@ -1720,6 +1780,11 @@ void func::Change (AcDbEntity *pEnt)
 	dg.TapRadiusConst=sTapRadiusConst;
 	dg.Swectangle=sSwectangle;
 
+	strfil(WipeoutLength,vWipeoutLength,sWipeoutLength);
+	dg.WipeoutLength=sWipeoutLength;
+
+	strfil(DuctFlex,vDuctFlex,sDuctFlex);
+	dg.DuctFlex=sDuctFlex;
 
 	if (firstPipe==false
 		&&firstTap==false
@@ -1793,12 +1858,28 @@ void func::Change (AcDbEntity *pEnt)
 
 
 
+	bool cWipeoutLength=true;
+	sequal(WipeoutLength,sWipeoutLength,dg.WipeoutLength,cWipeoutLength);
+
+	bool cDuctFlex=true;
+	sequal(DuctFlex,sDuctFlex,dg.DuctFlex,cDuctFlex);
+
+
 	if(pEnt->upgradeOpen()==Acad::eOk)
 	{
 
 
 
+		if ( (tvsEnt = TVS_Entity::cast(pEnt)) != NULL )
+		{	
 
+
+
+			if (cWipeoutLength==false) tvsEnt->put_WipeoutLength(WipeoutLength);
+
+			if (cDuctFlex==false) tvsEnt->setFlex(DuctFlex);
+
+		}
 
 
 
@@ -2340,7 +2421,7 @@ void func::rprov (bool &variableconst,
 
 void func::rprov (bool &variableconst, 
 				  bool &firstvariable,
-				  bool &objectvar,
+				  const bool  &objectvar,
 				  bool &myvar)
 
 {
@@ -2360,6 +2441,14 @@ void func::rprov (bool &variableconst,
 
 }
 
+void func::getdouble( CString &svar, double dvar )
+{
+	svar.Format(L"%.2f", dvar);
+}
+void func::getint( CString &svar, int dvar )
+{
+	svar.Format(L"%d", dvar);
+}
 
 void func::strfil (double &myvar,
 				   bool &variableconst,
@@ -2368,8 +2457,22 @@ void func::strfil (double &myvar,
 {
 	if (variableconst==true)
 		stringconst=CString("Разные");
-	else stringconst.Format(L"%g", myvar);
-
+	else 
+	{
+		double pnum=myvar;
+		CString stringvar;
+		getdouble(stringvar,pnum);
+		 int y = (int)pnum;
+		if ((pnum-y)==0)
+		{
+			getint(stringconst,myvar);
+			double g =1;
+		
+		}
+		else stringconst.Format(L"%.2f\n", myvar);
+	}
+		
+	double g =1;
 }
 
 void func::strfil (int &myvar,
@@ -2414,7 +2517,7 @@ void func::sequal(double &var,
 	double dbl=atof(ch);
 
 
-
+	delete[] ch;
 
 
 	if (Svar1==Svar2)
@@ -2452,7 +2555,7 @@ void func::sequal(int &var,
 	int dbl=atoi(ch);
 
 
-
+	delete[] ch;
 
 
 	if (Svar1==Svar2)
@@ -2715,6 +2818,8 @@ TVS_TAP* func::drawTapDirect(AcGePoint3d t1, AcGePoint3d t2, AcGePoint3d t3)
 
 
 
+
+
 void func::GiveStartvectorAndAngle (AcGePoint3d &n1,
 									AcGePoint3d &n2,
 									AcGePoint3d &n3,
@@ -2870,4 +2975,50 @@ int func::whyIsGrose( TVS_Entity* pEnt1,TVS_Entity* pEnt2 )
 		}
 	}
 
+}
+
+void func::drawEntity( AcDbEntity *pEnt )
+{
+	pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
+
+	AcDbBlockTable *pBlockTable;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
+		AcDb::kForRead);
+
+	AcDbBlockTableRecord *pBlockTableRecord;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,AcDb::kForWrite);
+	pBlockTable->close();
+
+	AcDbObjectId retId = AcDbObjectId::kNull;
+	pBlockTableRecord->appendAcDbEntity(retId, pEnt);
+	pBlockTableRecord->close();
+	pEnt->close();
+	//return pEnt;
+}
+
+int func::ActivationErrorMessage()
+{
+	int err;
+	int start=GetTickCount();
+	err=protection::licenseCheck();
+	int endf=GetTickCount();
+	int delta=endf-start;
+	//acutPrintf(L"\nStart: %d\nEnd: %d",start,endf);
+	acutPrintf(L"\nRun time: %d",delta);
+	if(err!=pError_Ok)
+	{
+		string errstr;
+		errstr=protection::getErrorCode(err);
+		CString err_list(errstr.c_str());
+
+
+		MessageBox(NULL, conversion::charToWchar(errstr.c_str()),L"Лицензия недействительна", MB_ICONERROR |MB_OK);
+	
+
+		return err;
+	}
+	else
+	{
+		return pError_Ok;
+	}
 }

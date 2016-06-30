@@ -1,15 +1,31 @@
-#pragma once
+﻿#pragma once
 #include "Resource.h"
 #include "dbmain.h"
 #include "rxmfcapi.h"
 #include <vector>
 using namespace std;
 #include "StdAfx.h"
+#include "Func.h"
 #include "../TVS_Ventilation_DBX/TVS_Entity.h"
 #include "../TVS_Ventilation_DBX/TVS_Tap.h"
 #include "../TVS_Ventilation_DBX/TVS_Pipe.h"
 #include "../TVS_Ventilation_DBX/TVS_Wye.h"
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
+#include "MSExcel.h"
+
+#define TagPos _T("ПОЗИЦИЯ")
+#define TagName _T("ИМЯ")
+#define TagType _T("ТИП")
+#define TagSize _T("РАЗМЕР")
+#define TagArticle _T("АРТИКУЛ")
+#define TagManufacture _T("ПРОИЗВОДИТЕЛЬ")
+#define TagMass _T("МАССА")
+#define TagCommit _T("ПРИМЕЧАНИЕ")
+
+#define Less 0
+#define Equal 1
+#define Larger 2
+
 class SPEC
 {
 private: 
@@ -17,6 +33,8 @@ private:
 	ACHAR achartype[512];
 
 public:
+		ACHAR d[512];
+			ACHAR grad[512];
 	SPEC(void);
 	~SPEC(void);
 ACHAR name[512];
@@ -51,7 +69,17 @@ double pLength,
 double pSwectangle=0,
 double pSizeA2=0,
 double pSizeA3=0
+
+
+
+
+
 );
+
+
+
+
+
 bool add (AcDbEntity * pEnt);
 void setName (const ACHAR * pName);
 void setLable (const ACHAR * pAchar);
@@ -62,11 +90,31 @@ void setUnit1 (const ACHAR * pAchar);
 void setUnit2 (const ACHAR * pAchar);
 int toInt(const ACHAR * pAchar);
 void printResult ();
+void printResultChar ();
 const ACHAR * toChar(double val);
 void setParamChars();
 double sCircle(double diam);
 double lCircle(double diam);
 
+
+bool GetAtt(AcDbEntity* pEnt, ACHAR* tag, ACHAR *pVal);
+ACHAR sPos[512];
+ACHAR sName[512];
+ACHAR sTypeSize[512];
+ACHAR sType[512];
+ACHAR sSize[512];
+ACHAR sArticle[512];
+ACHAR sManufacture[512];
+ACHAR sUnit[512];
+ACHAR sValue[512];
+ACHAR sMass[512];
+ACHAR sCommit[512];
+AcDbEntity* sEnt;
+AcArray <AcDbEntity*> entityList;
+bool addBlock(AcDbEntity * pEnt);
+bool setAtribToEnt(AcDbEntity* pEnt, ACHAR* tag, ACHAR *pVal);
+bool setAtribListToEnt();
+static bool getBlockName(AcDbEntity* pEnt , ACHAR *pName);
 };
 
 class SPEClist
@@ -77,13 +125,31 @@ class SPEClist
 		AcArray <SPEC> specList;
 		void append (SPEC line);
 		int length;
-		int checkRelevations(SPEC param1, SPEC param2);
+		virtual int checkRelevations(SPEC param1, SPEC param2);
+
 		void print();
 		
-		void printSPDSForm(AcGePoint3d cent);
-		void printText(AcGePoint3d cent, const ACHAR * pAchar);
+		virtual void printSPDSForm(AcGePoint3d &cent);
+		virtual void printText(AcGePoint3d cent, const ACHAR * pAchar);
 	static	void printLine(AcGePoint3d start, AcGePoint3d end);
+	virtual bool printToExel(CMSExcel* m_msExcel,long &idx);
+	
 };
+
+class SpecWithAttrlist : public SPEClist
+{
+public:
+	SpecWithAttrlist(void);
+	~SpecWithAttrlist(void);
+/*void append (SPEC line);*/
+int checkRelevations(SPEC param1, SPEC param2); //First vs two
+int checkCharRelevations(ACHAR * param1, ACHAR * param2);
+void printSPDSForm(AcGePoint3d &cent);
+bool printToExel(CMSExcel* m_msExcel,long &idx);
+void print();
+};
+
+
 
 // class TVSForm
 // {

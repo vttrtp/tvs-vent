@@ -39,8 +39,8 @@
 
 #define TypeRoundTap_TapSection 1
 #define TypeRoundTap_TapRound 2
-
-
+#define DuctTypeStill 0
+#define DuctTypeFlex 1
 #define Form_Direct 1
 #define Form_Up 2
 #define Form_Down 3
@@ -59,6 +59,7 @@
 #define IDC_LengthWye 1016
 #define IDC_TransLength 1023
 #define IDC_Wipeout 1020
+#define IDC_WipeoutLength 10020
 #define IDC_Grani 1021
 #define IDC_1D 1022
 #define IDC_ElevVal 1014
@@ -77,6 +78,7 @@
 #define IDC_TapMid 1035
 #define IDC_TapDown 1030
 #define IDC_Swectangle 1013
+#define IDC_DuctFlex 1041
 
 //-----------------------------------------------------------------------------
 class dgAllEdit : public CAdUiBaseDialog {
@@ -108,7 +110,7 @@ public:
 	CEdit fTapRadiusConst;
 	CEdit fSwectangle;
 
-	CButton fWipeout;;
+	CButton fWipeout;
 	CButton fGrani;
 	CButton fD1;
 	CButton fElevUp;
@@ -184,13 +186,25 @@ CButton fTapDown;
 	BOOL bD1;
 
 
+	///wipeoutlength
+	CEdit fWipeoutLength;
+	CString WipeoutLength;
+	BOOL bWipeoutLength;
+	
+
+	CButton fDuctFlex;
+	BOOL DuctFlex;
+	BOOL bDuctFlex;
+
+	//////////////////////////////////////////////////////////////////////////
+
 	bool Tpipe;
 	bool Twye;
 	bool Ttrans;
 	bool Ttap;
 	int won, woff,gon,goff,d1on,d1off;
 
-
+	
 	int iTapForm;
 	int iTypeRoundTap;
 	int iRadiusTypeRound;
@@ -215,7 +229,7 @@ CButton fTapDown;
 	afx_msg void ChangeWipe();
 	afx_msg void ChangeGrani();
 	afx_msg void ChangeD1();
-
+		
 	afx_msg void SetForm_Up();
 	afx_msg void SetForm_Down();
 	afx_msg void SetFForm_Direct();
@@ -229,8 +243,9 @@ CButton fTapDown;
 	afx_msg void SetRadiusTypeRect_RadiusVariable();
 
 		
-	
+	afx_msg void ChangeDuctFlex();
 
 	
 	afx_msg void OnBnClickedOk();
+
 } ;

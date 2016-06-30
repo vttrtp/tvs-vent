@@ -39,7 +39,7 @@
 #ifdef _DEBUG_WAS_DEFINED
 #define _DEBUG
 #endif
-#include "stdafx.h"
+
 #include <dbents.h>
 #include <dbsymtb.h>
 #include <adslib.h>
@@ -71,6 +71,9 @@ typedef std::map<AcDbGripOperations::GripStatus,const TCHAR*>::value_type GripSt
 typedef  std::vector<TSTDSTRING>  appDataType;
 
 
+static bool isOperationActive();
+static int myCallbackFn(void * pData);
+static void MyGroupTesta(void);
 Acad::ErrorStatus 
 getCurrentEntity(AcDbEntity *&pEntity);
 
@@ -79,9 +82,25 @@ getCurrentEntity(AcDbEntity *&pEntity);
 // Grip Call back functions
 //
 //========================================================================
+
+
+
 namespace GripCback
 {
-
+		
+// 	static int gripNumber;
+// 			
+// 	static AcDbObjectId entId;
+// 
+// 	static void GetParamsForDraw(AcDbObjectId &pEntId, int &pGripNumber)
+// 	{
+// 
+// 			pEntId=entId;
+// 			pGripNumber=gripNumber;
+// 			
+// 		
+// 	};
+	void SetParamsForDraw(AcDbObjectId pEntId, int pGripNumber);
 	AcDbGripOperations::ReturnValue
 	hotGripfunc(					AcDbGripData			*pthis,
 									const AcDbObjectId&		entId,

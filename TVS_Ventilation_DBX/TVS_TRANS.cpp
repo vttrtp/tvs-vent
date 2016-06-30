@@ -52,6 +52,25 @@ Acad::ErrorStatus TVS_TRANS::subGetClassID (CLSID *pClsid) const {
 
 	return (Acad::eOk) ;
 }
+
+void TVS_TRANS::setFlex( const bool &isFlex )
+{
+	assertWriteEnabled();
+	if (isFlex)
+	{
+		put_SizeB(0);
+	}
+
+}
+
+void TVS_TRANS::setDuctType( int pDuctType )
+{
+	if (pDuctType==DuctTypeFlex)
+	{
+		DuctType=DuctTypeStill;
+	}
+}
+
 //-----------------------------------------------------------------------------
 //----- AcDbObject protocols
 //- Dwg Filing protocol
@@ -84,8 +103,8 @@ Acad::ErrorStatus TVS_TRANS::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (Param) ;
 	pFiler->writeItem (IsPipe) ;
 	pFiler->writeItem (Form) ;
-	//pFiler->writeString (Tag1) ;
-	//pFiler->writeString (Tag2) ;
+	pFiler->writeItem (WipeoutLength) ;
+	pFiler->writeItem (DuctType) ;
 
 	return (pFiler->filerStatus ()) ;
 }
@@ -126,10 +145,10 @@ Acad::ErrorStatus TVS_TRANS::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Param) ;
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
-	//acutDelString(Tag1);
-	//acutDelString(Tag2);
-	//if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readString(&Tag1) ;
-	//if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readString(&Tag2) ;
+	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
+	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -203,6 +222,7 @@ void TVS_TRANS::unappended (const AcDbObject *pDbObj) {
 //----- AcDbEntity protocols
 Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 	assertReadEnabled () ;
+	ClearEntitylist();
 	bool tt=false;
 	AcGeVector3d vec=AcGeVector3d(VectTr.y,-VectTr.x,VectTr.z);
 	vec.normalize();
@@ -244,15 +264,12 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 			FirstPoint.y+VectTr.y,
 			FirstPoint.z);
 	}
-	AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
-	AcDbLinetypeTable *pLtTable;
-	AcDbObjectId ltId;
+
 
 
 	if (Wipeout==true) //wipe
 	{
-		AcCmColor backcolor;
-		get_WipeoutColor(mode,backcolor);
+		
 
 
 
@@ -269,17 +286,11 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 
 
 
+		
 
-		pLn->addVertexAt(0,p[0],0,SizeAp1+200,SizeAp2+200);
+		setWipeoutProperty(mode,pLn);
+		pLn->addVertexAt(0,p[0],0,SizeAp1+WipeoutLength*2,SizeAp2+WipeoutLength*2);
 		pLn->addVertexAt(1,p[1]);
-
-		pLn->setColor(backcolor);
-
-		mode->geometry().draw(pLn);	
-		delete pLn;
-		AcCmEntityColor col;
-		col=color().entityColor();
-		mode->subEntityTraits().setTrueColor(col);
 
 	}//wipe
 
@@ -301,43 +312,50 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 		mass[1]=B;
 		mass[2]=C;
 		mass[3]=D;
-		mode->geometry().polygon(4,mass);
+		AcDbPolyline*pl2=new AcDbPolyline;
+		for (int i=0;i<4; i++)
+		{
+			pl2->addVertexAt(i,AcGePoint2d(mass[i].x,mass[i].y));
+		}
+		pl2->setClosed(true);
+		setMainProperty(pl2);
 
 
 		if ((ThisRoundp1==true)&&(ThisRoundp2==true))
 		{
-			////
-			pDb->getSymbolTable(pLtTable, AcDb::kForRead);
-			pLtTable->getAt(_T("tvs_centerline"), ltId);
-			mode->subEntityTraits().setLineType(ltId);
-			mode->subEntityTraits().setLineWeight(AcDb::LineWeight(15));
-			pLtTable->close();
-			///
-			AcGePoint3d L1[2];
-			L1[0]=FirstPoint;
-			L1[1]=LastPoint;
-			mode->geometry().polyline(2,L1);
+		
+			AcDbLine*pl1=new AcDbLine(FirstPoint,LastPoint);
+			setCenterProperty(pl1);
 		}
 
 		if ((ThisRoundp1==true)&&(ThisRoundp2==false))
 
 		{
-
+			AcDbPolyline*pl2=new AcDbPolyline;
+		
 			AcGePoint3d mass3[3];
 			mass3[0]=B;
 			mass3[1]=FirstPoint;
 			mass3[2]=C;
-			mode->subEntityTraits().setLineWeight(AcDb::LineWeight(15));
-			mode->geometry().polyline(3,mass3);
+			for (int i=0;i<3; i++)
+			{
+			pl2->addVertexAt(i,AcGePoint2d(mass3[i].x,mass3[i].y));
+			}
+		
+	setThinProperty(pl2);
 		}
 		if ((ThisRoundp1==false)&&(ThisRoundp2==true))
 		{
+			AcDbPolyline*pl2=new AcDbPolyline;
 			AcGePoint3d mass4[3];
 			mass4[0]=A;
 			mass4[1]=LastPoint;
 			mass4[2]=D;
-			mode->subEntityTraits().setLineWeight(AcDb::LineWeight(15));
-			mode->geometry().polyline(3,mass4);
+			for (int i=0;i<3; i++)
+			{
+				pl2->addVertexAt(i,AcGePoint2d(mass4[i].x,mass4[i].y));
+			}
+			setThinProperty(pl2);
 		}
 
 	} 
@@ -376,14 +394,20 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 			AcGePoint3d pD =AcGePoint3d(FirstPoint.x+LengthTr,
 				FirstPoint.y,
 				FirstPoint.z).rotateBy(startangle,AcGeVector3d(0,0,1),FirstPoint);
-
+		
 			AcGePoint3d mass5[5];
 			mass5[0]=pB;
 			mass5[1]=pC;
 			mass5[2]=pA;
 			mass5[3]=pB;
 			mass5[4]=pD;
-			mode->geometry().polygon(5,mass5);
+			AcDbPolyline*pl2=new AcDbPolyline;
+			for (int i=0;i<5; i++)
+			{
+				pl2->addVertexAt(i,AcGePoint2d(mass5[i].x,mass5[i].y));
+			}
+			setMainProperty(pl2);
+
 
 		}
 
@@ -410,7 +434,12 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 			mass5[2]=pA;
 			mass5[3]=pB;
 			mass5[4]=pD;
-			mode->geometry().polygon(5,mass5);
+			AcDbPolyline*pl2=new AcDbPolyline;
+			for (int i=0;i<5; i++)
+			{
+				pl2->addVertexAt(i,AcGePoint2d(mass5[i].x,mass5[i].y));
+			}
+			setMainProperty(pl2);
 
 		}
 	}
@@ -418,10 +447,16 @@ Adesk::Boolean TVS_TRANS::subWorldDraw (AcGiWorldDraw *mode) {
 
 
 
+	for each (AcDbEntity * var in ListOfWipeout)
+	{
+		mode->geometry().draw(var);
+	}
 
 
-
-
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+		mode->geometry().draw(var);
+	}
 
 	return Adesk::kTrue;
 }
@@ -443,26 +478,37 @@ Acad::ErrorStatus TVS_TRANS::subGetOsnapPoints (
 	AcDbIntArray &geomIds) const
 {
 	assertReadEnabled () ;
-	AcGeLine3d line1,line2;
-	line1.set(B,C); 
-	line2.set(D,A); 
-	switch (osnapMode) {
+// 	AcGeLine3d line1,line2;
+// 	line1.set(B,C); 
+// 	line2.set(D,A); 
+// 	switch (osnapMode) {
+// 
+// 	case AcDb::kOsModeEnd:
+// 		snapPoints.append(FirstPoint);
+// 		snapPoints.append(A);
+// 		snapPoints.append(B);
+// 		snapPoints.append(LastPoint);
+// 		snapPoints.append(C);
+// 		snapPoints.append(D);
+// 
+// 		break;
+// 
+// 	case AcDb::kOsModePerp: 
+// 
+// 		snapPoints.append(line1.closestPointTo(lastPoint));
+// 		snapPoints.append(line2.closestPointTo(lastPoint));
+// 		break;
+// 	}
 
-	case AcDb::kOsModeEnd:
-		snapPoints.append(FirstPoint);
-		snapPoints.append(A);
-		snapPoints.append(B);
-		snapPoints.append(LastPoint);
-		snapPoints.append(C);
-		snapPoints.append(D);
 
-		break;
+	Acad::ErrorStatus er;
+	for each (AcDbEntity * var in ListOfEntity)
+	{
 
-	case AcDb::kOsModePerp: 
-
-		snapPoints.append(line1.closestPointTo(lastPoint));
-		snapPoints.append(line2.closestPointTo(lastPoint));
-		break;
+		er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+			lastPoint,viewXform,snapPoints,geomIds);
+		if (er!=Acad::eOk)
+			return er;
 	}
 	return (Acad::eOk);
 }
@@ -941,7 +987,7 @@ TVS_TRANS *TVS_TRANS::add_new(
 	pEnt->Param=0;
 	pEnt->IsPipe=false;
 	pEnt->Form=0;
-
+	pEnt->setNewParameters();
 	AcDbBlockTable *pBlockTable;
 	pEnt->setLinetypeScale(acdbHostApplicationServices()->workingDatabase()->celtscale());
 	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,

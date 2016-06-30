@@ -58,7 +58,7 @@ BEGIN_MESSAGE_MAP(PipeSizeDiallog, CAdUiBaseDialog)
 	ON_BN_CLICKED(IDC_TapRadiusRectConst, &PipeSizeDiallog::SetRadiusTypeRect_RadiusConstant)
 	ON_BN_CLICKED(IDC_TapRadiusRectVariable, &PipeSizeDiallog::SetRadiusTypeRect_RadiusVariable)
 
-
+	ON_BN_CLICKED(IDC_DuctFlex, &PipeSizeDiallog::ChangeDuctFlex)
 	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
@@ -143,6 +143,14 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 	DDX_Check(pDX, IDC_TapRadiusRoundVariable, TapRadiusRoundVariable);
 	DDX_Check(pDX, IDC_TapRadiusRoundConst, TapRadiusRoundConst);
 	DDX_Check(pDX, IDC_TapRadiusRoundSpecific, TapRadiusRoundSpecific);
+
+
+	DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
+	DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
+
+
+	DDX_Control(pDX, IDC_DuctFlex, fDuctFlex);
+	DDX_Check(pDX, IDC_DuctFlex, DuctFlex);
 	//DDX_Check(pDX, IDC_TapUp, TapUp);
 	//DDX_Check(pDX, IDC_TapMid, TapMid);
 	//DDX_Check(pDX, IDC_TapDown, TapDown);
@@ -152,6 +160,7 @@ void PipeSizeDiallog::DoDataExchange (CDataExchange *pDX) {
 //----- Needed for modeless dialogs to keep focus.
 //----- Return FALSE to not keep the focus, return TRUE to keep the focus
 LRESULT PipeSizeDiallog::OnAcadKeepFocus (WPARAM, LPARAM) {
+
 	return (TRUE) ;
 }
 
@@ -398,7 +407,9 @@ void PipeSizeDiallog::OnShowWindow(BOOL bShow, UINT nStatus)
 	CAdUiBaseDialog::OnShowWindow(bShow, nStatus);
 
 
-	
+	fSizeA.SetFocus();
+
+	SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
 
 
 	
@@ -456,3 +467,9 @@ void PipeSizeDiallog::OnShowWindow(BOOL bShow, UINT nStatus)
 	// TODO: добавьте свой код обработчика сообщений
 }
 
+void PipeSizeDiallog::ChangeDuctFlex()
+{
+	//change_BOOL(iDuctFlex,fDuctFlex);
+
+	change_BOOL(DuctFlex,fDuctFlex);
+}

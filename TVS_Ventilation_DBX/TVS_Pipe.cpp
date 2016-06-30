@@ -25,6 +25,7 @@
 #include "StdAfx.h"
 #include "TVS_Pipe.h"
 #include "TVS_Ventilation_DBX_i.h"
+
 //-----------------------------------------------------------------------------
 Adesk::UInt32 TVS_Pipe::kCurrentVersionNumber =TVS_Version ;
 
@@ -39,11 +40,33 @@ TVSTVS_VENTILATION_DBXAPP
 |WEB Address:      Your company WEB site address
 )
 
+
+
+appDataType TVS_Pipe::msAppData;
+bool		TVS_Pipe::mbHover;
+AcDbObjectId TVS_Pipe::mentId;
+
+
+
 //-----------------------------------------------------------------------------
 TVS_Pipe::TVS_Pipe () : TVS_Entity () {
 }
 
 TVS_Pipe::~TVS_Pipe () {
+}
+
+int TVS_Pipe::gripNumber;
+AcDbObjectId TVS_Pipe::entId;
+
+void TVS_Pipe::GetParamsForDraw( AcDbObjectId &pEntId, int &pGripNumber )
+{
+	
+
+		pEntId=entId;
+ 		pGripNumber=gripNumber;
+
+
+	
 }
 
 //-----------------------------------------------------------------------------
@@ -76,8 +99,9 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (ElevDown) ;
 	pFiler->writeItem (IsPipe) ;
 	pFiler->writeItem (Form) ;
-	//pFiler->writeString (Tag1) ;
-	//pFiler->writeString (Tag2) ;
+	pFiler->writeItem (WipeoutLength) ;
+	pFiler->writeItem (DuctType) ;
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -115,10 +139,10 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 4 /*&& version <= endVersion*/ ) pFiler->readItem (&ElevDown) ;
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
-	//acutDelString(Tag1);
-	//acutDelString(Tag2);
-	//if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readString(&Tag1) ;
-	//if ( version >= 6 /*&& version <= endVersion*/ ) pFiler->readString(&Tag2) ;
+	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
+	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+	
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -218,6 +242,7 @@ Acad::ErrorStatus TVS_Pipe::subGetClassID (CLSID *pClsid) const {
 //----- AcDbEntity protocols
 Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 	assertReadEnabled () ;
+	ClearEntitylist();
 	Length=(sqrt((FirstPoint.x-LastPoint.x)*(FirstPoint.x-LastPoint.x)+
 		(FirstPoint.y-LastPoint.y)*
 		(FirstPoint.y-LastPoint.y)));
@@ -227,147 +252,49 @@ Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 	if (Wipeout==true)
 	{
 
-	 
-		AcCmColor backcolor;
-	get_WipeoutColor(mode,backcolor);
-
-		
-
 		AcGePoint2d p[2];
 		p[0]=AcGePoint2d(FirstPoint.x,FirstPoint.y);
 		p[1]=AcGePoint2d(LastPoint.x,LastPoint.y);
 
 
-		wPline=new AcDbPolyline(2);
+		AcDbPolyline*wPline=new AcDbPolyline(2);
 
 		wPline->addVertexAt(0,p[0]);
 		wPline->addVertexAt(1,p[1]);
-		wPline->setColor(backcolor);
-		if (This1D==false) wPline->setConstantWidth(SizeA+200);
-		else wPline->setConstantWidth(200);
 
-
-		mode->geometry().draw(wPline);	
-		delete wPline;
-		AcCmEntityColor col;
-		col=color().entityColor();
-		mode->subEntityTraits().setTrueColor(col);
+setWipeoutProperty(mode,wPline);
 
 	}
 
 	if (This1D==false)
 	{
 
-
-		//if (ShowText==true)
-		//{
-		//
-		//	ACHAR buffer[25], buffer1[25], buffer2[25] ;
-		//	if (ThisRound==true)
-		//	{
-		//	
-		//	wcscpy_s(tSise,_T("%%C"));
-		//acdbRToS(SizeA,2,2,buffer);
-		//wcscat_s(tSise,buffer);
-		//}
-		//	else
-		//	{
-		//		acdbRToS(SizeA,2,2,tSise);
-		//		wcscat_s(tSise,_T("x"));
-		//		acdbRToS(SizeB,2,2,buffer);
-		//		wcscat_s(tSise,buffer);
-		//	}
-		//
-		//
-		//
-		//
-		//	AcDbDatabase *db=acdbHostApplicationServices()->workingDatabase();
-		//
-		//	AcDbObjectId tId=db->textstyle();
-		//	///
-		//	AcDbText *text1 = new AcDbText (FirstPoint, tSise,tId,SizeA/2,0 );
-		//
-		//	
-		//	//
-		//	text1->worldDraw(mode);
-		//}
-
-
 		Gimme4PipePoints();
 
 		if (Grani==true)
 		{
-			AcGePoint2d garray[4];
-			garray[0]=AcGePoint2d(A.x,A.y);
-			garray[1]=AcGePoint2d(B.x,B.y);
-			garray[2]=AcGePoint2d(C.x,C.y);
-			garray[3]=AcGePoint2d(D.x,D.y);
-
-			gPline=new AcDbPolyline(4);
-			for (int i=0;i<4; i++)
-			{
-				gPline->addVertexAt(i,garray[i]);
-			}
-
-			gPline->setLineWeight(this->lineWeight());
-			gPline->setLinetypeScale(this->linetypeScale());
-			gPline->setLayer(this->layerId());
-			gPline->setColor(this->color());
-			gPline->setClosed(true);
-			gPline->setLinetype(this->linetypeId());
-
-
-			mode->geometry().draw(gPline);
-
-
-			delete gPline;
+			AcDbLine	*Line1 = new AcDbLine(A,D);
+			AcDbLine	*Line2 = new AcDbLine(B,C);
+			setMainProperty(Line1); setMainProperty(Line2);
 		}
-		else
+	
 
+		
+		AcDbLine	*Line1 = new AcDbLine(A,B);
+		AcDbLine	*Line2 = new AcDbLine(D,C);
+		if (DuctType==DuctTypeStill) {setMainProperty(Line1); setMainProperty(Line2);}
+		if (DuctType==DuctTypeFlex) {setZigzagProperty(Line1); setZigzagProperty(Line2);}
+		
 
-		{
-			Line1 = new AcDbLine(A,B);
-			Line2 = new AcDbLine(D,C);
-			Line1->setLineWeight(this->lineWeight());
-			Line1->setLinetypeScale(this->linetypeScale());
-			Line1->setLayer(this->layerId());
-			Line1->setColor(this->color());
-			Line1->setLinetype(this->linetypeId());
-
-			Line2->setLineWeight(this->lineWeight());
-			Line2->setLinetypeScale(this->linetypeScale());
-			Line2->setLayer(this->layerId());
-			Line2->setColor(this->color());
-			Line2->setLinetype(this->linetypeId());
-
-
-			mode->geometry().draw(Line1);
-			mode->geometry().draw(Line2);
-			delete Line1;
-			delete Line2;
-
-		}
+		
 
 
 		if (ThisRound==true)
 		{
 
-			cLine = new AcDbLine(FirstPoint,LastPoint);
-			AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
-			AcDbLinetypeTable *pLtTable;
-			AcDbObjectId ltId;
-			pDb->getSymbolTable(pLtTable, AcDb::kForRead);
-			pLtTable->getAt(_T("tvs_centerline"), ltId);
-			pLtTable->close();
-
-
-			cLine->setLineWeight(AcDb::LineWeight(15));
-			cLine->setLayer(this->layerId());
-			cLine->setLinetype(ltId);
-			cLine->setColor(this->color());
-
-			mode->geometry().draw(cLine);
-			delete cLine;
+			AcDbLine*cLine = new AcDbLine(FirstPoint,LastPoint);
+			setCenterProperty(cLine);
+			
 		}
 
 	}
@@ -378,14 +305,23 @@ Adesk::Boolean TVS_Pipe::subWorldDraw (AcGiWorldDraw *mode) {
 		AcGePoint3d L1[2];
 		L1[0]=FirstPoint;
 		L1[1]=LastPoint;
-		mode->geometry().polyline(2,L1);
+		AcDbLine * pLine=new AcDbLine(FirstPoint,LastPoint);
+		if (DuctType==DuctTypeStill) {setMainProperty(pLine); }
+		if (DuctType==DuctTypeFlex) {setZigzagProperty(pLine); }
+		
 	}
 
 
+	for each (AcDbEntity * var in ListOfWipeout)
+	{
+		mode->geometry().draw(var);
+	}
 
 
-
-
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+		mode->geometry().draw(var);
+	}
 
 
 	return Adesk::kTrue;
@@ -409,106 +345,130 @@ Acad::ErrorStatus TVS_Pipe::subGetOsnapPoints (
 {
 	assertReadEnabled () ;
 
-	AcGeLine3d line1, line2, line3; 
-	line1.set(A,B); 
-	line2.set(C,D); 
-	line3.set(FirstPoint,LastPoint); 
+// 	AcGeLine3d line1, line2, line3; 
+// 	line1.set(A,B); 
+// 	line2.set(C,D); 
+// 	line3.set(FirstPoint,LastPoint); 
+// 
+// 	switch (osnapMode) {
+// 
+// 	case AcDb::kOsModeEnd:
+// 		snapPoints.append(FirstPoint);
+// 		snapPoints.append(LastPoint);
+// 		if (This1D==false)
+// 		{
+// 
+// 			snapPoints.append(A);
+// 			snapPoints.append(B);
+// 			snapPoints.append(C);
+// 			snapPoints.append(D);
+// 		}
+// 		break;
+// 
+// 	case AcDb::kOsModeMid:
+// 		//	snapPoints.append(FirstPoint);
+// 
+// 		snapPoints.append(AcGePoint3d((FirstPoint.x+LastPoint.x)/2,
+// 			(FirstPoint.y+LastPoint.y)/2,
+// 			(FirstPoint.z+LastPoint.z)/2));
+// 		if (This1D==false)
+// 		{
+// 			snapPoints.append(AcGePoint3d((A.x+B.x)/2,
+// 				(A.y+B.y)/2,
+// 				(A.z+B.z)/2));
+// 			snapPoints.append(AcGePoint3d((C.x+D.x)/2,
+// 				(C.y+D.y)/2,
+// 				(C.z+D.z)/2));
+// 
+// 		}
+// 
+// 		break;
+// 		//case AcDb::kOsModeEnd: 
+// 		//	AcGeLine3d line1, line2; 
+// 		//	line1.set(A,B); 
+// 		//	line2.set(C,D); 
+// 		//	snapPoints.append(line1.closestPointTo(pickPoint)); 
+// 		//	snapPoints.append(line2.closestPointTo(pickPoint)); 
+// 		//	break; 
+// 
+// 	case AcDb::kOsModeNear: 
+// 		snapPoints.append(line3.closestPointTo(pickPoint));
+// 		if (This1D==false)
+// 		{
+// 			snapPoints.append(line1.closestPointTo(pickPoint)); 
+// 			snapPoints.append(line2.closestPointTo(pickPoint));
+// 
+// 		}
+// 		break; 
+// 
+// 	case AcDb::kOsModePerp: 
+// 
+// 		snapPoints.append(line3.closestPointTo(lastPoint));
+// 
+// 		if (This1D==false)
+// 		{
+// 			snapPoints.append(line1.closestPointTo(lastPoint));
+// 			snapPoints.append(line2.closestPointTo(lastPoint));
+// 		}
+// 		break; 
+// 
+// 		//case AcDb::kOsModeCen:
+// 		//snapPoints.append(AcGePoint3d(LastPoint.x+(FirstPoint.x-LastPoint.x)/2,
+// 		//	LastPoint.y+(FirstPoint.y-LastPoint.y)/2,0));
+// 
+// 		//snapPoints.append(A);
+// 		//snapPoints.append(B);
+// 		//snapPoints.append(C);
+// 		//snapPoints.append(D);
+// 
+// 		//break;
+// 		//case AcDb::kOsModeTan:
+// 		//snapPoints.append(FirstPoint);
+// 		//snapPoints.append(LastPoint);
+// 		//snapPoints.append(A);
+// 		//snapPoints.append(B);
+// 		//snapPoints.append(C);
+// 		//snapPoints.append(D);
+// 
+// 		//break;
+// 
+// 		//case AcDb::kOsModeMid:
+// 		//	snapPoints.append(m_PtA+((m_PtAB-m_PtA).length()/2.0)*((m_PtAB-m_PtA).normalize()));
+// 		//snapPoints.append(m_PtAB+((m_PtB-m_PtAB).length()/2.0)*((m_PtB-m_PtAB).normalize()));
+// 		//snapPoints.append(m_PtB+((m_PtBA-m_PtB).length()/2.0)*((m_PtBA-m_PtB).normalize()));
+// 		//snapPoints.append(m_PtBA+((m_PtA-m_PtBA).length()/2.0)*((m_PtA-m_PtBA).normalize()));
+// 		//break;
+// 
+// 		//case AcDb::kOsModeCen:
+// 		//snapPoints.append(AcGePoint3d((m_PtB.x+m_PtA.x)/2.0,
+// 		//(m_PtB.y+m_PtA.y)/2.0, m_PtA.z));
+// 		//break;
+// 
+// 	}
 
-	switch (osnapMode) {
 
-	case AcDb::kOsModeEnd:
-		snapPoints.append(FirstPoint);
-		snapPoints.append(LastPoint);
-		if (This1D==false)
-		{
 
-			snapPoints.append(A);
-			snapPoints.append(B);
-			snapPoints.append(C);
-			snapPoints.append(D);
-		}
-		break;
+Acad::ErrorStatus er;
+for each (AcDbEntity * var in ListOfEntity)
+{
 
-	case AcDb::kOsModeMid:
-		//	snapPoints.append(FirstPoint);
+	er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+		lastPoint,viewXform,snapPoints,geomIds);
+	if (er!=Acad::eOk)
+		return er;
+}
+// switch (osnapMode) {
+// 
+// case AcDb::kOsModeEnd:
+// 	snapPoints.append(FirstPoint);
+// 	snapPoints.append(LastPoint);
+// 	break;
+// default:break;
+// }
 
-		snapPoints.append(AcGePoint3d((FirstPoint.x+LastPoint.x)/2,
-			(FirstPoint.y+LastPoint.y)/2,
-			(FirstPoint.z+LastPoint.z)/2));
-		if (This1D==false)
-		{
-			snapPoints.append(AcGePoint3d((A.x+B.x)/2,
-				(A.y+B.y)/2,
-				(A.z+B.z)/2));
-			snapPoints.append(AcGePoint3d((C.x+D.x)/2,
-				(C.y+D.y)/2,
-				(C.z+D.z)/2));
-
-		}
-
-		break;
-		//case AcDb::kOsModeEnd: 
-		//	AcGeLine3d line1, line2; 
-		//	line1.set(A,B); 
-		//	line2.set(C,D); 
-		//	snapPoints.append(line1.closestPointTo(pickPoint)); 
-		//	snapPoints.append(line2.closestPointTo(pickPoint)); 
-		//	break; 
-
-	case AcDb::kOsModeNear: 
-		snapPoints.append(line3.closestPointTo(pickPoint));
-		if (This1D==false)
-		{
-			snapPoints.append(line1.closestPointTo(pickPoint)); 
-			snapPoints.append(line2.closestPointTo(pickPoint));
-
-		}
-		break; 
-
-	case AcDb::kOsModePerp: 
-
-		snapPoints.append(line3.closestPointTo(lastPoint));
-
-		if (This1D==false)
-		{
-			snapPoints.append(line1.closestPointTo(lastPoint));
-			snapPoints.append(line2.closestPointTo(lastPoint));
-		}
-		break; 
-
-		//case AcDb::kOsModeCen:
-		//snapPoints.append(AcGePoint3d(LastPoint.x+(FirstPoint.x-LastPoint.x)/2,
-		//	LastPoint.y+(FirstPoint.y-LastPoint.y)/2,0));
-
-		//snapPoints.append(A);
-		//snapPoints.append(B);
-		//snapPoints.append(C);
-		//snapPoints.append(D);
-
-		//break;
-		//case AcDb::kOsModeTan:
-		//snapPoints.append(FirstPoint);
-		//snapPoints.append(LastPoint);
-		//snapPoints.append(A);
-		//snapPoints.append(B);
-		//snapPoints.append(C);
-		//snapPoints.append(D);
-
-		//break;
-
-		//case AcDb::kOsModeMid:
-		//	snapPoints.append(m_PtA+((m_PtAB-m_PtA).length()/2.0)*((m_PtAB-m_PtA).normalize()));
-		//snapPoints.append(m_PtAB+((m_PtB-m_PtAB).length()/2.0)*((m_PtB-m_PtAB).normalize()));
-		//snapPoints.append(m_PtB+((m_PtBA-m_PtB).length()/2.0)*((m_PtBA-m_PtB).normalize()));
-		//snapPoints.append(m_PtBA+((m_PtA-m_PtBA).length()/2.0)*((m_PtA-m_PtBA).normalize()));
-		//break;
-
-		//case AcDb::kOsModeCen:
-		//snapPoints.append(AcGePoint3d((m_PtB.x+m_PtA.x)/2.0,
-		//(m_PtB.y+m_PtA.y)/2.0, m_PtA.z));
-		//break;
-
-	}
+AcDbLine * pLine=new AcDbLine(FirstPoint,LastPoint);
+	er=pLine->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+	lastPoint,viewXform,snapPoints,geomIds);
 	return (Acad::eOk);
 }
 
@@ -537,11 +497,25 @@ Acad::ErrorStatus TVS_Pipe::subGetGripPoints (
 	gripPoints.append(LastPoint);
 	gripPoints.append((AcGePoint3d (FirstPoint.x+LastPoint.x, 
 		FirstPoint.y+LastPoint.y,FirstPoint.z+LastPoint.z))/2);
+// 
+// 
+// 
+// 	
+
+
+	
+
 
 	//----- This method is never called unless you return eNotImplemented 
 	//----- from the new getGripPoints() method below (which is the default implementation)
 	return (Acad::eOk);
 	//return (AcDbEntity::subGetGripPoints (gripPoints, osnapModes, geomIds)) ;
+}
+
+void TVS_Pipe::SetParamsForDraw( AcDbObjectId pEntId, int pGripNumber )
+{
+	entId=pEntId;
+	gripNumber=pGripNumber;
 }
 
 Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset) {
@@ -562,18 +536,108 @@ Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (const AcDbIntArray &indices, co
 	return (AcDbCurve::subMoveGripPointsAt (indices, offset)) ;
 }
 
+
+
+
+
+// appDataType::iterator 
+// 	TVS_Pipe::putAppData()
+// {
+// 	if(msAppData.empty())
+// 	{
+// 		msAppData.reserve(GripCount);
+// 		TSTDSTRING sAppData[GripCount]=
+// 		{
+// 			_T("Center")
+// 		};
+// 
+// 		for(int i=0;i<GripCount;i++)
+// 		{
+// 			msAppData.push_back(sAppData[i]);
+// 		}
+// 	}
+// 	return msAppData.begin();
+// 
+// }
+
 Acad::ErrorStatus TVS_Pipe::subGetGripPoints (
 	AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
 	const AcGeVector3d &curViewDir, const int bitflags
 ) const {
-	assertReadEnabled () ;
+	//assertReadEnabled () ;
 
+	//appDataType::iterator appIter = putAppData();
+	int appIter=0;
+	AcDbGripData* gpd=new AcDbGripData();
+	//appDataType appIter;
+	//All the GripData pointer are deallocated automatically
+	AcDbGripData *pFirst = new AcDbGripData();
+
+	AcDbGripData *pMid = new AcDbGripData();
+
+	AcDbGripData *pEnd = new AcDbGripData();
+
+	double k=1+10*curViewUnitSize / Length;
+
+
+
+ //	pCenterCoordGrip->setToolTipFunc(GripCback::GripToolTipFunc);
+	
+  	//pCenterCoordGrip->setHotGripFunc(GripCback::hotGripfunc);
+
+ // 	pCenterCoordGrip->setHoverFunc(GripCback::hoverGripfunc);
+ // 	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
+ 	//pCenterCoordGrip->setWorldDraw(GripCback::WorldDrawfunc);
+ //	pCenterCoordGrip->setRtClk(GripCback::Rtclkfunc);
+  //	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
+
+
+	AcDbGripData *pFirstGrip = new AcDbGripData();
+
+	pFirstGrip->setGripPoint((AcGePoint3d ((1-k)*FirstPoint.x+k*LastPoint.x, 
+		(1-k)*FirstPoint.y+k*LastPoint.y,(1-k)*FirstPoint.z+k*LastPoint.z)));
+	pFirstGrip->setAppData((void*)101);
+	pFirstGrip->setHotGripFunc(GripCback::hotGripfunc);
+	pFirstGrip->setWorldDraw(GripCback::WorldDrawfunc);
+	grips.append(pFirstGrip);	
+
+	AcDbGripData *pLastGrip = new AcDbGripData();
+
+	pLastGrip->setGripPoint((AcGePoint3d ((1-k)*LastPoint.x+k*FirstPoint.x, 
+		(1-k)*LastPoint.y+k*FirstPoint.y,(1-k)*LastPoint.z+k*FirstPoint.z)));
+	pLastGrip->setAppData((void*)102);
+	pLastGrip->setHotGripFunc(GripCback::hotGripfunc);
+	pLastGrip->setWorldDraw(GripCback::WorldDrawfunc);
+	grips.append(pLastGrip);	
+
+
+	pFirst->setGripPoint(FirstPoint);
+	pFirst->setAppData((void*)appIter);
+	grips.append(pFirst);
+	appIter++;
+
+	pEnd->setGripPoint(LastPoint);
+		pEnd->setAppData((void*)appIter);
+	grips.append(pEnd);
+	appIter++;
+
+	pMid->setGripPoint(((AcGePoint3d (FirstPoint.x+LastPoint.x, 
+		FirstPoint.y+LastPoint.y,FirstPoint.z+LastPoint.z))/2));
+		pMid->setAppData((void*)appIter);
+	grips.append(pMid);
+	appIter++;
+	return Acad::eOk;
 	//----- If you return eNotImplemented here, that will force AutoCAD to call
 	//----- the older getGripPoints() implementation. The call below may return
 	//----- eNotImplemented depending of your base class.
-	return (AcDbCurve::subGetGripPoints (grips, curViewUnitSize, gripSize, curViewDir, bitflags)) ;
+	//return (AcDbCurve::subGetGripPoints (grips, curViewUnitSize, gripSize, curViewDir, bitflags)) ;
 }
-
+// void TVS_Pipe::SetParamsForDraw(AcDbObjectId pEntId, int pGripNumber)
+// {
+// 	entId=pEntId;
+// 	gripNumber=pGripNumber;
+// 
+// }
 Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (
 	const AcDbVoidPtrArray &gripAppData, const AcGeVector3d &offset,
 	const int bitflags
@@ -583,6 +647,18 @@ Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (
 	//----- If you return eNotImplemented here, that will force AutoCAD to call
 	//----- the older getGripPoints() implementation. The call below may return
 	//----- eNotImplemented depending of your base class.
+	for(int i=0; i<gripAppData.length(); i++)
+	{
+
+		int idx = (int)gripAppData.at(i);
+		// For FP and center point
+
+
+		if (idx==0 || idx==2) FirstPoint += offset;
+		// For LP and center point
+		if (idx==1 || idx==2) LastPoint += offset;
+
+	}return eOk;
 	return (AcDbCurve::subMoveGripPointsAt (gripAppData, offset, bitflags)) ;
 }
 
@@ -652,15 +728,15 @@ Acad::ErrorStatus TVS_Pipe::getPointAtDist (double dist, AcGePoint3d &point) con
 }
 
 //- Derivative information.
-Acad::ErrorStatus TVS_Pipe::getFirstDeriv (double param, AcGeVector3d &firstDeriv) const {
-	assertReadEnabled () ;
-	return (AcDbCurve::getFirstDeriv (param, firstDeriv)) ;
-}
+// Acad::ErrorStatus TVS_Pipe::getFirstDeriv (double param, AcGeVector3d &firstDeriv) const {
+// 	assertReadEnabled () ;
+// 	return (AcDbCurve::getFirstDeriv (param, firstDeriv)) ;
+// }
 
-Acad::ErrorStatus TVS_Pipe::getFirstDeriv  (const AcGePoint3d &point, AcGeVector3d &firstDeriv) const {
-	assertReadEnabled () ;
-	return (AcDbCurve::getFirstDeriv (point, firstDeriv)) ;
-}
+// Acad::ErrorStatus TVS_Pipe::getFirstDeriv  (const AcGePoint3d &point, AcGeVector3d &firstDeriv) const {
+// 	assertReadEnabled () ;
+// 	return (AcDbCurve::getFirstDeriv (point, firstDeriv)) ;
+// }
 
 Acad::ErrorStatus TVS_Pipe::getSecondDeriv (double param, AcGeVector3d &secDeriv) const {
 	assertReadEnabled () ;
@@ -811,7 +887,7 @@ TVS_Pipe* TVS_Pipe::add_new(AcGePoint3d &pFirstPoint,
 	pEnt->ElevUp=0;
 	pEnt->IsPipe=false;
 	pEnt->Form=0;
-
+	pEnt->setNewParameters();
 	//TCHAR * pPipe->Tag2=new TCHAR
 
 	//pPipe->Tag2=ACRX_T("");
@@ -851,155 +927,126 @@ void TVS_Pipe::setLastpoint (AcGePoint3d pLastpoint)
 {
 	LastPoint=pLastpoint;
 }
+
+
+
+void TVS_Pipe::setDuctType(int pDuctType)
+{
+	assertWriteEnabled();
+	DuctType=pDuctType;
+}
+
+Acad::ErrorStatus TVS_Pipe::put_SizeB(double newVal)
+{
+	assertWriteEnabled () ;
+
+
+	if (DuctType==DuctTypeStill)
+	{
+
+		if((ThisRound==true)&&(newVal!=0))
+		{
+
+			ThisRound=false;
+			SizeB=newVal;
+			return (Acad::eOk) ;
+
+		}
+
+		if((ThisRound==false)&&(newVal==0))
+		{
+
+			ThisRound=true;
+
+			SizeB=newVal;
+			return (Acad::eOk) ;
+
+		}	
+
+
+
+
+		SizeB =newVal ;
+
+	}
+	else
+	{
+		SizeB=0;
+		ThisRound=true;
+		SizeB=0;
+	}
+	return (Acad::eOk) ;
+}
+
+AcGePoint3d TVS_Pipe::getPointForSpline( AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist )
+{
+	AcGeVector3d splinetangent;
+	double param;
+
+	pspline->getParamAtPoint(point,param);
+	pspline->getFirstDeriv(param,splinetangent);
+	splinetangent.normalize();
+	splinetangent=splinetangent.rotateBy(M_PI/2,AcGeVector3d(0,0,1));
+	splinetangent*=dist;
+	return AcGePoint3d(point.x+splinetangent.x,point.y+splinetangent.y,0);
+}
+
+AcGePoint3dArray TVS_Pipe::getPointsForSpline( const int &quantity, AcDbSpline * const &pspline, double const &dist )
+{
+	AcGePoint3dArray arr;
+	AcGePoint3d point;
+	AcGeVector3d splinetangent;
+		double param,splength;
+		AcGePoint3d endp;
+		pspline->getEndPoint(endp);
+		pspline->getDistAtPoint(endp,splength);
+		double startpar,endpar,step;
+		pspline->getStartParam(startpar);
+		pspline->getEndParam(endpar);
+	
+	for (int i=0;i<=quantity;i++)
+	{
+		param=(endpar-startpar)*i/quantity;
+		//getParamAtDist(splength*i/quantity,param);
+		pspline->getFirstDeriv(param,splinetangent);
+		splinetangent.normalize();
+		splinetangent=splinetangent.rotateBy(M_PI/2,AcGeVector3d(0,0,1));
+		splinetangent*=dist;
+		pspline->getPointAtParam(param,point);
+		arr.append(AcGePoint3d(point.x+splinetangent.x,point.y+splinetangent.y,0));
+	}
+	return arr;
+}
+
+void TVS_Pipe::setFlex( const bool &isFlex )
+{
+	assertWriteEnabled();
+	if (isFlex)
+	{
+		DuctType=DuctTypeFlex;
+		put_SizeB(0);
+	}
+	else
+	{
+		DuctType=DuctTypeStill;
+		
+	}
+	
+}
+
 // -----------------------------------------------------------------------------
 Acad::ErrorStatus TVS_Pipe::subExplode(AcDbVoidPtrArray & entitySet) const
 {
 
 	assertReadEnabled();
 
-	if (this->This1D==false)
+	
+	for each (AcDbEntity* var in ListOfEntity)
 	{
-		if (this->ThisRound==true)
-		{
-
-			AcDbLine* pLine1 = new AcDbLine(A,B);
-			AcDbLine* pLine2 = new AcDbLine(D,C);
-			AcDbLine* pLine3 = new AcDbLine(FirstPoint,LastPoint);
-
-
-
-
-			////
-			AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
-			AcDbLinetypeTable *pLtTable;
-			AcDbObjectId ltId;
-			pDb->getSymbolTable(pLtTable, AcDb::kForRead);
-			pLtTable->getAt(_T("tvs_centerline"), ltId);
-
-			pLtTable->close();
-			///
-			if (Grani==false)
-			{
-
-				pLine1->setLineWeight(this->lineWeight());
-				pLine1->setLayer(this->layerId());
-				pLine1->setColor(this->color());
-				pLine1->setLinetype(this->linetypeId());
-				pLine1->setLinetypeScale(this->linetypeScale());
-
-				pLine2->setLineWeight(this->lineWeight());
-				pLine2->setLayer(this->layerId());
-				pLine2->setColor(this->color());
-				pLine2->setLinetype(this->linetypeId());
-				pLine2->setLinetypeScale(this->linetypeScale());
-
-
-				entitySet.append(pLine1);
-				entitySet.append(pLine2);
-
-			}
-			else
-
-			{
-				AcGePoint2d garray[4];
-				garray[0]=AcGePoint2d(A.x,A.y);
-				garray[1]=AcGePoint2d(B.x,B.y);
-				garray[2]=AcGePoint2d(C.x,C.y);
-				garray[3]=AcGePoint2d(D.x,D.y);
-
-				AcDbPolyline* gPline=new AcDbPolyline(4);
-				for (int i=0;i<4; i++)
-				{
-					gPline->addVertexAt(i,garray[i]);
-				}
-
-				gPline->setLineWeight(this->lineWeight());
-				gPline->setLinetypeScale(this->linetypeScale());
-				gPline->setLayer(this->layerId());
-				gPline->setColor(this->color());
-				gPline->setClosed(true);
-				gPline->setLinetype(this->linetypeId());
-
-
-				entitySet.append(gPline);
-
-
-				//delete gPline;
-			}
-			pLine3->setLineWeight(AcDb::LineWeight(15));
-			pLine3->setLayer(this->layerId());
-			pLine3->setLinetype(ltId);
-			pLine3->setColor(this->color());
-
-			entitySet.append(pLine3);
-			//delete pLine1;
-			//delete pLine2;
-			//delete pLine3;
-
-
-
-
-		}
-		else
-		{
-			if (Grani==false)
-			{
-
-				AcDbLine* pLine1 = new AcDbLine(A,B);
-				AcDbLine* pLine2 = new AcDbLine(D,C);
-				pLine1->setLineWeight(this->lineWeight());
-				pLine1->setLayer(this->layerId());
-				pLine1->setColor(this->color());
-				pLine1->setLinetype(this->linetypeId());
-				pLine1->setLinetypeScale(this->linetypeScale());
-
-				pLine2->setLineWeight(this->lineWeight());
-				pLine2->setLayer(this->layerId());
-				pLine2->setColor(this->color());
-				pLine2->setLinetype(this->linetypeId());
-				pLine2->setLinetypeScale(this->linetypeScale());
-				entitySet.append(pLine1);
-				entitySet.append(pLine2);
-			}
-			else
-			{
-				AcGePoint2d garray[4];
-				garray[0]=AcGePoint2d(A.x,A.y);
-				garray[1]=AcGePoint2d(B.x,B.y);
-				garray[2]=AcGePoint2d(C.x,C.y);
-				garray[3]=AcGePoint2d(D.x,D.y);
-
-				AcDbPolyline* ggPline=new AcDbPolyline(4);
-				for (int i=0;i<4; i++)
-				{
-					ggPline->addVertexAt(i,garray[i]);
-				}
-
-				ggPline->setLineWeight(this->lineWeight());
-				ggPline->setLinetypeScale(this->linetypeScale());
-				ggPline->setLayer(this->layerId());
-				ggPline->setColor(this->color());
-				ggPline->setClosed(true);
-				ggPline->setLinetype(this->linetypeId());
-
-
-				entitySet.append(ggPline);
-
-
-				//delete ggPline;
-			}
-		}
+		entitySet.append(var);
 	}
-	else
-	{
-		AcDbLine* pLine3 = new AcDbLine(FirstPoint,LastPoint);
-		pLine3->setLineWeight(this->lineWeight());
-		pLine3->setLayer(this->layerId());
-		pLine3->setLinetype(this->linetypeId());
-		pLine3->setLinetypeScale(this->linetypeScale());
-		pLine3->setColor(this->color());
-		entitySet.append(pLine3);
-	}
+
+	
 	return Acad::eOk;
 
 }
@@ -1026,5 +1073,210 @@ Acad::ErrorStatus TVS_Pipe::put_Lastpoint(AcGePoint3d newVal)
 
 
 
+Adesk::Boolean TVS_FlexDuct::subWorldDraw (AcGiWorldDraw *mode) {
+		assertReadEnabled () ;
+		AcGePoint3dArray arr, arr1, arr2;
+		ListOfEntity.removeAll();
+		ListOfWipeout.removeAll();
+		arr.append(AcGePoint3d(FirstPoint));
+		arr.append(AcGePoint3d(flexmidpoint));
+		arr.append(AcGePoint3d(LastPoint));
+		AcGeVector3d startvect=AcGeVector3d(1,0,0);
+		AcGeVector3d endvect=AcGeVector3d(0,1,0);
+		AcDbSpline * pEnt=new AcDbSpline(arr,startvect,endvect);
+	
+	
+		double AParam, midParam, BParam;
+		setCenterProperty(pEnt);
+			ListOfEntity.append(pEnt);
+		mode->geometry().draw(pEnt);
 
 
+		AcGePoint3d A1, M1, B1, A2, M2, B2;
+
+		/*A1=*/
+
+
+
+// 
+// 		A1=getPointForSpline(FirstPoint,pEnt,SizeA/2);
+// 	
+// 		M1=getPointForSpline(flexmidpoint,pEnt,SizeA/2);
+// 	
+// 		B1=getPointForSpline(LastPoint,pEnt,SizeA/2);
+// 	
+// 		arr1.append(A1);
+// 		arr1.append(M1);
+// 		arr1.append(B1);
+
+		arr1=getPointsForSpline(100,pEnt,SizeA/2);
+				AcDbSpline * pEnt1=new AcDbSpline(arr1,startvect,endvect);
+				setMainProperty(pEnt1);
+		ListOfEntity.append(pEnt1);
+		mode->geometry().draw(pEnt1);
+
+
+
+// 
+// 		A2=getPointForSpline(FirstPoint,pEnt,-SizeA/2);
+// 
+// 		M2=getPointForSpline(flexmidpoint,pEnt,-SizeA/2);
+// 
+// 		B2=getPointForSpline(LastPoint,pEnt,-SizeA/2);
+// 
+// 		arr2.append(A2);
+// 		arr2.append(M2);
+// 		arr2.append(B2);
+		arr2=getPointsForSpline(100,pEnt,-SizeA/2);
+				AcDbSpline * pEnt2=new AcDbSpline(arr2,startvect,endvect);
+		setMainProperty(pEnt2);
+		ListOfEntity.append(pEnt2);
+		mode->geometry().draw(pEnt2);
+
+		return Adesk::kTrue;
+}
+
+Acad::ErrorStatus TVS_FlexDuct::subGetGripPoints( AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds ) const
+{
+	assertReadEnabled () ;
+
+	gripPoints.append(FirstPoint);
+	gripPoints.append(LastPoint);
+	gripPoints.append(flexmidpoint);
+
+
+
+
+
+
+
+	return (Acad::eOk);
+
+}
+
+Acad::ErrorStatus TVS_FlexDuct::subGetGripPoints( AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, const AcGeVector3d &curViewDir, const int bitflags ) const
+{
+	//assertReadEnabled () ;
+
+	//appDataType::iterator appIter = putAppData();
+	int appIter=0;
+	AcDbGripData* gpd=new AcDbGripData();
+	//appDataType appIter;
+	//All the GripData pointer are deallocated automatically
+	AcDbGripData *pFirst = new AcDbGripData();
+
+	AcDbGripData *pMid = new AcDbGripData();
+
+	AcDbGripData *pEnd = new AcDbGripData();
+
+	double k=1+10*curViewUnitSize / Length;
+
+
+
+	//	pCenterCoordGrip->setToolTipFunc(GripCback::GripToolTipFunc);
+
+	//pCenterCoordGrip->setHotGripFunc(GripCback::hotGripfunc);
+
+	// 	pCenterCoordGrip->setHoverFunc(GripCback::hoverGripfunc);
+	// 	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
+	//pCenterCoordGrip->setWorldDraw(GripCback::WorldDrawfunc);
+	//	pCenterCoordGrip->setRtClk(GripCback::Rtclkfunc);
+	//	pCenterCoordGrip->setGripOpStatFunc(GripCback::OpStatusfunc);
+
+
+	AcDbGripData *pFirstGrip = new AcDbGripData();
+
+	pFirstGrip->setGripPoint((AcGePoint3d ((1-k)*FirstPoint.x+k*LastPoint.x, 
+		(1-k)*FirstPoint.y+k*LastPoint.y,(1-k)*FirstPoint.z+k*LastPoint.z)));
+	pFirstGrip->setAppData((void*)101);
+	pFirstGrip->setHotGripFunc(GripCback::hotGripfunc);
+	pFirstGrip->setWorldDraw(GripCback::WorldDrawfunc);
+	grips.append(pFirstGrip);	
+
+	AcDbGripData *pLastGrip = new AcDbGripData();
+
+	pLastGrip->setGripPoint((AcGePoint3d ((1-k)*LastPoint.x+k*FirstPoint.x, 
+		(1-k)*LastPoint.y+k*FirstPoint.y,(1-k)*LastPoint.z+k*FirstPoint.z)));
+	pLastGrip->setAppData((void*)102);
+	pLastGrip->setHotGripFunc(GripCback::hotGripfunc);
+	pLastGrip->setWorldDraw(GripCback::WorldDrawfunc);
+	grips.append(pLastGrip);	
+
+
+	pFirst->setGripPoint(FirstPoint);
+	pFirst->setAppData((void*)appIter);
+	grips.append(pFirst);
+	appIter++;
+
+	pEnd->setGripPoint(LastPoint);
+	pEnd->setAppData((void*)appIter);
+	grips.append(pEnd);
+	appIter++;
+
+	pMid->setGripPoint(flexmidpoint);
+	pMid->setAppData((void*)appIter);
+	grips.append(pMid);
+	appIter++;
+	return Acad::eOk;
+}
+
+Acad::ErrorStatus TVS_FlexDuct::subMoveGripPointsAt( const AcDbIntArray &indices, const AcGeVector3d &offset )
+{
+	assertWriteEnabled () ;
+	//----- This method is never called unless you return eNotImplemented 
+	//----- from the new moveGripPointsAt() method below (which is the default implementation)
+	for(int i=0; i<indices.length(); i++)
+	{
+		int idx = indices.at(i);
+		// For FP and center point
+
+		if (idx==0 ) FirstPoint += offset;
+		// For LP and center point
+		if (idx==1 ) LastPoint += offset;
+			if (idx==2) flexmidpoint += offset;
+	}
+	//return (Acad::eOk);
+	return (AcDbCurve::subMoveGripPointsAt (indices, offset)) ;
+}
+
+Acad::ErrorStatus TVS_FlexDuct::subMoveGripPointsAt( const AcDbVoidPtrArray &gripAppData, const AcGeVector3d &offset, const int bitflags )
+{
+	assertWriteEnabled () ;
+
+	//----- If you return eNotImplemented here, that will force AutoCAD to call
+	//----- the older getGripPoints() implementation. The call below may return
+	//----- eNotImplemented depending of your base class.
+	for(int i=0; i<gripAppData.length(); i++)
+	{
+
+		int idx = (int)gripAppData.at(i);
+		// For FP and center point
+
+
+		if (idx==0 ) FirstPoint += offset;
+		// For LP and center point
+		if (idx==1 ) LastPoint += offset;
+		if (idx==2 ) flexmidpoint += offset;
+	}return eOk;
+	return (AcDbCurve::subMoveGripPointsAt (gripAppData, offset, bitflags)) ;
+}
+
+void TVS_FlexDuct::addfilerparam( AcDbDwgFiler *pFiler )
+{
+	pFiler->writeItem (flexmidpoint) ;
+}
+
+void TVS_FlexDuct::getfilerparam( AcDbDwgFiler *pFiler )
+{
+	pFiler->readItem (&flexmidpoint) ;
+}
+
+TVS_FlexDuct::TVS_FlexDuct()
+{
+ flexmidpoint=AcGePoint3d(0,100,0);
+}
+
+TVS_FlexDuct::~TVS_FlexDuct()
+{
+
+}

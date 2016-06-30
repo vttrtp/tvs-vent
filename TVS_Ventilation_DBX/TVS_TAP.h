@@ -255,13 +255,13 @@ static	TVS_TAP *add_new(
 	void checkRadiusTypeRound();
 	void checkRadiusTypeRect();
 	void checkTypeRoundTap();
-	Acad::ErrorStatus put_RadiusConst(int newVal);
+	Acad::ErrorStatus put_RadiusConst(double newVal);
 	int get_RadiusConst(void) const;
 	Acad::ErrorStatus put_RadiusTypeRect(int newVal);
 	int get_RadiusTypeRect(void) const;
-	Acad::ErrorStatus put_RadiusVariableParameter(int newVal);
+	Acad::ErrorStatus put_RadiusVariableParameter(double newVal);
 	int get_RadiusVariableParameter(void) const;
-
+	void setFlex(const bool &isFlex);
 protected:
 	// -----------------------------------------------------------------------------
 	virtual Acad::ErrorStatus subExplode(AcDbVoidPtrArray & entitySet) const;
@@ -274,6 +274,7 @@ protected:
 	void DrawDirect();
 	void checkForm();
 	void chekMiddlePoint();
+		void setDuctType(int pDuctType);	
 
 } ;
 

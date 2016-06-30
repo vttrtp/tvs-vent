@@ -48,14 +48,29 @@
 #endif
 
 
+
+
+//#include <windows.h>
+
+// #using <mscorlib.dll>
+// #using <System.dll>
+// #using <System.Core.dll>
+// #using <accoremgd.dll>
+// #using <acmgd.dll>
+// #using <acdbmgd.dll>
+// #using <AcCui.dll>
+//#include <vcclr.h>
+
+
+
 //- ObjectARX and OMF headers needs this
 #include <map>
-
+using namespace std;
 //-----------------------------------------------------------------------------
 #include <afxwin.h>				//- MFC core and standard components
 #include <afxext.h>				//- MFC extensions
 #include <afxcmn.h>				//- MFC support for Windows Common Controls
-
+//#pragma comment (lib, "TVSPL.lib")
 //-----------------------------------------------------------------------------
 #include <AtlBase.h>
 //-----------------------------------------------------------------------------
@@ -80,5 +95,19 @@ extern AcApDataManager<CDocData> DocVars ;
 //-----------------------------------------------------------------------------
 #import "acax20enu.tlb" raw_interfaces_only no_namespace
 
+
+
+#include <afxwin.h>         // MFC core and standard components
+#include <afxext.h>         // MFC extensions
+
+
+#include <afxdisp.h>        // MFC Automation classes
+
+
+
+#include "Protection.h"
+#include "httpRequest.h"
+#include "RsaGeneration.h"
+#include "Regedit.h"
 #pragma pack (pop)
 
