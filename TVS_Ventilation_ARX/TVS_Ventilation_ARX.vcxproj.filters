@@ -250,11 +250,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-    <None Include="..\..\OpenSSL-Win64\libeay32.dll">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
-    <None Include="..\..\OpenSSL-Win64\ssleay32.dll">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
   </ItemGroup>
 </Project>

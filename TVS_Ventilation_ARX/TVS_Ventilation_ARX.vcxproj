@@ -201,8 +201,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\OpenSSL-Win64\libeay32.dll" />
-    <None Include="..\..\OpenSSL-Win64\ssleay32.dll" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
