@@ -45,14 +45,19 @@
 #endif
 
 //-----------------------------------------------------------------------------
+#include <acedads.h>
+#include <acedCmdNF.h>
 #include "dbcurve.h"
-#define TVS_Version 22
+#define TVS_Version 24
 #define M_PI 3.14159265358979323846
+#define DuctTypeStill 0
+#define DuctTypeFlex 1
 #include <ObjBase.h>
 #include <InitGuid.h>
 #include "dbmain.h"
 #include "rxmfcapi.h"
 #include <vector>
+#include "GripImp.h"
 using namespace std;
 
 
@@ -169,6 +174,25 @@ public:
 	//- Area calculation.
 	virtual Acad::ErrorStatus getArea (double &area) const ;
 
+
+// 	virtual Acad::ErrorStatus   subIntersectWith(
+// 		const AcDbEntity*   ent,
+// 		AcDb::Intersect     intType,
+// 		AcGePoint3dArray&      points,
+// 		int                 thisGsMarker  = 0,
+// 		int                 otherGsMarker = 0)
+// 		const;
+// 
+// 	virtual Acad::ErrorStatus   subIntersectWith(
+// 		const AcDbEntity*   ent,
+// 		AcDb::Intersect     intType,
+// 		const AcGePlane&    projPlane,
+// 		AcGePoint3dArray&      points,
+// 		int                 thisGsMarker  = 0,
+// 		int                 otherGsMarker = 0)
+// 		const;
+
+
 	//////TVS
 	public:
 	double SizeA;
@@ -189,9 +213,11 @@ public:
 	int Param;
 	bool ShowText;
 	int Form;
+	int DuctType;
 	vector <AcDbEntity> ListOfEntityAxis;
 	vector <AcDbEntity> ListOfEntityBody;
 	AcDbVoidPtrArray ListOfEntity;
+	AcDbVoidPtrArray ListOfWipeout;
 	double WipeoutLength;
 	int Type1;
 	int Type2;
@@ -242,10 +268,20 @@ public:
 	Acad::ErrorStatus put_Type2(int newVal);
 	
 	void setMainProperty(AcDbEntity *pEnt);
-	void setAxisProperty(AcDbEntity *pEnt);
+	void setCenterProperty(AcDbEntity *pEnt);
 	void setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt);
 	void setHideProperty(AcDbEntity *pEnt);
-
+	void setZigzagProperty(AcDbEntity *pEnt);
+	void setThinProperty(AcDbEntity *pEnt);
+	double get_WipeoutLength(void) const;
+	Acad::ErrorStatus put_WipeoutLength(double newVal);
+	virtual void setFlex(const bool &isFlex);
+	void setStill();
+	int getDuctType();
+	virtual void setDuctType(int pDuctType);
+	void setNewParameters();
+	void ClearEntitylist();
+	bool isDuctFlex();
 } ;
 
 #ifdef TVS_VENTILATION_DBX_MODULE

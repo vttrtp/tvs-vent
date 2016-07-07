@@ -57,8 +57,10 @@ BEGIN_MESSAGE_MAP(dgAllEdit, CAdUiBaseDialog)
 	ON_BN_CLICKED(IDC_TapRadiusRectConst, &dgAllEdit::SetRadiusTypeRect_RadiusConstant)
 	ON_BN_CLICKED(IDC_TapRadiusRectVariable, &dgAllEdit::SetRadiusTypeRect_RadiusVariable)
 
+	ON_BN_CLICKED(IDC_DuctFlex, &dgAllEdit::ChangeDuctFlex)
 
 	ON_BN_CLICKED(IDOK, &dgAllEdit::OnBnClickedOk)
+
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
@@ -163,8 +165,11 @@ void dgAllEdit::DoDataExchange (CDataExchange *pDX) {
 
 
 
+		DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
+		DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
 
-
+		DDX_Control(pDX, IDC_DuctFlex, fDuctFlex);
+		DDX_Check(pDX, IDC_DuctFlex, DuctFlex);
 }
 
 //-----------------------------------------------------------------------------
@@ -179,7 +184,12 @@ void dgAllEdit::OnShowWindow(BOOL bShow, UINT nStatus)
 {
 	CAdUiBaseDialog::OnShowWindow(bShow, nStatus);
 
-	
+	fSizeA.SetFocus();
+
+  SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
+
+
+  	
 	if(Tpipe==false)
 	{
 		
@@ -414,6 +424,9 @@ void dgAllEdit::ChangeD1()
 	change_BOOL(D1,fD1);
 }
 
+
+
+
 void dgAllEdit::SetForm_Up()
 {
 
@@ -551,7 +564,7 @@ void dgAllEdit::OnBnClickedOk()
 
 	if (TapRadiusRoundConst==TRUE)
 	{
-		RadiusTypeRound.Format(L"%i", RadiusTypeRound_RadiusConstant);
+		RadiusTypeRound.Format(L"%.2f\n", RadiusTypeRound_RadiusConstant);
 	}
 
 	if (TapRadiusRoundVariable==TRUE)
@@ -591,3 +604,12 @@ void dgAllEdit::OnBnClickedOk()
 	this->OnOK();
 	// TODO: добавьте свой код обработчика уведомлений
 }
+
+
+void dgAllEdit::ChangeDuctFlex()
+{
+	//change_BOOL(iDuctFlex,fDuctFlex);
+
+	change_BOOL(DuctFlex,fDuctFlex);
+}
+

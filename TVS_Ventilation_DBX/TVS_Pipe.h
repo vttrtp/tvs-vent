@@ -47,9 +47,12 @@
 //-----------------------------------------------------------------------------
 
 #include "TVS_Entity.h"
+
+
 //-----------------------------------------------------------------------------
 class DLLIMPEXP TVS_Pipe : public TVS_Entity {
-
+	enum 
+	{ GripCount=4};
 public:
 	ACRX_DECLARE_MEMBERS(TVS_Pipe) ;
 
@@ -60,6 +63,21 @@ public:
 	TVS_Pipe () ;
 	virtual ~TVS_Pipe () ;
 
+
+
+	static int gripNumber;
+
+	static AcDbObjectId entId;
+
+	static void GetParamsForDraw(AcDbObjectId &pEntId, int &pGripNumber);
+	static void SetParamsForDraw(AcDbObjectId pEntId, int pGripNumber);
+// 	{
+// // 
+// //  //		pEntId=entId;
+// 		pGripNumber=TVS_Pipe::gripNumber;
+// // 
+// // 
+//  	};
 	//----- AcDbObject protocols
 	//- Dwg Filing protocol
 	virtual Acad::ErrorStatus dwgOutFields (AcDbDwgFiler *pFiler) const ;
@@ -116,7 +134,10 @@ public:
 
 	//- Grip points protocol
 	virtual Acad::ErrorStatus subGetGripPoints (AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds) const ;
+	
 	virtual Acad::ErrorStatus subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset) ;
+	
+	bool WorldDrawfunc(AcDbGripData *pThis, AcGiWorldDraw *pWd, const AcDbObjectId& entId, AcDbGripOperations::DrawType type, AcGePoint3d *cursor, double dGripSize);
 	virtual Acad::ErrorStatus subGetGripPoints (
 		AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
 		const AcGeVector3d &curViewDir, const int bitflags) const ;
@@ -139,8 +160,8 @@ public:
 	virtual Acad::ErrorStatus getDistAtPoint (const AcGePoint3d &point , double &dist) const ;
 	virtual Acad::ErrorStatus getPointAtDist (double dist, AcGePoint3d &point) const ;
 	//- Derivative information.
-	virtual Acad::ErrorStatus getFirstDeriv (double param, AcGeVector3d &firstDeriv) const ;
-	virtual Acad::ErrorStatus getFirstDeriv  (const AcGePoint3d &point, AcGeVector3d &firstDeriv) const ;
+// 	virtual Acad::ErrorStatus getFirstDeriv (double param, AcGeVector3d &firstDeriv) const ;
+// 	virtual Acad::ErrorStatus getFirstDeriv  (const AcGePoint3d &point, AcGeVector3d &firstDeriv) const ;
 	virtual Acad::ErrorStatus getSecondDeriv (double param, AcGeVector3d &secDeriv) const ;
 	virtual Acad::ErrorStatus getSecondDeriv (const AcGePoint3d &point, AcGeVector3d &secDeriv) const ;
 	//- Closest point on curve.
@@ -188,11 +209,7 @@ public:
 	AcGePoint2d BW;
 	AcGePoint2d CW;
 	AcGePoint2d DW;
-	AcDbLine *Line1;
-	AcDbLine *Line2;
-	AcDbLine *cLine;
-	AcDbPolyline *gPline;
-	AcDbPolyline *wPline;
+
 
 	
 	void Gimme4PipePoints ();
@@ -224,16 +241,23 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 	Acad::ErrorStatus put_TVS_Point(AcGePoint3d newVal);
 		void setLastpoint (AcGePoint3d pLastpoint);
 
+		void setDuctType(int pDuctType);
+		Acad::ErrorStatus put_SizeB(double newVal);
+	AcGePoint3d getPointForSpline(AcGePoint3d &point, AcDbSpline * const &pspline, double const &dist);
 
+		AcGePoint3dArray getPointsForSpline(const int &quantity,  AcDbSpline * const &pspline, double const &dist);
+		void setFlex(const bool &isFlex);
 
+private:
+	AcGePoint3d					   mCenter;
+	AcGeVector3d				   mNormal;
+	double						   mRadius;
+	static bool						mbHover;
+	static appDataType			   msAppData; //Stores the AppData
+	static AcDbObjectId			 mentId;
 
-
-
-
-
-
-
-
+	//Static method
+	//static appDataType::iterator	putAppData();
 
 
 } ;
@@ -241,4 +265,43 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 #ifdef TVS_VENTILATION_DBX_MODULE
 ACDB_REGISTER_OBJECT_ENTRY_AUTO(TVS_Pipe)
 #endif
-	 
+	
+
+class DLLIMPEXP  TVS_FlexDuct : public TVS_Pipe {
+
+// public:
+// 	ACRX_DECLARE_MEMBERS(TVS_FlexDuct) ;
+
+protected:
+	static Adesk::UInt32 kCurrentVersionNumber ;
+
+public:
+	Adesk::Boolean subWorldDraw (AcGiWorldDraw *mode);
+	AcGePoint3d flexmidpoint;
+	Acad::ErrorStatus subGetGripPoints (
+		AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds
+		) const;
+
+	Acad::ErrorStatus subGetGripPoints (
+		AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
+		const AcGeVector3d &curViewDir, const int bitflags
+		) const ;
+
+	Acad::ErrorStatus subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset);
+
+
+	void	addfilerparam(AcDbDwgFiler *pFiler);
+
+	void	getfilerparam(AcDbDwgFiler *pFiler);
+
+	Acad::ErrorStatus subMoveGripPointsAt (
+		const AcDbVoidPtrArray &gripAppData, const AcGeVector3d &offset,
+		const int bitflags
+		) ;
+	TVS_FlexDuct  () ;
+	virtual ~TVS_FlexDuct  () ;
+};
+
+#ifdef TVS_VENTILATION_DBX_MODULE
+ACDB_REGISTER_OBJECT_ENTRY_AUTO(TVS_FlexDuct)
+#endif

@@ -7,6 +7,12 @@
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
 #include "SPEC.h"
 #include "dgAllEdit.h"
+
+#include "StdAfx.h"
+#include "afxwin.h"
+#include <iostream>
+#include "afxdb.h"
+
 #define globalElevUp 1
 #define globalElevmid 2
 #define globalElevdown 3
@@ -29,7 +35,43 @@
 #define TVSEnt1isGrose 0
 #define TVSEnt2isGrose 1
 #define TVSEntitiesisSame 2
+
+
+
 namespace func {
+
+
+	template <typename T>
+	class FormParameter 
+
+	{
+			public:
+FormParameter<T>();
+
+		T parameter;
+		int quantity;
+		bool isSame;
+		CString stringValue;
+void		addParameter(const T &pVal);
+bool	isCompare	(const T &pVal);
+	T getParameter ();
+
+	};
+
+
+
+
+
+// class TVS_Attribute {
+// 	public:
+// 	ACHAR  name[512];
+// 	ACHAR  model[512];
+// 	ACHAR  manufacture[512];
+// 	ACHAR  size[512];
+// 	addAtribute(*&fdsfdsf)
+// };
+
+
 
 
 	void consoleprint(double It=0,const ACHAR*format=_T("") );
@@ -126,6 +168,8 @@ static double globalLengthW=50;
 static double globalElevMid=0;
 static double globalElev=globalElevdown;
 static double globalAxis=90;
+static int globalDuctType=DuctTypeStill;
+static double globalWipeoutLength=50;
 
 void TVS_CS (AcDbEntity *pEnt);
 void TVS_PEdit (AcDbEntity *pEnt);
@@ -138,7 +182,7 @@ void rprov (bool &variableconst,
 			double &myvar);
 void rprov (bool &variableconst, 
 			bool &firstvariable,
-			bool &objectvar,
+			const bool &objectvar,
 			bool &myvar);
 void rprov (bool &variableconst, bool &firstvariable, int &objectvar, int &myvar);
 void strfil (double &myvar,
@@ -173,10 +217,14 @@ CString &stringconst
 	 AcGePoint3d t2,
 	 AcGePoint3d t3
 	 );
-
+void getdouble(CString &svar, double dvar);
+void getint(CString &svar, int dvar);
 void PostToModelSpace(AcDbEntity *pEnt);
 void SetGlobalProperty(TVS_Entity *pEnt);
 void GiveStartvectorAndAngle (AcGePoint3d &n1, AcGePoint3d &n2, AcGePoint3d &n3, double &pAngle, AcGeVector3d &pStartvector);
 int TVSClassCheck (AcDbEntity* pEnt);
 int whyIsGrose (TVS_Entity* pEnt1,TVS_Entity* pEnt2);
+
+void drawEntity(AcDbEntity *pent);
+int ActivationErrorMessage();
 };

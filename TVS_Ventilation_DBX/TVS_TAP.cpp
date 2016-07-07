@@ -92,8 +92,8 @@ Acad::ErrorStatus TVS_TAP::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (RadiusVariableParameter) ;
 	pFiler->writeItem (RadiusConst) ;
 	pFiler->writeItem (MiddlePoint) ;
-	//pFiler->writeString (Tag1) ;
-	//pFiler->writeString (Tag2) ;
+	pFiler->writeItem (WipeoutLength) ;
+	pFiler->writeItem (DuctType) ;
 	return (pFiler->filerStatus ()) ;
 
 }
@@ -140,6 +140,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&RadiusVariableParameter) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&RadiusConst) ;
 	if ( version >= 22 /*&& version <= endVersion*/ ) pFiler->readItem (&MiddlePoint) ;
+	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 	if ( version < 22 /*&& version <= endVersion*/ )
 	{
 		checkRadiusTypeRect();
@@ -150,7 +151,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 
 		ListOfEntity.removeAll();
 		double  Lx, Ly,Nx, Ny;
-		WipeoutLength=100; //change in future
+		 //change in future
 		Nx=Startvector.x;
 		Ny=Startvector.y;
 		Lx=Nx;
@@ -165,7 +166,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 
 		chekMiddlePoint();
 	}
-
+	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
 
 	//acutDelString(Tag1);
 	//acutDelString(Tag2);
@@ -248,9 +249,9 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 	setRadius();
 
-	ListOfEntity.removeAll();
+	ClearEntitylist();
 	double  Lx, Ly,Nx, Ny;
-	WipeoutLength=100; //change in future
+	
 	Nx=Startvector.x;
 	Ny=Startvector.y;
 	Lx=Nx;
@@ -271,7 +272,310 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 		MiddlePoint.z
 		);
 
-	//TypeRoundTap==TypeRoundTap_TapRect
+
+
+#pragma region FlexDuct
+if (DuctType==DuctTypeFlex)
+{
+	if (Form==Form_Direct)
+	{
+		
+		A=AcGePoint3d((Radius+SizeA)*cos(startangle)+CenterPoint.x,
+			(Radius+SizeA)*sin(startangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+		B=AcGePoint3d((Radius+SizeA)*cos(startangle+Swectangle)+CenterPoint.x,
+			(Radius+SizeA)*sin(startangle+Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+		C=AcGePoint3d((Radius)*cos(startangle+Swectangle)+CenterPoint.x,
+			(Radius)*sin(startangle+Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+		D=AcGePoint3d((Radius)*cos(startangle)+CenterPoint.x,
+			(Radius)*sin(startangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+
+		MA=AcGePoint3d((Radius+SizeA/2)*cos(startangle)+CenterPoint.x,
+			(Radius+SizeA/2)*sin(startangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+		MC=AcGePoint3d((Radius+SizeA/2)*cos(startangle+Swectangle)+CenterPoint.x,
+			(Radius+SizeA/2)*sin(startangle+Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+		L1[0]=A;
+		L1[1]=D;
+		L2[0]=B;
+		L2[1]=C;
+
+		if (Wipeout==true)
+		{
+
+
+
+
+
+			AcGePoint2d p[2];
+			p[0]=AcGePoint2d(MA.x,MA.y);
+			p[1]=AcGePoint2d(MC.x,MC.y);
+
+			AcDbPolyline *pLn = new AcDbPolyline(2);
+
+
+
+			pLn->addVertexAt(0,p[0],tan(Swectangle/4));
+			pLn->addVertexAt(1,p[1],tan(Swectangle/4));
+
+			setWipeoutProperty(mode,pLn);
+
+
+
+		}///////
+
+		if (This1D==true)
+		{
+
+			AcDbArc *arcie1=new AcDbArc(CenterPoint,Normvector,Radius+SizeA/2,startangle,startangle+Swectangle);
+			setZigzagProperty(arcie1);
+
+
+		}
+		else
+		{
+
+
+
+			AcDbArc *arcie1= new AcDbArc(CenterPoint,Normvector,Radius+SizeA,startangle,startangle+Swectangle);
+			AcDbArc *arcie2= new AcDbArc(CenterPoint,Normvector,Radius,startangle,startangle+Swectangle);
+				AcDbArc *arcie3= new AcDbArc(CenterPoint,Normvector,Radius+SizeA/2,startangle,startangle+Swectangle);
+			AcDbLine*pLine1 = new AcDbLine(this->A,this->D);
+			AcDbLine*pLine2 = new AcDbLine(this->B,this->C);
+
+
+
+
+			setZigzagProperty(arcie1);
+			setZigzagProperty(arcie2);
+			setCenterProperty(arcie3);
+// 			setMainProperty(pLine1);
+// 			setMainProperty(pLine2);
+
+
+
+
+
+
+
+
+		}
+	}
+
+	////Updown
+	else
+	{
+
+
+		MA=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		MC=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			(SizeA/2+Radius)*sin(Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+
+
+
+
+		AcGePoint3d t1=AcGePoint3d(Radius+SizeA+CenterPoint.x,
+			CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+
+		AcGePoint3d t2=AcGePoint3d(Radius+SizeA+CenterPoint.x,
+			CenterPoint.y+(Radius+SizeA/2)*sin(Swectangle),
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		AcGePoint3d t3=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			CenterPoint.y+(Radius+SizeA)*sin(Swectangle),
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		AcGePoint3d t4=AcGePoint3d(Radius+CenterPoint.x,
+			CenterPoint.y+(Radius+SizeA/2)*sin(Swectangle),
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+		AcGePoint3d t5=AcGePoint3d(Radius+CenterPoint.x,
+			CenterPoint.y,
+			CenterPoint.z
+			).rotateBy(startangle,vectr,CenterPoint);
+
+		AcGePoint3d mm=AcGePoint3d(Radius+SizeA/2+CenterPoint.x,
+			(SizeA/2+Radius)*sin(Swectangle)+CenterPoint.y,
+			CenterPoint.z
+			);
+
+		AcGePoint3d p1=AcGePoint3d(mm.x+SizeA/2+Otstup,
+			mm.y,
+			mm.z
+			);
+
+		AcGePoint3d p2=AcGePoint3d(mm.x,
+			mm.y+(Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle)+Otstup,
+			mm.z
+			);
+		AcGePoint3d p3=AcGePoint3d(mm.x-SizeA/2-Otstup,
+			mm.y,
+			mm.z
+			);
+		AcGePoint3d p4=AcGePoint3d(mm.x,
+			mm.y-(Radius+SizeA)*sin(Swectangle)+(Radius+SizeA/2)*sin(Swectangle)-Otstup,
+			mm.z
+			);
+		AcGePoint3d p5=AcGePoint3d(mm.x,
+			CenterPoint.y,
+			mm.z
+			);
+
+
+
+		AcDbEllipse* el=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(SizeA/2,0,0),((Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle))/(SizeA/2),0,M_PI);
+		AcDbEllipse* el2=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(SizeA/2,0,0),((Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle))/(SizeA/2),M_PI,0);
+		AcDbEllipse* el3;
+		double radiusparam;
+		double radius2=(Radius+SizeA)*sin(Swectangle)-(Radius+SizeA/2)*sin(Swectangle);
+		if (radius2<=SizeA*3/8)
+		{
+			el3=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(SizeA*3/8,0,0),radius2/(SizeA*3/8),M_PI*3/2,M_PI/2);
+		}
+		else
+		{
+			el3=new AcDbEllipse(mm,AcGeVector3d(0,0,1),AcGeVector3d(0,radius2,0),(SizeA*3/8)/radius2,M_PI,0);
+		}
+
+
+
+		AcDbLine*pLine1 = new AcDbLine(p1,p3);
+		AcDbLine*pLine2 = new AcDbLine(p2,p5);
+
+		AcDbLine*pLn1 = new AcDbLine(t2,t1);
+		AcDbLine*pLn2 = new AcDbLine(t5,t4);
+// 				AcDbPolyline*pLn = new AcDbPolyline();
+// 		pLn->addVertexAt(0,AcGePoint2d(t2.x,t2.y));
+// 		pLn->addVertexAt(1,AcGePoint2d(t1.x,t1.y));
+// 		pLn->addVertexAt(2,AcGePoint2d(t5.x,t5.y));
+// 		pLn->addVertexAt(3,AcGePoint2d(t4.x,t4.y));
+
+
+		AcGeMatrix3d mat; 
+		mat.setToRotation(startangle,AcGeVector3d(0,0,1),CenterPoint); 
+
+
+		el->transformBy(mat);
+		el2->transformBy(mat);
+		el3->transformBy(mat);
+		pLine1->transformBy(mat);
+		pLine2->transformBy(mat);
+
+		if (Wipeout==true)
+		{
+			AcDbPolyline*pLn = new AcDbPolyline();
+			pLn->addVertexAt(0,AcGePoint2d(MA.x,MA.y));
+			pLn->addVertexAt(1,AcGePoint2d(t3.x,t3.y));
+			setWipeoutProperty(mode,pLn);
+
+		}
+
+		if (This1D==true)
+		{
+			AcDbLine*pLine1 = new AcDbLine(MA,mm.rotateBy(startangle,vectr,CenterPoint));
+			setZigzagProperty(pLine1);
+			AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+			setMainProperty(crcl);
+		}
+
+		else 
+		{
+			double l1=(double) 89.5*M_PI/180, l2=90.5*(double)M_PI/180;
+			if (Form==Form_Up)
+			{
+
+				if ((Swectangle> l1) && (Swectangle< l2))
+				{
+
+					setMainProperty(el);
+					setMainProperty(el2);
+					setMainProperty(el3);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+				}
+				else
+				{
+
+					setHideProperty(el);
+					setMainProperty(el2);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+				}
+			}
+			else
+			{
+				if ((Swectangle> l1) && (Swectangle< l2))
+				{
+
+					setMainProperty(el);
+					setHideProperty(el2);
+					setCenterProperty(el3);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+
+				}
+				else
+				{
+
+					setMainProperty(el);
+					setHideProperty(el2);
+					setCenterProperty(pLine1);
+					setCenterProperty(pLine2);
+					setZigzagProperty(pLn1);
+					setZigzagProperty(pLn2);
+
+				}
+			}
+
+
+
+
+		}
+
+
+
+
+
+	}
+
+}
+
+#pragma endregion Flexduct
+
+#pragma region Duct Type Still
+
+if (DuctType==DuctTypeStill)
+{
+
 
 	if (ThisRound==false)
 
@@ -363,10 +667,14 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 				AcDbLine*pLine2 = new AcDbLine(this->B,this->C);
 
 
-				setMainProperty(arcie1);
-				setMainProperty(arcie2);
-				setMainProperty(pLine1);
-				setMainProperty(pLine2);
+
+
+					setMainProperty(arcie1);
+					setMainProperty(arcie2);
+					setMainProperty(pLine1);
+					setMainProperty(pLine2);
+
+
 
 
 			
@@ -492,13 +800,14 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 				{
 
 					AcDbPolyline *pLn = new AcDbPolyline(2);
-
-
+				
 
 					pLn->addVertexAt(0,AcGePoint2d(MA.x,MA.y));
 					pLn->addVertexAt(1,AcGePoint2d(MC.x,MC.y));
+
 					setMainProperty(pLn);
-					
+					AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+					setMainProperty(crcl);
 
 				}
 				else
@@ -764,7 +1073,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 
 						setMainProperty(pLine1);
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine2);
 						setMainProperty(pLine3);
 						setMainProperty(pLine4);
 
@@ -908,7 +1217,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 						AcDbLine* pLine3 = new AcDbLine(this->pMass45[1],this->pMass45[4]);
 						setMainProperty(pLine1);	
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine2);
 						setMainProperty(pLine3);
 
 				
@@ -929,7 +1238,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						}
 
 						setMainProperty(pLine2)		;
-						
+
 
 
 					}
@@ -1059,7 +1368,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 					{
 						AcDbLine*pLine1 = new AcDbLine(MA,mm.rotateBy(startangle,vectr,CenterPoint));
 						setMainProperty(pLine1);
-					
+						AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+						setMainProperty(crcl);
 					}
 
 					else 
@@ -1074,8 +1384,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						setMainProperty(el);
 						setMainProperty(el2);
 						setMainProperty(el3);
-						setAxisProperty(pLine1);
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine1);
+						setCenterProperty(pLine2);
 						setMainProperty(pLn);
 						}
 						else
@@ -1083,8 +1393,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 							setHideProperty(el);
 							setMainProperty(el2);
 							//setMainProperty(el3);
-							setAxisProperty(pLine1);
-							setAxisProperty(pLine2);
+							setCenterProperty(pLine1);
+							setCenterProperty(pLine2);
 							setMainProperty(pLn);
 						}
 					}
@@ -1095,8 +1405,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						setMainProperty(el);
 						setHideProperty(el2);
 						setHideProperty(el3);
-						setAxisProperty(pLine1);
-						setAxisProperty(pLine2);
+						setCenterProperty(pLine1);
+						setCenterProperty(pLine2);
 						setMainProperty(pLn);
 						}
 						else
@@ -1104,8 +1414,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 							setMainProperty(el);
 							setHideProperty(el2);
 							//setHideProperty(el3);
-							setAxisProperty(pLine1);
-							setAxisProperty(pLine2);
+							setCenterProperty(pLine1);
+							setCenterProperty(pLine2);
 							setMainProperty(pLn);
 						}
 					}
@@ -1218,7 +1528,7 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 						setMainProperty(pLine2);
 						setMainProperty(arcie1);
 						setMainProperty(arcie2);
-						setAxisProperty(arcie3);
+						setCenterProperty(arcie3);
 						
 
 					
@@ -1352,7 +1662,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 					{
 						AcDbLine*pLine1 = new AcDbLine(MA,mm.rotateBy(startangle,vectr,CenterPoint));
 						setMainProperty(pLine1);
-						
+						AcDbCircle *crcl = new AcDbCircle(MC,AcGeVector3d(0,0,1),50);
+						setMainProperty(crcl);
 					}
 
 					else 
@@ -1367,8 +1678,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 								setMainProperty(el);
 								setMainProperty(el2);
 								setMainProperty(el3);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 							
@@ -1378,8 +1689,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 								setHideProperty(el);
 								setMainProperty(el2);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 							}
@@ -1391,9 +1702,9 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 								setMainProperty(el);
 								setHideProperty(el2);
-								setAxisProperty(el3);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(el3);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 
@@ -1403,8 +1714,8 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 								setMainProperty(el);
 								setHideProperty(el2);
-								setAxisProperty(pLine1);
-								setAxisProperty(pLine2);
+								setCenterProperty(pLine1);
+								setCenterProperty(pLine2);
 								setMainProperty(pLn);
 							
 							}
@@ -1463,7 +1774,15 @@ Adesk::Boolean TVS_TAP::subWorldDraw (AcGiWorldDraw *mode) {
 
 
 }
-	
+	}
+
+#pragma endregion Duct type still
+
+
+for each (AcDbEntity * var in ListOfWipeout)
+{
+	mode->geometry().draw(var);
+}
 
 	for each (AcDbEntity * var in ListOfEntity)
 	{
@@ -1493,46 +1812,72 @@ Acad::ErrorStatus TVS_TAP::subGetOsnapPoints (
 	//AcGeLine3d line1,line2;
 	//line1.set(B,C); 
 	//line2.set(D,A); 
+			Acad::ErrorStatus er;
+// 	switch (osnapMode) {
+// 
+// 	case AcDb::kOsModeEnd:
+// 		int ind;
+// 		AcDbPolyline * pLn;
+// 		Acad::ErrorStatus er;
+// 		for each (AcDbEntity * var in ListOfEntity)
+// 		{
+// // 			if ( (pLn = AcDbPolyline::cast(var)) != NULL )
+// // 			{
+// // 				ind=pLn->numVerts();
+// // 				for (int i=0;i<ind;i++)
+// // 				{
+// // 					AcGePoint2d curpnt;
+// // 					pLn->getPointAt(i,curpnt);
+// // 					snapPoints.append(AcGePoint3d(curpnt.x,curpnt.y,0));
+// // 				}
+// // 			}
+// 
+// 			er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+// 				lastPoint,viewXform,snapPoints,geomIds);
+// 			if (er!=Acad::eOk)
+// 				return er;
+// 		}
+// // snapPoints.append(MA);
+// // 
+// // snapPoints.append(MC);
+// // snapPoints.append(MiddlePoint);
+// 
+// 		break;
+// 		/*
+// 		case AcDb::kOsModeCen:
+// 		snapPoints.append(MA);
+// 
+// 		snapPoints.append(MC);
+// 
+// 
+// 		break;
+// 		*/
+// 
+// 	case AcDb::kOsModePerp: 
+// 
+// // 		snapPoints.append(line1.closestPointTo(lastPoint));
+// // 		snapPoints.append(line2.closestPointTo(lastPoint));
+// 		break;
+// 	}
 
-	switch (osnapMode) {
 
-	case AcDb::kOsModeEnd:
-		int ind;
-		AcDbPolyline * pLn;
-		for each (AcDbEntity * var in ListOfEntity)
-		{
-			if ( (pLn = AcDbPolyline::cast(var)) != NULL )
-			{
-				ind=pLn->numVerts();
-				for (int i=0;i<ind;i++)
-				{
-					AcGePoint2d curpnt;
-					pLn->getPointAt(i,curpnt);
-					snapPoints.append(AcGePoint3d(curpnt.x,curpnt.y,0));
-				}
-			}
-		}
-snapPoints.append(MA);
+	for each (AcDbEntity * var in ListOfEntity)
+	{
+		// 			if ( (pLn = AcDbPolyline::cast(var)) != NULL )
+		// 			{
+		// 				ind=pLn->numVerts();
+		// 				for (int i=0;i<ind;i++)
+		// 				{
+		// 					AcGePoint2d curpnt;
+		// 					pLn->getPointAt(i,curpnt);
+		// 					snapPoints.append(AcGePoint3d(curpnt.x,curpnt.y,0));
+		// 				}
+		// 			}
 
-snapPoints.append(MC);
-snapPoints.append(MiddlePoint);
-
-		break;
-		/*
-		case AcDb::kOsModeCen:
-		snapPoints.append(MA);
-
-		snapPoints.append(MC);
-
-
-		break;
-		*/
-
-	case AcDb::kOsModePerp: 
-
-// 		snapPoints.append(line1.closestPointTo(lastPoint));
-// 		snapPoints.append(line2.closestPointTo(lastPoint));
-		break;
+		er=var->getOsnapPoints(osnapMode,gsSelectionMark,pickPoint,
+			lastPoint,viewXform,snapPoints,geomIds);
+		if (er!=Acad::eOk)
+			return er;
 	}
 	return (Acad::eOk);
 }
@@ -1839,7 +2184,7 @@ TVS_TAP *TVS_TAP::add_new( double &pSizeA,
 	pEnt->RadiusVariableParameter=1;
 	pEnt->RadiusConst=150;
 	pEnt->Form=Form_Direct;
-
+	pEnt->setNewParameters();
 
 	if (pThisRound==true)
 	{
@@ -1934,7 +2279,9 @@ Acad::ErrorStatus TVS_TAP::put_SizeB(double newVal)
 	assertWriteEnabled () ;
 
 
-
+	if (DuctType==DuctTypeStill)
+	{
+	
 	if((ThisRound==true)&&(newVal!=0))
 	{
 
@@ -1948,7 +2295,7 @@ Acad::ErrorStatus TVS_TAP::put_SizeB(double newVal)
 	{
 
 		ThisRound=true;
-		
+
 		SizeB=newVal;
 		return (Acad::eOk) ;
 
@@ -1958,6 +2305,14 @@ Acad::ErrorStatus TVS_TAP::put_SizeB(double newVal)
 
 
 	SizeB =newVal ;
+
+	}
+	else
+	{
+		SizeB=0;
+		ThisRound=true;
+		SizeB=0;
+	}
 	return (Acad::eOk) ;
 }
 
@@ -2475,7 +2830,11 @@ double TVS_TAP::get_radius(void) const
 
 void TVS_TAP::setRadius()
 {
-
+	if (DuctType==DuctTypeFlex)
+	{
+		Radius=SizeA*RadiusVariableParameter;
+		return;
+	}
 	if (ThisRound==true)
 	{
 		switch ((int)RadiusTypeRound)
@@ -2625,7 +2984,22 @@ int TVS_TAP::get_RadiusVariableParameter(void) const
 	return(RadiusVariableParameter);
 }
 
-Acad::ErrorStatus TVS_TAP::put_RadiusVariableParameter(int newVal)
+void TVS_TAP::setFlex( const bool &isFlex )
+{
+	assertWriteEnabled();
+	if (isFlex)
+	{
+		DuctType=DuctTypeFlex;
+		put_SizeB(0);
+	}
+	else
+	{
+		DuctType=DuctTypeStill;
+
+	}
+}
+
+Acad::ErrorStatus TVS_TAP::put_RadiusVariableParameter(double newVal)
 {
 	assertWriteEnabled () ;
 	RadiusVariableParameter =newVal ;
@@ -2638,7 +3012,7 @@ int TVS_TAP::get_RadiusConst(void) const
 	return(RadiusConst);
 }
 
-Acad::ErrorStatus TVS_TAP::put_RadiusConst(int newVal)
+Acad::ErrorStatus TVS_TAP::put_RadiusConst(double newVal)
 {
 	assertWriteEnabled () ;
 	RadiusConst =newVal ;
@@ -2661,4 +3035,9 @@ void TVS_TAP::chekMiddlePoint()
 	return;
 }
 
+void TVS_TAP::setDuctType(int pDuctType)
+{
+	assertWriteEnabled();
+	DuctType=pDuctType;
+}
 

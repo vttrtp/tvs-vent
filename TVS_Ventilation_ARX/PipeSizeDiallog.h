@@ -59,6 +59,7 @@
 #define IDC_LengthWye 1016
 #define IDC_TransLength 1023
 #define IDC_Wipeout 1020
+#define IDC_WipeoutLength 10020
 #define IDC_Grani 1021
 #define IDC_1D 1022
 #define IDC_ElevVal 1014
@@ -79,6 +80,9 @@
 #define IDC_TapMid 1035
 #define IDC_TapDown 1030
 #define IDC_Swectangle 1013
+
+
+#define IDC_DuctFlex 1041
 //-----------------------------------------------------------------------------
 class PipeSizeDiallog : public CAdUiBaseDialog {
 	DECLARE_DYNAMIC (PipeSizeDiallog)
@@ -200,7 +204,12 @@ public:
 	int iRadiusTypeRect;
 
 
+	CEdit fWipeoutLength;
+	double WipeoutLength;
 
+	CButton fDuctFlex;
+	BOOL DuctFlex;
+	BOOL bDuctFlex;
 //	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 
 	afx_msg void OnBnClickedOk();
@@ -233,7 +242,7 @@ public:
 	afx_msg void SetRadiusTypeRect_RadiusConstant();
 	afx_msg void SetRadiusTypeRect_RadiusVariable();
 
-
+	afx_msg void ChangeDuctFlex();
 
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 } ;

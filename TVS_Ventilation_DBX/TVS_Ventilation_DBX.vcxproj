@@ -69,6 +69,7 @@
       <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Autodesk\AutoCAD 2016;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Level1</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Level1</WarningLevel>
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
     </Link>
@@ -81,6 +82,9 @@
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">acad.lib;accore.lib;acdb20.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Link>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">acad.lib;accore.lib;acdb20.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="acrxEntryPoint.cpp" />
@@ -88,6 +92,7 @@
     <ClCompile Include="ComTrans.cpp" />
     <ClCompile Include="ComWye.cpp" />
     <ClCompile Include="Com_TAP.cpp" />
+    <ClCompile Include="GripImp.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -107,6 +112,7 @@
     <ClInclude Include="ComTrans.h" />
     <ClInclude Include="ComWye.h" />
     <ClInclude Include="Com_TAP.h" />
+    <ClInclude Include="GripImp.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="TVS_ComEntity.h" />

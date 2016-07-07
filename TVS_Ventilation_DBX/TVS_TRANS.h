@@ -214,8 +214,9 @@ public:
 	Acad::ErrorStatus put_Type(int newVal);
 	Acad::ErrorStatus subGetClassID (CLSID *pClsid) const;
 
-
-
+	void setFlex(const bool &isFlex);
+	void setStill();
+	 void setDuctType(int pDuctType);
 
 
 
