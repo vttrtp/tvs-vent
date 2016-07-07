@@ -90,6 +90,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="acrxEntryPoint.cpp" />
+    <ClCompile Include="BLKMNGRDLG.cpp" />
     <ClCompile Include="dgAllEdit.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="Func.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BLKMNGRDLG.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="dgAllEdit.h" />
     <ClInclude Include="DocData.h" />

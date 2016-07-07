@@ -320,6 +320,16 @@ BEGIN
     LTEXT           "Угол",IDC_STATIC,15,44,35,10
 END
 
+IDD_BLOCKMNGRDLG DIALOGEX 0, 0, 583, 178
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "ОК",IDOK,198,157,50,14
+    PUSHBUTTON      "Отмена",IDCANCEL,526,157,50,14
+    CONTROL         "Настраиваемый1",IDC_CUSTOM1,"",WS_TABSTOP,7,7,569,142
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -359,6 +369,14 @@ BEGIN
         RIGHTMARGIN, 114
         TOPMARGIN, 7
         BOTTOMMARGIN, 75
+    END
+
+    IDD_BLOCKMNGRDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 576
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 171
     END
 END
 #endif    // APSTUDIO_INVOKED

@@ -36,6 +36,7 @@ void HeatFloor::getOffset(AcDbPolyline *pLine)
 	getMaxStep(pLine);
 	int idx=curStep/step;
 	pln=pLine;
+	curStep=step;
 	for (int i=0;i<idx;i++)
 	{
 		indexofrecursion++;
@@ -65,38 +66,38 @@ void HeatFloor::getOffset(AcDbPolyline *pLine)
 
 
 
-void HeatFloor::drawOffset(AcDbPolyline *pLine)
+void HeatFloor::drawOffset(AcDbPolyline *pLine,const int &step)
 {
 	
 	AcDbVoidPtrArray arr;
-	pLine->getOffsetCurves(200,arr);
+	pLine->getOffsetCurves(step,arr);
 	
 	indexofrecursion++;
-		if(indexofrecursion>5000) return;
+		if(indexofrecursion>700) return;
 	for (long i=0;i<arr.logicalLength();i++)
 	{
 		AcDbPolyline *pPoly = NULL;
 	
 	pPoly = (AcDbPolyline*)(arr[i]);
 
-	AcDbText pText;
 	
-	for (int j=0;j<pPoly->numVerts();j++)
-	{
-		AcDbText *pText=new AcDbText;
-		ACHAR cNum[512];
-		acdbRToS(j,2,0,cNum);
-		pText->setTextString(cNum);
-		pText->setHeight(50);
-		AcGePoint2d pos;
-		pPoly->getPointAt(j,pos);
-		pText->setPosition(AcGePoint3d(pos.x,pos.y,0));
-		drawEntity(pText);
-	}
-	 
+	
+// 	for (int j=0;j<pPoly->numVerts();j++)
+// 	{
+// 		AcDbText *pText=new AcDbText;
+// 		ACHAR cNum[512];
+// 		acdbRToS(j,2,0,cNum);
+// 		pText->setTextString(cNum);
+// 		pText->setHeight(50);
+// 		AcGePoint2d pos;
+// 		pPoly->getPointAt(j,pos);
+// 		pText->setPosition(AcGePoint3d(pos.x,pos.y,0));
+// 		drawEntity(pText);
+// 	}
+// 	 
 	pPoly->setColorIndex(std::rand() % 255);
 	func::drawEntity(pPoly);
-	drawOffset(pPoly);
+	drawOffset(pPoly,step);
 	}
 }
 
@@ -253,11 +254,11 @@ bool HeatFloor::getInsideOffset(AcDbPolyline* offset, AcDbVoidPtrArray &result)
 {
 	indexofrecursion1++;
 	AcDbVoidPtrArray rightArrS, leftArrS;
-	double pStep=curStep+step;
+	double pStep=step;
 	Acad::ErrorStatus er,el;
 	er=offset->getOffsetCurves(step,rightArrS);
 	el=offset->getOffsetCurves(-step,leftArrS);
-
+	
 		AcDbVoidPtrArray rightArr, leftArr;
 		
 		er=offset->getOffsetCurves(pStep,rightArr);
@@ -267,7 +268,7 @@ bool HeatFloor::getInsideOffset(AcDbPolyline* offset, AcDbVoidPtrArray &result)
 		if (leftArr.logicalLength()==0){ result= leftArrS; return true;};
 		
 	
-	return -1;
+	return false;
 }
 
 bool HeatFloor::getMaxOffset( AcDbVoidPtrArray offset, AcDbPolyline * &result)
@@ -293,7 +294,18 @@ indexofrecursion2++;
 		}
 
 	}
-	
+// 	if (leftArr.logicalLength()>0)
+// 	{
+// 		curStep-=step;result=pPoly; return true;
+// 	}
+// 	if (leftArr.logicalLength()>0)
+// 	{
+// 		curStep-=step;result=pPoly; return true;
+// 	}
+// 	pPoly->setColorIndex(1);
+// 	drawEntity(pPoly);
+	curStep-=step;result=pPoly;;
+	return true;
 
 }
 
