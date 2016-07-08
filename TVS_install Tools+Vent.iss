@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TVS Addins for Autocad"
-#define MyAppVersion "2.0.2"
+#define MyAppVersion "2"
 #define MyAppPublisher "Vitaut Tryputsin"
 #define MyAppURL "http://www.tvs-vent.by/"
 
