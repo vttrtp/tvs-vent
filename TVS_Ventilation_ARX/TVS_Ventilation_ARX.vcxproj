@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\openssl.1.0.1.25\build\native\openssl.props" Condition="Exists('..\packages\openssl.1.0.1.25\build\native\openssl.props')" />
+  <Import Project="..\packages\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('..\packages\openssl.1.0.1.24\build\native\openssl.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -60,18 +60,30 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <IncludePath>$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win64\include;$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL;</IncludePath>
-    <LibraryPath>$(SolutionDir)..\codegenerator\$(IntDir);$(ProjectDir)..\..\OpenSSL-Win64\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-openssl>static</Linkage-openssl>
+    <Linkage-curl>static</Linkage-curl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)..\..\codegenerator\TVSPL;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x86-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\..\OpenSSL-Win32\;$(ProjectDir)..\..\OpenSSL-Win32\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x86-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
+    <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    <Linkage-curl>static</Linkage-curl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\include;$(ProjectDir)..\..\OpenSSL-Win64\include;$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
-    <LibraryPath>$(ProjectDir)..\..\OpenSSL-Win64\;$(ProjectDir)..\..\codegenerator\TVSPL;$(ProjectDir)..\..\OpenSSL-Win64\lib\;$(ProjectDir)..\..\curl-7.47.1\builds\libcurl-vc11-x64-release-static-ipv6-sspi-winssl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
+    <Linkage-curl>
+    </Linkage-curl>
+    <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
+    <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    <Linkage-curl>static</Linkage-curl>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -101,11 +113,12 @@
     <Link>
     </Link>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;ssleay32.lib;libcurl_a.lib;libeay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib</AdditionalDependencies>
       <NoEntryPoint Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</NoEntryPoint>
+      <IgnoreAllDefaultLibraries Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IgnoreAllDefaultLibraries>
     </Link>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib</AdditionalDependencies>
       <DelayLoadDLLs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </DelayLoadDLLs>
       <EmbedManagedResourceFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -115,8 +128,11 @@
       <LinkLibraryDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib;$(SolutionDir)..\codegenerator\$(IntDir)TVSPL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib</AdditionalDependencies>
       <DelayLoadDLLs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">libeay32.dll;ssleay32.dll;</DelayLoadDLLs>
+    </Link>
+    <Link>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)TVS_Ventilation_DBX\$(IntDir)TVSTVS_Ventilation_DBX.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -210,13 +226,13 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" />
-    <Import Project="..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
-    <Import Project="..\packages\openssl.redist.1.0.1.25\build\native\openssl.redist.targets" Condition="Exists('..\packages\openssl.redist.1.0.1.25\build\native\openssl.redist.targets')" />
-    <Import Project="..\packages\openssl.1.0.1.25\build\native\openssl.targets" Condition="Exists('..\packages\openssl.1.0.1.25\build\native\openssl.targets')" />
     <Import Project="..\packages\curl.redist.7.30.0.2\build\native\curl.redist.targets" Condition="Exists('..\packages\curl.redist.7.30.0.2\build\native\curl.redist.targets')" />
     <Import Project="..\packages\curl.7.30.0.1\build\native\curl.targets" Condition="Exists('..\packages\curl.7.30.0.1\build\native\curl.targets')" />
     <Import Project="..\packages\rapidjson.1.0.2\build\native\rapidjson.targets" Condition="Exists('..\packages\rapidjson.1.0.2\build\native\rapidjson.targets')" />
+    <Import Project="..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="..\packages\openssl.redist.1.0.1.25\build\native\openssl.redist.targets" Condition="Exists('..\packages\openssl.redist.1.0.1.25\build\native\openssl.redist.targets')" />
+    <Import Project="..\packages\openssl.1.0.1.24\build\native\openssl.targets" Condition="Exists('..\packages\openssl.1.0.1.24\build\native\openssl.targets')" />
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>

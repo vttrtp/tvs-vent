@@ -48,7 +48,7 @@
 #include <acedads.h>
 #include <acedCmdNF.h>
 #include "dbcurve.h"
-#define TVS_Version 24
+#define TVS_Version 30
 #define M_PI 3.14159265358979323846
 #define DuctTypeStill 0
 #define DuctTypeFlex 1
@@ -214,6 +214,10 @@ public:
 	bool ShowText;
 	int Form;
 	int DuctType;
+	bool activeStatus;
+	AcDbHardPointerId connector1;
+	AcDbHardPointerId connector2;
+	AcDbHardPointerId connector3;
 	vector <AcDbEntity> ListOfEntityAxis;
 	vector <AcDbEntity> ListOfEntityBody;
 	AcDbVoidPtrArray ListOfEntity;

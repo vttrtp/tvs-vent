@@ -25,7 +25,7 @@
 #include "StdAfx.h"
 #include "TVS_Pipe.h"
 #include "TVS_Ventilation_DBX_i.h"
-
+#include<vector>
 //-----------------------------------------------------------------------------
 Adesk::UInt32 TVS_Pipe::kCurrentVersionNumber =TVS_Version ;
 
@@ -69,6 +69,27 @@ void TVS_Pipe::GetParamsForDraw( AcDbObjectId &pEntId, int &pGripNumber )
 	
 }
 
+void writeIdList(const std::vector<AcDbHardPointerId> &idList, AcDbDwgFiler *pFiler)
+{
+	
+	pFiler->writeItem((Adesk::UInt32)idList.size());
+	for (unsigned int i = 0;i<idList.size();i++)
+	{
+		pFiler->writeItem(idList[i]);
+	}
+}
+
+void readIdList( std::vector<AcDbHardPointerId> &idList, AcDbDwgFiler *pFiler)
+{
+	Adesk::UInt32 count;
+	pFiler->readItem(&count);
+	idList.resize(count);
+	for (unsigned int i = 0;i<count;i++)
+	{
+		pFiler->readItem(&idList[i]);
+	}
+}
+
 //-----------------------------------------------------------------------------
 //----- AcDbObject protocols
 //- Dwg Filing protocol
@@ -83,6 +104,7 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 		return (es) ;
 	//----- Output params
 	//.....
+	
 	pFiler->writeItem (FirstPoint) ;
 	pFiler->writeItem (LastPoint) ;
 	pFiler->writeItem (SizeA) ;
@@ -101,6 +123,9 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (Form) ;
 	pFiler->writeItem (WipeoutLength) ;
 	pFiler->writeItem (DuctType) ;
+	pFiler->writeItem (connector1) ;
+	pFiler->writeItem (connector2) ;
+	
 
 	return (pFiler->filerStatus ()) ;
 }
@@ -141,7 +166,11 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
-	
+	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
+	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+	if ( version >= 30 /*&& version <= endVersion*/ ) pFiler->readItem (&connector1) ;
+	if ( version >= 30 /*&& version <= endVersion*/ ) pFiler->readItem (&connector2) ;
+
 
 	return (pFiler->filerStatus ()) ;
 }
