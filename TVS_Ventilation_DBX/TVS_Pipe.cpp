@@ -69,26 +69,7 @@ void TVS_Pipe::GetParamsForDraw( AcDbObjectId &pEntId, int &pGripNumber )
 	
 }
 
-void writeIdList(const std::vector<AcDbHardPointerId> &idList, AcDbDwgFiler *pFiler)
-{
-	
-	pFiler->writeItem((Adesk::UInt32)idList.size());
-	for (unsigned int i = 0;i<idList.size();i++)
-	{
-		pFiler->writeItem(idList[i]);
-	}
-}
 
-void readIdList( std::vector<AcDbHardPointerId> &idList, AcDbDwgFiler *pFiler)
-{
-	Adesk::UInt32 count;
-	pFiler->readItem(&count);
-	idList.resize(count);
-	for (unsigned int i = 0;i<count;i++)
-	{
-		pFiler->readItem(&idList[i]);
-	}
-}
 
 //-----------------------------------------------------------------------------
 //----- AcDbObject protocols
@@ -123,9 +104,7 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (Form) ;
 	pFiler->writeItem (WipeoutLength) ;
 	pFiler->writeItem (DuctType) ;
-	pFiler->writeItem (connector1) ;
-	pFiler->writeItem (connector2) ;
-	
+	writeConnectors(pFiler);
 
 	return (pFiler->filerStatus ()) ;
 }
@@ -168,9 +147,7 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
-	if ( version >= 30 /*&& version <= endVersion*/ ) pFiler->readItem (&connector1) ;
-	if ( version >= 30 /*&& version <= endVersion*/ ) pFiler->readItem (&connector2) ;
-
+	readConnectors(pFiler,version);
 
 	return (pFiler->filerStatus ()) ;
 }
@@ -687,6 +664,22 @@ Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (
 		// For LP and center point
 		if (idx==1 || idx==2) LastPoint += offset;
 
+		if (idx == 2)
+		{
+			int conStart;
+			if (getConnectorByIndex(conPipeStart,conStart))
+			{
+				correctAnother(connectors[conStart],offset);
+			}
+			
+			int conEnd;
+			if (getConnectorByIndex(conPipeStart,conEnd))
+			{
+				correctAnother(connectors[conEnd],offset);
+			}
+		
+
+		}
 	}return eOk;
 	return (AcDbCurve::subMoveGripPointsAt (gripAppData, offset, bitflags)) ;
 }
@@ -858,6 +851,41 @@ Acad::ErrorStatus TVS_Pipe::put_FirstPoint(AcGePoint3d newVal)
 	return (Acad::eOk) ;
 }
 
+
+
+bool TVS_Pipe::correctConnector(const int &index,const AcGeVector3d &offset)
+{
+	TVS_Connector conStart;
+	int ind;
+	if(getConnectorByIndex(conPipeStart,ind))
+	{
+		conStart = connectors[ind];
+	}
+	TVS_Connector conEnd;
+		if(getConnectorByIndex(conPipeEnd,ind))
+		{
+			conEnd = connectors[ind];
+		}
+	AcGeVector3d anotherOffset;
+
+	anotherOffset = offset.orthoProject(((FirstPoint-LastPoint).normalize()));
+
+	FirstPoint+=offset;
+	LastPoint+=anotherOffset;
+	if (index == conPipeStart)
+	{
+		correctAnother(conEnd,anotherOffset);
+	}
+
+	if (index == conPipeEnd)
+	{
+		correctAnother(conStart,anotherOffset);
+	}
+	conStart.point = FirstPoint;
+	conEnd.point = LastPoint;
+		return true;
+}
+
 void TVS_Pipe::Gimme4PipePoints ()
 {
 	double X1,X2,Y1,Y2;
@@ -935,6 +963,18 @@ TVS_Pipe* TVS_Pipe::add_new(AcGePoint3d &pFirstPoint,
 	AcDbObjectId retId = AcDbObjectId::kNull;
 	pBlockTableRecord->appendAcDbEntity(retId, pEnt);
 	pBlockTableRecord->close();
+
+	TVS_Connector conStart;
+	conStart.connectionID = NULL;
+	conStart.cTypeCurrent = conPipeStart;
+
+	TVS_Connector conEnd;
+	conEnd.connectionID = NULL;
+	conEnd.cTypeCurrent = conPipeEnd;
+	pEnt->connectors.resize(2);
+	pEnt->connectors[0] = conStart;
+	pEnt->connectors[1] = conEnd;
+
 	pEnt->close();
 	return pEnt;
 }
@@ -1262,7 +1302,8 @@ Acad::ErrorStatus TVS_FlexDuct::subMoveGripPointsAt( const AcDbIntArray &indices
 		if (idx==0 ) FirstPoint += offset;
 		// For LP and center point
 		if (idx==1 ) LastPoint += offset;
-			if (idx==2) flexmidpoint += offset;
+		if (idx==2) flexmidpoint += offset;
+
 	}
 	//return (Acad::eOk);
 	return (AcDbCurve::subMoveGripPointsAt (indices, offset)) ;

@@ -576,6 +576,66 @@ Acad::ErrorStatus TVS_Entity::put_Param(int newVal)
 }
 
 
+
+
+
+bool  TVS_Entity::getConnectorByIndex(const int &ind, int &indexret)
+{
+	for (unsigned int i = 0; i< connectors.size();i++)
+	{
+		if (connectors[i].cTypeCurrent==ind)
+		{
+			indexret = i;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool TVS_Entity::correctConnector(const int &index,const AcGeVector3d &offset)
+{
+	return true;
+}
+
+bool TVS_Entity::correctAnother(const TVS_Connector& con,const AcGeVector3d& offset)
+{
+	AcDbEntity *pEnt;
+	TVS_Entity *pTVS;
+	if (acdbOpenAcDbEntity(pEnt,con.connectionID,AcDb::kForWrite)==eOk)
+	{
+		if ( (pTVS = TVS_Entity::cast(pEnt)) != NULL )
+		{
+			if(!pTVS->correctConnector(con.cTypeAnother,offset)) return false;
+		}
+		pEnt->close();
+	}
+	return true;
+}
+
+void TVS_Entity::writeConnectors(AcDbDwgFiler *pFiler) const
+{
+	int count = connectors.size();
+	pFiler->writeItem(count);
+	for (unsigned int i = 0;i<connectors.size();i++)
+	{
+		connectors[i].write(pFiler);
+	}
+}
+
+void TVS_Entity::readConnectors(AcDbDwgFiler *pFiler, const int &version)
+{
+	if (version>=30)
+	{
+		pFiler->readItem(&connectorCounts);
+		connectors.resize(connectorCounts);
+		
+		for (unsigned int i = 0;i<connectorCounts;i++)
+		{
+			connectors[i].read(pFiler,version);
+		}
+	}
+}
+
 //bool TVS_Entity::get_ShowText(void) const
 //{
 //	assertReadEnabled () ;

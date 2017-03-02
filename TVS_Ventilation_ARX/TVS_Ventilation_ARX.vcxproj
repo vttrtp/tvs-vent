@@ -60,27 +60,29 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-    <Linkage-openssl>static</Linkage-openssl>
-    <Linkage-curl>static</Linkage-curl>
+    <Linkage-openssl>
+    </Linkage-openssl>
+    <Linkage-curl>
+    </Linkage-curl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-curl>static</Linkage-curl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <Linkage-curl>
     </Linkage-curl>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath);$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-curl>static</Linkage-curl>

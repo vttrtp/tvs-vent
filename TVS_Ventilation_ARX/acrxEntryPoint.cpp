@@ -40,7 +40,7 @@
 #include <diskid.h>
 #include <protection.h>
 #include "Regedit.h"
-
+#include <TVS_Connector.h>
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
@@ -3301,6 +3301,127 @@ public:
 		ConnectWithTap(pEnt1,pEnt2,pt1,pt2);
 	}
 
+	static void Ventilation_ARXTVS_CONNECTTest(void)
+	{
+		if(ActivationErrorMessage()!=pError_Ok) return;
+		// Add your code for command Ventilation_ARX.TVS_CONNECT here
+
+		double Lx,Ly, startangle;
+		ads_name vozd1,vozd2, eName;
+		ACHAR handle[17];
+		ads_point pt1,pt2;
+		ads_real sise=0;
+		AcDbEntity *pEnt1,*pEnt2 = NULL;
+		AcDbObjectId id1,id2;
+		TVS_WYE wyie;
+		TVS_TAP * Tapie;
+		TVS_Pipe * Pipi1,*Pipi2;
+		double NewSiseA, NewRadius;
+		resbuf *rb = NULL;
+		bool ft=false;
+		while (ft==false)
+		{
+
+			if (acedEntSel (_T("\nВыберете 1-ый воздуховод:"), vozd1,pt1)== RTCAN)
+				return;
+
+
+
+			if (acdbGetObjectId(id1,vozd1)==eOk)
+			{
+
+				acdbGetObjectId(id1,vozd1);
+
+				{if (id1!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt1,id1,AcDb::kForWrite)==eOk)
+					{if ( (Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL )
+					{	
+						
+						//acutPrintf(_T("\nPipe 1...ок"));
+						ft=true;
+
+					}
+					}
+
+					else {
+						acutPrintf(_T("\nОбьект заблокирован"));
+
+						return;
+					}
+					pEnt1->close();	
+				}
+				}
+
+
+			}
+		}
+		ft=false;
+		while (ft==false)
+		{
+			if (acedEntSel (_T("\nВыберете 2-ый воздуховод:"), vozd2,pt2)== RTCAN)
+				return;
+
+			if (acdbGetObjectId(id2,vozd2)==eOk)
+			{
+
+				acdbGetObjectId(id2,vozd2);
+
+				{if (id2!=AcDbObjectId::kNull)
+				{
+					if (acdbOpenAcDbEntity(pEnt2,id2,AcDb::kForWrite)==eOk)
+					{if ( (Pipi2 = TVS_Pipe::cast(pEnt2)) != NULL )
+					{	
+						if (Pipi1!=Pipi2)
+						{
+							//acutPrintf(_T("\nPipe 2...ок"));
+							ft=true;
+						}
+						else
+						{
+							acutPrintf(_T("\nВыбоан тот же воздуховод"));
+
+						}
+
+					}
+					}
+
+					else {
+						acutPrintf(_T("\nОбьект заблокирован"));
+
+						return;
+					}
+
+					pEnt2->close();	
+				}
+				}
+
+
+			}
+
+
+		}
+
+		acdbOpenAcDbEntity(pEnt1,id1,AcDb::kForWrite);
+		(Pipi1 = TVS_Pipe::cast(pEnt1));
+
+		acdbOpenAcDbEntity(pEnt2,id2,AcDb::kForWrite);
+		(Pipi2 = TVS_Pipe::cast(pEnt2));
+
+		int con1end;
+		Pipi1->getConnectorByIndex(conPipeEnd,con1end);
+
+		int con2start;
+		Pipi2->getConnectorByIndex(conPipeEnd,con2start);
+
+		Pipi1->connectors[con1end].connectionID = id2;
+		Pipi1->connectors[con1end].cTypeAnother = Pipi2->connectors[con2start].cTypeCurrent;
+
+		Pipi2->connectors[con2start].connectionID = id1;
+		Pipi2->connectors[con2start].cTypeAnother = Pipi1->connectors[con1end].cTypeCurrent;
+		Pipi1->close();
+		Pipi2->close();
+	}
 
 	// - Ventilation_ARX.TVS_DUCT command (do not rename)
 	static void Ventilation_ARXTVS_DUCT(void)
@@ -6995,6 +7116,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_TRANS, TVS_TRANS, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_WYE, TVS_WYE, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECTT, TVS_CONNECTT, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECTTest, TVS_CONNECTTest, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_CONNECTW, TVS_CONNECTW, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DUCT, TVS_DUCT, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_1D2D, TVS_1D2D, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)

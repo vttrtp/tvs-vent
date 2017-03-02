@@ -47,7 +47,8 @@
 //-----------------------------------------------------------------------------
 
 #include "TVS_Entity.h"
-
+#define conPipeStart 1
+#define conPipeEnd 2
 
 //-----------------------------------------------------------------------------
 class DLLIMPEXP TVS_Pipe : public TVS_Entity {
@@ -209,7 +210,7 @@ public:
 	AcGePoint2d BW;
 	AcGePoint2d CW;
 	AcGePoint2d DW;
-
+	bool correctConnector(const int &index,const  AcGeVector3d &offset);
 
 	
 	void Gimme4PipePoints ();

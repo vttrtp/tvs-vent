@@ -58,6 +58,7 @@
 #include "rxmfcapi.h"
 #include <vector>
 #include "GripImp.h"
+#include "TVS_Connector.h"
 using namespace std;
 
 
@@ -226,6 +227,14 @@ public:
 	int Type1;
 	int Type2;
 
+	bool connectorInteractionStatus;
+	int connectorCounts;
+	bool getConnectorByIndex(const int &ind, int &indexret);
+	virtual bool correctConnector(const int &index,const  AcGeVector3d &offset);
+	bool correctAnother(const TVS_Connector& con,const AcGeVector3d& offset);
+	vector<TVS_Connector> connectors; 
+	void writeConnectors(AcDbDwgFiler *pFiler) const;
+	void readConnectors(AcDbDwgFiler *pFiler, const int &version);
 	public:
 	bool get_Grani(void) const;
 	Acad::ErrorStatus put_Grani(bool newVal);
