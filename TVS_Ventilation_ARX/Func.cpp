@@ -2998,27 +2998,28 @@ void func::drawEntity( AcDbEntity *pEnt )
 
 int func::ActivationErrorMessage()
 {
-	int err;
-	int start=GetTickCount();
-	err=protection::licenseCheck();
-	int endf=GetTickCount();
-	int delta=endf-start;
-	//acutPrintf(L"\nStart: %d\nEnd: %d",start,endf);
-	acutPrintf(L"\nRun time: %d",delta);
-	if(err!=pError_Ok)
-	{
-		string errstr;
-		errstr=protection::getErrorCode(err);
-		CString err_list(errstr.c_str());
-
-
-		MessageBox(NULL, conversion::charToWchar(errstr.c_str()),L"Лицензия недействительна", MB_ICONERROR |MB_OK);
-	
-
-		return err;
-	}
-	else
-	{
-		return pError_Ok;
-	}
+// 	int err;
+// 	int start=GetTickCount();
+// 	err=protection::licenseCheck();
+// 	int endf=GetTickCount();
+// 	int delta=endf-start;
+// 	//acutPrintf(L"\nStart: %d\nEnd: %d",start,endf);
+// 	acutPrintf(L"\nRun time: %d",delta);
+// 	if(err!=pError_Ok)
+// 	{
+// 		string errstr;
+// 		errstr=protection::getErrorCode(err);
+// 		CString err_list(errstr.c_str());
+// 
+// 
+// 		MessageBox(NULL, conversion::charToWchar(errstr.c_str()),L"Лицензия недействительна", MB_ICONERROR |MB_OK);
+// 	
+// 
+// 		return err;
+// 	}
+// 	else
+// 	{
+// 		return pError_Ok;
+// 	}
+	return 0;
 }

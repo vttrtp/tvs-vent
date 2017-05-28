@@ -138,12 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\codegenerator\TVSPL\diskid.cpp" />
-    <ClCompile Include="..\..\codegenerator\TVSPL\httpRequest.cpp" />
-    <ClCompile Include="..\..\codegenerator\TVSPL\jsoncpp.cpp" />
-    <ClCompile Include="..\..\codegenerator\TVSPL\Protection.cpp" />
-    <ClCompile Include="..\..\codegenerator\TVSPL\Regedit.cpp" />
-    <ClCompile Include="..\..\codegenerator\TVSPL\RsaGeneration.cpp" />
     <ClCompile Include="..\GridCtrl_src\GridCell.cpp" />
     <ClCompile Include="..\GridCtrl_src\GridCellBase.cpp" />
     <ClCompile Include="..\GridCtrl_src\GridCtrl.cpp" />
@@ -178,13 +172,6 @@
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\codegenerator\TVSPL\diskid.h" />
-    <ClInclude Include="..\..\codegenerator\TVSPL\HeaderGen.h" />
-    <ClInclude Include="..\..\codegenerator\TVSPL\httpRequest.h" />
-    <ClInclude Include="..\..\codegenerator\TVSPL\json.h" />
-    <ClInclude Include="..\..\codegenerator\TVSPL\Protection.h" />
-    <ClInclude Include="..\..\codegenerator\TVSPL\Regedit.h" />
-    <ClInclude Include="..\..\codegenerator\TVSPL\RsaGeneration.h" />
     <ClInclude Include="..\GridCtrl_src\CellRange.h" />
     <ClInclude Include="..\GridCtrl_src\GridCell.h" />
     <ClInclude Include="..\GridCtrl_src\GridCellBase.h" />

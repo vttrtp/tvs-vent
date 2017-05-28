@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TVS Addins for Autocad"
-#define MyAppVersion "2"
+#define MyAppVersion "2.0"
 #define MyAppPublisher "Vitaut Tryputsin"
 #define MyAppURL "http://www.tvs-vent.by/"
 
@@ -38,16 +38,16 @@ Source: "{#SourcePath}\x64\Release\TVSTVS_Ventilation_ARX.arx"; Components: TVS_
 Source: "{#SourcePath}\x64\Release\TVSTVS_Ventilation_DBX.dbx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2015-2016\win64"; Flags: ignoreversion
 Source: "{#SourcePath}\Installer\TVS_TOOLS\*"; DestDir: "{app}\Contents\TVS_TOOLS\Resources"; Components: TVS_TOOLS; Flags: ignoreversion
 Source: "{#SourcePath}\Installer\TVS_VENT\*"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\Resources"; Flags: ignoreversion recursesubdirs
-Source: "{#SourcePath}\..\codegenerator\Release\Activator TVS-Vent.exe"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\Activator"; Flags: ignoreversion 
-Source: "{#SourcePath}\Installer\dlls\x32\*"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\Activator"; Flags: ignoreversion recursesubdirs 
-Source: "{#SourcePath}\Installer\dlls\x64\*"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2015-2016\win64"; Flags: ignoreversion recursesubdirs 
+;Source: "{#SourcePath}\..\codegenerator\Release\Activator TVS-Vent.exe"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\Activator"; Flags: ignoreversion 
+;Source: "{#SourcePath}\Installer\dlls\x32\*"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\Activator"; Flags: ignoreversion recursesubdirs 
+;Source: "{#SourcePath}\Installer\dlls\x64\*"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2015-2016\win64"; Flags: ignoreversion recursesubdirs 
 
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{group}\Активировать TVS-Vent"; Filename: "{app}\Contents\TVS_VENT\Activator\Activator TVS-Vent.exe"
+;Name: "{group}\Активировать TVS-Vent"; Filename: "{app}\Contents\TVS_VENT\Activator\Activator TVS-Vent.exe"
 
 [Types]
 Name: "full"; Description: "Полная установка"
@@ -65,4 +65,4 @@ Root: HKCU; Subkey: "Software\{#MyAppPublisher}\TVS_Vent\{#MyAppVersion}"; Value
 Root: HKCU; Subkey: "Software\{#MyAppPublisher}\TVS_Vent\{#MyAppVersion}"; ValueType: string; ValueName: "CurrentVersion"; ValueData: "{#MyAppVersion}"
 
 [Run]
-Filename: "{app}\Contents\TVS_VENT\Activator\Activator TVS-Vent.exe";
+;Filename: "{app}\Contents\TVS_VENT\Activator\Activator TVS-Vent.exe";

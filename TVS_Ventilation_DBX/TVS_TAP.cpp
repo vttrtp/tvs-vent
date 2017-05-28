@@ -2236,12 +2236,18 @@ Acad::ErrorStatus TVS_TAP::subTransformBy(const AcGeMatrix3d & xform)
 Acad::ErrorStatus TVS_TAP::subExplode(AcDbVoidPtrArray & entitySet) const
 {
 	assertReadEnabled();
+
+
 	for each (AcDbEntity* var in ListOfEntity)
 	{
-		entitySet.append(var);
+		AcDbEntity* clonedEntity = (AcDbEntity*)var->clone();
+		if(clonedEntity) entitySet.append(clonedEntity);
+		//entitySet.append(var);
 	}
-	
+
+
 	return Acad::eOk;
+
 }
 
 

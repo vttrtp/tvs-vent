@@ -92,9 +92,7 @@ Acad::ErrorStatus TVS_Entity::subOpen (AcDb::OpenMode mode) {
 	return (AcDbCurve::subOpen (mode)) ;
 }
 
-Acad::ErrorStatus TVS_Entity::subErase (Adesk::Boolean erasing) {
-	return (AcDbCurve::subErase (erasing)) ;
-}
+
 
 Acad::ErrorStatus TVS_Entity::subCancel () {
 	return (AcDbCurve::subCancel ()) ;
@@ -612,19 +610,22 @@ bool TVS_Entity::correctAnother(const TVS_Connector& con,const AcGeVector3d& off
 	return true;
 }
 
-void TVS_Entity::writeConnectors(AcDbDwgFiler *pFiler) const
+void TVS_Entity::writeConnectors(AcDbDwgFiler *pFiler, const int &version) const
 {
+	if (version>=31)
+	{
 	int count = connectors.size();
 	pFiler->writeItem(count);
 	for (unsigned int i = 0;i<connectors.size();i++)
 	{
 		connectors[i].write(pFiler);
 	}
+	}
 }
 
 void TVS_Entity::readConnectors(AcDbDwgFiler *pFiler, const int &version)
 {
-	if (version>=30)
+	if (version>=31)
 	{
 		pFiler->readItem(&connectorCounts);
 		connectors.resize(connectorCounts);

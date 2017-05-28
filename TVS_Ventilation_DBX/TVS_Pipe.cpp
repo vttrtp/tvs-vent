@@ -53,6 +53,7 @@ TVS_Pipe::TVS_Pipe () : TVS_Entity () {
 }
 
 TVS_Pipe::~TVS_Pipe () {
+	ClearEntitylist();
 }
 
 int TVS_Pipe::gripNumber;
@@ -157,9 +158,7 @@ Acad::ErrorStatus TVS_Pipe::subOpen (AcDb::OpenMode mode) {
 	return (AcDbCurve::subOpen (mode)) ;
 }
 
-Acad::ErrorStatus TVS_Pipe::subErase (Adesk::Boolean erasing) {
-	return (AcDbCurve::subErase (erasing)) ;
-}
+
 
 Acad::ErrorStatus TVS_Pipe::subCancel () {
 	return (AcDbCurve::subCancel ()) ;
@@ -1112,7 +1111,9 @@ Acad::ErrorStatus TVS_Pipe::subExplode(AcDbVoidPtrArray & entitySet) const
 	
 	for each (AcDbEntity* var in ListOfEntity)
 	{
-		entitySet.append(var);
+		AcDbEntity* clonedEntity = (AcDbEntity*)var->clone();
+		if(clonedEntity) entitySet.append(clonedEntity);
+		//entitySet.append(var);
 	}
 
 	

@@ -86,7 +86,7 @@ public:
 
 	//- SubXXX() methods (self notification)
 	virtual Acad::ErrorStatus subOpen (AcDb::OpenMode mode) ;
-	virtual Acad::ErrorStatus subErase (Adesk::Boolean erasing) ;
+	//virtual Acad::ErrorStatus subErase (Adesk::Boolean erasing) ;
 	virtual Acad::ErrorStatus subCancel () ;
 	virtual Acad::ErrorStatus subClose () ;
 

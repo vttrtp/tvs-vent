@@ -83,7 +83,7 @@ public:
 
 	//- SubXXX() methods (self notification)
 	virtual Acad::ErrorStatus subOpen (AcDb::OpenMode mode) ;
-	virtual Acad::ErrorStatus subErase (Adesk::Boolean erasing) ;
+	//virtual Acad::ErrorStatus subErase (Adesk::Boolean erasing) ;
 	virtual Acad::ErrorStatus subCancel () ;
 	virtual Acad::ErrorStatus subClose () ;
 
@@ -233,8 +233,8 @@ public:
 	virtual bool correctConnector(const int &index,const  AcGeVector3d &offset);
 	bool correctAnother(const TVS_Connector& con,const AcGeVector3d& offset);
 	vector<TVS_Connector> connectors; 
-	void writeConnectors(AcDbDwgFiler *pFiler) const;
-	void readConnectors(AcDbDwgFiler *pFiler, const int &version);
+	void writeConnectors(AcDbDwgFiler *pFiler, const int &version = kCurrentVersionNumber) const;
+	void readConnectors(AcDbDwgFiler *pFiler, const int &version = kCurrentVersionNumber);
 	public:
 	bool get_Grani(void) const;
 	Acad::ErrorStatus put_Grani(bool newVal);
