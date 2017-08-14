@@ -53,7 +53,7 @@ TVS_Pipe::TVS_Pipe () : TVS_Entity () {
 }
 
 TVS_Pipe::~TVS_Pipe () {
-	ClearEntitylist();
+	
 }
 
 int TVS_Pipe::gripNumber;
@@ -146,8 +146,7 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
-	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
-	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+
 	readConnectors(pFiler,version);
 
 	return (pFiler->filerStatus ()) ;
@@ -158,7 +157,9 @@ Acad::ErrorStatus TVS_Pipe::subOpen (AcDb::OpenMode mode) {
 	return (AcDbCurve::subOpen (mode)) ;
 }
 
-
+Acad::ErrorStatus TVS_Pipe::subErase (Adesk::Boolean erasing) {
+	return (AcDbCurve::subErase (erasing)) ;
+}
 
 Acad::ErrorStatus TVS_Pipe::subCancel () {
 	return (AcDbCurve::subCancel ()) ;

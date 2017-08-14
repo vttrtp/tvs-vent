@@ -104,14 +104,14 @@ extern AcApDataManager<CDocData> DocVars ;
 #include <afxdisp.h>        // MFC Automation classes
 
 
-#pragma comment( lib, "libeay32.lib" )
-#pragma comment( lib, "libcurl.lib" )
+//#pragma comment( lib, "libeay32.lib" )
+//#pragma comment( lib, "libcurl.lib" )
 
 
 
-#include "Protection.h"
-#include "httpRequest.h"
-#include "RsaGeneration.h"
-#include "Regedit.h"
+//#include "Protection.h"
+//#include "httpRequest.h"
+//#include "RsaGeneration.h"
+//#include "Regedit.h"
 #pragma pack (pop)
 
