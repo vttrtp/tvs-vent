@@ -2256,7 +2256,7 @@ public:
 		Pipi1->getConnectorByIndex(conPipeEnd,con1end);
 
 		int con2start;
-		Pipi2->getConnectorByIndex(conPipeEnd,con2start);
+		Pipi2->getConnectorByIndex(conPipeStart,con2start);
 
 		Pipi1->connectors[con1end].connectionID = id2;
 		Pipi1->connectors[con1end].cTypeAnother = Pipi2->connectors[con2start].cTypeCurrent;
@@ -2423,7 +2423,7 @@ public:
 
 
 
-		long len = 0;
+		Int32 len = 0;
 
 		acedSSLength(sset, &len);
 		//consoleprint(double(len),_T("\nL: "));
@@ -2534,7 +2534,7 @@ public:
 		if(acedGetPoint(NULL,_T("\nУкажите точку вставки спецификации:"),pt1)!=RTNORM )
 			return;
 		pb=asPnt3d(pt1);
-		long len = 0;
+		Int32 len = 0;
 
 		acedSSLength(sset, &len);
 		//consoleprint(double(len),_T("\nL: "));
@@ -4503,7 +4503,7 @@ public:
 
 
 
-		long len = 0;
+		Int32 len = 0;
 
 		acedSSLength(sset, &len);
 		//consoleprint(double(len),_T("\nL: "));
@@ -5118,7 +5118,7 @@ public:
 	}
 	static void  fillspecification(ads_name &sset, SpecWithAttrlist &specatrlist,ACHAR * grad, ACHAR * d)
 	{
-		long len = 0;
+		Int32 len = 0;
 		AcDbBlockReference * br;
 		TVS_Entity * Ent;
 		AcDbEntity *pEnt = NULL;
@@ -5162,7 +5162,7 @@ public:
 	}
 	static void  fillspecification(ads_name &sset, SPEClist &speclist,SPEClist &speclistflex,SpecWithAttrlist &specatrlist,ACHAR * grad, ACHAR * d)
 	{
-		long len = 0;
+		Int32 len = 0;
 		AcDbBlockReference * br;
 		TVS_Entity * Ent;
 		AcDbEntity *pEnt = NULL;

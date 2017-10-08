@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <ApplicationPackage SchemaVersion="1.0" AppVersion="2.0.0" AutodeskProduct="AutoCAD" Description="TVS" Author="Tryputsin Vitaut" ProductCode="{4BEE127E-95C4-434D-ABAC-65155192BB24}"  Name="TVS">
-  <RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD|AutoCAD*" SeriesMin="15.0" SeriesMax="20.1" />
+  <RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD|AutoCAD*" SeriesMin="15.0" SeriesMax="22.0" />
   <CompanyDetails Name="TVS" Email="krylatyvershnik@gmail.com" />
   
   
@@ -13,20 +13,68 @@
 		</ComponentEntry>
 	</Components>
   
+   <Components Description="TVS_Vent 2015-2016 32bit">
+		<RuntimeRequirements OS="Win32" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R20.1" SupportPath="./Contents/TVS_VENT/2015-2016/win32;"/>
+		<ComponentEntry AppName="TVS_VENT 2015-2016x32" Version="2.0.0" ModuleName="./Contents/TVS_VENT/2015-2016/win32/TVSTVS_Ventilation_DBX.dbx"
+			 LoadOnAutoCADStartup="True">
+		</ComponentEntry>
+	</Components>
+	
+	
+	
+	
+	
+	
+	  <Components Description="TVS_Vent 2017 64bit">
+		<RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R21.0" SeriesMax="R21.0" SupportPath="./Contents/TVS_VENT/2017/win64;"/>
+		<ComponentEntry AppName="TVS_VENT 2017x64" Version="2.0.0" ModuleName="./Contents/TVS_VENT/2017/win64/TVSTVS_Ventilation_DBX.dbx"
+			 LoadOnAutoCADStartup="True">
+		</ComponentEntry>
+	</Components>
+  
+   <Components Description="TVS_Vent 2017 32bit">
+		<RuntimeRequirements OS="Win32" Platform="AutoCAD*" SeriesMin="R21.0" SeriesMax="R21.0" SupportPath="./Contents/TVS_VENT/2017/win32;"/>
+		<ComponentEntry AppName="TVS_VENT 2017x32" Version="2.0.0" ModuleName="./Contents/TVS_VENT/2017/win32/TVSTVS_Ventilation_DBX.dbx"
+			 LoadOnAutoCADStartup="True">
+		</ComponentEntry>
+	</Components>
+	
+	
+	
+	
+	
+		  <Components Description="TVS_Vent 2018 64bit">
+		<RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R22.0" SeriesMax="R22.0" SupportPath="./Contents/TVS_VENT/2018/win64;"/>
+		<ComponentEntry AppName="TVS_VENT 2018x64" Version="2.0.0" ModuleName="./Contents/TVS_VENT/2018/win64/TVSTVS_Ventilation_DBX.dbx"
+			 LoadOnAutoCADStartup="True">
+		</ComponentEntry>
+	</Components>
+  
+   <Components Description="TVS_Vent 2018 32bit">
+		<RuntimeRequirements OS="Win32" Platform="AutoCAD*" SeriesMin="R22.0" SeriesMax="R22.0" SupportPath="./Contents/TVS_VENT/2018/win32;"/>
+		<ComponentEntry AppName="TVS_VENT 2018x32" Version="2.0.0" ModuleName="./Contents/TVS_VENT/2018/win32/TVSTVS_Ventilation_DBX.dbx"
+			 LoadOnAutoCADStartup="True">
+		</ComponentEntry>
+	</Components>
+	
+	
+	
+	
+	
        <Components Description="TVS_VENT menu">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R20.1" SupportPath="./Contents/TVS_VENT/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R22.0" SupportPath="./Contents/TVS_VENT/Resources;"/>
 		<ComponentEntry AppName="TVS_VENT" Version="2.0.0" ModuleName="./Contents/TVS_VENT/Resources/TVS_VENT.cuix"/>
 			</Components>
 			
    <Components Description="TVS_TOOLS">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R20.1" SupportPath="./Contents/TVS_TOOLS/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R22.0" SupportPath="./Contents/TVS_TOOLS/Resources;"/>
 		<ComponentEntry AppName="TVS_TOOLS" Version="2.0.0" ModuleName="./Contents/TVS_TOOLS/Resources/TVS_TOOLS.cuix"/>
 		
 	</Components>
   
   
        <Components Description="Resources">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R20.1" SupportPath="./Contents/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R22.0" SupportPath="./Contents/Resources;"/>
 		
 	</Components>
   

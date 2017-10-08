@@ -673,7 +673,7 @@ Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (
 			}
 			
 			int conEnd;
-			if (getConnectorByIndex(conPipeStart,conEnd))
+			if (getConnectorByIndex(conPipeEnd,conEnd))
 			{
 				correctAnother(connectors[conEnd],offset);
 			}

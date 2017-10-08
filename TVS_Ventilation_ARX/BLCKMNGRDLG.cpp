@@ -98,7 +98,7 @@ void BLCKMNGRDLG::OnShowWindow(BOOL bShow, UINT nStatus)
 	mGrid.SetItemText(0,4, _T("Размер"));
 	mGrid.SetItemText(0,5, _T("Артикул"));
 	mGrid.SetItemText(0,6, _T("Производитель"));
-	mGrid.SetItemText(0,7, _T("Еденица"));
+	mGrid.SetItemText(0,7, _T("Единица"));
 	mGrid.SetItemText(0,8, _T("Кол-во"));
 	mGrid.SetItemText(0,9, _T("Масса"));
 	mGrid.SetItemText(0,10, _T("Примечание"));

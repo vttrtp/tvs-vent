@@ -599,8 +599,10 @@ bool TVS_Entity::correctAnother(const TVS_Connector& con,const AcGeVector3d& off
 {
 	AcDbEntity *pEnt;
 	TVS_Entity *pTVS;
+	cout<<"try to correct: "<<con.connectionID<<endl;
 	if (acdbOpenAcDbEntity(pEnt,con.connectionID,AcDb::kForWrite)==eOk)
 	{
+		cout<<"correcting..."<<endl;
 		if ( (pTVS = TVS_Entity::cast(pEnt)) != NULL )
 		{
 			if(!pTVS->correctConnector(con.cTypeAnother,offset)) return false;
@@ -612,9 +614,9 @@ bool TVS_Entity::correctAnother(const TVS_Connector& con,const AcGeVector3d& off
 
 void TVS_Entity::writeConnectors(AcDbDwgFiler *pFiler, const int &version) const
 {
-	if (version>=31)
+	if (version>=32)
 	{
-	int count = connectors.size();
+	Int8 count = connectors.size();
 	pFiler->writeItem(count);
 	for (unsigned int i = 0;i<connectors.size();i++)
 	{
@@ -625,7 +627,7 @@ void TVS_Entity::writeConnectors(AcDbDwgFiler *pFiler, const int &version) const
 
 void TVS_Entity::readConnectors(AcDbDwgFiler *pFiler, const int &version)
 {
-	if (version>=31)
+	if (version>=32)
 	{
 		pFiler->readItem(&connectorCounts);
 		connectors.resize(connectorCounts);

@@ -159,6 +159,8 @@ bool SPEC::add(AcDbEntity * pEnt)
 				else
 				{
 					Swectangle=5*floor((pTap->Swectangle+(2*M_PI/180))/5*180/M_PI);
+
+					
 					SizeA=pTap->get_SizeA();
 					SizeB=pTap->get_SizeB();
 
@@ -180,6 +182,16 @@ bool SPEC::add(AcDbEntity * pEnt)
 					}
 					else 
 					{ 
+						if (pTap->Form == Form_Direct)
+						{
+					
+							SizeA=pTap->get_SizeA();
+							SizeB=pTap->get_SizeB();
+						}else{
+						
+							SizeB=pTap->get_SizeA();
+							SizeA=pTap->get_SizeB();
+						}
 						status=TapRect;
 						setName(_T("Отвод прямоугольный"));
 						setLable(SizeA);
@@ -796,9 +808,9 @@ void SPEClist::printSPDSForm(AcGePoint3d &cent)
 	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
 	printText(pos1,_T("Наименование"));
 	printText(pos2,_T("Размер"));
-	printText(pos3,_T("Еденица"));
+	printText(pos3,_T("Единица"));
 	printText(pos4,_T("Кол-во"));
-	printText(pos5,_T("Еденица2"));
+	printText(pos5,_T("Единица2"));
 	printText(pos6,_T("Кол-во"));
 	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 
@@ -839,9 +851,9 @@ void SPEClist::printSPDSForm(AcGePoint3d &cent)
 	pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
 	printText(pos5,_T("Итого:"));
 	//printText(pos2,_T("Размер"));
-	//printText(pos3,_T("Еденица"));
+	//printText(pos3,_T("Единица"));
 	//printText(pos4,_T("Кол-во"));
-	//printText(pos5,_T("Еденица2"));
+	//printText(pos5,_T("Единица2"));
 	printText(pos6,sA);
 	curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 
@@ -942,9 +954,9 @@ bool SPEClist::printToExel(CMSExcel* m_msExcel,long &idx)
 
 	m_msExcel->printExelText(col2,idx,_T("Наименование"));
 	m_msExcel->printExelText(col3,idx,_T("Размер"));
-	m_msExcel->printExelText(col6,idx,_T("Еденица"));
+	m_msExcel->printExelText(col6,idx,_T("Единица"));
 	m_msExcel->printExelText(col7,idx,_T("Кол-во"));
-	m_msExcel->printExelText(col8,idx,_T("Еденица2"));
+	m_msExcel->printExelText(col8,idx,_T("Единица2"));
 	m_msExcel->printExelText(col9,idx,_T("Кол-во"));
 
 
@@ -1056,7 +1068,7 @@ void SpecWithAttrlist::printSPDSForm(AcGePoint3d &cent)
 	printText(pos3,_T("Типоразмер"));
 	printText(pos4,_T("Артикул"));
 	printText(pos5,_T("Изготовитель"));
-	printText(pos6,_T("Еденица"));
+	printText(pos6,_T("Единица"));
 	printText(pos7,_T("Кол-во"));
 	printText(pos8,_T("Масса"));
 	printText(pos9,_T("Примечание"));
@@ -1109,9 +1121,9 @@ void SpecWithAttrlist::printSPDSForm(AcGePoint3d &cent)
 	// 		pos6=AcGePoint3d(curcnt.x+columndistanse[5]+otstupX,curcnt.y+otstupY,curcnt.z);
 	// 		printText(pos5,_T("Итого:"));
 	// 		//printText(pos2,_T("Размер"));
-	// 		//printText(pos3,_T("Еденица"));
+	// 		//printText(pos3,_T("Единица"));
 	// 		//printText(pos4,_T("Кол-во"));
-	// 		//printText(pos5,_T("Еденица2"));
+	// 		//printText(pos5,_T("Единица2"));
 	// 		printText(pos6,sA);
 	// 		curcnt=AcGePoint3d(curcnt.x,curcnt.y-rowhight,curcnt.z);
 
@@ -1164,7 +1176,7 @@ bool SpecWithAttrlist::printToExel(CMSExcel* m_msExcel,long &idx)
 	m_msExcel->printExelText(col3,idx,_T("Типоразмер"));
 	m_msExcel->printExelText(col4,idx,_T("Артикул"));
 	m_msExcel->printExelText(col5,idx,_T("Изготовитель"));
-	m_msExcel->printExelText(col6,idx,_T("Еденица"));
+	m_msExcel->printExelText(col6,idx,_T("Единица"));
 	m_msExcel->printExelText(col7,idx,_T("Кол-во"));
 	m_msExcel->printExelText(col8,idx,_T("Масса"));
 	m_msExcel->printExelText(col9,idx,_T("Примечание"));

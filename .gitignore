@@ -12,6 +12,7 @@
 
 # Build results
 
+*.opendb
 [Dd]ebug/
 [Rr]elease/
 x64/

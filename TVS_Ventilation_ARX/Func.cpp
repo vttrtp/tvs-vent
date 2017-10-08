@@ -996,7 +996,7 @@ void func::Change (ads_name &sset)
 
 
 
-	long len = 0;
+	Int32 len = 0;
 
 
 	//проверяем элементы и извлекаем данные

@@ -48,7 +48,7 @@
 #include <acedads.h>
 #include <acedCmdNF.h>
 #include "dbcurve.h"
-#define TVS_Version 30
+#define TVS_Version 31
 #define M_PI 3.14159265358979323846
 #define DuctTypeStill 0
 #define DuctTypeFlex 1
@@ -59,6 +59,7 @@
 #include <vector>
 #include "GripImp.h"
 #include "TVS_Connector.h"
+#include <iostream>
 using namespace std;
 
 
@@ -228,7 +229,7 @@ public:
 	int Type2;
 
 	bool connectorInteractionStatus;
-	int connectorCounts;
+	Int8 connectorCounts;
 	bool getConnectorByIndex(const int &ind, int &indexret);
 	virtual bool correctConnector(const int &index,const  AcGeVector3d &offset);
 	bool correctAnother(const TVS_Connector& con,const AcGeVector3d& offset);

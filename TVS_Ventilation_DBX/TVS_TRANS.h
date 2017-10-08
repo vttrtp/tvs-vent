@@ -170,7 +170,7 @@ public:
 	AcGePoint3d A,B,C,D;
 	bool ThisRoundp1;
 	bool ThisRoundp2;
-	int TransType;//левый=1,правый=2,осевой=3, произвольный=4
+	Int8 TransType;//левый=1,правый=2,осевой=3, произвольный=4
 
 
 

@@ -329,7 +329,7 @@ bool HeatFloor::getMaxStep(const AcDbPolyline* offset)
 
 void HeatFloor::setPolySet()
 {
-	AcArray<AcArray<AcDbPolyline >> polyTree;
+	/*AcArray<AcArray<AcDbPolyline >> polyTree;
 	indexofrecursion=0;
 
 	AcDbVoidPtrArray arr;
@@ -358,7 +358,7 @@ void HeatFloor::setPolySet()
 			pText->setPosition(AcGePoint3d(pos.x,pos.y,0));
 			drawEntity(pText);
 		}
-}
+}*/
 
 	
 }

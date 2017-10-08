@@ -25,6 +25,7 @@
 #include "StdAfx.h"
 #include "resource.h"
 #include <vld.h> 
+#include <iostream>
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 
@@ -37,7 +38,9 @@ public:
 
 	virtual AcRx::AppRetCode On_kInitAppMsg (void *pkt) {
 		// TODO: Load dependencies here
-
+		//AllocConsole();
+		//freopen("CONOUT$", "w", stdout);
+		
 		// You *must* call On_kInitAppMsg here
 		AcRx::AppRetCode retCode =AcRxDbxApp::On_kInitAppMsg (pkt) ;
 		

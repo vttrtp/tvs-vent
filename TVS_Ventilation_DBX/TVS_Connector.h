@@ -32,8 +32,8 @@ public:
 
 	TVS_Connector(void);
 	~TVS_Connector(void);
-	int cTypeCurrent;
-	int cTypeAnother;
+	Int8 cTypeCurrent;
+	Int8 cTypeAnother;
 	AcGePoint3d point;
 	AcDbObjectId connectionID;
 	void write(AcDbDwgFiler *pFiler) const;

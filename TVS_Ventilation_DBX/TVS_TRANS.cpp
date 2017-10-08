@@ -136,7 +136,12 @@ Acad::ErrorStatus TVS_TRANS::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&FirstPoint) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&ThisRoundp1) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&ThisRoundp2) ;
-	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&TransType) ;
+	if (version >= 1 && version < 31 /*&& version <= endVersion*/ ){
+		int temp;
+		pFiler->readItem (&temp);
+		TransType = temp;
+	};
+	if ( version >= 31 /*&& version <= endVersion*/ ) pFiler->readItem (&TransType) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&This1D) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Flow) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Direct) ;
