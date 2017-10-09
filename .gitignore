@@ -10,8 +10,9 @@
 
 \ThirdParty/*
 
-# Build results
 
+# Build results
+*.db
 *.opendb
 [Dd]ebug/
 [Rr]elease/
