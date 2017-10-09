@@ -105,7 +105,7 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (Form) ;
 	pFiler->writeItem (WipeoutLength) ;
 	pFiler->writeItem (DuctType) ;
-	writeConnectors(pFiler);
+	//writeConnectors(pFiler);
 
 	return (pFiler->filerStatus ()) ;
 }
@@ -147,7 +147,7 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
 
-	readConnectors(pFiler,version);
+	//readConnectors(pFiler,version);
 
 	return (pFiler->filerStatus ()) ;
 }
