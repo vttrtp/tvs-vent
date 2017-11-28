@@ -77,14 +77,14 @@ Acad::ErrorStatus TVS_WYE::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (ThisRoundotv) ;
 	pFiler->writeItem (This1D) ;
 	pFiler->writeItem (Flow) ;
-	pFiler->writeItem (Direct) ;
+	writeInt(pFiler,Direct);
 	pFiler->writeItem (Elev) ;
 	pFiler->writeItem (Wipeout) ;
-	pFiler->writeItem (Param) ;
+	writeInt(pFiler,Param);
 	pFiler->writeItem (IsPipe) ;
-	pFiler->writeItem (Form) ;
+	writeInt(pFiler,Form);
 	pFiler->writeItem (WipeoutLength) ;
-	pFiler->writeItem (DuctType) ;;
+	writeInt(pFiler,DuctType);
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -118,15 +118,15 @@ Acad::ErrorStatus TVS_WYE::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&ThisRoundotv) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&This1D) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Flow) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Direct) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Direct,version);
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Elev) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Wipeout) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Param) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Param,version);
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
-	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
+	if ( version >= 21 /*&& version <= endVersion*/ ) readInt(pFiler,Form,version);
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
 		
-	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+	if ( version >= 24 /*&& version <= endVersion*/ ) readInt(pFiler,DuctType,version);	else DuctType=0;
 
 	return (pFiler->filerStatus ()) ;
 }

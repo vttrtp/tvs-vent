@@ -413,6 +413,23 @@ Acad::ErrorStatus TVS_Entity::getArea (double &area) const {
 	return (AcDbCurve::getArea (area)) ;
 }
 
+void TVS_Entity::writeInt(AcDbDwgFiler *pFiler, const int &param) const
+{
+		pFiler->writeItem ((Adesk::Int32)param) ;
+}
+
+void TVS_Entity::readInt(AcDbDwgFiler *pFiler, int &param,const int &version)
+{
+	if (version<32){
+		pFiler->readItem (&param) ;
+	}else{
+		Adesk::Int32 temp;
+		pFiler->readItem (&temp) ;
+		param = (int)temp;
+	}
+
+}
+
 ////////!!!!!!!!!!
 
 

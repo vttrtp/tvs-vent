@@ -80,10 +80,10 @@ Acad::ErrorStatus TVS_TAP::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (ThisRound) ;
 	pFiler->writeItem (This1D) ;
 	pFiler->writeItem (Flow) ;
-	pFiler->writeItem (Direct) ;
+	writeInt(pFiler,Direct); //int
 	pFiler->writeItem (Elev) ;
-	pFiler->writeItem (Wipeout) ;
-	pFiler->writeItem (Param) ;
+	pFiler->writeItem (Wipeout) ; 
+	writeInt(pFiler,Param);  //int
 	pFiler->writeItem (IsPipe) ;
 	pFiler->writeItem (Form) ;
 	pFiler->writeItem (TypeRoundTap) ;
@@ -93,7 +93,7 @@ Acad::ErrorStatus TVS_TAP::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (RadiusConst) ;
 	pFiler->writeItem (MiddlePoint) ;
 	pFiler->writeItem (WipeoutLength) ;
-	pFiler->writeItem (DuctType) ;
+	writeInt(pFiler,DuctType);  //int
 	return (pFiler->filerStatus ()) ;
 
 }
@@ -128,10 +128,10 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&ThisRound) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&This1D) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Flow) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Direct) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Direct,version); //int
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Elev) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Wipeout) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Param) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Param,version); //int
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
 	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&TypeRoundTap) ;
@@ -166,7 +166,7 @@ Acad::ErrorStatus TVS_TAP::dwgInFields (AcDbDwgFiler *pFiler) {
 
 		chekMiddlePoint();
 	}
-	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+	if ( version >= 24 /*&& version <= endVersion*/ ) readInt(pFiler,DuctType,version); //int ;	else DuctType=0;
 
 	//acutDelString(Tag1);
 	//acutDelString(Tag2);

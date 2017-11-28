@@ -48,7 +48,7 @@
 #include <acedads.h>
 #include <acedCmdNF.h>
 #include "dbcurve.h"
-#define TVS_Version 31
+#define TVS_Version 32
 #define M_PI 3.14159265358979323846
 #define DuctTypeStill 0
 #define DuctTypeFlex 1
@@ -196,6 +196,10 @@ public:
 
 
 	//////TVS
+
+	void writeInt(AcDbDwgFiler *pFiler, const int &param) const;
+	void readInt(AcDbDwgFiler *pFiler, int &param,const int &version);
+
 	public:
 	double SizeA;
 	double SizeB;

@@ -97,14 +97,14 @@ Acad::ErrorStatus TVS_TRANS::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (TransType) ;
 	pFiler->writeItem (This1D) ;
 	pFiler->writeItem (Flow) ;
-	pFiler->writeItem (Direct) ;
+	writeInt(pFiler,Direct); //int;
 	pFiler->writeItem (Elev) ;
 	pFiler->writeItem (Wipeout) ;
-	pFiler->writeItem (Param) ;
+	writeInt(pFiler,Param); //int;
 	pFiler->writeItem (IsPipe) ;
-	pFiler->writeItem (Form) ;
+	writeInt(pFiler,Form); //int;
 	pFiler->writeItem (WipeoutLength) ;
-	pFiler->writeItem (DuctType) ;
+	writeInt(pFiler,DuctType); //int;
 
 	return (pFiler->filerStatus ()) ;
 }
@@ -138,20 +138,20 @@ Acad::ErrorStatus TVS_TRANS::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&ThisRoundp2) ;
 	if (version >= 1 && version < 31 /*&& version <= endVersion*/ ){
 		int temp;
-		pFiler->readItem (&temp);
+		readInt(pFiler,temp,version); //int;
 		TransType = temp;
 	};
 	if ( version >= 31 /*&& version <= endVersion*/ ) pFiler->readItem (&TransType) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&This1D) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Flow) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Direct) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Direct,version);
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Elev) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Wipeout) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Param) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Param,version);
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
-	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
+	if ( version >= 21 /*&& version <= endVersion*/ ) readInt(pFiler,Form,version);
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
-	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+	if ( version >= 24 /*&& version <= endVersion*/ ) readInt(pFiler,DuctType,version);	else DuctType=0;
 
 
 	return (pFiler->filerStatus ()) ;

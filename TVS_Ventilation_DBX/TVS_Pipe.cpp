@@ -61,13 +61,8 @@ AcDbObjectId TVS_Pipe::entId;
 
 void TVS_Pipe::GetParamsForDraw( AcDbObjectId &pEntId, int &pGripNumber )
 {
-	
-
 		pEntId=entId;
  		pGripNumber=gripNumber;
-
-
-	
 }
 
 
@@ -94,19 +89,37 @@ Acad::ErrorStatus TVS_Pipe::dwgOutFields (AcDbDwgFiler *pFiler) const {
 	pFiler->writeItem (This1D) ;
 	pFiler->writeItem (ThisRound) ;
 	pFiler->writeItem (Flow) ;
-	pFiler->writeItem (Direct) ;
+	writeInt(pFiler,Direct);
 	pFiler->writeItem (Elev) ;
 	pFiler->writeItem (Wipeout) ;
-	pFiler->writeItem (Param) ;
+	writeInt(pFiler,Param);
 	pFiler->writeItem (Grani) ;
 	pFiler->writeItem (ElevUp) ;
 	pFiler->writeItem (ElevDown) ;
 	pFiler->writeItem (IsPipe) ;
-	pFiler->writeItem (Form) ;
+	writeInt(pFiler,Form);
 	pFiler->writeItem (WipeoutLength) ;
-	pFiler->writeItem (DuctType) ;
+	writeInt(pFiler,DuctType);
 	//writeConnectors(pFiler);
 
+// 	cout<<"write "<<"FirstPoint: "<<FirstPoint.x<<";"<<FirstPoint.y<<";"<<FirstPoint.z<<endl;
+// 	cout<<"write "<<"LastPoint: "<<LastPoint.x<<";"<<LastPoint.y<<";"<<LastPoint.z<<endl;
+// 	cout<<"write "<<"SizeA: "<<SizeA<<endl;
+// 	cout<<"write "<<"SizeB: "<<SizeB<<endl;
+// 	cout<<"write "<<"This1D: "<<This1D<<endl;
+// 	cout<<"write "<<"ThisRound: "<<ThisRound<<endl;
+// 	cout<<"write "<<"Flow: "<<Flow<<endl;
+// 	cout<<"write "<<"Direct: "<<Direct<<endl;
+// 	cout<<"write "<<"Elev: "<<Elev<<endl;
+// 	cout<<"write "<<"Wipeout: "<<Wipeout<<endl;
+// 	cout<<"write "<<"Param: "<<Param<<endl;
+// 	cout<<"write "<<"Grani: "<<Grani<<endl;
+// 	cout<<"write "<<"ElevUp: "<<ElevUp<<endl;
+// 	cout<<"write "<<"ElevDown: "<<ElevDown<<endl;
+// 	cout<<"write "<<"IsPipe: "<<IsPipe<<endl;
+// 	cout<<"write "<<"Form: "<<Form<<endl;
+// 	cout<<"write "<<"WipeoutLength: "<<WipeoutLength<<endl;
+// 	cout<<"write "<<"DuctType: "<<DuctType<<endl;
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -128,6 +141,8 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	//	return (Acad::eMakeMeProxy) ;
 	//----- Read params
 	//.....
+
+
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&FirstPoint) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&LastPoint) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&SizeA) ;
@@ -135,17 +150,37 @@ Acad::ErrorStatus TVS_Pipe::dwgInFields (AcDbDwgFiler *pFiler) {
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&This1D) ;
 	if ( version >= 1 /*&& version <= endVersion*/ ) pFiler->readItem (&ThisRound) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Flow) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Direct) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Direct,version);
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Elev) ;
 	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Wipeout) ;
-	if ( version >= 2 /*&& version <= endVersion*/ ) pFiler->readItem (&Param) ;
+	if ( version >= 2 /*&& version <= endVersion*/ ) readInt(pFiler,Param,version);
 	if ( version >= 3 /*&& version <= endVersion*/ ) pFiler->readItem (&Grani) ;
 	if ( version >= 4 /*&& version <= endVersion*/ ) pFiler->readItem (&ElevUp) ;
 	if ( version >= 4 /*&& version <= endVersion*/ ) pFiler->readItem (&ElevDown) ;
 	if ( version >= 5 /*&& version <= endVersion*/ ) pFiler->readItem (&IsPipe) ;
-	if ( version >= 21 /*&& version <= endVersion*/ ) pFiler->readItem (&Form) ;
+	if ( version >= 21 /*&& version <= endVersion*/ ) readInt(pFiler,Form,version);
 	if ( version >= 23 /*&& version <= endVersion*/ ) pFiler->readItem (&WipeoutLength) ;	else WipeoutLength=50;
-	if ( version >= 24 /*&& version <= endVersion*/ ) pFiler->readItem (&DuctType) ;	else DuctType=0;
+	if ( version >= 24 /*&& version <= endVersion*/ ) readInt(pFiler,DuctType,version);
+
+
+// 	cout<<"read "<<"FirstPoint: "<<FirstPoint.x<<";"<<FirstPoint.y<<";"<<FirstPoint.z<<endl;
+// 	cout<<"read "<<"LastPoint: "<<LastPoint.x<<";"<<LastPoint.y<<";"<<LastPoint.z<<endl;
+// 	cout<<"read "<<"SizeA: "<<SizeA<<endl;
+// 	cout<<"read "<<"SizeB: "<<SizeB<<endl;
+// 	cout<<"read "<<"This1D: "<<This1D<<endl;
+// 	cout<<"read "<<"ThisRound: "<<ThisRound<<endl;
+// 	cout<<"read "<<"Flow: "<<Flow<<endl;
+// 	cout<<"read "<<"Direct: "<<Direct<<endl;
+// 	cout<<"read "<<"Elev: "<<Elev<<endl;
+// 	cout<<"read "<<"Wipeout: "<<Wipeout<<endl;
+// 	cout<<"read "<<"Param: "<<Param<<endl;
+// 	cout<<"read "<<"Grani: "<<Grani<<endl;
+// 	cout<<"read "<<"ElevUp: "<<ElevUp<<endl;
+// 	cout<<"read "<<"ElevDown: "<<ElevDown<<endl;
+// 	cout<<"read "<<"IsPipe: "<<IsPipe<<endl;
+// 	cout<<"read "<<"Form: "<<Form<<endl;
+// 	cout<<"read "<<"WipeoutLength: "<<WipeoutLength<<endl;
+// 	cout<<"read "<<"DuctType: "<<DuctType<<endl;
 
 	//readConnectors(pFiler,version);
 
