@@ -46,6 +46,7 @@
 #define DISPID_Tag2 0x0C
 //----- CComTrans
 class ATL_NO_VTABLE CComTrans : 
+		public CTVS_ComEntity,
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CComTrans, &CLSID_ComTrans>,
 	public ISupportErrorInfo,

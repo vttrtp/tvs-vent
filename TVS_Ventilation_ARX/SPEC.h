@@ -13,14 +13,7 @@ using namespace std;
 #include "../TVS_Ventilation_DBX/TVS_TRANS.h"
 #include "MSExcel.h"
 
-#define TagPos _T("ПОЗИЦИЯ")
-#define TagName _T("ИМЯ")
-#define TagType _T("ТИП")
-#define TagSize _T("РАЗМЕР")
-#define TagArticle _T("АРТИКУЛ")
-#define TagManufacture _T("ПРОИЗВОДИТЕЛЬ")
-#define TagMass _T("МАССА")
-#define TagCommit _T("ПРИМЕЧАНИЕ")
+
 
 #define Less 0
 #define Equal 1

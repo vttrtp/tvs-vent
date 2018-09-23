@@ -2603,8 +2603,6 @@ void func::sequal(bool &var,
 void func::PostToModelSpace(AcDbEntity *pEnt)
 
 {
-
-
 	AcDbBlockTable *pBlockTable;
 	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable,
 		AcDb::kForRead);

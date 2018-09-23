@@ -28,7 +28,11 @@
 #include "TVS_WYE.h"
 #include "TVS_ComEntity.h"
 
+//common
+#define DISPID_GeomCenter 0x20
 
+
+//personal
 #define DISPID_A  0x01
 #define DISPID_SizeB  0x02
 //#define DISPID_Flow  0x03
@@ -42,8 +46,11 @@
 #define DISPID_Elev 0x09
 #define DISPID_Tag1 0x0a
 #define DISPID_Tag2 0x0b
+
+
 //----- CComWye
 class ATL_NO_VTABLE CComWye : 
+	public CTVS_ComEntity,
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CComWye, &CLSID_ComWye>,
 	public ISupportErrorInfo,
@@ -101,6 +108,7 @@ public:
 	//IOPMPropertyExtension
 	BEGIN_OPMPROP_MAP()
 
+		//personal
 		OPMPROP_ENTRY(0, DISPID_A, PROPCAT_Data, \
 		0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
 		OPMPROP_ENTRY(0, DISPID_Length, PROPCAT_Data, \

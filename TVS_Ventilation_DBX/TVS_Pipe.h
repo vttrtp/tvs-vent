@@ -195,6 +195,13 @@ protected:
 
 public:
 
+	//get Size String
+	virtual void getSizeString(CString &size,const bool &sortSize=false);
+
+
+
+
+
 	AcGePoint3d FirstPoint;
 	AcGePoint3d LastPoint;
 	

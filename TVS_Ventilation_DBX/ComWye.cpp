@@ -149,47 +149,20 @@ STDMETHODIMP CComWye::GetGroupCount (DISPID dispID, long *nGroupCnt) {
 
 STDMETHODIMP CComWye::GetDisplayName (DISPID dispId, BSTR *propName) 
 { 
+	if (tryToSetCommonDisplayName(dispId,propName)){
+		return S_OK; 
+	}
+
 	switch (dispId) 
 	{ 
-		// стандартное 
+	
 	case (0x401): 
 		*propName  = ::SysAllocString(_T("Тройник")); 
 		break; 
 
-	case (0x516): 
-		*propName  = ::SysAllocString(_T("Цвет")); 
-		break; 
+	//////////////////////////////////////////////////////////////////////////
 
-	case (0x501): 
-		*propName  = ::SysAllocString(_T("Слой")); 
-		break; 
-
-	case (0x502): 
-		*propName  = ::SysAllocString(_T("Тип линий")); 
-		break; 
-
-	case (0x503): 
-		*propName  = ::SysAllocString(_T("Масштаб типа линий")); 
-		break; 
-
-	case (0x513): 
-		*propName  = ::SysAllocString(_T("Стиль печати")); 
-		break; 
-
-	case (0x514): 
-		*propName  = ::SysAllocString(_T("Вес линий")); 
-		break; 
-
-	case (0x515): 
-		*propName  = ::SysAllocString(_T("Гиперссылка")); 
-		break; 
-
-	case (0x577): 
-		*propName  = ::SysAllocString(_T("Материал")); 
-		break; 
-		// моё 
-
-
+//personal
 	case (DISPID_A): 
 		*propName  = ::SysAllocString(L"Dпр"); 
 		break; 
@@ -208,15 +181,6 @@ STDMETHODIMP CComWye::GetDisplayName (DISPID dispId, BSTR *propName)
 	case (DISPID_Wipeout): 
 		*propName  = ::SysAllocString(L"Маскировка"); 
 		break; 
-		//case (DISPID_Flow): 
-		//	*propName  = ::SysAllocString(L"L="); 
-		//	break; 
-		//case (DISPID_Speed): 
-		//	*propName  = ::SysAllocString(L"v="); 
-		//	break; 
-
-
-
 
 	case (DISPID_Length): 
 		*propName  = ::SysAllocString(L"Длина"); 
@@ -241,6 +205,12 @@ STDMETHODIMP CComWye::GetDisplayName (DISPID dispId, BSTR *propName)
 	} 
 	return S_OK; 
 }    
+
+
+
+
+
+
 
 STDMETHODIMP CComWye::get_Dpr(double *pVal)
 {

@@ -124,6 +124,7 @@
     <ClCompile Include="TVS_WYE.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commonDef.h" />
     <ClInclude Include="ComPipe.h" />
     <ClInclude Include="ComTrans.h" />
     <ClInclude Include="ComWye.h" />

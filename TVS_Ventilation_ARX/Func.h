@@ -13,28 +13,7 @@
 #include <iostream>
 #include "afxdb.h"
 
-#define globalElevUp 1
-#define globalElevmid 2
-#define globalElevdown 3
-#define M_PI 3.14159265358979323846
-#define dCONTINUE 0
-#define dCONNECT 1
-#define dSIZE 2
-#define dParal 1
-#define dPerpend 0
-#define dPeresec 2
-#define dNeperesec 3
-#define dComplanar 4
-#define dObshaiztochka 5
-#define isBlocked 0
-#define isNoTVS 1
-#define isTVS_Pipe 2
-#define isTVS_TAP 3
-#define isTVS_TRANS 4
-#define isTVS_Wye 5
-#define TVSEnt1isGrose 0
-#define TVSEnt2isGrose 1
-#define TVSEntitiesisSame 2
+#include "Settings.h"
 
 
 
@@ -144,32 +123,7 @@ AcGePoint3d AddSpecLine(AcGePoint3d cent,
 				 const ACHAR*t5=_T("")
 				 );
 
-static double globSizeA=150;
-static double globSizeB=150;
-static bool globRound=false;
-static bool globalWipeout=false;
-static bool globalGrani=false;
-static bool global1D=false;
-static double ftSizeB=100;
-static double ftSizeroundA=160;
-static double ftLengthp=150;
-static int ftTransType=1;
-static int globalMlead=1;
-static int globalRadiusTypeRound=RadiusTypeRound_RadiusSpecific;
-static int globalRadiusTypeRect=RadiusTypeRect_RadiusConstant;
-static int globalTypeRoundTap=1;
-static int globalTapForm=Form_Direct;
-static int globalTransType=0;
-static double globalTapRadiusVariableParameter=1;
-static double globalTapRadiusConst=150;
-static double globalFlow=0;
-static double globalLengthTr=300;
-static double globalLengthW=50;
-static double globalElevMid=0;
-static double globalElev=globalElevdown;
-static double globalAxis=90;
-static int globalDuctType=DuctTypeStill;
-static double globalWipeoutLength=50;
+
 
 void TVS_CS (AcDbEntity *pEnt);
 void TVS_PEdit (AcDbEntity *pEnt);

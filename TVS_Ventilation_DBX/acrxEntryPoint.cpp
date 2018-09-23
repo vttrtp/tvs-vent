@@ -29,9 +29,12 @@
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 
+
+
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
 class CTVS_Ventilation_DBXApp : public AcRxDbxApp {
+
 
 public:
 	CTVS_Ventilation_DBXApp () : AcRxDbxApp () {}

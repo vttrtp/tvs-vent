@@ -60,6 +60,8 @@
 #include "GripImp.h"
 #include "TVS_Connector.h"
 #include <iostream>
+
+#include <algorithm>
 using namespace std;
 
 
@@ -196,6 +198,10 @@ public:
 
 
 	//////TVS
+	//get Size String
+	virtual void getSizeString(CString &size,const bool &sortSize=false) {};
+
+
 
 	void writeInt(AcDbDwgFiler *pFiler, const int &param) const;
 	void readInt(AcDbDwgFiler *pFiler, int &param,const int &version);

@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+﻿// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -887,6 +887,22 @@ Acad::ErrorStatus TVS_Pipe::put_FirstPoint(AcGePoint3d newVal)
 }
 
 
+//⌀
+void TVS_Pipe::getSizeString(CString &sizeStr,const bool &sortSize/*=false*/)
+{
+ 
+	if (SizeB==0)
+	{
+		sizeStr.Format(L"%%%%c%g", SizeA);
+		return;
+	}
+	if (sortSize){
+		sizeStr.Format(L"%gx%g", min(SizeA,SizeB),max(SizeA,SizeB));
+		return;
+	}else{
+		sizeStr.Format(L"%gx%g", SizeA,SizeB);
+	}
+}
 
 bool TVS_Pipe::correctConnector(const int &index,const AcGeVector3d &offset)
 {

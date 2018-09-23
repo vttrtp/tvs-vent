@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+﻿// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -46,6 +46,21 @@ ACRX_DXF_DEFINE_MEMBERS (
 TVS_TAP::~TVS_TAP () {
 }
 
+
+void TVS_TAP::getSizeString(CString &sizeStr,const bool &sortSize/*=false*/)
+{
+	if (SizeB==0)
+	{
+		sizeStr.Format(L"%%%%C%g", SizeA);
+		return;
+	}
+	if (sortSize){
+		sizeStr.Format(L"%gx%g", min(SizeA,SizeB),max(SizeA,SizeB));
+		return;
+	}else{
+		sizeStr.Format(L"%gx%g", SizeA,SizeB);
+	}
+}
 
 Acad::ErrorStatus TVS_TAP::subGetClassID (CLSID *pClsid) const {
 	assertReadEnabled () ;

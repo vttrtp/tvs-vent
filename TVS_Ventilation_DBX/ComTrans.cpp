@@ -149,47 +149,11 @@ STDMETHODIMP CComTrans::GetGroupCount (DISPID dispID, long *nGroupCnt) {
 
 STDMETHODIMP CComTrans::GetDisplayName (DISPID dispId, BSTR *propName) 
 { 
+	if (tryToSetCommonDisplayName(dispId,propName)){
+		return S_OK; 
+	}
 	switch (dispId) 
-	{ 
-		// стандартное 
-	case (0x401): 
-		*propName  = ::SysAllocString(_T("Переход")); 
-		break; 
-
-	case (0x516): 
-		*propName  = ::SysAllocString(_T("Цвет")); 
-		break; 
-
-	case (0x501): 
-		*propName  = ::SysAllocString(_T("Слой")); 
-		break; 
-
-	case (0x502): 
-		*propName  = ::SysAllocString(_T("Тип линий")); 
-		break; 
-
-	case (0x503): 
-		*propName  = ::SysAllocString(_T("Масштаб типа линий")); 
-		break; 
-
-	case (0x513): 
-		*propName  = ::SysAllocString(_T("Стиль печати")); 
-		break; 
-
-	case (0x514): 
-		*propName  = ::SysAllocString(_T("Вес линий")); 
-		break; 
-
-	case (0x515): 
-		*propName  = ::SysAllocString(_T("Гиперссылка")); 
-		break; 
-
-	case (0x577): 
-		*propName  = ::SysAllocString(_T("Материал")); 
-		break; 
-		// моё 
-
-
+	{
 	case (DISPID_A): 
 		*propName  = ::SysAllocString(L"Dпр"); 
 		break; 

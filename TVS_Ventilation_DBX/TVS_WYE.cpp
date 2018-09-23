@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -45,6 +45,29 @@ TVS_WYE::TVS_WYE () : TVS_Entity () {
 
 TVS_WYE::~TVS_WYE () {
 }
+
+void TVS_WYE::getSizeString(CString &sizeStr,const bool &sortSize/*=false*/)
+{
+
+	if (SizeBpr==0)
+	{
+		sizeStr.Format(L"%%%%c%g", SizeApr);
+
+	}else{
+		sizeStr.Format(L"%gx%g", SizeApr,SizeBpr);
+	}
+	CString strSize2;
+	if (SizeBotv==0)
+	{
+		strSize2.Format(L"-%%%%c%g", SizeAotv);
+		sizeStr += strSize2;
+
+	}else{
+		strSize2.Format(L"-%gx%g", SizeAotv,SizeBotv);
+		sizeStr += strSize2;
+	}
+}
+
 Acad::ErrorStatus TVS_WYE::subGetClassID (CLSID *pClsid) const {
 	assertReadEnabled () ;
 	*pClsid=CLSID_ComWye;
@@ -295,10 +318,10 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 		}
 		pLn->setClosed(true);
 		setMainProperty(pLn);
-		if (ThisRoundpr==true)//начало dпр-круглый
+		if (ThisRoundpr==true)//РЅР°С‡Р°Р»Рѕ dРїСЂ-РєСЂСѓРіР»С‹Р№
 		{
 
-			if (ThisRoundotv==true)//начало отв-круглый
+			if (ThisRoundotv==true)//РЅР°С‡Р°Р»Рѕ РѕС‚РІ-РєСЂСѓРіР»С‹Р№
 			{
 				AcGeVector3d normaleleps=AcGeVector3d(0,0,1);
 				double startangle ,angle1,angle2;
@@ -364,8 +387,8 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 				massforarray[1]=pA5;
 				AcDbLine * pLn2=new AcDbLine (massforarray[0],massforarray[1]);
 				setCenterProperty(pLn2);
-			} //конец отв-круглый
-			else//начало пр-кругл отв-прямоуг
+			} //РєРѕРЅРµС† РѕС‚РІ-РєСЂСѓРіР»С‹Р№
+			else//РЅР°С‡Р°Р»Рѕ РїСЂ-РєСЂСѓРіР» РѕС‚РІ-РїСЂСЏРјРѕСѓРі
 			{
 				AcGePoint3d mass4[4];
 				mass4[0]=pG;
@@ -386,11 +409,11 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 				massforarray[1]=pA3;
 				AcDbLine * pLn3=new AcDbLine (massforarray[0],massforarray[1]);
 				setCenterProperty(pLn3);
-			}//конец пр-кругл отв-прямоуг
+			}//РєРѕРЅРµС† РїСЂ-РєСЂСѓРіР» РѕС‚РІ-РїСЂСЏРјРѕСѓРі
 
 
-		} //конец dпр-круглый
-		else//начало пр-прямоуг
+		} //РєРѕРЅРµС† dРїСЂ-РєСЂСѓРіР»С‹Р№
+		else//РЅР°С‡Р°Р»Рѕ РїСЂ-РїСЂСЏРјРѕСѓРі
 		{
 			massforarray[0]=pG;
 			massforarray[1]=pD;
@@ -407,12 +430,12 @@ Adesk::Boolean TVS_WYE::subWorldDraw (AcGiWorldDraw *mode) {
 				massforarray[1]=pA5;
 				AcDbLine * pLn3=new AcDbLine (massforarray[0],massforarray[1]);
 				setCenterProperty(pLn3);;
-			}//конец пр-пр отв-кругл
+			}//РєРѕРЅРµС† РїСЂ-РїСЂ РѕС‚РІ-РєСЂСѓРіР»
 
-		}//конец пр-прямоуг
+		}//РєРѕРЅРµС† РїСЂ-РїСЂСЏРјРѕСѓРі
 
 
-	} //конец 2d
+	} //РєРѕРЅРµС† 2d
 	else
 	{
 
@@ -780,10 +803,10 @@ Acad::ErrorStatus TVS_WYE::subExplode(AcDbVoidPtrArray & entitySet) const
 
 
 
-		if (ThisRoundpr==true)//начало dпр-круглый
+		if (ThisRoundpr==true)//РЅР°С‡Р°Р»Рѕ dРїСЂ-РєСЂСѓРіР»С‹Р№
 		{
 
-			if (ThisRoundotv==true)//начало отв-круглый
+			if (ThisRoundotv==true)//РЅР°С‡Р°Р»Рѕ РѕС‚РІ-РєСЂСѓРіР»С‹Р№
 			{
 				AcGeVector3d normaleleps=AcGeVector3d(0,0,1);
 				double startangle,angle1,angle2;
@@ -877,8 +900,8 @@ Acad::ErrorStatus TVS_WYE::subExplode(AcDbVoidPtrArray & entitySet) const
 				entitySet.append(pLine3);
 
 
-			} //конец отв-круглый
-			else//начало пр-кругл отв-прямоуг
+			} //РєРѕРЅРµС† РѕС‚РІ-РєСЂСѓРіР»С‹Р№
+			else//РЅР°С‡Р°Р»Рѕ РїСЂ-РєСЂСѓРіР» РѕС‚РІ-РїСЂСЏРјРѕСѓРі
 			{
 				AcGePoint2d mass4[4];
 				mass4[0]=AcGePoint2d(pG.x,pG.y);
@@ -917,11 +940,11 @@ Acad::ErrorStatus TVS_WYE::subExplode(AcDbVoidPtrArray & entitySet) const
 
 
 
-			}//конец пр-кругл отв-прямоуг
+			}//РєРѕРЅРµС† РїСЂ-РєСЂСѓРіР» РѕС‚РІ-РїСЂСЏРјРѕСѓРі
 
 
-		} //конец dпр-круглый
-		else//начало пр-прямоуг
+		} //РєРѕРЅРµС† dРїСЂ-РєСЂСѓРіР»С‹Р№
+		else//РЅР°С‡Р°Р»Рѕ РїСЂ-РїСЂСЏРјРѕСѓРі
 		{
 			AcDbLine* pLine6 = new AcDbLine;
 			pLine6->setStartPoint(pG);
@@ -962,12 +985,12 @@ Acad::ErrorStatus TVS_WYE::subExplode(AcDbVoidPtrArray & entitySet) const
 
 
 
-			}//конец пр-пр отв-кругл
+			}//РєРѕРЅРµС† РїСЂ-РїСЂ РѕС‚РІ-РєСЂСѓРіР»
 
-		}//конец пр-прямоуг
+		}//РєРѕРЅРµС† РїСЂ-РїСЂСЏРјРѕСѓРі
 
 
-	} //конец 2d
+	} //РєРѕРЅРµС† 2d
 	else
 	{
 		AcDbLine* pLine8 = new AcDbLine;

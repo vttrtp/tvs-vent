@@ -79,6 +79,10 @@ public:
 	TVS_TAP () ;
 	virtual ~TVS_TAP () ;
 	
+
+	//get Size String
+	virtual void getSizeString(CString &size,const bool &sortSize=false);
+
 	
 	//----- AcDbObject protocols
 	//- Dwg Filing protocol

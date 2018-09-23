@@ -46,6 +46,7 @@
 
 //----- CCom_TAP
 class ATL_NO_VTABLE CCom_TAP : 
+		public CTVS_ComEntity,
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CCom_TAP, &CLSID_Com_TAP>,
 	public ISupportErrorInfo,

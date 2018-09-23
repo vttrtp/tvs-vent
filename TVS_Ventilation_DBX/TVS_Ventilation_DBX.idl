@@ -29,7 +29,12 @@ library TVSTVS_Ventilation_DBXLib
 	//----- axdb16enu.tlb is guaranteed to be available in all locales.
 	//----- If you want to provide localized typelib then you must import
 	//----- localized tlb here.
+
+
 	importlib("axdb20enu.tlb");
+	//importlib("axdb21enu.tlb");
+	//importlib("axdb22enu.tlb");
+	//importlib("axdb23enu.tlb");
 	//- Interface definition
 	[
 		object,

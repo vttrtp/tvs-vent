@@ -60,6 +60,11 @@ public:
 	TVS_WYE () ;
 	virtual ~TVS_WYE () ;
 
+	//get Size String
+	virtual void getSizeString(CString &size,const bool &sortSize=false);
+
+
+
 	//----- AcDbObject protocols
 	//- Dwg Filing protocol
 	virtual Acad::ErrorStatus dwgOutFields (AcDbDwgFiler *pFiler) const ;

@@ -24,64 +24,21 @@
 //-----------------------------------------------------------------------------
 #pragma once
 #include "resource.h"
-#include "..//TVS_Ventilation_DBX/TVS_Entity.h"
-#include "..//TVS_Ventilation_DBX/TVS_Ventilation_DBX_i.h"
+#include "TVS_Entity.h"
+#include "TVS_Ventilation_DBX_i.h"
 #define DISPID_A  0x01
 
+class ATL_NO_VTABLE CTVS_ComEntity
 
-//----- CTVS_ComEntity
-class ATL_NO_VTABLE CTVS_ComEntity : 
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CTVS_ComEntity, &CLSID_TVS_ComEntity>,
-	public ISupportErrorInfo,
-	public IAcadEntityDispatchImpl<CTVS_ComEntity, &CLSID_TVS_ComEntity, ITVS_ComEntity, &IID_ITVS_ComEntity, &LIBID_TVSTVS_Ventilation_DBXLib>
-	//- Please do not remove the following line. It is here to make the Visual Studio ATL Wizards
-	//- running properly. The class will not compile but is required by Visual Studio to recognize
-	//-	this class as being an ATL class
-	//- Uncomment the following line when you want to use the ATL Wizards to add a member or method
-	//- to its interface.
-	//,public IDispatchImpl<Ighfghgfh, &IID_IIghfghgfh, &LIBID_adskArxProject1Lib>
+
 {
 public:
 	CTVS_ComEntity () {
 	}
 
-	DECLARE_REGISTRY_RESOURCEID(IDR_TVS_COMENTITY)
-
-	BEGIN_COM_MAP(CTVS_ComEntity)
-		COM_INTERFACE_ENTRY(ITVS_ComEntity)
-		COM_INTERFACE_ENTRY(IDispatch)
-		COM_INTERFACE_ENTRY(ISupportErrorInfo)
-		COM_INTERFACE_ENTRY(IConnectionPointContainer)
-		COM_INTERFACE_ENTRY(IAcadBaseObject)
-		COM_INTERFACE_ENTRY(IAcadBaseObject2)
-		COM_INTERFACE_ENTRY(IAcadObject)
-		COM_INTERFACE_ENTRY(IAcadEntity)
-		COM_INTERFACE_ENTRY(IRetrieveApplication)
-	END_COM_MAP()
-
-	//----- ISupportsErrorInfo
-	STDMETHOD(InterfaceSupportsErrorInfo)(REFIID riid);
-
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
-
-	HRESULT FinalConstruct () {
-		return (S_OK) ;
-	}
-	
-	void FinalRelease () {
-	}
-
-	//IAcadBaseObjectImpl
-	virtual HRESULT CreateNewObject (AcDbObjectId &objId, AcDbObjectId &ownerId, TCHAR *keyName);
-	//IAcadBaseObject2Impl
-	STDMETHOD(ForceDbResident)(VARIANT_BOOL *forceDbResident) ;
-	STDMETHOD(CreateObject)(AcDbObjectId ownerId =AcDbObjectId::kNull, TCHAR *keyName =NULL);
-	STDMETHOD(AddToDb)(AcDbObjectId &objId, AcDbObjectId ownerId =AcDbObjectId::kNull, TCHAR *keyName =NULL);
 
 public:
-	//ITVS_ComEntity
-
+	bool tryToSetCommonDisplayName(const DISPID &dispId, BSTR *propName);
+	
 } ;
 
-OBJECT_ENTRY_AUTO(__uuidof(TVS_ComEntity), CTVS_ComEntity)

@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+﻿// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -45,6 +45,29 @@ ACRX_DXF_DEFINE_MEMBERS (
 
 TVS_TRANS::~TVS_TRANS () {
 }
+
+void TVS_TRANS::getSizeString(CString &sizeStr,const bool &sortSize/*=false*/)
+{
+
+	if (SizeBp1==0)
+	{
+		sizeStr.Format(L"%%%%c%g", SizeAp1);
+	
+	}else{
+		sizeStr.Format(L"%gx%g", SizeAp1,SizeBp1);
+	}
+	CString strSize2;
+	if (SizeBp2==0)
+	{
+		strSize2.Format(L"-%%%%c%g", SizeAp2);
+		sizeStr += strSize2;
+
+	}else{
+		strSize2.Format(L"-%gx%g", SizeAp2,SizeBp2);
+		sizeStr += strSize2;
+	}
+}
+
 Acad::ErrorStatus TVS_TRANS::subGetClassID (CLSID *pClsid) const {
 	assertReadEnabled () ;
 

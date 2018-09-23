@@ -43,6 +43,7 @@
 #define DISPID_Tag2 0x10
 //----- CComPipe
 class ATL_NO_VTABLE CComPipe : 
+		public CTVS_ComEntity,
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CComPipe, &CLSID_ComPipe>,
 	public ISupportErrorInfo,
