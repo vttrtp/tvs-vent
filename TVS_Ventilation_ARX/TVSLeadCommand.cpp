@@ -174,13 +174,14 @@ void TVS_Lead_Command::createMLeader(const CString &message, const AcGePoint3d &
 		vec=AcGeVector3d(0,-1,0);
 	}
 
-	mText->setContents(message.GetString());
+	
 
 	//mText->getColumnHeight(0,texth);
 	//mText->getColumnWidth(textw);
 	mText->setLocation(ptEnd);
 
-	mText->setColorIndex(AcDb::kByBlock);
+	mText->setColorIndex(AcDb::kByLayer);
+	mText->setContents(message.GetString());
 	//mText->setLineWeight(AcDb::kLnWt025);
 
 	//мультивыноска
@@ -197,6 +198,7 @@ void TVS_Lead_Command::createMLeader(const CString &message, const AcGePoint3d &
 	//pEnt->setEnableDogleg(false);
 	//pEnt->setDoglegLength(10);
 	//pEnt->setDoglegDirection(i,vec);
+
 	pEnt->setMText(mText);
 	
 	PostToModelSpace(pEnt);
@@ -206,7 +208,7 @@ void TVS_Lead_Command::createMLeader(const CString &message, const AcGePoint3d &
 	if (pEnt1.openStatus () == Acad::eOk)
 	{
 		pEnt1->setLastVertex(i,ptEnd);
-		pEnt1->mtext()->setColorIndex(AcDb::kByBlock);
+		//pEnt1->mtext()->setColorIndex(-1);
 	}
 }
 

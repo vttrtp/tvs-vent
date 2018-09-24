@@ -93,7 +93,7 @@ using namespace std;
 extern AcApDataManager<CDocData> DocVars ;
 
 //-----------------------------------------------------------------------------
-#import "acax20enu.tlb" raw_interfaces_only no_namespace
+//#import "acax20enu.tlb" raw_interfaces_only no_namespace
 
 
 

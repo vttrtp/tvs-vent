@@ -23,7 +23,6 @@
 //----- acrxEntryPoint.cpp
 //-----------------------------------------------------------------------------
 #pragma once
-#include <vld.h> 
 #include "StdAfx.h"
 #include "resource.h"
 #include "Func.h"
@@ -34,7 +33,7 @@
 #include "MSExcel.h"	
 #include "HeatFloor.h"
 #include "BLCKMNGRDLG.h"
-#import "acax20ENU.tlb" 
+//#import "acax21ENU.tlb" 
 #include <rxmfcapi.h>
 #include <axpnt3d.h>
 

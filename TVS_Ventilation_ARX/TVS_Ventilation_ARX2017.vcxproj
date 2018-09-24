@@ -157,9 +157,9 @@
     <ClCompile Include="dgAllEdit.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="Func.cpp" />
-    <ClCompile Include="GripPoints.cpp" />
     <ClCompile Include="hangeZdg.cpp" />
     <ClCompile Include="HeatFloor.cpp" />
+    <ClCompile Include="mLeadPropertyDg.cpp" />
     <ClCompile Include="MSExcel.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCheck.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCombo.cpp" />
@@ -168,6 +168,7 @@
     <ClCompile Include="NewCellTypes\GridURLCell.cpp" />
     <ClCompile Include="OLEMethod.cpp" />
     <ClCompile Include="PipeSizeDiallog.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SPEC.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,6 +178,8 @@
     </ClCompile>
     <ClCompile Include="tdbl.cpp" />
     <ClCompile Include="Calculate.cpp" />
+    <ClCompile Include="TVSLeadCommand.cpp" />
+    <ClCompile Include="TVS_Command.cpp" />
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +199,7 @@
     <ClInclude Include="GripPoints.h" />
     <ClInclude Include="hangeZdg.h" />
     <ClInclude Include="HeatFloor.h" />
+    <ClInclude Include="mLeadPropertyDg.h" />
     <ClInclude Include="MSExcel.h" />
     <ClInclude Include="NewCellTypes\GridCellCheck.h" />
     <ClInclude Include="NewCellTypes\GridCellCombo.h" />
@@ -206,10 +210,13 @@
     <ClInclude Include="OLEMethod.h" />
     <ClInclude Include="PipeSizeDiallog.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="SPEC.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tdbl.h" />
     <ClInclude Include="Calculate.h" />
+    <ClInclude Include="TVSLeadCommand.h" />
+    <ClInclude Include="TVS_Command.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TVS_Ventilation_ARX.rc" />

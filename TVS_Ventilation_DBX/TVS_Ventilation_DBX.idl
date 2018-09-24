@@ -35,7 +35,7 @@ library TVSTVS_Ventilation_DBXLib
 	//importlib("axdb21enu.tlb");
 	//importlib("axdb22enu.tlb");
 	//importlib("axdb23enu.tlb");
-	//- Interface definition
+	//.- Interface definition
 	[
 		object,
 		uuid(D18FCCA1-82A4-4305-AC38-9E572137F808),

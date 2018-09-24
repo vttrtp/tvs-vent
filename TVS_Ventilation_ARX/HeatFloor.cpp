@@ -9,7 +9,7 @@
 #include "HeatFloor.h"
 #include <mmsystem.h>
 
-#import "acax20ENU.tlb" 
+//#import "acax20ENU.tlb" 
 #include <rxmfcapi.h>
 #include <axpnt3d.h>
 
