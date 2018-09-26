@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\GridCtrl_src\GridCell.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCellBase.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellCheck.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellCombo.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellDateTime.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridCellNumeric.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridCtrl.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\GridDropTarget.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridURLCell.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\TitleTip.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="BLCKMNGRDLG.cpp">
+      <Filter>forms</Filter>
+    </ClCompile>
+    <ClCompile Include="dgAllEdit.cpp">
+      <Filter>forms</Filter>
+    </ClCompile>
+    <ClCompile Include="acrxEntryPoint.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculate.cpp">
+      <Filter>commands</Filter>
+    </ClCompile>
+    <ClCompile Include="DocData.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Func.cpp">
+      <Filter>functions</Filter>
+    </ClCompile>
+    <ClCompile Include="hangeZdg.cpp">
+      <Filter>forms</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatFloor.cpp">
+      <Filter>commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp">
+      <Filter>grid</Filter>
+    </ClCompile>
+    <ClCompile Include="MSExcel.cpp">
+      <Filter>functions</Filter>
+    </ClCompile>
+    <ClCompile Include="OLEMethod.cpp">
+      <Filter>functions</Filter>
+    </ClCompile>
+    <ClCompile Include="PipeSizeDiallog.cpp">
+      <Filter>forms</Filter>
+    </ClCompile>
+    <ClCompile Include="SPEC.cpp">
+      <Filter>commands</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="tdbl.cpp">
+      <Filter>commands</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_Ventilation_ARX.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_Command.cpp">
+      <Filter>commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>settings</Filter>
+    </ClCompile>
+    <ClCompile Include="mLeadPropertyDg.cpp">
+      <Filter>forms\mLeader</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSLeadCommand.cpp">
+      <Filter>commands\TVSLeadCommand</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\GridCtrl_src\GridCell.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCellBase.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellCheck.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellCombo.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellDateTime.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridCellNumeric.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridCtrl.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\GridDropTarget.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="NewCellTypes\GridURLCell.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\TitleTip.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="BLCKMNGRDLG.h">
+      <Filter>forms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\CellRange.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="dgAllEdit.h">
+      <Filter>forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculate.h">
+      <Filter>commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>commands</Filter>
+    </ClInclude>
+    <ClInclude Include="DocData.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Func.h">
+      <Filter>functions</Filter>
+    </ClInclude>
+    <ClInclude Include="hangeZdg.h">
+      <Filter>forms</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatFloor.h">
+      <Filter>commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GridCtrl_src\MemDC.h">
+      <Filter>grid</Filter>
+    </ClInclude>
+    <ClInclude Include="MSExcel.h">
+      <Filter>functions</Filter>
+    </ClInclude>
+    <ClInclude Include="OLEMethod.h">
+      <Filter>functions</Filter>
+    </ClInclude>
+    <ClInclude Include="PipeSizeDiallog.h">
+      <Filter>forms</Filter>
+    </ClInclude>
+    <ClInclude Include="SPEC.h">
+      <Filter>commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="tdbl.h">
+      <Filter>commands</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_Command.h">
+      <Filter>commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="mLeadPropertyDg.h">
+      <Filter>forms\mLeader</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSLeadCommand.h">
+      <Filter>commands\TVSLeadCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="MLeaderSettings.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd">
+      <Filter>main</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{6f2ea9af-fd38-4e96-a171-76adb9bd8552}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="forms">
+      <UniqueIdentifier>{90ba6131-f00f-4699-a27f-714a633026a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands">
+      <UniqueIdentifier>{8f1d7f3f-0469-4a6d-81da-d757237e8b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="grid">
+      <UniqueIdentifier>{7051f7ce-c0a9-472e-a6f6-2635802628d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="functions">
+      <UniqueIdentifier>{90552be0-5412-4745-955b-c298f5b1bffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="settings">
+      <UniqueIdentifier>{8148863f-81e3-4533-89ab-7ff68f3ce2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="forms\mLeader">
+      <UniqueIdentifier>{206c2994-1c79-4c17-ab58-a5b5648a1155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands\TVSLeadCommand">
+      <UniqueIdentifier>{ff806572-e1af-4458-9ab9-6f42c8dbb60e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>main</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TVS_Ventilation_ARX.rc">
+      <Filter>main</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

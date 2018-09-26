@@ -154,6 +154,11 @@ STDMETHODIMP CComTrans::GetDisplayName (DISPID dispId, BSTR *propName)
 	}
 	switch (dispId) 
 	{
+		// стандартное 
+	case (0x401): 
+		*propName  = ::SysAllocString(_T("Переход")); 
+		break; 
+
 	case (DISPID_A): 
 		*propName  = ::SysAllocString(L"Dпр"); 
 		break; 
