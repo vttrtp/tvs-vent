@@ -42,9 +42,10 @@
 //#include "Regedit.h"
 #include <TVS_Connector.h>
 
+#include "TVSController.h"
 
 #include "TVSLeadCommand.h"
-
+#include "TVS_Lead_Recalculate.h"
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
@@ -99,7 +100,32 @@ public:
 		return (retCode) ;
 	}
 
+	virtual AcRx::AppRetCode On_kLoadDwgMsg(void * pkt)
+	{
+		AcRx::AppRetCode retCode = AcRxArxApp::On_kLoadDwgMsg(pkt);
+
+		// register apps
+		TVSController::get()->mLeaderController.registerApp();
+		TVSController::get()->tvsPropertyController.registerApp();
+
+		return (retCode);
+	}
+
+	virtual AcRx::AppRetCode On_(void *pkt) {
+		// TODO: Add your code here
+
+		// You *must* call On_kUnloadAppMsg here
+		AcRx::AppRetCode retCode = AcRxArxApp::On_kUnloadAppMsg(pkt);
+
+		// TODO: Unload dependencies here
+
+		return (retCode);
+	}
+
 	virtual void RegisterServerComponents () {
+		//----- Self-register COM server upon loading.
+		if (FAILED(::DllRegisterServer()))
+			acutPrintf(_RXST("Failed to register COM server.\n"));
 	}
 
 	// The ACED_ARXCOMMAND_ENTRY_AUTO macro can be applied to any static member 
@@ -4664,6 +4690,12 @@ public:
 		cmnd.execute();
 	}
 
+	static void Ventilation_ARXTVS_LEAD_Recalculate(void)
+	{
+		TVS_Lead_Recalculate cmnd;
+		cmnd.execute();
+	}
+
 	static void setZ()
 	{
 		throw std::logic_error("The method or operation is not implemented.");
@@ -5541,6 +5573,9 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Change, TVS_Change, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ERASE, TVS_ERASE, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_LEAD, TVS_LEAD, ACRX_CMD_TRANSPARENT, NULL)
+
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_LEAD_Recalculate, TVS_LEAD_Recalculate, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SCALE, TVS_SCALE, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AddAtrib, TVS_AddAtrib, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVSSomeParts, TVSSomeParts, ACRX_CMD_TRANSPARENT, NULL)

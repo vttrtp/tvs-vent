@@ -1,0 +1,27 @@
+HKCR
+{
+	TVS_Ventilation_ARX.TVSPropertyPositi.1 = s 'TVSPropertyPositionDyn Class'
+	{
+		CLSID = s '{9CDF19D2-AEDA-4BCD-BEF0-B54EEC0CB34F}'
+	}
+	TVS_Ventilation_ARX.TVSPropertyPosition = s 'TVSPropertyPositionDyn Class'
+	{
+		CLSID = s '{9CDF19D2-AEDA-4BCD-BEF0-B54EEC0CB34F}'
+		CurVer = s 'TVS_Ventilation_ARX.TVSPropertyPositi.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9CDF19D2-AEDA-4BCD-BEF0-B54EEC0CB34F} = s 'TVSPropertyPositionDyn Class'
+		{
+			ProgID = s 'TVS_Ventilation_ARX.TVSPropertyPositi.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_ARX.TVSPropertyPosition'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{5040B8FD-1BB3-4F7E-9436-250A358C6270}'
+		}
+	}
+}

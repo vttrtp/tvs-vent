@@ -1,0 +1,26 @@
+HKCR
+{
+	TVS_Ventilation_ARX2019.MLeaderDyn.1 = s 'MLeaderDyn Class'
+	{
+		CLSID = s '{C5CC04FA-8967-4093-A303-ECC3A55DB435}'
+	}
+	TVS_Ventilation_ARX2019.MLeaderDyn = s 'MLeaderDyn Class'
+	{
+		CLSID = s '{C5CC04FA-8967-4093-A303-ECC3A55DB435}'
+		CurVer = s 'TVS_Ventilation_ARX2019.MLeaderDyn.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C5CC04FA-8967-4093-A303-ECC3A55DB435} = s 'MLeaderDyn Class'
+		{
+			ProgID = s 'TVS_Ventilation_ARX2019.MLeaderDyn.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_ARX2019.MLeaderDyn'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{F41B178C-0060-4EC5-943D-A92C9EAD221A}'
+		}
+	}
+}

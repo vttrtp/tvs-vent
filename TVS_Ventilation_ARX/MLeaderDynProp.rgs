@@ -1,0 +1,27 @@
+HKCR
+{
+	TVS_Ventilation_ARX.MLeaderDynProp.1 = s 'MLeaderDynProp Class'
+	{
+		CLSID = s '{122D8C49-9A8C-4239-8C29-007C24EF231A}'
+	}
+	TVS_Ventilation_ARX.MLeaderDynProp = s 'MLeaderDynProp Class'
+	{
+		CLSID = s '{122D8C49-9A8C-4239-8C29-007C24EF231A}'
+		CurVer = s 'TVS_Ventilation_ARX.MLeaderDynProp.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {122D8C49-9A8C-4239-8C29-007C24EF231A} = s 'MLeaderDynProp Class'
+		{
+			ProgID = s 'TVS_Ventilation_ARX.MLeaderDynProp.1'
+			VersionIndependentProgID = s 'TVS_Ventilation_ARX.MLeaderDynProp'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{F41B178C-0060-4EC5-943D-A92C9EAD221A}'
+		}
+	}
+}

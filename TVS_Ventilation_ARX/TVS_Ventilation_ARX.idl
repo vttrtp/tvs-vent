@@ -1,0 +1,304 @@
+// (C) Copyright 2002-2012 by Autodesk, Inc. 
+
+// TVS_Ventilation_ARX.idl : IDL source
+//
+// This file will be processed by the MIDL tool to
+// produce the type library (TVSTVS_Ventilation_ARX.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+//import "acadi.idl";
+
+
+
+//mleaderProperty
+[
+	object,
+	uuid(5040B8FD-1BB3-4F7E-9436-250A358C6270),
+	dual,
+	nonextensible,
+	helpstring("IMLeaderDynProp Interface"),
+	pointer_default(unique)
+]
+interface IMLeaderDynProp : IDispatch {
+};
+
+//position
+[
+	object,
+	uuid(C1E7B1E0-A2BC-4B72-A107-F194C07A2E3D),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyPositionDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyPositionDyn : IDispatch {
+};
+
+//name
+[
+	object,
+	uuid(B54DF745-D7FE-472F-B51E-A7712C0C08A0),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyNameDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyNameDyn : IDispatch {
+};
+
+//type
+[
+	object,
+	uuid(97E60D1A-4D9B-42A0-8528-BF721B7A9641),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyTypeDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyTypeDyn : IDispatch {
+};
+
+//size
+[
+	object,
+	uuid(92F57766-6434-41C6-B1A5-6B5680FBE8B3),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertySizeDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertySizeDyn : IDispatch {
+};
+
+//article
+[
+	object,
+	uuid(49512E67-8D16-40AE-BF81-E3A5C4DCF2E6),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyArticleDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyArticleDyn : IDispatch {
+};
+
+//manufacturer
+[
+	object,
+	uuid(DFFAF303-7CD8-4947-9BA2-133AF19FCF75),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyManufacturerDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyManufacturerDyn : IDispatch {
+};
+
+//units
+[
+	object,
+	uuid(DA57A20D-2149-490E-8513-578A9F7829EA),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyUnitsDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyUnitsDyn : IDispatch {
+};
+
+//count
+[
+	object,
+	uuid(CA4EEADD-F396-42A7-94C3-E51F9670337B),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyCountDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyCountDyn : IDispatch {
+};
+
+//mass
+[
+	object,
+	uuid(34D404D5-AED0-4A90-B728-260425C08025),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyMassDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyMassDyn : IDispatch {
+};
+
+//note
+[
+	object,
+	uuid(ABBE5C6B-7B53-46C9-ADD0-575D47E0F323),
+	dual,
+	nonextensible,
+	helpstring("ITVSPropertyNoteDyn Interface"),
+	pointer_default(unique)
+]
+interface ITVSPropertyNoteDyn : IDispatch {
+};
+
+
+
+//app
+[
+	uuid(F41B178C-0060-4EC5-943D-A92C9EAD221A),
+	version(1.0),
+	helpstring("TVSTVS_Ventilation_ARX 1.0 Type Library")
+]
+library TVSTVS_Ventilation_ARXLib
+{
+	importlib("axdb20enu.tlb"); //2016
+	//importlib("axdb21enu.tlb");
+	//importlib("axdb22enu.tlb");
+	//importlib("axdb23enu.tlb");
+
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	//----- If the following import fails then it means that the type library 
+	//----- is not on the system path you can fix the problem in two ways:
+	//----- 1. Add it to the system wide PATH environment variable
+	//----- 2. Add it to the executable file list in Developer Studio. You can do
+	//----- this in using the Tools/Option menu and then choosing the 'Directories'
+	//----- tab and finally typing the full path at the Executable files section.
+
+	//----- Importing english is ok here. Autodesk doesn't localize this idl/tlb.
+	//----- axdb16enu.tlb is guaranteed to be available in all locales.
+	//----- If you want to provide localized typelib then you must import
+	//----- localized tlb here.
+
+	//mleaderProperty
+	[
+		uuid(122D8C49-9A8C-4239-8C29-007C24EF231A),
+		helpstring("MLeaderDynProp Class")
+	]
+	coclass MLeaderDynProp
+	{
+		[default] interface IMLeaderDynProp;
+	};
+
+	//position
+	[
+		uuid(9CDF19D2-AEDA-4BCD-BEF0-B54EEC0CB34F),
+		helpstring("TVSPropertyPositionDyn Class")
+	]
+
+
+	coclass TVSPropertyPositionDyn
+	{
+		[default] interface ITVSPropertyPositionDyn;
+	};
+
+	//Name
+	[
+		uuid(CFBDD843-ECB7-4759-AE1E-A20209C504B1),
+		helpstring("TVSPropertyNameDyn Class")
+	]
+
+
+	coclass TVSPropertyNameDyn
+	{
+		[default] interface ITVSPropertyNameDyn;
+	};
+
+	//Type
+	[
+		uuid(85FBD211-1892-460B-A668-ACABF964C096),
+		helpstring("TVSPropertyTypeDyn Class")
+	]
+
+
+	coclass TVSPropertyTypeDyn
+	{
+		[default] interface ITVSPropertyTypeDyn;
+	};
+
+	//Size
+	[
+		uuid(7514E3C8-8DAE-44E2-ACF4-94F5E313D0FB),
+		helpstring("TVSPropertySizeDyn Class")
+	]
+
+
+	coclass TVSPropertySizeDyn
+	{
+		[default] interface ITVSPropertySizeDyn;
+	};
+
+	//Article
+	[
+		uuid(731F4CE4-EA83-403A-9E76-91F0A150B9F1),
+		helpstring("TVSPropertyArticleDyn Class")
+	]
+
+
+	coclass TVSPropertyArticleDyn
+	{
+		[default] interface ITVSPropertyArticleDyn;
+	};
+
+	//Manufacturer
+	[
+		uuid(3D2E7155-ECB6-4754-8C7F-B9C2AD3C4B4B),
+		helpstring("TVSPropertyManufacturerDyn Class")
+	]
+
+
+	coclass TVSPropertyManufacturerDyn
+	{
+		[default] interface ITVSPropertyManufacturerDyn;
+	};
+
+	//Units
+	[
+		uuid(C2B31506-22AC-443A-BAB6-28106E77C186),
+		helpstring("TVSPropertyUnitsDyn Class")
+	]
+
+
+	coclass TVSPropertyUnitsDyn
+	{
+		[default] interface ITVSPropertyUnitsDyn;
+	};
+
+	//Count
+	[
+		uuid(F34FBE1C-6D72-41DA-97A1-10AB8782D477),
+		helpstring("TVSPropertyCountDyn Class")
+	]
+
+
+	coclass TVSPropertyCountDyn
+	{
+		[default] interface ITVSPropertyCountDyn;
+	};
+
+	//Mass
+	[
+		uuid(2E0FDB59-A6B5-450B-AAC1-DF7E235B91EB),
+		helpstring("TVSPropertyMassDyn Class")
+	]
+
+
+	coclass TVSPropertyMassDyn
+	{
+		[default] interface ITVSPropertyMassDyn;
+	};
+
+	//Note
+	[
+		uuid(1453F171-05FA-4878-8B2D-E0E0DE6B9CC4),
+		helpstring("TVSPropertyNoteDyn Class")
+	]
+
+	coclass TVSPropertyNoteDyn
+	{
+		[default] interface ITVSPropertyNoteDyn;
+	};
+
+};

@@ -40,9 +40,6 @@
     <ClCompile Include="acrxEntryPoint.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="Calculate.cpp">
-      <Filter>commands</Filter>
-    </ClCompile>
     <ClCompile Include="DocData.cpp">
       <Filter>grid</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     </ClCompile>
     <ClCompile Include="hangeZdg.cpp">
       <Filter>forms</Filter>
-    </ClCompile>
-    <ClCompile Include="HeatFloor.cpp">
-      <Filter>commands</Filter>
     </ClCompile>
     <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp">
       <Filter>grid</Filter>
@@ -67,14 +61,8 @@
     <ClCompile Include="PipeSizeDiallog.cpp">
       <Filter>forms</Filter>
     </ClCompile>
-    <ClCompile Include="SPEC.cpp">
-      <Filter>commands</Filter>
-    </ClCompile>
     <ClCompile Include="StdAfx.cpp">
       <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="tdbl.cpp">
-      <Filter>commands</Filter>
     </ClCompile>
     <ClCompile Include="TVS_Ventilation_ARX.cpp">
       <Filter>main</Filter>
@@ -90,6 +78,69 @@
     </ClCompile>
     <ClCompile Include="TVSLeadCommand.cpp">
       <Filter>commands\TVSLeadCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="MleaderController.cpp">
+      <Filter>controllers\MLeader</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_Lead_Recalculate.cpp">
+      <Filter>commands\TVSLeadRecalculate</Filter>
+    </ClCompile>
+    <ClCompile Include="xRecordXdataHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSProperty.cpp">
+      <Filter>models\TVSProperty</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyController.cpp">
+      <Filter>controllers\TVSProperty</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyPositionDyn.cpp">
+      <Filter>dynProps\TVSProperty\position</Filter>
+    </ClCompile>
+    <ClCompile Include="MLeaderDynProp.cpp">
+      <Filter>dynProps\MLeaderProperty</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculate.cpp">
+      <Filter>old</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatFloor.cpp">
+      <Filter>old</Filter>
+    </ClCompile>
+    <ClCompile Include="SPEC.cpp">
+      <Filter>old</Filter>
+    </ClCompile>
+    <ClCompile Include="tdbl.cpp">
+      <Filter>old</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSController.cpp">
+      <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyArticleDyn.cpp">
+      <Filter>dynProps\TVSProperty\article</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyCountDyn.cpp">
+      <Filter>dynProps\TVSProperty\count</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyManufacturerDyn.cpp">
+      <Filter>dynProps\TVSProperty\manufacturer</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyMassDyn.cpp">
+      <Filter>dynProps\TVSProperty\mass</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyNameDyn.cpp">
+      <Filter>dynProps\TVSProperty\name</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertySizeDyn.cpp">
+      <Filter>dynProps\TVSProperty\size</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyTypeDyn.cpp">
+      <Filter>dynProps\TVSProperty\type</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyNoteDyn.cpp">
+      <Filter>dynProps\TVSProperty\note</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertyUnitsDyn.cpp">
+      <Filter>dynProps\TVSProperty\units</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,12 +183,6 @@
     <ClInclude Include="dgAllEdit.h">
       <Filter>forms</Filter>
     </ClInclude>
-    <ClInclude Include="Calculate.h">
-      <Filter>commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Constants.h">
-      <Filter>commands</Filter>
-    </ClInclude>
     <ClInclude Include="DocData.h">
       <Filter>grid</Filter>
     </ClInclude>
@@ -146,9 +191,6 @@
     </ClInclude>
     <ClInclude Include="hangeZdg.h">
       <Filter>forms</Filter>
-    </ClInclude>
-    <ClInclude Include="HeatFloor.h">
-      <Filter>commands</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h">
       <Filter>grid</Filter>
@@ -165,17 +207,11 @@
     <ClInclude Include="PipeSizeDiallog.h">
       <Filter>forms</Filter>
     </ClInclude>
-    <ClInclude Include="SPEC.h">
-      <Filter>commands</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="StdAfx.h">
       <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="tdbl.h">
-      <Filter>commands</Filter>
     </ClInclude>
     <ClInclude Include="TVS_Command.h">
       <Filter>commands</Filter>
@@ -192,6 +228,78 @@
     <ClInclude Include="MLeaderSettings.h">
       <Filter>settings</Filter>
     </ClInclude>
+    <ClInclude Include="MleaderController.h">
+      <Filter>controllers\MLeader</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_Lead_Recalculate.h">
+      <Filter>commands\TVSLeadRecalculate</Filter>
+    </ClInclude>
+    <ClInclude Include="xRecordXdataHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSProperty.h">
+      <Filter>models\TVSProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyController.h">
+      <Filter>controllers\TVSProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyPositionDyn.h">
+      <Filter>dynProps\TVSProperty\position</Filter>
+    </ClInclude>
+    <ClInclude Include="MLeaderDynProp.h">
+      <Filter>dynProps\MLeaderProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertySettings.h">
+      <Filter>settings</Filter>
+    </ClInclude>
+    <ClInclude Include="tdbl.h">
+      <Filter>old</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculate.h">
+      <Filter>old</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>old</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatFloor.h">
+      <Filter>old</Filter>
+    </ClInclude>
+    <ClInclude Include="SPEC.h">
+      <Filter>old</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSController.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertDynBase.h">
+      <Filter>dynProps\TVSProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyArticleDyn.h">
+      <Filter>dynProps\TVSProperty\article</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyCountDyn.h">
+      <Filter>dynProps\TVSProperty\count</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyManufacturerDyn.h">
+      <Filter>dynProps\TVSProperty\manufacturer</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyMassDyn.h">
+      <Filter>dynProps\TVSProperty\mass</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyNameDyn.h">
+      <Filter>dynProps\TVSProperty\name</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertySizeDyn.h">
+      <Filter>dynProps\TVSProperty\size</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyTypeDyn.h">
+      <Filter>dynProps\TVSProperty\type</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyNoteDyn.h">
+      <Filter>dynProps\TVSProperty\note</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertyUnitsDyn.h">
+      <Filter>dynProps\TVSProperty\units</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -199,6 +307,9 @@
     </None>
     <None Include="ClassDiagram.cd">
       <Filter>main</Filter>
+    </None>
+    <None Include="TVSPropertyPositionDyn.rgs">
+      <Filter>dynProps\TVSProperty\position</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +337,69 @@
     <Filter Include="commands\TVSLeadCommand">
       <UniqueIdentifier>{ff806572-e1af-4458-9ab9-6f42c8dbb60e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dynProps">
+      <UniqueIdentifier>{8e76c7fa-d75a-4bff-b804-4937fa88c010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers">
+      <UniqueIdentifier>{1a823f76-6071-41fc-aa22-0c1e36a4ac6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers\MLeader">
+      <UniqueIdentifier>{fc303dde-9a68-450e-87b9-6ec1d9d52794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands\TVSLeadRecalculate">
+      <UniqueIdentifier>{74dc8fb0-475f-4103-b1b0-4d607368d32b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="helpers">
+      <UniqueIdentifier>{b88b37b4-4c88-4476-982f-f012172f6398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers\TVSProperty">
+      <UniqueIdentifier>{393b5ee7-56f5-4dc4-887d-baf1f0e9d472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty">
+      <UniqueIdentifier>{3b3d070f-3db6-4be0-be7d-33ab6d61b225}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models">
+      <UniqueIdentifier>{a4464944-7a7f-434b-8a23-274688a50e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\TVSProperty">
+      <UniqueIdentifier>{4f56c561-e565-4f5d-aed9-487bc06d4162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\position">
+      <UniqueIdentifier>{4a8fc397-0035-42c3-b3a0-7c3bc502b0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\MLeaderProperty">
+      <UniqueIdentifier>{04cccf37-a699-42aa-9a8c-11c4487cfe48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old">
+      <UniqueIdentifier>{e340426e-dc61-4f3b-9a96-3b31fc0281f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\article">
+      <UniqueIdentifier>{c32ca805-21d0-4c32-9b8c-37469c210f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\count">
+      <UniqueIdentifier>{dcd171dd-2ca5-41d1-b5cb-50ddbe80dd02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\manufacturer">
+      <UniqueIdentifier>{0f627165-05cf-4af5-971c-292e3621cb17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\mass">
+      <UniqueIdentifier>{c7aa9276-211f-4b14-99f1-bf6a7cc24c77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\name">
+      <UniqueIdentifier>{eaf549d7-04f2-4903-a472-2e5d0da81398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\size">
+      <UniqueIdentifier>{d9494fe1-126c-47fc-a00a-ac3555f187f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\type">
+      <UniqueIdentifier>{1ac868bf-c5c5-4321-ab38-ab67d1543ae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\note">
+      <UniqueIdentifier>{0d0ec352-bf36-4515-94d5-e6ec1875cb59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dynProps\TVSProperty\units">
+      <UniqueIdentifier>{f86e78d8-368c-4393-83a5-2d820ece04d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt">
@@ -236,5 +410,10 @@
     <ResourceCompile Include="TVS_Ventilation_ARX.rc">
       <Filter>main</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TVS_Ventilation_ARX.idl">
+      <Filter>dynProps</Filter>
+    </Midl>
   </ItemGroup>
 </Project>

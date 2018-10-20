@@ -50,29 +50,32 @@
 
 
 
-//#include <windows.h>
+//-----------------------------------------------------------------------------
+#define _ATL_APARTMENT_THREADED
+#define _ATL_NO_AUTOMATIC_NAMESPACE
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	//- Some CString constructors will be explicit
+//- Turns off ATL's hiding of some common and often safely ignored warning messages
+#define _ATL_ALL_WARNINGS
 
-// #using <mscorlib.dll>
-// #using <System.dll>
-// #using <System.Core.dll>
-// #using <accoremgd.dll>
-// #using <acmgd.dll>
-// #using <acdbmgd.dll>
-// #using <AcCui.dll>
-//#include <vcclr.h>
 
+using namespace std;
 
 
 //- ObjectARX and OMF headers needs this
 #include <map>
-using namespace std;
+
 //-----------------------------------------------------------------------------
 #include <afxwin.h>				//- MFC core and standard components
 #include <afxext.h>				//- MFC extensions
 #include <afxcmn.h>				//- MFC support for Windows Common Controls
-//#pragma comment (lib, "TVSPL.lib")
+
 //-----------------------------------------------------------------------------
 #include <AtlBase.h>
+#include <AtlCom.h>
+using namespace ATL;
+
+
+
 //-----------------------------------------------------------------------------
 //- Include ObjectDBX/ObjectARX headers
 //- Uncomment one of the following lines to bring a given library in your project.
@@ -84,34 +87,15 @@ using namespace std;
 //#define _ARX_CUSTOM_DRAG_N_DROP_	//- Support for the ObjectARX Drag'n Drop API
 //#define _INC_LEAGACY_HEADERS_			//- Include legacy headers in this project
 #include "arxHeaders.h"
-
+#include "dbmleader.h"
 
 //-----------------------------------------------------------------------------
 #include "DocData.h" //- Your document specific data class holder
 
 //- Declare it as an extern here so that it becomes available in all modules
-extern AcApDataManager<CDocData> DocVars ;
+extern AcApDataManager<CDocData> DocVars;
 
-//-----------------------------------------------------------------------------
-//#import "acax20enu.tlb" raw_interfaces_only no_namespace
-
-
-
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
-
-
-#include <afxdisp.h>        // MFC Automation classes
-
-
-//#pragma comment( lib, "libeay32.lib" )
-//#pragma comment( lib, "libcurl.lib" )
-
-
-
-//#include "Protection.h"
-//#include "httpRequest.h"
-//#include "RsaGeneration.h"
-//#include "Regedit.h"
 #pragma pack (pop)
+
+
 

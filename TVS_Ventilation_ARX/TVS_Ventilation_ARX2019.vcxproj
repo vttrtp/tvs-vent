@@ -159,6 +159,7 @@
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="hangeZdg.cpp" />
     <ClCompile Include="HeatFloor.cpp" />
+    <ClCompile Include="MLeaderDynProp.cpp" />
     <ClCompile Include="mLeadPropertyDg.cpp" />
     <ClCompile Include="MSExcel.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCheck.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Func.h" />
     <ClInclude Include="hangeZdg.h" />
     <ClInclude Include="HeatFloor.h" />
+    <ClInclude Include="MLeaderDynProp.h" />
     <ClInclude Include="MLeaderSettings.h" />
     <ClInclude Include="mLeadPropertyDg.h" />
     <ClInclude Include="MSExcel.h" />
@@ -208,7 +210,7 @@
     <ClInclude Include="NewCellTypes\GridURLCell.h" />
     <ClInclude Include="OLEMethod.h" />
     <ClInclude Include="PipeSizeDiallog.h" />
-    <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SPEC.h" />
     <ClInclude Include="StdAfx.h" />
@@ -225,6 +227,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="MLeaderDynProp.rgs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TVS_Ventilation_ARX.idl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

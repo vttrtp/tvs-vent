@@ -159,6 +159,8 @@
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="hangeZdg.cpp" />
     <ClCompile Include="HeatFloor.cpp" />
+    <ClCompile Include="MleaderController.cpp" />
+    <ClCompile Include="MLeaderDynProp.cpp" />
     <ClCompile Include="mLeadPropertyDg.cpp" />
     <ClCompile Include="MSExcel.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCheck.cpp" />
@@ -178,9 +180,24 @@
     </ClCompile>
     <ClCompile Include="tdbl.cpp" />
     <ClCompile Include="Calculate.cpp" />
+    <ClCompile Include="TVSController.cpp" />
+    <ClCompile Include="TVSProperty.cpp" />
+    <ClCompile Include="TVSPropertyArticleDyn.cpp" />
+    <ClCompile Include="TVSPropertyController.cpp" />
+    <ClCompile Include="TVSPropertyCountDyn.cpp" />
+    <ClCompile Include="TVSPropertyManufacturerDyn.cpp" />
+    <ClCompile Include="TVSPropertyMassDyn.cpp" />
+    <ClCompile Include="TVSPropertyNameDyn.cpp" />
+    <ClCompile Include="TVSPropertyNoteDyn.cpp" />
+    <ClCompile Include="TVSPropertyPositionDyn.cpp" />
+    <ClCompile Include="TVSPropertySizeDyn.cpp" />
+    <ClCompile Include="TVSPropertyTypeDyn.cpp" />
+    <ClCompile Include="TVSPropertyUnitsDyn.cpp" />
     <ClCompile Include="TVS_Command.cpp" />
     <ClCompile Include="TVSLeadCommand.cpp" />
+    <ClCompile Include="TVS_Lead_Recalculate.cpp" />
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
+    <ClCompile Include="xRecordXdataHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GridCtrl_src\CellRange.h" />
@@ -198,6 +215,8 @@
     <ClInclude Include="Func.h" />
     <ClInclude Include="hangeZdg.h" />
     <ClInclude Include="HeatFloor.h" />
+    <ClInclude Include="MleaderController.h" />
+    <ClInclude Include="MLeaderDynProp.h" />
     <ClInclude Include="MLeaderSettings.h" />
     <ClInclude Include="mLeadPropertyDg.h" />
     <ClInclude Include="MSExcel.h" />
@@ -214,8 +233,25 @@
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tdbl.h" />
     <ClInclude Include="Calculate.h" />
+    <ClInclude Include="TVSController.h" />
+    <ClInclude Include="TVSPropertDynBase.h" />
+    <ClInclude Include="TVSProperty.h" />
+    <ClInclude Include="TVSPropertyArticleDyn.h" />
+    <ClInclude Include="TVSPropertyController.h" />
+    <ClInclude Include="TVSPropertyCountDyn.h" />
+    <ClInclude Include="TVSPropertyManufacturerDyn.h" />
+    <ClInclude Include="TVSPropertyMassDyn.h" />
+    <ClInclude Include="TVSPropertyNameDyn.h" />
+    <ClInclude Include="TVSPropertyNoteDyn.h" />
+    <ClInclude Include="TVSPropertyPositionDyn.h" />
+    <ClInclude Include="TVSPropertySettings.h" />
+    <ClInclude Include="TVSPropertySizeDyn.h" />
+    <ClInclude Include="TVSPropertyTypeDyn.h" />
+    <ClInclude Include="TVSPropertyUnitsDyn.h" />
     <ClInclude Include="TVS_Command.h" />
     <ClInclude Include="TVSLeadCommand.h" />
+    <ClInclude Include="TVS_Lead_Recalculate.h" />
+    <ClInclude Include="xRecordXdataHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TVS_Ventilation_ARX.rc" />
@@ -226,6 +262,10 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+    <None Include="TVSPropertyPositionDyn.rgs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TVS_Ventilation_ARX.idl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

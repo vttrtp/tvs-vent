@@ -1,8 +1,24 @@
 //{{NO_DEPENDENCIES}}
-// Включаемый файл, созданный в Microsoft Visual C++.
-// Используется TVS_Ventilation_ARX.rc
+// Microsoft Visual C++ generated include file.
+// Used by MleaderDyn.rc
 //
 #define IDS_PROJNAME                    100
+#define IDR_TVS_VENTILATION_ARX			101
+#define IDR_MLEADERDYNPROP  103
+
+#define IDR_TVSPROPERTYPositionDYN      105
+#define IDR_TVSPROPERTYNameDYN      106
+#define IDR_TVSPROPERTYTypeDYN      107
+#define IDR_TVSPROPERTYSizeDYN      108
+#define IDR_TVSPROPERTYArticleDYN      109
+#define IDR_TVSPROPERTYManufacturerDYN      110
+#define IDR_TVSPROPERTYUnitsDYN      111
+#define IDR_TVSPROPERTYCountDYN      112
+#define IDR_TVSPROPERTYMassDYN      113
+#define IDR_TVSPROPERTYNoteDYN      114
+#define IDR_TVSPROPERTYZDYN      115
+#define IDR_TVSPROPERTYAADYN      116
+
 #define IDC_EDIT1                       100
 #define IDC_EDIT2                       101
 #define StartZ                          101
@@ -23,9 +39,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        110
+#define _APS_NEXT_RESOURCE_VALUE        102
 #define _APS_NEXT_COMMAND_VALUE         32768
-#define _APS_NEXT_CONTROL_VALUE         107
-#define _APS_NEXT_SYMED_VALUE           110
+#define _APS_NEXT_CONTROL_VALUE         100
+#define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

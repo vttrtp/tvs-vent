@@ -1,7 +1,7 @@
 #pragma once
 #include "TVS_TAP.h"
 #include "MLeaderSettings.h"
-
+#include "TVSPropertySettings.h"
 
 #define globalElevUp 1
 #define globalElevmid 2
@@ -34,6 +34,8 @@
 #define TagManufacture _T("œ–Œ»«¬Œƒ»“≈À‹")
 #define TagMass _T("Ã¿——¿")
 #define TagCommit _T("œ–»Ã≈◊¿Õ»≈")
+
+
 
 static double globSizeA=150;
 static double globSizeB=150;
@@ -68,6 +70,7 @@ public:
 	Settings(void);
 	virtual ~Settings(void);
 	static Settings* get();
+	TVSPropertySettings tvsProperty;
 	MLeaderSettings mLeader;
 };
 

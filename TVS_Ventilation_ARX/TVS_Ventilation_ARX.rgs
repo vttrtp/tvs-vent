@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'TVS_Ventilation_ARX'
+		'TVSTVS_Ventilation_ARX.arx'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

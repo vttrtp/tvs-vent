@@ -91,6 +91,7 @@
     <ClCompile Include="TVSLeadCommand.cpp">
       <Filter>commands\TVSLeadCommand</Filter>
     </ClCompile>
+    <ClCompile Include="MLeaderDynProp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GridCtrl_src\GridCell.h">
@@ -168,9 +169,6 @@
     <ClInclude Include="SPEC.h">
       <Filter>commands</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>main</Filter>
-    </ClInclude>
     <ClInclude Include="StdAfx.h">
       <Filter>main</Filter>
     </ClInclude>
@@ -192,11 +190,16 @@
     <ClInclude Include="MLeaderSettings.h">
       <Filter>settings</Filter>
     </ClInclude>
+    <ClInclude Include="MLeaderDynProp.h" />
+    <ClInclude Include="resource.h">
+      <Filter>main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd">
       <Filter>main</Filter>
     </None>
+    <None Include="MLeaderDynProp.rgs" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="main">
@@ -223,6 +226,9 @@
     <Filter Include="commands\TVSLeadCommand">
       <UniqueIdentifier>{ff806572-e1af-4458-9ab9-6f42c8dbb60e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dynProps">
+      <UniqueIdentifier>{a73d54d6-0c36-4d2c-9142-672ea1956b71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt">
@@ -233,5 +239,10 @@
     <ResourceCompile Include="TVS_Ventilation_ARX.rc">
       <Filter>main</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TVS_Ventilation_ARX.idl">
+      <Filter>main</Filter>
+    </Midl>
   </ItemGroup>
 </Project>

@@ -31,10 +31,10 @@ library TVSTVS_Ventilation_DBXLib
 	//----- localized tlb here.
 
 
-	//importlib("axdb20enu.tlb");
+	importlib("axdb20enu.tlb"); //2016
 	//importlib("axdb21enu.tlb");
 	//importlib("axdb22enu.tlb");
-	importlib("axdb23enu.tlb");
+	//importlib("axdb23enu.tlb");
 	//.- Interface definition
 	[
 		object,
