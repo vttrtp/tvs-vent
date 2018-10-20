@@ -57,76 +57,7 @@ bool TVSPropertyController::setProperty(const AcDbObjectId &objectId, const TVSP
 	bool ret = setXdataBuf(objectId,  rb);
 	acutRelRb(rb);
 
-// acdbRegApp(L"Position");
-// resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, L"Position",
-// 	AcDb::kDxfXdAsciiString, tvsProperty.position.GetString(),
-// 	AcDb::kDwgNull);
-// bool ret = setXdataBuf(objectId, rb);
-//  	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"name");
-// 	 rb = acutBuildList(AcDb::kDxfRegAppName, L"name",
-// 		AcDb::kDxfXdAsciiString, tvsProperty.name.GetString(),
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 
-// 	acdbRegApp(L"type");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"type",
-// 		AcDb::kDxfXdAsciiString, tvsProperty.type.GetString(),
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"size");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"size",
-// 		AcDb::kDxfXdAsciiString, tvsProperty.size.GetString(),
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"article");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"article",
-// 		AcDb::kDxfXdAsciiString, tvsProperty.article.GetString(),
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"manufacturer");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"manufacturer",
-// 		AcDb::kDxfXdAsciiString, tvsProperty.manufacturer.GetString(),
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"units");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"units",
-// 		AcDb::kDxfXdAsciiString, tvsProperty.units.GetString(),
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"count");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"count",
-// 		AcDb::kDxfXdReal, tvsProperty.count,
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"mass");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"mass",
-// 		AcDb::kDxfXdReal, tvsProperty.mass,
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-// 	acutRelRb(rb);
-// 
-// 	acdbRegApp(L"note");
-// 	rb = acutBuildList(AcDb::kDxfRegAppName, L"note",
-// 		AcDb::kDxfXdAsciiString, tvsProperty.note,
-// 		AcDb::kDwgNull);
-// 	setXdataBuf(objectId, rb);
-	
+
 	return ret;
 }
 
@@ -155,4 +86,104 @@ bool TVSPropertyController::getProperty(const AcDbObjectId &objectId, TVSPropert
 bool TVSPropertyController::removeProperty(const AcDbObjectId &objectId)
 {
 	return true;
+}
+
+bool TVSPropertyController::setPosition(const AcDbObjectId &objectId, const CString &val)
+{
+	setSubXString(objectId, CTVSProperty, CTVSProperty_Number_position, val);
+}
+
+bool TVSPropertyController::getPosition(const AcDbObjectId &objectId, CString val)
+{
+	getSubXString(objectId, CTVSProperty, CTVSProperty_Number_position, val);
+}
+
+bool TVSPropertyController::setName(const AcDbObjectId &objectId, const CString &val)
+{
+
+}
+
+bool TVSPropertyController::getName(const AcDbObjectId &objectId, CString val)
+{
+
+}
+
+bool TVSPropertyController::setType(const AcDbObjectId &objectId, const CString &val)
+{
+
+}
+
+bool TVSPropertyController::getType(const AcDbObjectId &objectId, CString val)
+{
+
+}
+
+bool TVSPropertyController::setSize(const AcDbObjectId &objectId, const CString &val)
+{
+
+}
+
+bool TVSPropertyController::getSize(const AcDbObjectId &objectId, CString val)
+{
+
+}
+
+bool TVSPropertyController::setArticle(const AcDbObjectId &objectId, const CString &val)
+{
+
+}
+
+bool TVSPropertyController::getArticle(const AcDbObjectId &objectId, CString val)
+{
+
+}
+
+bool TVSPropertyController::setManufacturer(const AcDbObjectId &objectId, const CString &val)
+{
+
+}
+
+bool TVSPropertyController::getManufaturer(const AcDbObjectId &objectId, CString val)
+{
+
+}
+
+bool TVSPropertyController::setUnits(const AcDbObjectId &objectId, const CString &val)
+{
+
+}
+
+bool TVSPropertyController::getUnits(const AcDbObjectId &objectId, CString val)
+{
+
+}
+
+bool TVSPropertyController::setCount(const AcDbObjectId &objectId, const double &val)
+{
+
+}
+
+bool TVSPropertyController::getCount(const AcDbObjectId &objectId, double val)
+{
+
+}
+
+bool TVSPropertyController::setMass(const AcDbObjectId &objectId, const double &val)
+{
+
+}
+
+bool TVSPropertyController::getMass(const AcDbObjectId &objectId, double val)
+{
+
+}
+
+bool TVSPropertyController::setNote(const AcDbObjectId &objectId, const CString &val)
+{
+
+}
+
+bool TVSPropertyController::getNote(const AcDbObjectId &objectId, CString val)
+{
+
 }
