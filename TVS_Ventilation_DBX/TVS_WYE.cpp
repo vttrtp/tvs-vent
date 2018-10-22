@@ -1147,6 +1147,11 @@ void TVS_WYE::Gimme7Points()
 }
 
 
+void TVS_WYE::getName(CString &unit)
+{
+	unit = CCommonWueName;
+}
+
 double TVS_WYE::get_Length(void) const
 {
 	assertReadEnabled () ;

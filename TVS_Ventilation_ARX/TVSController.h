@@ -1,6 +1,8 @@
 #pragma once
 #include "MleaderController.h"
 #include "TVSPropertyController.h"
+#include "TVSPropertySpecController.h"
+
 class TVSController
 {
 public:
@@ -8,6 +10,7 @@ public:
 	static TVSController* get();
 	MleaderController mLeaderController;
 	TVSPropertyController tvsPropertyController;
+	TVSPropertySpecController tvsPropertySpecController;
 	TVSController();
 	virtual ~TVSController();
 };

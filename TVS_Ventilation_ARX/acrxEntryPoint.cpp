@@ -46,6 +46,7 @@
 
 #include "TVSLeadCommand.h"
 #include "TVS_Lead_Recalculate.h"
+#include "TVSCommandPropertyManager.h"
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
@@ -127,6 +128,51 @@ public:
 		if (FAILED(::DllRegisterServer()))
 			acutPrintf(_RXST("Failed to register COM server.\n"));
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//new commands
+
+	static void Ventilation_ARXTVS_LEAD(void)
+	{
+		TVS_Lead_Command cmnd;
+		cmnd.execute();
+	}
+
+	static void Ventilation_ARXTVS_LEAD_Recalculate(void)
+	{
+		TVS_Lead_Recalculate cmnd;
+		cmnd.execute();
+	}
+
+	
+	static void Ventilation_ARXTVS_PropertyManager(void)
+	{
+		TVSCommandPropertyManager cmnd;
+		cmnd.execute();
+	}
+
+
+
+
+
+
+
+
+
+
 
 	// The ACED_ARXCOMMAND_ENTRY_AUTO macro can be applied to any static member 
 	// function of the CTVS_Ventilation_ARXApp class.
@@ -4683,19 +4729,6 @@ public:
 		delete quantity;
 	}
 
-
-	static void Ventilation_ARXTVS_LEAD(void)
-	{
-		TVS_Lead_Command cmnd;
-		cmnd.execute();
-	}
-
-	static void Ventilation_ARXTVS_LEAD_Recalculate(void)
-	{
-		TVS_Lead_Recalculate cmnd;
-		cmnd.execute();
-	}
-
 	static void setZ()
 	{
 		throw std::logic_error("The method or operation is not implemented.");
@@ -5552,6 +5585,19 @@ public:
 
 //-----------------------------------------------------------------------------
 IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
+
+
+	//new
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_PropertyManager, TVS_PropertyManager, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+
+
+
+
+
+
+
+
+//old
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_PIPE, TVS_PIPE, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_DRAW, TVS_DRAW, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_TEST, TVS_TEST, ACRX_CMD_TRANSPARENT, NULL)

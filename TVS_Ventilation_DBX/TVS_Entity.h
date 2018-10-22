@@ -60,6 +60,7 @@
 #include "GripImp.h"
 #include "TVS_Connector.h"
 #include <iostream>
+#include "commonDef.h"
 
 #include <algorithm>
 using namespace std;
@@ -70,58 +71,58 @@ using namespace std;
 class DLLIMPEXP TVS_Entity : public AcDbCurve {
 
 public:
-	ACRX_DECLARE_MEMBERS(TVS_Entity) ;
+	ACRX_DECLARE_MEMBERS(TVS_Entity);
 
 protected:
-	static Adesk::UInt32 kCurrentVersionNumber ;
+	static Adesk::UInt32 kCurrentVersionNumber;
 
 public:
-	TVS_Entity () ;
-	virtual ~TVS_Entity () ;
+	TVS_Entity();
+	virtual ~TVS_Entity();
 
 	//----- AcDbObject protocols
 	//- Dwg Filing protocol
-	virtual Acad::ErrorStatus dwgOutFields (AcDbDwgFiler *pFiler) const ;
-	virtual Acad::ErrorStatus dwgInFields (AcDbDwgFiler *pFiler) ;
+	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler *pFiler) const;
+	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler *pFiler);
 
 	//- SubXXX() methods (self notification)
-	virtual Acad::ErrorStatus subOpen (AcDb::OpenMode mode) ;
+	virtual Acad::ErrorStatus subOpen(AcDb::OpenMode mode);
 	//virtual Acad::ErrorStatus subErase (Adesk::Boolean erasing) ;
-	virtual Acad::ErrorStatus subCancel () ;
-	virtual Acad::ErrorStatus subClose () ;
+	virtual Acad::ErrorStatus subCancel();
+	virtual Acad::ErrorStatus subClose();
 
 	//- Persistent reactor callbacks
-	virtual void openedForModify (const AcDbObject *pDbObj) ;
-	virtual void cancelled (const AcDbObject *pDbObj) ;
-	virtual void objectClosed (const AcDbObjectId objId) ;
-	virtual void goodbye (const AcDbObject *pDbObj) ;
-	virtual void copied (const AcDbObject *pDbObj, const AcDbObject *pNewObj) ;
-	virtual void erased (const AcDbObject *pDbObj, Adesk::Boolean bErasing =true) ;
-	virtual void modified (const AcDbObject *pDbObj) ;
-	virtual void modifiedGraphics (const AcDbEntity *pDbEnt) ;
-	virtual void modifiedXData (const AcDbObject *pDbObj) ;
-	virtual void subObjModified (const AcDbObject *pMainbObj, const AcDbObject *pSubObj) ;
-	virtual void modifyUndone (const AcDbObject *pDbObj) ;
-	virtual void reappended (const AcDbObject *pDbObj) ;
-	virtual void unappended (const AcDbObject *pDbObj) ;
+	virtual void openedForModify(const AcDbObject *pDbObj);
+	virtual void cancelled(const AcDbObject *pDbObj);
+	virtual void objectClosed(const AcDbObjectId objId);
+	virtual void goodbye(const AcDbObject *pDbObj);
+	virtual void copied(const AcDbObject *pDbObj, const AcDbObject *pNewObj);
+	virtual void erased(const AcDbObject *pDbObj, Adesk::Boolean bErasing = true);
+	virtual void modified(const AcDbObject *pDbObj);
+	virtual void modifiedGraphics(const AcDbEntity *pDbEnt);
+	virtual void modifiedXData(const AcDbObject *pDbObj);
+	virtual void subObjModified(const AcDbObject *pMainbObj, const AcDbObject *pSubObj);
+	virtual void modifyUndone(const AcDbObject *pDbObj);
+	virtual void reappended(const AcDbObject *pDbObj);
+	virtual void unappended(const AcDbObject *pDbObj);
 
 	//----- AcDbEntity protocols
 	//- Graphics protocol
 protected:
-	virtual Adesk::Boolean subWorldDraw (AcGiWorldDraw *mode) ;
-	virtual Adesk::UInt32 subSetAttributes (AcGiDrawableTraits *traits) ;
+	virtual Adesk::Boolean subWorldDraw(AcGiWorldDraw *mode);
+	virtual Adesk::UInt32 subSetAttributes(AcGiDrawableTraits *traits);
 
 	//- Osnap points protocol
 public:
-	virtual Acad::ErrorStatus subGetOsnapPoints (
+	virtual Acad::ErrorStatus subGetOsnapPoints(
 		AcDb::OsnapMode osnapMode,
 		Adesk::GsMarker gsSelectionMark,
 		const AcGePoint3d &pickPoint,
 		const AcGePoint3d &lastPoint,
 		const AcGeMatrix3d &viewXform,
 		AcGePoint3dArray &snapPoints,
-		AcDbIntArray &geomIds) const ;
-	virtual Acad::ErrorStatus subGetOsnapPoints (
+		AcDbIntArray &geomIds) const;
+	virtual Acad::ErrorStatus subGetOsnapPoints(
 		AcDb::OsnapMode osnapMode,
 		Adesk::GsMarker gsSelectionMark,
 		const AcGePoint3d &pickPoint,
@@ -129,79 +130,83 @@ public:
 		const AcGeMatrix3d &viewXform,
 		AcGePoint3dArray &snapPoints,
 		AcDbIntArray &geomIds,
-		const AcGeMatrix3d &insertionMat) const ;
+		const AcGeMatrix3d &insertionMat) const;
 
 	//- Grip points protocol
-	virtual Acad::ErrorStatus subGetGripPoints (AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds) const ;
-	virtual Acad::ErrorStatus subMoveGripPointsAt (const AcDbIntArray &indices, const AcGeVector3d &offset) ;
-	virtual Acad::ErrorStatus subGetGripPoints (
-		AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize, 
-		const AcGeVector3d &curViewDir, const int bitflags) const ;
-	virtual Acad::ErrorStatus subMoveGripPointsAt (const AcDbVoidPtrArray &gripAppData, const AcGeVector3d &offset, const int bitflags) ;
+	virtual Acad::ErrorStatus subGetGripPoints(AcGePoint3dArray &gripPoints, AcDbIntArray &osnapModes, AcDbIntArray &geomIds) const;
+	virtual Acad::ErrorStatus subMoveGripPointsAt(const AcDbIntArray &indices, const AcGeVector3d &offset);
+	virtual Acad::ErrorStatus subGetGripPoints(
+		AcDbGripDataPtrArray &grips, const double curViewUnitSize, const int gripSize,
+		const AcGeVector3d &curViewDir, const int bitflags) const;
+	virtual Acad::ErrorStatus subMoveGripPointsAt(const AcDbVoidPtrArray &gripAppData, const AcGeVector3d &offset, const int bitflags);
 
 	//----- AcDbCurve protocols
 	//- Curve property tests.
-	virtual Adesk::Boolean isClosed () const ;
-	virtual Adesk::Boolean isPeriodic () const ;
+	virtual Adesk::Boolean isClosed() const;
+	virtual Adesk::Boolean isPeriodic() const;
 	//- Get planar and start/end geometric properties.
-	virtual Acad::ErrorStatus getStartParam (double &param) const ;
-	virtual Acad::ErrorStatus getEndParam (double &param) const ;
-	virtual Acad::ErrorStatus getStartPoint (AcGePoint3d &point) const ;
-	virtual Acad::ErrorStatus getEndPoint (AcGePoint3d &point) const ;
+	virtual Acad::ErrorStatus getStartParam(double &param) const;
+	virtual Acad::ErrorStatus getEndParam(double &param) const;
+	virtual Acad::ErrorStatus getStartPoint(AcGePoint3d &point) const;
+	virtual Acad::ErrorStatus getEndPoint(AcGePoint3d &point) const;
 	//- Conversions to/from parametric/world/distance.
-	virtual Acad::ErrorStatus getPointAtParam (double param, AcGePoint3d &point) const ;
-	virtual Acad::ErrorStatus getParamAtPoint (const AcGePoint3d &point, double &param) const ;
-	virtual Acad::ErrorStatus getDistAtParam (double param, double &dist) const ;
-	virtual Acad::ErrorStatus getParamAtDist (double dist, double &param) const ;
-	virtual Acad::ErrorStatus getDistAtPoint (const AcGePoint3d &point , double &dist) const ;
-	virtual Acad::ErrorStatus getPointAtDist (double dist, AcGePoint3d &point) const ;
+	virtual Acad::ErrorStatus getPointAtParam(double param, AcGePoint3d &point) const;
+	virtual Acad::ErrorStatus getParamAtPoint(const AcGePoint3d &point, double &param) const;
+	virtual Acad::ErrorStatus getDistAtParam(double param, double &dist) const;
+	virtual Acad::ErrorStatus getParamAtDist(double dist, double &param) const;
+	virtual Acad::ErrorStatus getDistAtPoint(const AcGePoint3d &point, double &dist) const;
+	virtual Acad::ErrorStatus getPointAtDist(double dist, AcGePoint3d &point) const;
 	//- Derivative information.
-	virtual Acad::ErrorStatus getFirstDeriv (double param, AcGeVector3d &firstDeriv) const ;
-	virtual Acad::ErrorStatus getFirstDeriv  (const AcGePoint3d &point, AcGeVector3d &firstDeriv) const ;
-	virtual Acad::ErrorStatus getSecondDeriv (double param, AcGeVector3d &secDeriv) const ;
-	virtual Acad::ErrorStatus getSecondDeriv (const AcGePoint3d &point, AcGeVector3d &secDeriv) const ;
+	virtual Acad::ErrorStatus getFirstDeriv(double param, AcGeVector3d &firstDeriv) const;
+	virtual Acad::ErrorStatus getFirstDeriv(const AcGePoint3d &point, AcGeVector3d &firstDeriv) const;
+	virtual Acad::ErrorStatus getSecondDeriv(double param, AcGeVector3d &secDeriv) const;
+	virtual Acad::ErrorStatus getSecondDeriv(const AcGePoint3d &point, AcGeVector3d &secDeriv) const;
 	//- Closest point on curve.
-	virtual Acad::ErrorStatus getClosestPointTo (const AcGePoint3d &givenPnt, AcGePoint3d &pointOnCurve, Adesk::Boolean extend =Adesk::kFalse) const ;
-	virtual Acad::ErrorStatus getClosestPointTo (const AcGePoint3d &givenPnt, const AcGeVector3d &direction, AcGePoint3d &pointOnCurve, Adesk::Boolean extend =Adesk::kFalse) const ;
+	virtual Acad::ErrorStatus getClosestPointTo(const AcGePoint3d &givenPnt, AcGePoint3d &pointOnCurve, Adesk::Boolean extend = Adesk::kFalse) const;
+	virtual Acad::ErrorStatus getClosestPointTo(const AcGePoint3d &givenPnt, const AcGeVector3d &direction, AcGePoint3d &pointOnCurve, Adesk::Boolean extend = Adesk::kFalse) const;
 	//- Get a projected copy of the curve.
-	virtual Acad::ErrorStatus getOrthoProjectedCurve (const AcGePlane &plane, AcDbCurve *&projCrv) const ;
-	virtual Acad::ErrorStatus getProjectedCurve (const AcGePlane &plane, const AcGeVector3d &projDir, AcDbCurve *&projCrv) const ;
+	virtual Acad::ErrorStatus getOrthoProjectedCurve(const AcGePlane &plane, AcDbCurve *&projCrv) const;
+	virtual Acad::ErrorStatus getProjectedCurve(const AcGePlane &plane, const AcGeVector3d &projDir, AcDbCurve *&projCrv) const;
 	//- Get offset, spline and split copies of the curve.
-	virtual Acad::ErrorStatus getOffsetCurves (double offsetDist, AcDbVoidPtrArray &offsetCurves) const ;
-	virtual Acad::ErrorStatus getOffsetCurvesGivenPlaneNormal (const AcGeVector3d &normal, double offsetDist, AcDbVoidPtrArray &offsetCurves) const ;
-	virtual Acad::ErrorStatus getSpline (AcDbSpline *&spline) const ;
-	virtual Acad::ErrorStatus getSplitCurves (const AcGeDoubleArray &params, AcDbVoidPtrArray &curveSegments) const ;
-	virtual Acad::ErrorStatus getSplitCurves (const AcGePoint3dArray &points, AcDbVoidPtrArray &curveSegments) const ;
+	virtual Acad::ErrorStatus getOffsetCurves(double offsetDist, AcDbVoidPtrArray &offsetCurves) const;
+	virtual Acad::ErrorStatus getOffsetCurvesGivenPlaneNormal(const AcGeVector3d &normal, double offsetDist, AcDbVoidPtrArray &offsetCurves) const;
+	virtual Acad::ErrorStatus getSpline(AcDbSpline *&spline) const;
+	virtual Acad::ErrorStatus getSplitCurves(const AcGeDoubleArray &params, AcDbVoidPtrArray &curveSegments) const;
+	virtual Acad::ErrorStatus getSplitCurves(const AcGePoint3dArray &points, AcDbVoidPtrArray &curveSegments) const;
 	//- Extend the curve.
-	virtual Acad::ErrorStatus extend (double newParam) ;
-	virtual Acad::ErrorStatus extend (Adesk::Boolean extendStart, const AcGePoint3d &toPoint) ;
+	virtual Acad::ErrorStatus extend(double newParam);
+	virtual Acad::ErrorStatus extend(Adesk::Boolean extendStart, const AcGePoint3d &toPoint);
 	//- Area calculation.
-	virtual Acad::ErrorStatus getArea (double &area) const ;
+	virtual Acad::ErrorStatus getArea(double &area) const;
 
 
-// 	virtual Acad::ErrorStatus   subIntersectWith(
-// 		const AcDbEntity*   ent,
-// 		AcDb::Intersect     intType,
-// 		AcGePoint3dArray&      points,
-// 		int                 thisGsMarker  = 0,
-// 		int                 otherGsMarker = 0)
-// 		const;
-// 
-// 	virtual Acad::ErrorStatus   subIntersectWith(
-// 		const AcDbEntity*   ent,
-// 		AcDb::Intersect     intType,
-// 		const AcGePlane&    projPlane,
-// 		AcGePoint3dArray&      points,
-// 		int                 thisGsMarker  = 0,
-// 		int                 otherGsMarker = 0)
-// 		const;
+	// 	virtual Acad::ErrorStatus   subIntersectWith(
+	// 		const AcDbEntity*   ent,
+	// 		AcDb::Intersect     intType,
+	// 		AcGePoint3dArray&      points,
+	// 		int                 thisGsMarker  = 0,
+	// 		int                 otherGsMarker = 0)
+	// 		const;
+	// 
+	// 	virtual Acad::ErrorStatus   subIntersectWith(
+	// 		const AcDbEntity*   ent,
+	// 		AcDb::Intersect     intType,
+	// 		const AcGePlane&    projPlane,
+	// 		AcGePoint3dArray&      points,
+	// 		int                 thisGsMarker  = 0,
+	// 		int                 otherGsMarker = 0)
+	// 		const;
 
 
-	//////TVS
-	//get Size String
-	virtual void getSizeString(CString &size,const bool &sortSize=false) {};
+		//////TVS new
+		//get Size String
+	virtual void getSizeString(CString &size, const bool &sortSize = false) {};
 
+	virtual void getCount(double &count);
 
+	virtual void getCountUnit(CString &unit);
+	virtual void getName(CString &unit){};
+	////
 
 	void writeInt(AcDbDwgFiler *pFiler, const int &param) const;
 	void readInt(AcDbDwgFiler *pFiler, int &param,const int &version);

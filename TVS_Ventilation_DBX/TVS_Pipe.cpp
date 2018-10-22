@@ -904,6 +904,21 @@ void TVS_Pipe::getSizeString(CString &sizeStr,const bool &sortSize/*=false*/)
 	}
 }
 
+void TVS_Pipe::getCount(double &count)
+{
+	count = get_Length() / 1000;
+}
+
+void TVS_Pipe::getCountUnit(CString &unit)
+{
+	unit = CCommonLength_Unit;
+}
+
+void TVS_Pipe::getName(CString &unit)
+{
+	unit = CCommonPipeName;
+}
+
 bool TVS_Pipe::correctConnector(const int &index,const AcGeVector3d &offset)
 {
 	TVS_Connector conStart;

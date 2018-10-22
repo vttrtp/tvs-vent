@@ -66,6 +66,39 @@ bool XRecordXdataHelper::getStringXdata(const AcDbObjectId &objectId, const ACHA
 	return false;
 }
 
+bool XRecordXdataHelper::checkXdataApp(const AcDbObjectId &objectId, const ACHAR * paramName)
+{
+	//open object
+	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForRead);
+	if (pObject.openStatus() != Acad::eOk) return false;
+
+	//get resbuf
+	resbuf *xdata = pObject->xData(paramName);
+
+	if (xdata!=NULL)
+	{
+		return true;
+	} 
+	else
+	{
+		return false;
+	}
+}
+
+bool XRecordXdataHelper::addXdataApp(const AcDbObjectId &objectId, const ACHAR * paramName)
+{
+	//open object
+	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
+	if (pObject.openStatus() != Acad::eOk) return false;
+
+	//add resbuf to xdata
+	resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, paramName, AcDb::kDwgNull);
+
+	//set object format
+	pObject->setXData(rb);
+	return true;
+}
+
 bool XRecordXdataHelper::removeXdata(const AcDbObjectId &objectId, const ACHAR * paramName)
 {
 	//open object
@@ -216,12 +249,94 @@ resbuf* tailOfResbufChain(resbuf* const rb)
 	return tmp;
 }
 resbuf *lastPointer;
+
+bool XRecordXdataHelper::getSubXReal(const AcDbObjectId &objectId, const ACHAR * appName, int tag, double &parameter)
+{
+	//open Object
+	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
+	if (pObject.openStatus() != Acad::eOk) return false;
+	return getSubXReal(pObject, appName, tag, parameter);
+
+}
+
+bool XRecordXdataHelper::getSubXReal(AcDbObjectPointer<AcDbObject> &pObject, const ACHAR * appName, int tag, double &parameter)
+{
+	resbuf *rb;
+	getXDataResbuf(pObject, appName, rb);
+
+	if (rb == NULL) {
+		parameter = 0;
+		return false;
+	}
+	else {
+		resbuf* tagBuff = findSubXdata(tag, rb);
+		if (tagBuff != NULL)
+		{
+			parameter = tagBuff->resval.rreal;
+			return true;
+		}
+		else {
+			parameter = 0;
+			return false;
+		}
+	}
+}
+
+bool XRecordXdataHelper::setSubXReal(AcDbObjectPointer<AcDbObject> &pObject, const ACHAR * appName, int tag, const double &parameter)
+{
+	resbuf *rb;
+	getXDataResbuf(pObject, appName, rb);
+	if (rb == NULL) {
+		rb = acutBuildList(AcDb::kDxfRegAppName, appName,
+			AcDb::kDxfXdInteger16, tag,
+			AcDb::kDxfXdReal, parameter,
+			AcDb::kDwgNull);
+		pObject->setXData(rb);
+		acutRelRb(rb);
+		return true;
+	}
+	else {
+		resbuf* tagBuff = findSubXdata(tag, rb);
+		if (tagBuff != NULL)
+		{
+			tagBuff->resval.rreal = parameter;
+			pObject->setXData(rb);
+			return true;
+		}
+		else {
+
+			tagBuff = acutNewRb(AcDb::kDxfXdInteger16);
+			tagBuff->resval.rint = tag;
+
+			resbuf * valBuff = acutNewRb(AcDb::kDxfXdReal);
+			valBuff->resval.rreal = parameter;
+			tagBuff->rbnext = valBuff;
+			tailOfResbufChain(rb)->rbnext = tagBuff;
+			pObject->setXData(rb);
+			return true;
+		}
+	}
+}
+bool XRecordXdataHelper::setSubXReal(const AcDbObjectId &objectId, const ACHAR * appName, int tag, const double &parameter)
+{
+	//open Object
+	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
+	if (pObject.openStatus() != Acad::eOk) return false;
+
+	setSubXReal(pObject, appName, tag, parameter);
+}
+
+
 bool XRecordXdataHelper::setSubXString(const AcDbObjectId &objectId, const ACHAR * appName, int tag, const CString &parameter)
 {
 	//open Object
 	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
 	if (pObject.openStatus() != Acad::eOk) return false;
 
+	setSubXString(pObject, appName, tag, parameter);
+}
+bool XRecordXdataHelper::setSubXString(AcDbObjectPointer<AcDbObject> &pObject, const ACHAR * appName, int tag, const CString &parameter)
+{
 	resbuf *rb;
 	getXDataResbuf(pObject, appName, rb);
 	if (rb == NULL) {
@@ -259,81 +374,17 @@ bool XRecordXdataHelper::setSubXString(const AcDbObjectId &objectId, const ACHAR
 	}
 }
 
-
-
-bool XRecordXdataHelper::setSubXReal(const AcDbObjectId &objectId, const ACHAR * appName, int tag, const double &parameter)
-{
-	//open Object
-	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
-	if (pObject.openStatus() != Acad::eOk) return false;
-
-	resbuf *rb;
-	getXDataResbuf(pObject, appName, rb);
-
-	if (rb == NULL) {
-		rb = acutBuildList(AcDb::kDxfRegAppName, appName,
-			AcDb::kDxfXdInteger16, tag,
-			AcDb::kDxfReal, parameter,
-			AcDb::kDwgNull);
-		pObject->setXData(rb);
-		acutRelRb(rb);
-		return true;
-	}
-	else {
-		resbuf* tagBuff = findSubXdata(tag, rb);
-		if (tagBuff!=NULL)
-		{
-			tagBuff->resval.rreal = parameter;
-			pObject->setXData(rb);
-			return true;
-		}
-		else {
-			tagBuff = acutNewRb(AcDb::kDxfXdInteger16);
-			tagBuff->resval.rint = tag;
-
-			resbuf * valBuff = acutNewRb(AcDb::kDxfXReal);
-			valBuff->resval.rreal = parameter;
-
-			tagBuff->rbnext = valBuff;
-			tailOfResbufChain(rb)->rbnext = tagBuff;
-
-			pObject->setXData(rb);
-			return true;
-		}
-	}
-}
-
-bool XRecordXdataHelper::getSubXReal(const AcDbObjectId &objectId, const ACHAR * appName, int tag, double &parameter)
-{
-	//open Object
-	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
-	if (pObject.openStatus() != Acad::eOk) return false;
-
-	resbuf *rb;
-	getXDataResbuf(pObject, appName, rb);
-
-	if (rb == NULL) {
-		return false;
-	}
-	else {
-		resbuf* tagBuff = findSubXdata(tag, rb);
-		if (tagBuff != NULL)
-		{
-			parameter = tagBuff->resval.rreal;
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-}
-
 bool XRecordXdataHelper::getSubXString(const AcDbObjectId &objectId, const ACHAR * appName, int tag, CString &parameter)
 {
 	//open Object
 	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
 	if (pObject.openStatus() != Acad::eOk) return false;
 
+	return getSubXString(pObject, appName, tag, parameter);
+}
+
+bool XRecordXdataHelper::getSubXString(AcDbObjectPointer<AcDbObject> &pObject, const ACHAR * appName, int tag, CString &parameter)
+{
 	resbuf *rb;
 	getXDataResbuf(pObject, appName, rb);
 

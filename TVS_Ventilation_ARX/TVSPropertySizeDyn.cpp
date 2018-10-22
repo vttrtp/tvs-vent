@@ -100,8 +100,9 @@ STDMETHODIMP CTVSPropertySizeDyn::GetCurrentValueData (IUnknown *pUnk, VARIANT *
 	CString retValue;
 
 	AcAxDocLock docLoc(acdbCurDwg());
-	if (TVSController::get()->tvsPropertyController.getSubXString(objId, CTVSProperty, CTVSProperty_Number_size, retValue))
+	if (TVSController::get()->tvsPropertyController.getSize(objId, retValue)) {
 		V_BSTR(pVarData) = retValue.AllocSysString();
+	}
 
 	return (S_OK) ;
 }
@@ -116,7 +117,7 @@ STDMETHODIMP CTVSPropertySizeDyn::SetCurrentValueData (IUnknown *pUnk, const VAR
 		pObj->GetObjectId(&objId);
 	}
 	AcAxDocLock docLoc(acdbCurDwg());
-	TVSController::get()->tvsPropertyController.setSubXString(objId, CTVSProperty, CTVSProperty_Number_size, CString(V_BSTR(&varData)));
+	TVSController::get()->tvsPropertyController.setSize(objId, CString(V_BSTR(&varData)));
 
 	return (S_OK) ;
 }

@@ -2,34 +2,34 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\GridCtrl_src\GridCell.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\GridCtrl_src\GridCellBase.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="NewCellTypes\GridCellCheck.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="NewCellTypes\GridCellCombo.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="NewCellTypes\GridCellDateTime.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="NewCellTypes\GridCellNumeric.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\GridCtrl_src\GridCtrl.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\GridCtrl_src\GridDropTarget.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="NewCellTypes\GridURLCell.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\GridCtrl_src\TitleTip.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="BLCKMNGRDLG.cpp">
       <Filter>forms</Filter>
@@ -41,7 +41,7 @@
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="DocData.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="Func.cpp">
       <Filter>functions</Filter>
@@ -50,7 +50,7 @@
       <Filter>forms</Filter>
     </ClCompile>
     <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClCompile>
     <ClCompile Include="MSExcel.cpp">
       <Filter>functions</Filter>
@@ -142,49 +142,64 @@
     <ClCompile Include="TVSPropertyUnitsDyn.cpp">
       <Filter>dynProps\TVSProperty\units</Filter>
     </ClCompile>
+    <ClCompile Include="DLGTVSPropertyManager.cpp">
+      <Filter>forms\tvsProperty</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertySpec.cpp">
+      <Filter>models\TVSPropertySpec</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertySpecController.cpp">
+      <Filter>controllers\TVSPropertySpec</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertySpecRow.cpp">
+      <Filter>models\TVSPropertySpec</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSCommandPropertyManager.cpp">
+      <Filter>commands\TVSPropertyManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GridCtrl_src\GridCell.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\GridCellBase.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="NewCellTypes\GridCellCheck.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="NewCellTypes\GridCellCombo.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="NewCellTypes\GridCellDateTime.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="NewCellTypes\GridCellNumeric.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\GridCtrl.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\GridDropTarget.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="NewCellTypes\GridURLCell.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\TitleTip.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="BLCKMNGRDLG.h">
       <Filter>forms</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\CellRange.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="dgAllEdit.h">
       <Filter>forms</Filter>
     </ClInclude>
     <ClInclude Include="DocData.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="Func.h">
       <Filter>functions</Filter>
@@ -193,10 +208,10 @@
       <Filter>forms</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\MemDC.h">
-      <Filter>grid</Filter>
+      <Filter>old\grid</Filter>
     </ClInclude>
     <ClInclude Include="MSExcel.h">
       <Filter>functions</Filter>
@@ -300,6 +315,21 @@
     <ClInclude Include="TVSPropertyUnitsDyn.h">
       <Filter>dynProps\TVSProperty\units</Filter>
     </ClInclude>
+    <ClInclude Include="DLGTVSPropertyManager.h">
+      <Filter>forms\tvsProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertySpec.h">
+      <Filter>models\TVSPropertySpec</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertySpecController.h">
+      <Filter>controllers\TVSPropertySpec</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSPropertySpecRow.h">
+      <Filter>models\TVSPropertySpec</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSCommandPropertyManager.h">
+      <Filter>commands\TVSPropertyManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -307,9 +337,6 @@
     </None>
     <None Include="ClassDiagram.cd">
       <Filter>main</Filter>
-    </None>
-    <None Include="TVSPropertyPositionDyn.rgs">
-      <Filter>dynProps\TVSProperty\position</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -321,9 +348,6 @@
     </Filter>
     <Filter Include="commands">
       <UniqueIdentifier>{8f1d7f3f-0469-4a6d-81da-d757237e8b2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="grid">
-      <UniqueIdentifier>{7051f7ce-c0a9-472e-a6f6-2635802628d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="functions">
       <UniqueIdentifier>{90552be0-5412-4745-955b-c298f5b1bffa}</UniqueIdentifier>
@@ -399,6 +423,21 @@
     </Filter>
     <Filter Include="dynProps\TVSProperty\units">
       <UniqueIdentifier>{f86e78d8-368c-4393-83a5-2d820ece04d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="forms\tvsProperty">
+      <UniqueIdentifier>{013c0712-fd59-4fdc-a8c9-5857d94e44eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\TVSPropertySpec">
+      <UniqueIdentifier>{da5e2ce4-82ad-4484-960b-5e8a665a9e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers\TVSPropertySpec">
+      <UniqueIdentifier>{d5b677bf-1e01-4825-afae-3e452540ebd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\grid">
+      <UniqueIdentifier>{7051f7ce-c0a9-472e-a6f6-2635802628d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands\TVSPropertyManager">
+      <UniqueIdentifier>{7f26f505-6476-46a2-98cc-1e90c4c5e881}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

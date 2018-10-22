@@ -413,6 +413,16 @@ Acad::ErrorStatus TVS_Entity::getArea (double &area) const {
 	return (AcDbCurve::getArea (area)) ;
 }
 
+void TVS_Entity::getCount(double &count)
+{
+	count = 1;
+}
+
+void TVS_Entity::getCountUnit(CString &unit)
+{
+	unit = CCommonCount_Unit;
+}
+
 void TVS_Entity::writeInt(AcDbDwgFiler *pFiler, const int &param) const
 {
 		pFiler->writeItem ((Adesk::Int32)param) ;

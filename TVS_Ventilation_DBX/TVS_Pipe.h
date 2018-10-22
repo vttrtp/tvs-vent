@@ -198,9 +198,10 @@ public:
 	//get Size String
 	virtual void getSizeString(CString &size,const bool &sortSize=false);
 
-
-
-
+	//////////////////////////////////////////////////////////////////////////
+	virtual void getCount(double &count);
+	virtual void getCountUnit(CString &unit);
+	virtual void getName(CString &unit);
 
 	AcGePoint3d FirstPoint;
 	AcGePoint3d LastPoint;

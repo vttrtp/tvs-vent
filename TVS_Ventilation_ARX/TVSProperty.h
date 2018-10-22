@@ -1,18 +1,22 @@
 #pragma once
 #include <string>
+#include "commonDef.h"
 #define CTVSProperty _T("TVS_Property")
 
 #define CTVSPropertyCategoryName _T("TVS_Свойства")
-#define  CTVSProperty_position L"ПОЗИЦИЯ"
-#define  CTVSProperty_name	   L"ИМЯ"
-#define  CTVSProperty_type     L"ТИП"
-#define  CTVSProperty_size     L"РАЗМЕР"
-#define  CTVSProperty_article     L"АРТИКУЛ"
-#define  CTVSProperty_manufacturer     L"ПРОИЗВОДИТЕЛЬ"
-#define  CTVSProperty_units     L"ЕД.ИЗМ"
-#define  CTVSProperty_count     L"КОЛИЧЕСТВО"
-#define  CTVSProperty_mass     L"МАССА"
-#define  CTVSProperty_note     L"ПРИМЕЧАНИЕ"
+#define  CTVSProperty_position L"Позиция"
+#define  CTVSProperty_name	   L"Имя"
+#define  CTVSProperty_type     L"Тип"
+#define  CTVSProperty_size     L"Размер"
+#define  CTVSProperty_article     L"Артикул"
+#define  CTVSProperty_manufacturer     L"Производитель"
+#define  CTVSProperty_units     L"Ед.Изм"
+#define  CTVSProperty_count     L"Количество"
+#define  CTVSProperty_mass     L"Масса"
+#define  CTVSProperty_note     L"Примечание"
+
+#define  CTVSProperty_Default_Units    CCommonCount_Unit
+#define  CTVSProperty_Default_Length	CCommonCount_Length
 
 #define  CTVSProperty_Number_position 0
 #define  CTVSProperty_Number_name	   1

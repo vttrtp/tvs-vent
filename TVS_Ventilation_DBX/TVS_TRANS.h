@@ -180,7 +180,8 @@ public:
 	Int8 TransType;//левый=1,правый=2,осевой=3, произвольный=4
 
 
-
+////////////////////////////////////
+	virtual void getName(CString &unit);
 
 
 

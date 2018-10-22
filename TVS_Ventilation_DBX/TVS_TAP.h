@@ -218,7 +218,8 @@ public:
 
 
 
-
+	////////////////////////////////////
+	virtual void getName(CString &unit);
 
 
 static	TVS_TAP *add_new(

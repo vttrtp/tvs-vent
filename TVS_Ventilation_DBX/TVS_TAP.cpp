@@ -2156,6 +2156,11 @@ Acad::ErrorStatus TVS_TAP::getArea (double &area) const {
 	return (AcDbCurve::getArea (area)) ;
 }
 
+void TVS_TAP::getName(CString &unit)
+{
+	unit = CCommonTapName;
+}
+
 ///////////////////
 
 

@@ -77,7 +77,7 @@ STDMETHODIMP CTVSPropertyMassDyn::GetCurrentValueType (VARTYPE *pVarType) {
 	if ( pVarType == NULL )
 		return (E_POINTER) ;
 	// TODO: add your code here (and comment the line below)
-	*pVarType = VT_BSTR; 
+	*pVarType = VT_R8;
 
 	return (S_OK) ;
 }
@@ -98,13 +98,14 @@ STDMETHODIMP CTVSPropertyMassDyn::GetCurrentValueData (IUnknown *pUnk, VARIANT *
 	
 
 	::VariantInit(pVarData);
-	V_VT(pVarData) = VT_BSTR;
+	V_VT(pVarData) = VT_R8;
 
-	CString retValue;
+	double retValue;
 
 	AcAxDocLock docLoc(acdbCurDwg());
-	if (TVSController::get()->tvsPropertyController.getSubXString(objId, CTVSProperty, CTVSProperty_Number_mass, retValue))
-		V_BSTR(pVarData) = retValue.AllocSysString();
+	if (TVSController::get()->tvsPropertyController.getMass(objId, retValue)) {
+		V_R8(pVarData) = retValue;
+	}
 
 	return (S_OK) ;
 }
@@ -112,15 +113,14 @@ STDMETHODIMP CTVSPropertyMassDyn::GetCurrentValueData (IUnknown *pUnk, VARIANT *
 STDMETHODIMP CTVSPropertyMassDyn::SetCurrentValueData (IUnknown *pUnk, const VARIANT varData) {
 	if ( pUnk == NULL )
 		return (E_INVALIDARG) ;
-	
+
 	AcDbObjectId objId;
 	{
 		CComQIPtr<IAcadBaseObject> pObj(pUnk);
 		pObj->GetObjectId(&objId);
 	}
 	AcAxDocLock docLoc(acdbCurDwg());
-	TVSController::get()->tvsPropertyController.setSubXString(objId, CTVSProperty, CTVSProperty_Number_mass, CString(V_BSTR(&varData)));
-
+	TVSController::get()->tvsPropertyController.setMass(objId, V_R8(&varData));
 	return (S_OK) ;
 }
 

@@ -190,7 +190,8 @@ public:
 		);
 	void Gimme7Points();
 
-
+	////////////////////////////////////
+	virtual void getName(CString &unit);
 
 	double get_Length(void) const;
 	Acad::ErrorStatus put_Length(double newVal);

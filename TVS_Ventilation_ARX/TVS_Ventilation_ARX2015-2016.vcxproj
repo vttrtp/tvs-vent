@@ -155,6 +155,7 @@
     <ClCompile Include="acrxEntryPoint.cpp" />
     <ClCompile Include="BLCKMNGRDLG.cpp" />
     <ClCompile Include="dgAllEdit.cpp" />
+    <ClCompile Include="DLGTVSPropertyManager.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="hangeZdg.cpp" />
@@ -180,6 +181,7 @@
     </ClCompile>
     <ClCompile Include="tdbl.cpp" />
     <ClCompile Include="Calculate.cpp" />
+    <ClCompile Include="TVSCommandPropertyManager.cpp" />
     <ClCompile Include="TVSController.cpp" />
     <ClCompile Include="TVSProperty.cpp" />
     <ClCompile Include="TVSPropertyArticleDyn.cpp" />
@@ -191,11 +193,14 @@
     <ClCompile Include="TVSPropertyNoteDyn.cpp" />
     <ClCompile Include="TVSPropertyPositionDyn.cpp" />
     <ClCompile Include="TVSPropertySizeDyn.cpp" />
+    <ClCompile Include="TVSPropertySpecController.cpp" />
+    <ClCompile Include="TVSPropertySpecRow.cpp" />
     <ClCompile Include="TVSPropertyTypeDyn.cpp" />
     <ClCompile Include="TVSPropertyUnitsDyn.cpp" />
     <ClCompile Include="TVS_Command.cpp" />
     <ClCompile Include="TVSLeadCommand.cpp" />
     <ClCompile Include="TVS_Lead_Recalculate.cpp" />
+    <ClCompile Include="TVSPropertySpec.cpp" />
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
     <ClCompile Include="xRecordXdataHelper.cpp" />
   </ItemGroup>
@@ -211,6 +216,7 @@
     <ClInclude Include="BLCKMNGRDLG.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="dgAllEdit.h" />
+    <ClInclude Include="DLGTVSPropertyManager.h" />
     <ClInclude Include="DocData.h" />
     <ClInclude Include="Func.h" />
     <ClInclude Include="hangeZdg.h" />
@@ -233,6 +239,7 @@
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tdbl.h" />
     <ClInclude Include="Calculate.h" />
+    <ClInclude Include="TVSCommandPropertyManager.h" />
     <ClInclude Include="TVSController.h" />
     <ClInclude Include="TVSPropertDynBase.h" />
     <ClInclude Include="TVSProperty.h" />
@@ -246,11 +253,14 @@
     <ClInclude Include="TVSPropertyPositionDyn.h" />
     <ClInclude Include="TVSPropertySettings.h" />
     <ClInclude Include="TVSPropertySizeDyn.h" />
+    <ClInclude Include="TVSPropertySpecController.h" />
+    <ClInclude Include="TVSPropertySpecRow.h" />
     <ClInclude Include="TVSPropertyTypeDyn.h" />
     <ClInclude Include="TVSPropertyUnitsDyn.h" />
     <ClInclude Include="TVS_Command.h" />
     <ClInclude Include="TVSLeadCommand.h" />
     <ClInclude Include="TVS_Lead_Recalculate.h" />
+    <ClInclude Include="TVSPropertySpec.h" />
     <ClInclude Include="xRecordXdataHelper.h" />
   </ItemGroup>
   <ItemGroup>
@@ -262,7 +272,6 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
-    <None Include="TVSPropertyPositionDyn.rgs" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TVS_Ventilation_ARX.idl" />

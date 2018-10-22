@@ -77,7 +77,7 @@ STDMETHODIMP CTVSPropertyCountDyn::GetCurrentValueType (VARTYPE *pVarType) {
 	if ( pVarType == NULL )
 		return (E_POINTER) ;
 	// TODO: add your code here (and comment the line below)
-	*pVarType = VT_BSTR; 
+	*pVarType = VT_R8;
 
 	return (S_OK) ;
 }
@@ -98,14 +98,15 @@ STDMETHODIMP CTVSPropertyCountDyn::GetCurrentValueData (IUnknown *pUnk, VARIANT 
 	
 
 	::VariantInit(pVarData);
-	V_VT(pVarData) = VT_BSTR;
+	V_VT(pVarData) = VT_R8;
 
-	CString retValue;
+	double retValue;
 
 	AcAxDocLock docLoc(acdbCurDwg());
-	if (TVSController::get()->tvsPropertyController.getSubXString(objId, CTVSProperty, CTVSProperty_Number_count, retValue))
-		V_BSTR(pVarData) = retValue.AllocSysString();
-
+	if (TVSController::get()->tvsPropertyController.getCount(objId, retValue)) {
+		V_R8(pVarData) = retValue;
+	}
+	
 	return (S_OK) ;
 }
 
@@ -119,7 +120,7 @@ STDMETHODIMP CTVSPropertyCountDyn::SetCurrentValueData (IUnknown *pUnk, const VA
 		pObj->GetObjectId(&objId);
 	}
 	AcAxDocLock docLoc(acdbCurDwg());
-	TVSController::get()->tvsPropertyController.setSubXString(objId, CTVSProperty, CTVSProperty_Number_count, CString(V_BSTR(&varData)));
+	TVSController::get()->tvsPropertyController.setCount(objId, V_R8(&varData));
 
 	return (S_OK) ;
 }

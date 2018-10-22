@@ -103,8 +103,9 @@ STDMETHODIMP CTVSPropertyNameDyn::GetCurrentValueData (IUnknown *pUnk, VARIANT *
 	CString retValue;
 
 	AcAxDocLock docLoc(acdbCurDwg());
-	if (TVSController::get()->tvsPropertyController.getSubXString(objId, CTVSProperty, CTVSProperty_Number_name, retValue))
+	if (TVSController::get()->tvsPropertyController.getName(objId, retValue)) {
 		V_BSTR(pVarData) = retValue.AllocSysString();
+	}
 
 	return (S_OK) ;
 }
@@ -119,7 +120,7 @@ STDMETHODIMP CTVSPropertyNameDyn::SetCurrentValueData (IUnknown *pUnk, const VAR
 		pObj->GetObjectId(&objId);
 	}
 	AcAxDocLock docLoc(acdbCurDwg());
-	TVSController::get()->tvsPropertyController.setSubXString(objId, CTVSProperty, CTVSProperty_Number_name, CString(V_BSTR(&varData)));
+	TVSController::get()->tvsPropertyController.setName(objId, CString(V_BSTR(&varData)));
 
 	return (S_OK) ;
 }
