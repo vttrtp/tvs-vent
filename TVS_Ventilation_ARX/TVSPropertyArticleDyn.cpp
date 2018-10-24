@@ -6,7 +6,7 @@
 //----- CTVSPropertyArticleDyn
 STDMETHODIMP CTVSPropertyArticleDyn::InterfaceSupportsErrorInfo(REFIID riid) {
 	static const IID* arr [] ={
-		&IID_ITVSPropertyPositionDyn
+		&IID_ITVSPropertyArticleDyn
 	} ;
 
 	for ( int i =0 ; i < sizeof (arr) / sizeof (arr [0]) ; i++ ) {

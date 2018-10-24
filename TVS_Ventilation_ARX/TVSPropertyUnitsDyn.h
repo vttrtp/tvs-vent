@@ -65,4 +65,4 @@ public:
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(TVSPropertyUnitsDyn), CTVSPropertyUnitsDyn)
-OPM_DYNPROP_OBJECT_ENTRY_AUTO(CTVSPropertyUnitsDyn, AcDbObject)
+//OPM_DYNPROP_OBJECT_ENTRY_AUTO(CTVSPropertyUnitsDyn, AcDbObject)

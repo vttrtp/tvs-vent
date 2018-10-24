@@ -19,7 +19,7 @@ public:
 	CTVSPropertyPositionDyn() {
 	}
 
-	DECLARE_REGISTRY_RESOURCEID(IDR_TVSPROPERTYPositionDYN)
+	DECLARE_REGISTRY_RESOURCEID(IDR_TVSPropertyPositionDyn)
 
 	BEGIN_COM_MAP(CTVSPropertyPositionDyn)
 		COM_INTERFACE_ENTRY(ITVSPropertyPositionDyn)
@@ -65,4 +65,4 @@ public:
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(TVSPropertyPositionDyn), CTVSPropertyPositionDyn)
-OPM_DYNPROP_OBJECT_ENTRY_AUTO(CTVSPropertyPositionDyn, AcDbObject)
+//OPM_DYNPROP_OBJECT_ENTRY_AUTO(CTVSPropertyPositionDyn, AcDbObject)

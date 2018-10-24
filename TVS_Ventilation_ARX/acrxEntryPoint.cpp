@@ -43,10 +43,12 @@
 #include <TVS_Connector.h>
 
 #include "TVSController.h"
+#include "PropertyAdmin.h"
 
 #include "TVSLeadCommand.h"
 #include "TVS_Lead_Recalculate.h"
 #include "TVSCommandPropertyManager.h"
+
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
@@ -84,7 +86,7 @@ public:
 		delete pdbl;
 		// You *must* call On_kInitAppMsg here
 		AcRx::AppRetCode retCode =AcRxArxApp::On_kInitAppMsg (pkt) ;
-
+		PropertyAdmin::initialize();
 		// TODO: Add your initialization code here
 
 		return (retCode) ;

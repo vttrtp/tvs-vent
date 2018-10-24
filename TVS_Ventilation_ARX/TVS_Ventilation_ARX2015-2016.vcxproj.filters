@@ -157,6 +157,9 @@
     <ClCompile Include="TVSCommandPropertyManager.cpp">
       <Filter>commands\TVSPropertyManager</Filter>
     </ClCompile>
+    <ClCompile Include="PropertyAdmin.cpp">
+      <Filter>models\PropertyAdmin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GridCtrl_src\GridCell.h">
@@ -330,6 +333,9 @@
     <ClInclude Include="TVSCommandPropertyManager.h">
       <Filter>commands\TVSPropertyManager</Filter>
     </ClInclude>
+    <ClInclude Include="PropertyAdmin.h">
+      <Filter>models\PropertyAdmin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -438,6 +444,9 @@
     </Filter>
     <Filter Include="commands\TVSPropertyManager">
       <UniqueIdentifier>{7f26f505-6476-46a2-98cc-1e90c4c5e881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\PropertyAdmin">
+      <UniqueIdentifier>{b55a6144-c40a-47aa-ba82-675ecd5595f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@
 #define IDC_GRID                        103
 #define IDD_HANGEZDG                    104
 #define IDC_Axis                        104
-#define IDR_TVSPROPERTYPositionDYN      105
+#define IDR_TVSPropertyPositionDyn      105
 #define IDD_DIALOG1                     105
 #define IDD_DGALLEDIT                   105
 #define IDR_TVSPROPERTYNameDYN          106

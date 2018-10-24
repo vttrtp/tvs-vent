@@ -171,6 +171,7 @@
     <ClCompile Include="NewCellTypes\GridURLCell.cpp" />
     <ClCompile Include="OLEMethod.cpp" />
     <ClCompile Include="PipeSizeDiallog.cpp" />
+    <ClCompile Include="PropertyAdmin.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SPEC.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -233,6 +234,7 @@
     <ClInclude Include="NewCellTypes\GridURLCell.h" />
     <ClInclude Include="OLEMethod.h" />
     <ClInclude Include="PipeSizeDiallog.h" />
+    <ClInclude Include="PropertyAdmin.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SPEC.h" />
