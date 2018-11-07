@@ -3,8 +3,8 @@
 #include "Func.h"
 #include "tdbl.h"
 #include "dbmleader.h"
-#include "PipeSizeDiallog.h"
-#include "hangeZdg.h"
+#include "dgPipeSize.h"
+#include "dgChangeZ.h"
 #include "MSExcel.h"	
 #include "HeatFloor.h"
 #include <mmsystem.h>

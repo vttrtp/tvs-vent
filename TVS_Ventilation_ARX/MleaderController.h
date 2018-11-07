@@ -8,7 +8,7 @@ class MleaderController:
 {
 public:
 	MleaderController();
-
+	static MleaderController* get();
 	virtual bool registerApp();
 	//ObjectId xData
 	bool getObjectId(const AcDbObjectId &MLeaderId, AcDbObjectId &objectId);
@@ -27,8 +27,8 @@ public:
 
 	//Mleader get Message by Format
 	bool getStringMessage(const AcDbObjectId &ObjectId, const CString &format, CString &message);
-	bool GetEntityStringPropertyByName(TVS_Entity* pEnt, const CString &stringTemplate, CString &stringText);
-	bool GetBlockStringPropertyByName(AcDbBlockReference* pBr, const CString &stringTemplate, CString &stringText);
+	bool GetEntityStringPropertyByName(const AcDbObjectId &objId, const CString &stringTemplate, CString &stringText);
+	bool GetBlockStringPropertyByName(const AcDbObjectId &objId, const CString &stringTemplate, CString &stringText);
 	bool GetAtt(AcDbBlockReference* pBr, const CString& tag, CString& valueStr);
 
 	~MleaderController();

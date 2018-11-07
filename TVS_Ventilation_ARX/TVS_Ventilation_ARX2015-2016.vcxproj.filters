@@ -31,9 +31,6 @@
     <ClCompile Include="..\GridCtrl_src\TitleTip.cpp">
       <Filter>old\grid</Filter>
     </ClCompile>
-    <ClCompile Include="BLCKMNGRDLG.cpp">
-      <Filter>forms</Filter>
-    </ClCompile>
     <ClCompile Include="dgAllEdit.cpp">
       <Filter>forms</Filter>
     </ClCompile>
@@ -46,9 +43,6 @@
     <ClCompile Include="Func.cpp">
       <Filter>functions</Filter>
     </ClCompile>
-    <ClCompile Include="hangeZdg.cpp">
-      <Filter>forms</Filter>
-    </ClCompile>
     <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp">
       <Filter>old\grid</Filter>
     </ClCompile>
@@ -58,32 +52,20 @@
     <ClCompile Include="OLEMethod.cpp">
       <Filter>functions</Filter>
     </ClCompile>
-    <ClCompile Include="PipeSizeDiallog.cpp">
-      <Filter>forms</Filter>
-    </ClCompile>
     <ClCompile Include="StdAfx.cpp">
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="TVS_Ventilation_ARX.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="TVS_Command.cpp">
-      <Filter>commands</Filter>
-    </ClCompile>
     <ClCompile Include="Settings.cpp">
       <Filter>settings</Filter>
-    </ClCompile>
-    <ClCompile Include="mLeadPropertyDg.cpp">
-      <Filter>forms\mLeader</Filter>
     </ClCompile>
     <ClCompile Include="TVSLeadCommand.cpp">
       <Filter>commands\TVSLeadCommand</Filter>
     </ClCompile>
     <ClCompile Include="MleaderController.cpp">
       <Filter>controllers\MLeader</Filter>
-    </ClCompile>
-    <ClCompile Include="TVS_Lead_Recalculate.cpp">
-      <Filter>commands\TVSLeadRecalculate</Filter>
     </ClCompile>
     <ClCompile Include="xRecordXdataHelper.cpp">
       <Filter>helpers</Filter>
@@ -142,9 +124,6 @@
     <ClCompile Include="TVSPropertyUnitsDyn.cpp">
       <Filter>dynProps\TVSProperty\units</Filter>
     </ClCompile>
-    <ClCompile Include="DLGTVSPropertyManager.cpp">
-      <Filter>forms\tvsProperty</Filter>
-    </ClCompile>
     <ClCompile Include="TVSPropertySpec.cpp">
       <Filter>models\TVSPropertySpec</Filter>
     </ClCompile>
@@ -159,6 +138,45 @@
     </ClCompile>
     <ClCompile Include="PropertyAdmin.cpp">
       <Filter>models\PropertyAdmin</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSCommandLeadRecalculate.cpp">
+      <Filter>commands\TVSLeadRecalculate</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSCommand.cpp">
+      <Filter>commands</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSCommandAttributesToProperties.cpp">
+      <Filter>commands\TVSAttributesToProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="dgBlockManager.cpp">
+      <Filter>forms</Filter>
+    </ClCompile>
+    <ClCompile Include="dgChangeZ.cpp">
+      <Filter>forms</Filter>
+    </ClCompile>
+    <ClCompile Include="dgPipeSize.cpp">
+      <Filter>forms</Filter>
+    </ClCompile>
+    <ClCompile Include="dgTVSPropertyManager.cpp">
+      <Filter>forms\tvsProperty</Filter>
+    </ClCompile>
+    <ClCompile Include="dgMLeadProperty.cpp">
+      <Filter>forms\mLeader</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSAttrtibutesController.cpp">
+      <Filter>controllers\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSCommandAddProperties.cpp">
+      <Filter>commands\TVSAddProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSCommandSpecification.cpp">
+      <Filter>commands\TVSSpecification</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSCommandExcelSpecification.cpp">
+      <Filter>commands\TVSExcelSpecification</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSPropertDynBase.cpp">
+      <Filter>dynProps\TVSProperty</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +210,6 @@
     <ClInclude Include="..\GridCtrl_src\TitleTip.h">
       <Filter>old\grid</Filter>
     </ClInclude>
-    <ClInclude Include="BLCKMNGRDLG.h">
-      <Filter>forms</Filter>
-    </ClInclude>
     <ClInclude Include="..\GridCtrl_src\CellRange.h">
       <Filter>old\grid</Filter>
     </ClInclude>
@@ -206,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="Func.h">
       <Filter>functions</Filter>
-    </ClInclude>
-    <ClInclude Include="hangeZdg.h">
-      <Filter>forms</Filter>
     </ClInclude>
     <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h">
       <Filter>old\grid</Filter>
@@ -222,23 +234,14 @@
     <ClInclude Include="OLEMethod.h">
       <Filter>functions</Filter>
     </ClInclude>
-    <ClInclude Include="PipeSizeDiallog.h">
-      <Filter>forms</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="StdAfx.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="TVS_Command.h">
-      <Filter>commands</Filter>
-    </ClInclude>
     <ClInclude Include="Settings.h">
       <Filter>settings</Filter>
-    </ClInclude>
-    <ClInclude Include="mLeadPropertyDg.h">
-      <Filter>forms\mLeader</Filter>
     </ClInclude>
     <ClInclude Include="TVSLeadCommand.h">
       <Filter>commands\TVSLeadCommand</Filter>
@@ -248,9 +251,6 @@
     </ClInclude>
     <ClInclude Include="MleaderController.h">
       <Filter>controllers\MLeader</Filter>
-    </ClInclude>
-    <ClInclude Include="TVS_Lead_Recalculate.h">
-      <Filter>commands\TVSLeadRecalculate</Filter>
     </ClInclude>
     <ClInclude Include="xRecordXdataHelper.h">
       <Filter>helpers</Filter>
@@ -318,9 +318,6 @@
     <ClInclude Include="TVSPropertyUnitsDyn.h">
       <Filter>dynProps\TVSProperty\units</Filter>
     </ClInclude>
-    <ClInclude Include="DLGTVSPropertyManager.h">
-      <Filter>forms\tvsProperty</Filter>
-    </ClInclude>
     <ClInclude Include="TVSPropertySpec.h">
       <Filter>models\TVSPropertySpec</Filter>
     </ClInclude>
@@ -335,6 +332,42 @@
     </ClInclude>
     <ClInclude Include="PropertyAdmin.h">
       <Filter>models\PropertyAdmin</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSCommand.h">
+      <Filter>commands</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSCommandLeadRecalculate.h">
+      <Filter>commands\TVSLeadRecalculate</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSCommandAttributesToProperties.h">
+      <Filter>commands\TVSAttributesToProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="dgBlockManager.h">
+      <Filter>forms</Filter>
+    </ClInclude>
+    <ClInclude Include="dgChangeZ.h">
+      <Filter>forms</Filter>
+    </ClInclude>
+    <ClInclude Include="dgPipeSize.h">
+      <Filter>forms</Filter>
+    </ClInclude>
+    <ClInclude Include="dgTVSPropertyManager.h">
+      <Filter>forms\tvsProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="dgMLeadProperty.h">
+      <Filter>forms\mLeader</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSAttrtibutesController.h">
+      <Filter>controllers\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSCommandAddProperties.h">
+      <Filter>commands\TVSAddProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSCommandSpecification.h">
+      <Filter>commands\TVSSpecification</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSCommandExcelSpecification.h">
+      <Filter>commands\TVSExcelSpecification</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -447,6 +480,21 @@
     </Filter>
     <Filter Include="models\PropertyAdmin">
       <UniqueIdentifier>{b55a6144-c40a-47aa-ba82-675ecd5595f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands\TVSAttributesToProperties">
+      <UniqueIdentifier>{1ba3b9b3-ce74-4b66-9581-70cadd975fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers\Attributes">
+      <UniqueIdentifier>{08761c28-aa75-4061-87b0-21f33f3cfa57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands\TVSAddProperties">
+      <UniqueIdentifier>{46b25880-c93e-480a-80b2-ac6c8582cb47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands\TVSSpecification">
+      <UniqueIdentifier>{346d3f7a-7159-4be0-8eee-8af97feae9e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="commands\TVSExcelSpecification">
+      <UniqueIdentifier>{0790b6f0-f997-48a1-a3be-ae72bfd00803}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

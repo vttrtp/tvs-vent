@@ -54,7 +54,7 @@
   <PropertyGroup Label="Configuration">
     <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v90'">v90</PlatformToolset>
     <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v100'">v100</PlatformToolset>
-    <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v110'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v140'">v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,7 +107,7 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\$(Configuration)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level1</WarningLevel>
-      <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Autodesk\AutoCAD 2016;$(ArxSdkDir)\inc-$(Platform);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Autodesk\AutoCAD 2018;$(ArxSdkDir)\inc-$(Platform);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\$(Configuration)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
@@ -153,13 +153,18 @@
     <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp" />
     <ClCompile Include="..\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="acrxEntryPoint.cpp" />
-    <ClCompile Include="BLCKMNGRDLG.cpp" />
+    <ClCompile Include="TVSCommandAddProperties.cpp" />
+    <ClCompile Include="TVSAttrtibutesController.cpp" />
+    <ClCompile Include="dgBlockManager.cpp" />
     <ClCompile Include="dgAllEdit.cpp" />
+    <ClCompile Include="dgTVSPropertyManager.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="Func.cpp" />
-    <ClCompile Include="GripPoints.cpp" />
-    <ClCompile Include="hangeZdg.cpp" />
+    <ClCompile Include="dgChangeZ.cpp" />
     <ClCompile Include="HeatFloor.cpp" />
+    <ClCompile Include="MleaderController.cpp" />
+    <ClCompile Include="MLeaderDynProp.cpp" />
+    <ClCompile Include="dgMLeadProperty.cpp" />
     <ClCompile Include="MSExcel.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCheck.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCombo.cpp" />
@@ -167,7 +172,9 @@
     <ClCompile Include="NewCellTypes\GridCellNumeric.cpp" />
     <ClCompile Include="NewCellTypes\GridURLCell.cpp" />
     <ClCompile Include="OLEMethod.cpp" />
-    <ClCompile Include="PipeSizeDiallog.cpp" />
+    <ClCompile Include="dgPipeSize.cpp" />
+    <ClCompile Include="PropertyAdmin.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SPEC.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,7 +184,32 @@
     </ClCompile>
     <ClCompile Include="tdbl.cpp" />
     <ClCompile Include="Calculate.cpp" />
+    <ClCompile Include="TVSCommandAttributesToProperties.cpp" />
+    <ClCompile Include="TVSCommandPropertyManager.cpp" />
+    <ClCompile Include="TVSController.cpp" />
+    <ClCompile Include="TVSCommandExcelSpecification.cpp" />
+    <ClCompile Include="TVSPropertDynBase.cpp" />
+    <ClCompile Include="TVSProperty.cpp" />
+    <ClCompile Include="TVSPropertyArticleDyn.cpp" />
+    <ClCompile Include="TVSPropertyController.cpp" />
+    <ClCompile Include="TVSPropertyCountDyn.cpp" />
+    <ClCompile Include="TVSPropertyManufacturerDyn.cpp" />
+    <ClCompile Include="TVSPropertyMassDyn.cpp" />
+    <ClCompile Include="TVSPropertyNameDyn.cpp" />
+    <ClCompile Include="TVSPropertyNoteDyn.cpp" />
+    <ClCompile Include="TVSPropertyPositionDyn.cpp" />
+    <ClCompile Include="TVSPropertySizeDyn.cpp" />
+    <ClCompile Include="TVSPropertySpecController.cpp" />
+    <ClCompile Include="TVSPropertySpecRow.cpp" />
+    <ClCompile Include="TVSPropertyTypeDyn.cpp" />
+    <ClCompile Include="TVSPropertyUnitsDyn.cpp" />
+    <ClCompile Include="TVSCommand.cpp" />
+    <ClCompile Include="TVSLeadCommand.cpp" />
+    <ClCompile Include="TVSCommandLeadRecalculate.cpp" />
+    <ClCompile Include="TVSPropertySpec.cpp" />
+    <ClCompile Include="TVSCommandSpecification.cpp" />
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
+    <ClCompile Include="xRecordXdataHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GridCtrl_src\CellRange.h" />
@@ -188,28 +220,61 @@
     <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h" />
     <ClInclude Include="..\GridCtrl_src\MemDC.h" />
     <ClInclude Include="..\GridCtrl_src\TitleTip.h" />
-    <ClInclude Include="BLCKMNGRDLG.h" />
+    <ClInclude Include="TVSCommandAddProperties.h" />
+    <ClInclude Include="TVSAttrtibutesController.h" />
+    <ClInclude Include="dgBlockManager.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="dgAllEdit.h" />
+    <ClInclude Include="dgTVSPropertyManager.h" />
     <ClInclude Include="DocData.h" />
     <ClInclude Include="Func.h" />
-    <ClInclude Include="GripPoints.h" />
-    <ClInclude Include="hangeZdg.h" />
+    <ClInclude Include="dgChangeZ.h" />
     <ClInclude Include="HeatFloor.h" />
+    <ClInclude Include="MleaderController.h" />
+    <ClInclude Include="MLeaderDynProp.h" />
+    <ClInclude Include="MLeaderSettings.h" />
+    <ClInclude Include="dgMLeadProperty.h" />
     <ClInclude Include="MSExcel.h" />
     <ClInclude Include="NewCellTypes\GridCellCheck.h" />
     <ClInclude Include="NewCellTypes\GridCellCombo.h" />
     <ClInclude Include="NewCellTypes\GridCellDateTime.h" />
     <ClInclude Include="NewCellTypes\GridCellNumeric.h" />
     <ClInclude Include="NewCellTypes\GridURLCell.h" />
-    <ClInclude Include="Office.h" />
     <ClInclude Include="OLEMethod.h" />
-    <ClInclude Include="PipeSizeDiallog.h" />
+    <ClInclude Include="dgPipeSize.h" />
+    <ClInclude Include="PropertyAdmin.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="SPEC.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tdbl.h" />
     <ClInclude Include="Calculate.h" />
+    <ClInclude Include="TVSCommandAttributesToProperties.h" />
+    <ClInclude Include="TVSCommandPropertyManager.h" />
+    <ClInclude Include="TVSController.h" />
+    <ClInclude Include="TVSCommandExcelSpecification.h" />
+    <ClInclude Include="TVSPropertDynBase.h" />
+    <ClInclude Include="TVSProperty.h" />
+    <ClInclude Include="TVSPropertyArticleDyn.h" />
+    <ClInclude Include="TVSPropertyController.h" />
+    <ClInclude Include="TVSPropertyCountDyn.h" />
+    <ClInclude Include="TVSPropertyManufacturerDyn.h" />
+    <ClInclude Include="TVSPropertyMassDyn.h" />
+    <ClInclude Include="TVSPropertyNameDyn.h" />
+    <ClInclude Include="TVSPropertyNoteDyn.h" />
+    <ClInclude Include="TVSPropertyPositionDyn.h" />
+    <ClInclude Include="TVSPropertySettings.h" />
+    <ClInclude Include="TVSPropertySizeDyn.h" />
+    <ClInclude Include="TVSPropertySpecController.h" />
+    <ClInclude Include="TVSPropertySpecRow.h" />
+    <ClInclude Include="TVSPropertyTypeDyn.h" />
+    <ClInclude Include="TVSPropertyUnitsDyn.h" />
+    <ClInclude Include="TVSCommand.h" />
+    <ClInclude Include="TVSLeadCommand.h" />
+    <ClInclude Include="TVSCommandLeadRecalculate.h" />
+    <ClInclude Include="TVSPropertySpec.h" />
+    <ClInclude Include="TVSCommandSpecification.h" />
+    <ClInclude Include="xRecordXdataHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TVS_Ventilation_ARX.rc" />
@@ -220,6 +285,9 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TVS_Ventilation_ARX.idl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

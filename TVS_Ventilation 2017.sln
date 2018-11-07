@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 14.00
-# Visual Studio 2015
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TVS_Ventilation_DBX", "TVS_Ventilation_DBX\TVS_Ventilation_DBX2017.vcxproj", "{77464C6A-D1E9-4593-AA0C-E6AD29988CE4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TVS_Ventilation_ARX", "TVS_Ventilation_ARX\TVS_Ventilation_ARX2017.vcxproj", "{8ED4A7FF-8603-4396-8E54-0526B7202E0D}"

@@ -11,6 +11,76 @@ TVSPropertyController::~TVSPropertyController()
 {
 }
 
+TVSPropertyController pctrl;
+TVSPropertyController* TVSPropertyController::get()
+{
+	return &pctrl;
+}
+
+bool TVSPropertyController::getStringValueOfAnyPropertyByName(const AcDbObjectId &objectId, const CString &prop, CString &val)
+{
+	if (checkProperty(objectId))
+	{
+		if (prop == CTVSProperty_position)
+		{
+			return getPosition(objectId, val);
+		}else if (prop == CTVSProperty_name)
+		{
+			return  getName(objectId, val);
+		}
+		else if (prop == CTVSProperty_type)
+		{
+			return  getType(objectId, val);
+		}
+		else if (prop == CTVSProperty_size)
+		{
+			return  getSize(objectId, val);
+		}
+		else if (prop == CTVSProperty_article)
+		{
+			return  getArticle(objectId, val);
+		}
+		else if (prop == CTVSProperty_Number_manufacturer)
+		{
+			return  getManufaturer(objectId, val);
+		}
+		else if (prop == CTVSProperty_mass)
+		{
+			double dVal;
+			if (getMass(objectId, dVal)) {
+				val.Format(L"%g", dVal );
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (prop == CTVSProperty_units)
+		{
+			return  getUnits(objectId, val);
+		}
+		else if (prop == CTVSProperty_count)
+		{
+			double dVal;
+			if (getCount(objectId, dVal)) {
+				val.Format(L"%g", dVal);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (prop == CTVSProperty_note)
+		{
+			return  getNote(objectId, val);
+		}
+		else return false;
+	}
+	else {
+		return false;
+	}
+}
+
 bool TVSPropertyController::registerApp()
 {
 	acdbRegApp(CTVSProperty);
@@ -78,15 +148,23 @@ bool TVSPropertyController::checkProperty(const AcDbObjectId &objectId) {
 bool TVSPropertyController::addProperty(const AcDbObjectId &objectId) {
 	if (!checkProperty(objectId))
 	{
-		return addXdataApp(objectId, CTVSProperty);
+		resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, CTVSProperty,
+			AcDb::kDxfXdInteger16, CTVSProperty_Number_count,
+			AcDb::kDxfXdReal, 1.0,
+			AcDb::kDwgNull);
+
+		return setXdataBuf(objectId, rb);
 	}
 	else {
 		return false;
 	}
 }
 
+
 bool TVSPropertyController:: getProperty(const AcDbObjectId &objectId, TVSProperty &tvsProperty)
 {
+	if (checkProperty(objectId))
+	{
 	getPosition(objectId, tvsProperty.position);
 	getName(objectId, tvsProperty.name);
 	getType(objectId, tvsProperty.type);
@@ -98,6 +176,10 @@ bool TVSPropertyController:: getProperty(const AcDbObjectId &objectId, TVSProper
 	getCount(objectId, tvsProperty.count);
 	getNote(objectId, tvsProperty.note);
 	return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool TVSPropertyController::removeProperty(const AcDbObjectId &objectId)
@@ -172,7 +254,6 @@ bool TVSPropertyController::getSize(const AcDbObjectId &objectId, CString &val)
 {
 	AcDbObjectPointer<AcDbObject> pObj(objectId, AcDb::kForWrite);
 	if (pObj.openStatus() != Acad::eOk) return false;
-
 	TVS_Entity * ent;
 	if ((ent = TVS_Entity::cast(pObj)) != NULL) {
 		ent->getSizeString(val);
@@ -229,7 +310,10 @@ bool TVSPropertyController::getUnits(const AcDbObjectId &objectId, CString &val)
 		return true;
 	}
 	else {
-		return getSubXString(pObj, CTVSProperty, CTVSProperty_Number_units, val);
+		if (!getSubXString(pObj, CTVSProperty, CTVSProperty_Number_units, val)) {
+			val = CCommonCount_Unit;
+		};
+		return true;
 	}
 	
 }

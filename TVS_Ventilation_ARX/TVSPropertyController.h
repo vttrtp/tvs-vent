@@ -9,7 +9,10 @@ class TVSPropertyController :
 public:
 	TVSPropertyController();
 	virtual ~TVSPropertyController();
+	static TVSPropertyController* get();
 
+
+	bool getStringValueOfAnyPropertyByName(const AcDbObjectId &objectId, const CString &prop, CString &val);
 	//ProcessProperty
 	virtual bool registerApp();
 	bool setProperty(const AcDbObjectId &objectId, const TVSProperty &tvsProperty);

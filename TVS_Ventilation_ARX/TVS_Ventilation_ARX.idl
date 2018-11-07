@@ -153,13 +153,13 @@ interface ITVSPropertyNoteDyn : IDispatch {
 ]
 library TVSTVS_Ventilation_ARXLib
 {
-	importlib("axdb20enu.tlb"); //2016
-	//importlib("axdb21enu.tlb");
-	//importlib("axdb22enu.tlb");
-	//importlib("axdb23enu.tlb");
-
 	importlib("stdole32.tlb");
 	importlib("stdole2.tlb");
+	
+
+	importlib("axdb22enu.tlb");
+
+
 	//----- If the following import fails then it means that the type library 
 	//----- is not on the system path you can fix the problem in two ways:
 	//----- 1. Add it to the system wide PATH environment variable

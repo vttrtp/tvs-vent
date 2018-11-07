@@ -21,6 +21,6 @@
 		<ArxBrepLibs>$(ArxSdkDir)\utils\brep\lib-$(Platform)</ArxBrepLibs>
 		<ArxAtilLibs>$(ArxSdkDir)\utils\Atil\Lib-$(Platform)</ArxAtilLibs>
 		<ArxSDKVersion>21.0</ArxSDKVersion>
-		<ArxSDKPlatform>v110</ArxSDKPlatform>
+		<ArxSDKPlatform>v140</ArxSDKPlatform>
 	</PropertyGroup>
 </Project>

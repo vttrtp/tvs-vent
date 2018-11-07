@@ -153,16 +153,18 @@
     <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp" />
     <ClCompile Include="..\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="acrxEntryPoint.cpp" />
-    <ClCompile Include="BLCKMNGRDLG.cpp" />
+    <ClCompile Include="TVSCommandAddProperties.cpp" />
+    <ClCompile Include="TVSAttrtibutesController.cpp" />
+    <ClCompile Include="dgBlockManager.cpp" />
     <ClCompile Include="dgAllEdit.cpp" />
-    <ClCompile Include="DLGTVSPropertyManager.cpp" />
+    <ClCompile Include="dgTVSPropertyManager.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="Func.cpp" />
-    <ClCompile Include="hangeZdg.cpp" />
+    <ClCompile Include="dgChangeZ.cpp" />
     <ClCompile Include="HeatFloor.cpp" />
     <ClCompile Include="MleaderController.cpp" />
     <ClCompile Include="MLeaderDynProp.cpp" />
-    <ClCompile Include="mLeadPropertyDg.cpp" />
+    <ClCompile Include="dgMLeadProperty.cpp" />
     <ClCompile Include="MSExcel.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCheck.cpp" />
     <ClCompile Include="NewCellTypes\GridCellCombo.cpp" />
@@ -170,7 +172,7 @@
     <ClCompile Include="NewCellTypes\GridCellNumeric.cpp" />
     <ClCompile Include="NewCellTypes\GridURLCell.cpp" />
     <ClCompile Include="OLEMethod.cpp" />
-    <ClCompile Include="PipeSizeDiallog.cpp" />
+    <ClCompile Include="dgPipeSize.cpp" />
     <ClCompile Include="PropertyAdmin.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SPEC.cpp" />
@@ -182,8 +184,11 @@
     </ClCompile>
     <ClCompile Include="tdbl.cpp" />
     <ClCompile Include="Calculate.cpp" />
+    <ClCompile Include="TVSCommandAttributesToProperties.cpp" />
     <ClCompile Include="TVSCommandPropertyManager.cpp" />
     <ClCompile Include="TVSController.cpp" />
+    <ClCompile Include="TVSCommandExcelSpecification.cpp" />
+    <ClCompile Include="TVSPropertDynBase.cpp" />
     <ClCompile Include="TVSProperty.cpp" />
     <ClCompile Include="TVSPropertyArticleDyn.cpp" />
     <ClCompile Include="TVSPropertyController.cpp" />
@@ -198,10 +203,11 @@
     <ClCompile Include="TVSPropertySpecRow.cpp" />
     <ClCompile Include="TVSPropertyTypeDyn.cpp" />
     <ClCompile Include="TVSPropertyUnitsDyn.cpp" />
-    <ClCompile Include="TVS_Command.cpp" />
+    <ClCompile Include="TVSCommand.cpp" />
     <ClCompile Include="TVSLeadCommand.cpp" />
-    <ClCompile Include="TVS_Lead_Recalculate.cpp" />
+    <ClCompile Include="TVSCommandLeadRecalculate.cpp" />
     <ClCompile Include="TVSPropertySpec.cpp" />
+    <ClCompile Include="TVSCommandSpecification.cpp" />
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
     <ClCompile Include="xRecordXdataHelper.cpp" />
   </ItemGroup>
@@ -214,18 +220,20 @@
     <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h" />
     <ClInclude Include="..\GridCtrl_src\MemDC.h" />
     <ClInclude Include="..\GridCtrl_src\TitleTip.h" />
-    <ClInclude Include="BLCKMNGRDLG.h" />
+    <ClInclude Include="TVSCommandAddProperties.h" />
+    <ClInclude Include="TVSAttrtibutesController.h" />
+    <ClInclude Include="dgBlockManager.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="dgAllEdit.h" />
-    <ClInclude Include="DLGTVSPropertyManager.h" />
+    <ClInclude Include="dgTVSPropertyManager.h" />
     <ClInclude Include="DocData.h" />
     <ClInclude Include="Func.h" />
-    <ClInclude Include="hangeZdg.h" />
+    <ClInclude Include="dgChangeZ.h" />
     <ClInclude Include="HeatFloor.h" />
     <ClInclude Include="MleaderController.h" />
     <ClInclude Include="MLeaderDynProp.h" />
     <ClInclude Include="MLeaderSettings.h" />
-    <ClInclude Include="mLeadPropertyDg.h" />
+    <ClInclude Include="dgMLeadProperty.h" />
     <ClInclude Include="MSExcel.h" />
     <ClInclude Include="NewCellTypes\GridCellCheck.h" />
     <ClInclude Include="NewCellTypes\GridCellCombo.h" />
@@ -233,7 +241,7 @@
     <ClInclude Include="NewCellTypes\GridCellNumeric.h" />
     <ClInclude Include="NewCellTypes\GridURLCell.h" />
     <ClInclude Include="OLEMethod.h" />
-    <ClInclude Include="PipeSizeDiallog.h" />
+    <ClInclude Include="dgPipeSize.h" />
     <ClInclude Include="PropertyAdmin.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Settings.h" />
@@ -241,8 +249,10 @@
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tdbl.h" />
     <ClInclude Include="Calculate.h" />
+    <ClInclude Include="TVSCommandAttributesToProperties.h" />
     <ClInclude Include="TVSCommandPropertyManager.h" />
     <ClInclude Include="TVSController.h" />
+    <ClInclude Include="TVSCommandExcelSpecification.h" />
     <ClInclude Include="TVSPropertDynBase.h" />
     <ClInclude Include="TVSProperty.h" />
     <ClInclude Include="TVSPropertyArticleDyn.h" />
@@ -259,10 +269,11 @@
     <ClInclude Include="TVSPropertySpecRow.h" />
     <ClInclude Include="TVSPropertyTypeDyn.h" />
     <ClInclude Include="TVSPropertyUnitsDyn.h" />
-    <ClInclude Include="TVS_Command.h" />
+    <ClInclude Include="TVSCommand.h" />
     <ClInclude Include="TVSLeadCommand.h" />
-    <ClInclude Include="TVS_Lead_Recalculate.h" />
+    <ClInclude Include="TVSCommandLeadRecalculate.h" />
     <ClInclude Include="TVSPropertySpec.h" />
+    <ClInclude Include="TVSCommandSpecification.h" />
     <ClInclude Include="xRecordXdataHelper.h" />
   </ItemGroup>
   <ItemGroup>

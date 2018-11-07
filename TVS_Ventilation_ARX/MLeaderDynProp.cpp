@@ -25,6 +25,8 @@
 #include "StdAfx.h"
 #include "MLeaderDynProp.h"
 #include "MLeaderSettings.h"
+#include "TVSController.h"
+#include "MleaderController.h"
 
 UINT GetEntitiesCount(VARIANT *l_selection) 
 {
@@ -143,6 +145,7 @@ void PutFormatString(VARIANT *l_selection, AcString res)
               {
                 resbuf *rb = acutBuildList(1001, MLeaderFormat, 1000, res.kTCharPtr(), 0);
                 pMleader->setXData(rb); acutRelRb(rb);
+				
               }
             }
           }
@@ -254,7 +257,15 @@ STDMETHODIMP CMLeaderDynProp::SetCurrentValueData (IUnknown *pUnk, const VARIANT
 	// TODO: add your code here
   sFormat = V_BSTR(&varData);
   PutFormatString(&l_sel, sFormat);
-  
+
+  AcDbObjectId objId;
+  {
+	  CComQIPtr<IAcadBaseObject> pObj(pUnk);
+	  pObj->GetObjectId(&objId);
+  }
+
+  AcAxDocLock docLoc(acdbCurDwg());
+  MleaderController::get()->recalculateMleader(objId);
 	return (S_OK) ;
 }
 
@@ -296,6 +307,6 @@ STDMETHODIMP CMLeaderDynProp::GetCategoryName (PROPCAT propcat, LCID lcid, BSTR 
 	// TODO: add your code here (and comment the 3 lines below)
 	if ( propcat != 0 )
 		return (E_INVALIDARG) ;
-	*pBstrName =::SysAllocString (L"TVS_Property") ;
+	*pBstrName = ::SysAllocString(CTVSPropertyCategoryName);
   	return (S_OK) ;
 }

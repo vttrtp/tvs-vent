@@ -1,9 +1,16 @@
 #include "stdafx.h"
 #include "MleaderController.h"
 #include "MleaderSettings.h"
+#include "TVSPropertyController.h"
 
 MleaderController::MleaderController()
 {
+}
+
+MleaderController m_ctrl;
+MleaderController * MleaderController::get()
+{
+	return &m_ctrl;
 }
 
 bool MleaderController::registerApp()
@@ -75,21 +82,29 @@ bool MleaderController::setTextMessage(const AcDbObjectId &MLeaderId, const CStr
 
 bool MleaderController::getStringMessage(const AcDbObjectId &ObjectId, const CString &format, CString &message)
 {
-	AcDbObjectPointer<AcDbEntity>pEnt(ObjectId, AcDb::kForRead);
 
-	//check entity
-	AcDbBlockReference * br;
-	TVS_Entity * ent;
 	int entType = 0;
-	if ((br = AcDbBlockReference::cast(pEnt)) != NULL)
+
+	//check attrib
+	bool haveAttrib = TVSPropertyController::get()->checkProperty(ObjectId);
+	
 	{
-		entType = 1;
+		AcDbObjectPointer<AcDbEntity>pEnt(ObjectId, AcDb::kForRead);
+
+		//check entity
+		AcDbBlockReference * br;
+		TVS_Entity * ent;
+		if ((br = AcDbBlockReference::cast(pEnt)) != NULL)
+		{
+			entType = 1;
+		}
+		else if ((ent = TVS_Entity::cast(pEnt)) != NULL)
+		{
+			entType = 2;
+		}
+		else return false;
 	}
-	else if ((ent = TVS_Entity::cast(pEnt)) != NULL)
-	{
-		entType = 2;
-	}
-	else return false;
+
 
 	//parse format
 	CString curTemp;
@@ -105,15 +120,22 @@ bool MleaderController::getStringMessage(const AcDbObjectId &ObjectId, const CSt
 
 		if (format[i] == L']') {
 			CString strVal;
-			switch (entType) {
-			case 1:
-				GetBlockStringPropertyByName(br, curTemp, strVal);
-				break;
-			case 2:
-				GetEntityStringPropertyByName(ent, curTemp, strVal);
-				break;
+			if (haveAttrib)
+			{
+				TVSPropertyController::get()->getStringValueOfAnyPropertyByName(ObjectId, curTemp, strVal);
 			}
-			
+			if (strVal == "") {
+				switch (entType) {
+
+				case 1:
+					GetBlockStringPropertyByName(ObjectId, curTemp, strVal);
+					break;
+				case 2:
+					GetEntityStringPropertyByName(ObjectId, curTemp, strVal);
+					break;
+				}
+			}
+		
 			message += strVal;
 			curTemp = L"";
 			inTemp = false;
@@ -131,31 +153,47 @@ bool MleaderController::getStringMessage(const AcDbObjectId &ObjectId, const CSt
 
 }
 
-bool MleaderController::GetEntityStringPropertyByName(TVS_Entity* pEnt, const CString &stringTemplate, CString &stringText)
+bool MleaderController::GetEntityStringPropertyByName(const AcDbObjectId  &objId, const CString &stringTemplate, CString &stringText)
 {
+	AcDbObjectPointer<TVS_Entity>pEnt(objId, AcDb::kForRead);
+	if (pEnt.openStatus() != Acad::eOk)
+	{
+		return false;
+	}
 	if (stringTemplate == L"N")
 	{
 		ACHAR * layerName = pEnt->layer();
 		stringText = layerName;
+		return true;
 	}
 	else if (stringTemplate == L"L") {
 		stringText.Format(L"%g", pEnt->get_Flow());
+		return true;
 	}
 	else if (stringTemplate == L"V") {
+		return true;
 		//stringText.Format(L"%d",pEnt->get_Speed());
 	}
 	else if (stringTemplate == L"D") {
 		pEnt->getSizeString(stringText);
+		return true;
 	}
 	else if (stringTemplate == L"P") {
 		//pEnt->getSizeString(stringText);
+		return true;
 	}
 
-	return true;
+	return false;
 }
 
-bool MleaderController::GetBlockStringPropertyByName(AcDbBlockReference* pBr, const CString &stringTemplate, CString &stringText)
+bool MleaderController::GetBlockStringPropertyByName(const AcDbObjectId  &objId, const CString &stringTemplate, CString &stringText)
 {
+	AcDbObjectPointer<AcDbBlockReference>pBr(objId, AcDb::kForRead);
+	if (pBr.openStatus()!=Acad::eOk)
+	{
+		return false;
+	}
+
 	if (stringTemplate == L"N")
 	{
 		ACHAR * layerName = pBr->layer();

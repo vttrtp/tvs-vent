@@ -41,7 +41,7 @@ STDMETHODIMP CTVSPropertyPositionDyn::IsPropertyEnabled (IUnknown *pUnk, BOOL *p
 	if ( pbEnabled == NULL )
 		return (E_POINTER) ;
 	// TODO: add your code here (and comment the line below)
-	*pbEnabled = checkEnabled();
+	*pbEnabled = checkEnabled(pUnk);
 
 	return (S_OK) ;
 }

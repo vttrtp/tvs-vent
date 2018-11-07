@@ -90,7 +90,7 @@ bool XRecordXdataHelper::addXdataApp(const AcDbObjectId &objectId, const ACHAR *
 	//open object
 	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
 	if (pObject.openStatus() != Acad::eOk) return false;
-
+	
 	//add resbuf to xdata
 	resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, paramName, AcDb::kDwgNull);
 

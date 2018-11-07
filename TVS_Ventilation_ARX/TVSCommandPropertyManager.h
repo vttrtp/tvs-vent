@@ -1,7 +1,7 @@
 #pragma once
-#include "TVS_Command.h"
+#include "TVSCommand.h"
 class TVSCommandPropertyManager :
-	public TVS_Command
+	public TVSCommand
 {
 public:
 	TVSCommandPropertyManager();

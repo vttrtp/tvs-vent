@@ -28,11 +28,11 @@
 #include "Func.h"
 #include "tdbl.h"
 
-#include "PipeSizeDiallog.h"
-#include "hangeZdg.h"
+#include "dgPipeSize.h"
+#include "dgChangeZ.h"
 #include "MSExcel.h"	
 #include "HeatFloor.h"
-#include "BLCKMNGRDLG.h"
+#include "dgBlockManager.h"
 //#import "acax21ENU.tlb" 
 #include <rxmfcapi.h>
 #include <axpnt3d.h>
@@ -43,12 +43,16 @@
 #include <TVS_Connector.h>
 
 #include "TVSController.h"
+#include "MleaderController.h"
 #include "PropertyAdmin.h"
 
 #include "TVSLeadCommand.h"
-#include "TVS_Lead_Recalculate.h"
+#include "TVSCommandLeadRecalculate.h"
 #include "TVSCommandPropertyManager.h"
-
+#include "TVSCommandAttributesToProperties.h"
+#include "TVSCommandAddProperties.h"
+#include "TVSCommandExcelSpecification.h"
+#include "TVSCommandSpecification.h"
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("TVS")
 #define dCONTINUE 0
@@ -108,7 +112,8 @@ public:
 		AcRx::AppRetCode retCode = AcRxArxApp::On_kLoadDwgMsg(pkt);
 
 		// register apps
-		TVSController::get()->mLeaderController.registerApp();
+		MleaderController mctrl;
+			mctrl.registerApp();
 		TVSController::get()->tvsPropertyController.registerApp();
 
 		return (retCode);
@@ -149,13 +154,13 @@ public:
 
 	static void Ventilation_ARXTVS_LEAD(void)
 	{
-		TVS_Lead_Command cmnd;
+		TVSCommandLead cmnd;
 		cmnd.execute();
 	}
 
 	static void Ventilation_ARXTVS_LEAD_Recalculate(void)
 	{
-		TVS_Lead_Recalculate cmnd;
+		TVSCommandLeadRecalculate cmnd;
 		cmnd.execute();
 	}
 
@@ -166,7 +171,29 @@ public:
 		cmnd.execute();
 	}
 
+	static void Ventilation_ARXTVS_AttributesToProps(void)
+	{
+		TVSCommandAttributesToProperties cmnd;
+		cmnd.execute();
+	}
 
+	static void Ventilation_ARXTVS_AddProperty(void)
+	{
+		TVSCommandAddProperties cmnd;
+		cmnd.execute();
+	}
+
+	static void Ventilation_ARXTVS_ExcelSpecification(void)
+	{
+		TVSCommandExcelSpecification cmnd;
+		cmnd.execute();
+	}
+
+	static void Ventilation_ARXTVS_Specification(void)
+	{
+		TVSCommandSpecification cmnd;
+		cmnd.execute();
+	}
 
 
 
@@ -990,7 +1017,7 @@ public:
 		// 		if (globSizeB==0) globRound=true;
 		// 		else globRound=false;
 
-		PipeSizeDiallog dg;
+		dgPipeSize dg;
 		a=dg.SizeA=globSizeA;
 		b=dg.SizeB=globSizeB;
 		dg.Flow=globalFlow;
@@ -1266,7 +1293,7 @@ public:
 	{
 		AcDbEntity * pEnt;
 		double startZ, nextZ, Axis;
-		changeZdg dg;
+		dgChangeZ dg;
 		startZ=globalElevMid;
 		nextZ=globalElevMid;
 		Axis=globalAxis;
@@ -2564,7 +2591,7 @@ public:
 	}
 
 	// - Ventilation_ARX.TVS_SPEC command (do not rename)
-	static void Ventilation_ARXTVS_Specification(void)
+	static void Ventilation_ARXTVS_SpecificationOld(void)
 	{
 		if(ActivationErrorMessage()!=pError_Ok) return;
 		ads_name sset, eName;
@@ -5173,7 +5200,7 @@ public:
 			//speclist.print();
 
 			CAcModuleResourceOverride resourceOverride;
-			BLCKMNGRDLG dlg;
+			dgBlockManager dlg;
 			dlg.blckList=specatrlist;
 			INT_PTR nRet = -1;
 			nRet=dlg.DoModal();
@@ -5209,7 +5236,7 @@ public:
 			//speclist.print();
 		
 			CAcModuleResourceOverride resourceOverride;
-			BLCKMNGRDLG dlg;
+			dgBlockManager dlg;
 			dlg.blckList=specatrlist;
 			INT_PTR nRet = -1;
 			nRet=dlg.DoModal();
@@ -5306,11 +5333,6 @@ public:
 
 				if(SPEC::getBlockName(pBlkRef,pName))
 				{
-
-
-
-
-
 					if (CheckAtt(pName,TagPos))
 					{
 						AddNewAtt(pName,TagPos);
@@ -5591,10 +5613,10 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 
 	//new
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_PropertyManager, TVS_PropertyManager, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
-
-
-
-
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AttributesToProps, TVS_AttributesToProps, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ExcelSpecification, TVS_ExcelSpecification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Specification, TVS_Specification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AddProperty, TVS_AddProperty, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
 
 
@@ -5613,7 +5635,7 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SPEC, TVS_SPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_BLCKMNGR, TVS_BLCKMNGR, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_EXCELSPEC, TVS_EXCELSPEC, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
-	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Specification, TVS_Specification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_SpecificationOld, TVS_SpecificationOld, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Flex, TVS_Flex, ACRX_CMD_TRANSPARENT, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Show, TVS_Show, ACRX_CMD_TRANSPARENT, NULL)

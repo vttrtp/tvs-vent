@@ -2,7 +2,7 @@
 #include "TVSCommandPropertyManager.h"
 #include "MleaderController.h"
 #include "TVSPropertySpec.h"
-#include "DLGTVSPropertyManager.h"
+#include "dgTVSPropertyManager.h"
 
 TVSCommandPropertyManager::TVSCommandPropertyManager()
 {
@@ -22,9 +22,8 @@ void TVSCommandPropertyManager::execute(void)
 	TVSPropertySpec spec;
 	spec.processSetOfObjects(sset);
 	spec.sort();
-	acutPrintf(L"rows %d", spec.rows.size());
 	if (spec.rows.size() > 0) {
-		DLGTVSPropertyManager dg;
+		dgTVSPropertyManager dg;
 		dg.propertySpec = spec;
 		dg.DoModal();
 	}

@@ -3,18 +3,18 @@
 #include "SPEC.h"
 #include <dbmleader.h>
 #include "Func.h"
-#include "mLeadPropertyDg.h"
+#include "dgMLeadProperty.h"
 #include "MleaderController.h"
-
+#include "TVSController.h"
 using namespace func;
 
-TVS_Lead_Command::TVS_Lead_Command(void)
+TVSCommandLead::TVSCommandLead(void)
 {
 
 }
 
 
-TVS_Lead_Command::~TVS_Lead_Command(void)
+TVSCommandLead::~TVSCommandLead(void)
 {
 }
 
@@ -22,7 +22,7 @@ TVS_Lead_Command::~TVS_Lead_Command(void)
 
 
 
-void TVS_Lead_Command::createMLeader(const CString &message, const AcGePoint3d &ptStart, const AcGePoint3d &ptEnd, const AcDbObjectId &id)
+void TVSCommandLead::createMLeader(const CString &message, const AcGePoint3d &ptStart, const AcGePoint3d &ptEnd, const AcDbObjectId &id)
 {
 
 	AcDbMText *mText=new AcDbMText();
@@ -91,13 +91,13 @@ void TVS_Lead_Command::createMLeader(const CString &message, const AcGePoint3d &
 
 }
 
-void TVS_Lead_Command::ShowLeadDlg()
+void TVSCommandLead::ShowLeadDlg()
 {
-	mLeadPropertyDg dg;
+	dgMLeadProperty dg;
 	dg.DoModal();
 }
 
-void TVS_Lead_Command::execute(void)
+void TVSCommandLead::execute(void)
  {
 // 	 AllocConsole();
 // 	 freopen("CONOUT$", "w", stdout);
@@ -150,68 +150,73 @@ void TVS_Lead_Command::execute(void)
 		pCut=asPnt3d(pt1);
 		{
 		if (acdbGetObjectId(id,vozd1)!=eOk) continue;
-		AcDbObjectPointer<AcDbEntity>pEnt1 (id, AcDb::kForRead);
 
-		
-		if (pEnt1.openStatus() == Acad::eOk)
+		if (TVSController::get()->tvsPropertyController.checkProperty(id)) {
+			ft = true;
+		}
 		{
-			TVS_Pipe * Pipi1;
-			if ((Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL)
+			AcDbObjectPointer<AcDbEntity>pEnt1(id, AcDb::kForRead);
+
+
+			if (pEnt1.openStatus() == Acad::eOk)
 			{
-				Line.set(Pipi1->FirstPoint, Pipi1->LastPoint);
-				pCut = Line.closestPointTo(pCut);
-				ft = true;
-				pstatus = 1;
-			}
+				TVS_Pipe * Pipi1;
+				if ((Pipi1 = TVS_Pipe::cast(pEnt1)) != NULL)
+				{
+					Line.set(Pipi1->FirstPoint, Pipi1->LastPoint);
+					pCut = Line.closestPointTo(pCut);
+					ft = true;
+					pstatus = 1;
+				}
 
-			TVS_TAP * Tapie;
-			if ((Tapie = TVS_TAP::cast(pEnt1)) != NULL)
-			{
-				pCut = Tapie->MiddlePoint;
-				ft = true;
-				pstatus = 2;
-			}
+				TVS_TAP * Tapie;
+				if ((Tapie = TVS_TAP::cast(pEnt1)) != NULL)
+				{
+					pCut = Tapie->MiddlePoint;
+					ft = true;
+					pstatus = 2;
+				}
 
-			TVS_WYE *wyie;
-			if ((wyie = TVS_WYE::cast(pEnt1)) != NULL)
-			{
-				Line.set(wyie->pA1, wyie->pA3);
-				pCut = Line.closestPointTo(pCut);
+				TVS_WYE *wyie;
+				if ((wyie = TVS_WYE::cast(pEnt1)) != NULL)
+				{
+					Line.set(wyie->pA1, wyie->pA3);
+					pCut = Line.closestPointTo(pCut);
 
-				ft = true;
-				pstatus = 3;
-			}
+					ft = true;
+					pstatus = 3;
+				}
 
-			TVS_TRANS * Transie;
-			if ((Transie = TVS_TRANS::cast(pEnt1)) != NULL)
-			{
-				Line.set(Transie->FirstPoint, Transie->LastPoint);
-				pCut = Line.closestPointTo(pCut);
+				TVS_TRANS * Transie;
+				if ((Transie = TVS_TRANS::cast(pEnt1)) != NULL)
+				{
+					Line.set(Transie->FirstPoint, Transie->LastPoint);
+					pCut = Line.closestPointTo(pCut);
 
-				ft = true;
-				pstatus = 4;
-			}
+					ft = true;
+					pstatus = 4;
+				}
 
-			AcDbBlockReference * br;
-			if ((br = AcDbBlockReference::cast(pEnt1)) != NULL)
-			{
-
-				CString atrType;
-				if (mCtrl.GetAtt(br, TagType, atrType) && mCtrl.GetAtt(br, TagSize, atrType))
+				AcDbBlockReference * br;
+				if ((br = AcDbBlockReference::cast(pEnt1)) != NULL)
 				{
 
+					CString atrType;
+					if (mCtrl.GetAtt(br, TagType, atrType) && mCtrl.GetAtt(br, TagSize, atrType))
+					{
 
-					pCut = AcGePoint3d(asPnt3d(pt1));
-					ft = true;
-					pstatus = 5;
+
+						pCut = AcGePoint3d(asPnt3d(pt1));
+						ft = true;
+						pstatus = 5;
+					}
 				}
+
 			}
-
+			else {
+				acutPrintf(_T("\nОбьект заблокирован"));
+			}
 		}
-		else {
-			acutPrintf(_T("\nОбьект заблокирован"));
-		}
-
 		if (ft) {
 
 			mCtrl.getStringMessage(id,Settings::get()->mLeader.getFormatForEntity(id), resultMessage);

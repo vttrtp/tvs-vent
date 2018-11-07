@@ -17,23 +17,18 @@ public:
 [Название Атрибута]-Значение\r\n\ Аттрибута (Для блоков)\r\n\
 ";
 		pipeLeader =L"[D]";
-		blockLeader = L"[ТИП]-[РАЗМЕР]";
+		blockLeader = L"[Тип]-[Размер]";
 	
 	};
 
 	CString & getFormatForEntity(const AcDbObjectId &id) {
 
 		AcDbObjectPointer<AcDbEntity>pEnt(id, AcDb::kForRead);
-
-		AcDbBlockReference * br;
-		if ((br = AcDbBlockReference::cast(pEnt)) != NULL)
-			return blockLeader;
-
 		TVS_Entity * ent;
 		if ((ent = TVS_Entity::cast(pEnt)) != NULL)
 			return pipeLeader;
 
-		return CString(L"");
+			return blockLeader;
 	}
 	virtual ~MLeaderSettings(void){};
 	CString  instructionMessage;
