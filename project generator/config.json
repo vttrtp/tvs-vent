@@ -1,0 +1,52 @@
+{
+"project_relative_folder":"../",
+"name_replace_value" : "2015-2016",
+"files" : [
+    {
+        "name":"Configurations2015-2016.targets",
+        "usingReplace" : true
+    },
+    {
+        "name":"TVS_Ventilation 2015-2016.sln",
+        "usingReplace" : true
+    },
+    {
+        "name":"TVS_Ventilation_ARX/Autodesk.arx-2015-2016.props",
+        "usingReplace" : true
+    },
+    {
+        "name":"TVS_Ventilation_ARX/TVS_Ventilation_ARX2015-2016.vcxproj",
+        "usingReplace" : true
+    },
+    {
+        "name":"TVS_Ventilation_ARX/TVS_Ventilation_ARX2015-2016.vcxproj.filters",
+        "usingReplace" : true
+    },
+  
+
+    {
+        "name":"TVS_Ventilation_DBX/Autodesk.arx-2015-2016.props",
+        "usingReplace" : true
+    },
+  
+    {
+        "name":"TVS_Ventilation_DBX/TVS_Ventilation_DBX2015-2016.vcxproj",
+        "usingReplace" : true
+    },
+  
+    {
+        "name":"TVS_Ventilation_DBX/TVS_Ventilation_DBX2015-2016.vcxproj.filters",
+        "usingReplace" : true
+    },
+
+    {
+        "name":"TVS_Ventilation_ARX/TVS_Ventilation_ARX.idl",
+        "usingReplace" : false
+    },
+    {
+        "name":"TVS_Ventilation_DBX/TVS_Ventilation_DBX.idl",
+        "usingReplace" : false
+    }
+  
+]
+}

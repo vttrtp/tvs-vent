@@ -1,0 +1,12 @@
+{
+    "replace_name" : "2015-2016",
+    "replace_strings" : 
+    {
+        "acdb20.lib":"acdb20.lib",
+        "axdb20enu.tlb" : "axdb20enu.tlb",
+        "axdb21enu.tlb" : "axdb20enu.tlb",
+        "axdb22enu.tlb" : "axdb20enu.tlb",
+        "axdb23enu.tlb" : "axdb20enu.tlb",
+        "axdb24enu.tlb" : "axdb20enu.tlb"
+    }
+}

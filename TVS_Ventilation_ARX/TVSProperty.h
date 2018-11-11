@@ -43,6 +43,7 @@ public:
 	double count;
 	double mass;
 	CString note;
+	bool isTvsEnt;
 	virtual ~TVSProperty();
 };
 

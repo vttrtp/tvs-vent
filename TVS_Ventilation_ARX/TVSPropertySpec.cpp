@@ -69,21 +69,24 @@ void TVSPropertySpec::addRow(const TVSProperty &props, const AcDbObjectId &objId
 
 bool compareRows(const TVSPropertySpecRow &a, const TVSPropertySpecRow &b)
 {
-	if (a.tvsPropery.position < b.tvsPropery.position)	return true;
-	if (a.tvsPropery.name < b.tvsPropery.name) return true;
-	if (a.tvsPropery.type < b.tvsPropery.type) return true;
-	if (a.tvsPropery.size < b.tvsPropery.size) return true;
-	if (a.tvsPropery.article < b.tvsPropery.article) return true;
-	if (a.tvsPropery.manufacturer < b.tvsPropery.manufacturer) return true;
-	if (a.tvsPropery.units < b.tvsPropery.units) return true;
-	if (a.tvsPropery.mass < b.tvsPropery.mass) return true;
-	if (a.tvsPropery.note < b.tvsPropery.note) return true;
+	
+	if(a.tvsPropery.isTvsEnt!= b.tvsPropery.isTvsEnt)	return (a.tvsPropery.isTvsEnt < b.tvsPropery.isTvsEnt);
+
+	if (a.tvsPropery.position.Compare(b.tvsPropery.position) != 0)	return (a.tvsPropery.position.Compare(b.tvsPropery.position)> 0);
+	if (a.tvsPropery.name.Compare(b.tvsPropery.name)!= 0) return (a.tvsPropery.name.Compare(b.tvsPropery.name)> 0);
+ 	if (a.tvsPropery.type.Compare(b.tvsPropery.type) != 0) return (a.tvsPropery.type.Compare(b.tvsPropery.type)> 0);
+ 	if (a.tvsPropery.size.Compare(b.tvsPropery.size) != 0) return (a.tvsPropery.size.Compare(b.tvsPropery.size)> 0);
+	if (a.tvsPropery.article.Compare(b.tvsPropery.article) != 0) return (a.tvsPropery.article.Compare(b.tvsPropery.article)> 0);
+	if (a.tvsPropery.manufacturer.Compare(b.tvsPropery.manufacturer) != 0) return (a.tvsPropery.manufacturer.Compare(b.tvsPropery.manufacturer)> 0);
+	if (a.tvsPropery.units.Compare(b.tvsPropery.units) != 0) return (a.tvsPropery.units.Compare(b.tvsPropery.units)> 0);
+	if (a.tvsPropery.mass != b.tvsPropery.mass) return (a.tvsPropery.mass > b.tvsPropery.mass);
+	if (a.tvsPropery.note.Compare(b.tvsPropery.note)!= 0) return (a.tvsPropery.note.Compare(b.tvsPropery.note)> 0);
 	return false;
 }
 
 void TVSPropertySpec::sort()
 {
 	rows.sort([](const TVSPropertySpecRow &a, const TVSPropertySpecRow &b) {
-		return compareRows(a, b);
+		return !compareRows(a, b);
 	});
 }

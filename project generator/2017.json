@@ -1,0 +1,16 @@
+{
+    "replace_name" : "2017",
+    "replace_strings" : 
+    {
+        "2015-2016":"2017",
+        "AutoCAD 2016":"AutoCAD 2017",
+        "20.0" : "21.0",
+        "v110" : "v140",
+        "acdb20.lib":"acdb21.lib",
+        "axdb20enu.tlb" : "axdb21enu.tlb",
+        "axdb21enu.tlb" : "axdb21enu.tlb",
+        "axdb22enu.tlb" : "axdb21enu.tlb",
+        "axdb23enu.tlb" : "axdb21enu.tlb",
+        "axdb24enu.tlb" : "axdb21enu.tlb"
+    }
+}

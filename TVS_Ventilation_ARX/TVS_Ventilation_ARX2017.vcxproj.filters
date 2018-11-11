@@ -127,6 +127,9 @@
     <ClCompile Include="TVSPropertySpec.cpp">
       <Filter>models\TVSPropertySpec</Filter>
     </ClCompile>
+    <ClCompile Include="TVSPropertySpecController.cpp">
+      <Filter>controllers\TVSPropertySpec</Filter>
+    </ClCompile>
     <ClCompile Include="TVSPropertySpecRow.cpp">
       <Filter>models\TVSPropertySpec</Filter>
     </ClCompile>
@@ -318,6 +321,9 @@
     <ClInclude Include="TVSPropertySpec.h">
       <Filter>models\TVSPropertySpec</Filter>
     </ClInclude>
+    <ClInclude Include="TVSPropertySpecController.h">
+      <Filter>controllers\TVSPropertySpec</Filter>
+    </ClInclude>
     <ClInclude Include="TVSPropertySpecRow.h">
       <Filter>models\TVSPropertySpec</Filter>
     </ClInclude>
@@ -462,6 +468,9 @@
     </Filter>
     <Filter Include="models\TVSPropertySpec">
       <UniqueIdentifier>{da5e2ce4-82ad-4484-960b-5e8a665a9e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controllers\TVSPropertySpec">
+      <UniqueIdentifier>{d5b677bf-1e01-4825-afae-3e452540ebd6}</UniqueIdentifier>
     </Filter>
     <Filter Include="old\grid">
       <UniqueIdentifier>{7051f7ce-c0a9-472e-a6f6-2635802628d7}</UniqueIdentifier>

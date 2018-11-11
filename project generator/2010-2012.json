@@ -1,0 +1,16 @@
+{
+    "replace_name" : "2010-2012",
+    "replace_strings" : 
+    {
+        "2015-2016":"2010-2012",
+        "AutoCAD 2016":"AutoCAD 2010",
+        "20.0" : "18.0",
+        "v110" : "v110",
+        "acdb20.lib":"acdb18.lib",
+        "axdb20enu.tlb" : "axdb18enu.tlb",
+        "axdb21enu.tlb" : "axdb18enu.tlb",
+        "axdb22enu.tlb" : "axdb18enu.tlb",
+        "axdb23enu.tlb" : "axdb18enu.tlb",
+        "axdb24enu.tlb" : "axdb18enu.tlb"
+    }
+}

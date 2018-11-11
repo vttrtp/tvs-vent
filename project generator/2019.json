@@ -1,0 +1,16 @@
+{
+    "replace_name" : "2019",
+    "replace_strings" : 
+    {
+        "2015-2016":"2019",
+        "AutoCAD 2016":"AutoCAD 2019",
+        "20.0" : "23.0",
+        "v110" : "v141",
+        "acdb20.lib":"acdb23.lib",
+        "axdb20enu.tlb" : "axdb23enu.tlb",
+        "axdb21enu.tlb" : "axdb23enu.tlb",
+        "axdb22enu.tlb" : "axdb23enu.tlb",
+        "axdb23enu.tlb" : "axdb23enu.tlb",
+        "axdb24enu.tlb" : "axdb23enu.tlb"
+    }
+}

@@ -165,6 +165,15 @@ bool TVSPropertyController:: getProperty(const AcDbObjectId &objectId, TVSProper
 {
 	if (checkProperty(objectId))
 	{
+		{
+			TVS_Entity *ent;
+			AcDbObjectPointer<AcDbObject> pObj(objectId, AcDb::kForRead);
+			if ((ent = TVS_Entity::cast(pObj)) != NULL) {
+				{
+					tvsProperty.isTvsEnt = true;
+				}
+			}
+		}
 	getPosition(objectId, tvsProperty.position);
 	getName(objectId, tvsProperty.name);
 	getType(objectId, tvsProperty.type);

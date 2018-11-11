@@ -60,7 +60,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-openssl>
@@ -71,7 +71,7 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ACADVER)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-curl>static</Linkage-curl>
@@ -79,7 +79,7 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ACADVER)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <Linkage-curl>
     </Linkage-curl>
@@ -88,7 +88,7 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ACADVER)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-curl>static</Linkage-curl>
@@ -199,7 +199,6 @@
     <ClCompile Include="TVSPropertyNoteDyn.cpp" />
     <ClCompile Include="TVSPropertyPositionDyn.cpp" />
     <ClCompile Include="TVSPropertySizeDyn.cpp" />
-    <ClCompile Include="TVSPropertySpecController.cpp" />
     <ClCompile Include="TVSPropertySpecRow.cpp" />
     <ClCompile Include="TVSPropertyTypeDyn.cpp" />
     <ClCompile Include="TVSPropertyUnitsDyn.cpp" />
@@ -265,7 +264,6 @@
     <ClInclude Include="TVSPropertyPositionDyn.h" />
     <ClInclude Include="TVSPropertySettings.h" />
     <ClInclude Include="TVSPropertySizeDyn.h" />
-    <ClInclude Include="TVSPropertySpecController.h" />
     <ClInclude Include="TVSPropertySpecRow.h" />
     <ClInclude Include="TVSPropertyTypeDyn.h" />
     <ClInclude Include="TVSPropertyUnitsDyn.h" />

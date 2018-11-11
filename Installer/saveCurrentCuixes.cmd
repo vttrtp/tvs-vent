@@ -1,0 +1,2 @@
+COPY "c:\users\vitaut\appdata\roaming\autodesk\autocad 2016\r20.1\rus\support\tvs_vent.cuix" "C:\projects\tvs_ventilation\Installer\TVS_VENT\TVS_VENT.cuix"
+COPY "c:\users\vitaut\appdata\roaming\autodesk\autocad 2016\r20.1\rus\support\tvs_tools.cuix" "C:\projects\tvs_ventilation\Installer\TVS_TOOLS\TVS_TOOLS.cuix"

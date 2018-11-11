@@ -183,13 +183,13 @@ public:
 		cmnd.execute();
 	}
 
-	static void Ventilation_ARXTVS_ExcelSpecification(void)
+	static void Ventilation_ARXTVS_ExcelSp(void)
 	{
 		TVSCommandExcelSpecification cmnd;
 		cmnd.execute();
 	}
 
-	static void Ventilation_ARXTVS_Specification(void)
+	static void Ventilation_ARXTVS_Sp(void)
 	{
 		TVSCommandSpecification cmnd;
 		cmnd.execute();
@@ -5614,8 +5614,8 @@ IMPLEMENT_ARX_ENTRYPOINT(CTVS_Ventilation_ARXApp)
 	//new
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_PropertyManager, TVS_PropertyManager, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AttributesToProps, TVS_AttributesToProps, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
-	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ExcelSpecification, TVS_ExcelSpecification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
-	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Specification, TVS_Specification, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_ExcelSp, TVS_ExcelSp, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
+	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_Sp, TVS_Sp, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 	ACED_ARXCOMMAND_ENTRY_AUTO(CTVS_Ventilation_ARXApp, Ventilation_ARX, TVS_AddProperty, TVS_AddProperty, ACRX_CMD_TRANSPARENT | ACRX_CMD_USEPICKSET, NULL)
 
 

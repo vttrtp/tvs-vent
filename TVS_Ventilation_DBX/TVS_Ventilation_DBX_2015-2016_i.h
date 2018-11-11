@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0595 */
-/* at Mon Nov 12 00:15:35 2018
+ /* File created by MIDL compiler version 8.00.0603 */
+/* at Wed Nov 07 21:33:41 2018
  */
-/* Compiler settings for TVS_Ventilation_DBX.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
+/* Compiler settings for TVS_Ventilation_DBX_2015-2016.idl:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -32,8 +32,8 @@
 #endif // __RPCNDR_H_VERSION__
 
 
-#ifndef __TVS_Ventilation_DBX_i_h__
-#define __TVS_Ventilation_DBX_i_h__
+#ifndef __TVS_Ventilation_DBX_20152D2016_i_h__
+#define __TVS_Ventilation_DBX_20152D2016_i_h__
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
