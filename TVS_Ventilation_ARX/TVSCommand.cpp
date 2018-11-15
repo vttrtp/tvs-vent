@@ -6,7 +6,6 @@ TVSCommand::TVSCommand(void)
 {
 }
 
-
 TVSCommand::~TVSCommand(void)
 {
 }

@@ -7,6 +7,5 @@ public:
 	TVSCommandAddProperties();
 	virtual ~TVSCommandAddProperties();
 	virtual void processId(const AcDbObjectId &objId);
-	//virtual void execute(void);
 };
 

@@ -8,4 +8,3 @@ public:
 	virtual ~TVSCommandPropertyManager();
 	virtual void execute(void);
 };
-

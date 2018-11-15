@@ -8,4 +8,3 @@ public:
 	virtual ~TVSCommandLeadRecalculate();
 	virtual void execute(void);
 };
-

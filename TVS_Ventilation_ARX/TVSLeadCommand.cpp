@@ -36,10 +36,6 @@ void TVSCommandLead::createMLeader(const CString &message, const AcGePoint3d &pt
 		vec = AcGeVector3d(0, -1, 0);
 	}
 
-
-
-	//mText->getColumnHeight(0,texth);
-	//mText->getColumnWidth(textw);
 	mText->setLocation(ptEnd);
 
 	mText->setColorIndex(AcDb::kByLayer);
