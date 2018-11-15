@@ -37,32 +37,32 @@
 
 
 
-static double globSizeA=150;
-static double globSizeB=150;
-static bool globRound=false;
-static bool globalWipeout=false;
-static bool globalGrani=false;
-static bool global1D=false;
-static double ftSizeB=100;
-static double ftSizeroundA=160;
-static double ftLengthp=150;
-static int ftTransType=1;
-static int globalMlead=1;
-static int globalRadiusTypeRound=RadiusTypeRound_RadiusSpecific;
-static int globalRadiusTypeRect=RadiusTypeRect_RadiusConstant;
-static int globalTypeRoundTap=1;
-static int globalTapForm=Form_Direct;
-static int globalTransType=0;
-static double globalTapRadiusVariableParameter=1;
-static double globalTapRadiusConst=150;
-static double globalFlow=0;
-static double globalLengthTr=300;
-static double globalLengthW=50;
-static double globalElevMid=0;
-static double globalElev=globalElevdown;
-static double globalAxis=90;
-static int globalDuctType=DuctTypeStill;
-static double globalWipeoutLength=50;
+static double globSizeA = 150;
+static double globSizeB = 150;
+static bool globRound = false;
+static bool globalWipeout = false;
+static bool globalGrani = false;
+static bool global1D = false;
+static double ftSizeB = 100;
+static double ftSizeroundA = 160;
+static double ftLengthp = 150;
+static int ftTransType = 1;
+static int globalMlead = 1;
+static int globalRadiusTypeRound = RadiusTypeRound_RadiusSpecific;
+static int globalRadiusTypeRect = RadiusTypeRect_RadiusConstant;
+static int globalTypeRoundTap = 1;
+static int globalTapForm = Form_Direct;
+static int globalTransType = 0;
+static double globalTapRadiusVariableParameter = 1;
+static double globalTapRadiusConst = 150;
+static double globalFlow = 0;
+static double globalLengthTr = 300;
+static double globalLengthW = 50;
+static double globalElevMid = 0;
+static double globalElev = globalElevdown;
+static double globalAxis = 90;
+static int globalDuctType = DuctTypeStill;
+static double globalWipeoutLength = 50;
 
 class Settings
 {

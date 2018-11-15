@@ -85,20 +85,20 @@
 #define IDC_DuctFlex 1041
 //-----------------------------------------------------------------------------
 class dgPipeSize : public CAdUiBaseDialog {
-	DECLARE_DYNAMIC (dgPipeSize)
+	DECLARE_DYNAMIC(dgPipeSize)
 
 public:
-	dgPipeSize (CWnd *pParent =NULL, HINSTANCE hInstance =NULL) ;
+	dgPipeSize(CWnd *pParent = NULL, HINSTANCE hInstance = NULL);
 
-	enum { IDD = IDD_PIPESIZEDIALLOG} ;
+	enum { IDD = IDD_PIPESIZEDIALLOG };
 
 protected:
-	virtual void DoDataExchange (CDataExchange *pDX) ;
-	afx_msg LRESULT OnAcadKeepFocus (WPARAM, LPARAM) ;
+	virtual void DoDataExchange(CDataExchange *pDX);
+	afx_msg LRESULT OnAcadKeepFocus(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 public:
-	
+
 public:
 	CEdit fSizeA;
 	CEdit fSizeB;
@@ -195,7 +195,7 @@ public:
 	bool Twye;
 	bool Ttrans;
 	bool Ttap;
-	int won, woff,gon,goff,d1on,d1off;
+	int won, woff, gon, goff, d1on, d1off;
 
 
 	int iTapForm;
@@ -210,7 +210,7 @@ public:
 	CButton fDuctFlex;
 	BOOL DuctFlex;
 	BOOL bDuctFlex;
-//	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	//	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
@@ -245,4 +245,4 @@ public:
 	afx_msg void ChangeDuctFlex();
 
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
-} ;
+};

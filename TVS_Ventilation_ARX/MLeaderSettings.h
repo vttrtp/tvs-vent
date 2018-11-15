@@ -3,11 +3,11 @@
 #include "TVS_Entity.h"
 #define MLeaderID _T("TVS_MLeaderID")
 #define MLeaderFormat _T("TVS_MLeaderFormat")
-class MLeaderSettings 
+class MLeaderSettings
 {
 public:
-	MLeaderSettings(void){
-		instructionMessage=L"\
+	MLeaderSettings(void) {
+		instructionMessage = L"\
 [L]-Расход м3/ч\r\n\
 [V]-Скорость м/с\r\n\
 [D]-Размер мм\r\n\
@@ -16,9 +16,9 @@ public:
 [N]-Имя слоя\r\n\
 [Название Атрибута]-Значение\r\n\ Аттрибута (Для блоков)\r\n\
 ";
-		pipeLeader =L"[D]";
+		pipeLeader = L"[D]";
 		blockLeader = L"[Тип]-[Размер]";
-	
+
 	};
 
 	CString & getFormatForEntity(const AcDbObjectId &id) {
@@ -28,9 +28,9 @@ public:
 		if ((ent = TVS_Entity::cast(pEnt)) != NULL)
 			return pipeLeader;
 
-			return blockLeader;
+		return blockLeader;
 	}
-	virtual ~MLeaderSettings(void){};
+	virtual ~MLeaderSettings(void) {};
 	CString  instructionMessage;
 	CString  pipeLeader;
 	CString  blockLeader;

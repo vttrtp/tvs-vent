@@ -62,6 +62,6 @@ public:
 	bool setNote(const AcDbObjectId &objectId, const CString &val);
 	bool getNote(const AcDbObjectId &objectId, CString &val);
 
-	
+
 };
 

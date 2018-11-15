@@ -27,19 +27,19 @@
 #include "dgChangeZ.h"
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_DYNAMIC (dgChangeZ, CAdUiBaseDialog)
+IMPLEMENT_DYNAMIC(dgChangeZ, CAdUiBaseDialog)
 
 BEGIN_MESSAGE_MAP(dgChangeZ, CAdUiBaseDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, OnAcadKeepFocus)
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
-dgChangeZ::dgChangeZ (CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog (dgChangeZ::IDD, pParent, hInstance) {
+dgChangeZ::dgChangeZ(CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog(dgChangeZ::IDD, pParent, hInstance) {
 }
 
 //-----------------------------------------------------------------------------
-void dgChangeZ::DoDataExchange (CDataExchange *pDX) {
-	CAdUiBaseDialog::DoDataExchange (pDX) ;
+void dgChangeZ::DoDataExchange(CDataExchange *pDX) {
+	CAdUiBaseDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_StartZ, startZ);
 	DDX_Text(pDX, IDC_NextZ, nextZ);
 	DDX_Text(pDX, IDC_Axis, Axis);
@@ -48,6 +48,6 @@ void dgChangeZ::DoDataExchange (CDataExchange *pDX) {
 //-----------------------------------------------------------------------------
 //----- Needed for modeless dialogs to keep focus.
 //----- Return FALSE to not keep the focus, return TRUE to keep the focus
-LRESULT dgChangeZ::OnAcadKeepFocus (WPARAM, LPARAM) {
-	return (TRUE) ;
+LRESULT dgChangeZ::OnAcadKeepFocus(WPARAM, LPARAM) {
+	return (TRUE);
 }

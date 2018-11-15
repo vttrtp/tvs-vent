@@ -9,10 +9,10 @@ XRecordXdataHelper::XRecordXdataHelper()
 bool XRecordXdataHelper::setXdataBuf(const AcDbObjectId &objectId, const  resbuf *rb)
 {
 	//open object
-	
+
 	AcDbObjectPointer<AcDbObject> pobj(objectId, AcDb::kForWrite);
 	if (pobj.openStatus() != Acad::eOk) return false;
-	
+
 	//set object format
 	pobj->setXData(rb);
 	return true;
@@ -75,10 +75,10 @@ bool XRecordXdataHelper::checkXdataApp(const AcDbObjectId &objectId, const ACHAR
 	//get resbuf
 	resbuf *xdata = pObject->xData(paramName);
 
-	if (xdata!=NULL)
+	if (xdata != NULL)
 	{
 		return true;
-	} 
+	}
 	else
 	{
 		return false;
@@ -90,7 +90,7 @@ bool XRecordXdataHelper::addXdataApp(const AcDbObjectId &objectId, const ACHAR *
 	//open object
 	AcDbObjectPointer<AcDbObject> pObject(objectId, AcDb::kForWrite);
 	if (pObject.openStatus() != Acad::eOk) return false;
-	
+
 	//add resbuf to xdata
 	resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, paramName, AcDb::kDwgNull);
 

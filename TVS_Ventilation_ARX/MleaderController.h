@@ -3,7 +3,7 @@
 #include "TVS_Entity.h"
 #include "xRecordXdataHelper.h"
 
-class MleaderController:
+class MleaderController :
 	protected XRecordXdataHelper
 {
 public:
@@ -14,9 +14,9 @@ public:
 	bool getObjectId(const AcDbObjectId &MLeaderId, AcDbObjectId &objectId);
 	bool clearMleader(const AcDbObjectId &MLeaderId);
 	bool setObjectId(const AcDbObjectId &MLeaderId, const AcDbObjectId &objectId);
-	
+
 	//Format xData
-	bool getFormat(const AcDbObjectId &MLeaderId,  CString &format);
+	bool getFormat(const AcDbObjectId &MLeaderId, CString &format);
 	bool setFormat(const AcDbObjectId &MLeaderId, const CString &format);
 
 	//recalculate mleader
@@ -33,6 +33,6 @@ public:
 
 	~MleaderController();
 private:
-	
+
 };
 

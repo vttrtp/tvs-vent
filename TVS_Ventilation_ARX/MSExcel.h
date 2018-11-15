@@ -8,14 +8,14 @@ protected:
 	IDispatch*  m_pBooks;
 	IDispatch*	m_pActiveBook;
 private:
-	HRESULT Initialize(bool bVisible=true);
+	HRESULT Initialize(bool bVisible = true);
 public:
 	CMSExcel(void);
 	~CMSExcel(void);
-	HRESULT SetVisible(bool bVisible=true);
-	HRESULT NewExcelBook(bool bVisible=true);
-	HRESULT OpenExcelBook(LPCTSTR szFilename, bool bVisible=true);
-	HRESULT SaveAs(LPCTSTR szFilename, int nSaveAs=40);
+	HRESULT SetVisible(bool bVisible = true);
+	HRESULT NewExcelBook(bool bVisible = true);
+	HRESULT OpenExcelBook(LPCTSTR szFilename, bool bVisible = true);
+	HRESULT SaveAs(LPCTSTR szFilename, int nSaveAs = 40);
 	HRESULT ProtectExcelWorkbook(LPCTSTR szPassword);
 	HRESULT UnProtectExcelWorkbook(LPCTSTR szPassword);
 	HRESULT ProtectExcelSheet(int nSheetNo, LPCTSTR szPassword);
@@ -25,7 +25,7 @@ public:
 	HRESULT GetExcelValue(LPCTSTR szCell, CString &sValue);
 	HRESULT SetExcelBackgroundColor(LPCTSTR szRange, COLORREF crColor, int nPattern);
 	HRESULT SetExcelFont(LPCTSTR szRange, LPCTSTR szName, int nSize, COLORREF crColor, bool bBold, bool bItalic);
-	HRESULT SetExcelValue(LPCTSTR szRange,LPCTSTR szValue,bool bAutoFit, int nAlignment);
+	HRESULT SetExcelValue(LPCTSTR szRange, LPCTSTR szValue, bool bAutoFit, int nAlignment);
 	HRESULT SetExcelBorder(LPCTSTR szRange, int nStyle);
 	HRESULT MergeExcelCells(LPCTSTR szRange);
 	HRESULT AutoFitExcelColumn(LPCTSTR szColumn);
@@ -33,7 +33,7 @@ public:
 	HRESULT MoveCursor(int nDirection);
 	HRESULT GetActiveCell(int &nRow, int &nCol);
 	HRESULT SetActiveCellText(LPCTSTR szText);
-	HRESULT printExelText( const ACHAR *pColumn,long pRow, const ACHAR *pText);
+	HRESULT printExelText(const ACHAR *pColumn, long pRow, const ACHAR *pText);
 	HRESULT Quit();
 	HRESULT Quit2();
 };

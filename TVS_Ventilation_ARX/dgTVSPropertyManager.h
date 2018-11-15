@@ -32,18 +32,18 @@
 
 //-----------------------------------------------------------------------------
 class dgTVSPropertyManager : public CAdUiBaseDialog {
-	DECLARE_DYNAMIC (dgTVSPropertyManager)
+	DECLARE_DYNAMIC(dgTVSPropertyManager)
 
 public:
-	dgTVSPropertyManager (CWnd *pParent =NULL, HINSTANCE hInstance =NULL) ;
+	dgTVSPropertyManager(CWnd *pParent = NULL, HINSTANCE hInstance = NULL);
 
 	enum {
 		IDD = IDD_TVSPROPERTYMANAGER
 	};
 
 protected:
-	virtual void DoDataExchange (CDataExchange *pDX) ;
-	afx_msg LRESULT OnAcadKeepFocus (WPARAM, LPARAM) ;
+	virtual void DoDataExchange(CDataExchange *pDX);
+	afx_msg LRESULT OnAcadKeepFocus(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -51,4 +51,4 @@ public:
 	TVSPropertySpec propertySpec;
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnBnClickedOk();
-} ;
+};

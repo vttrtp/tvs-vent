@@ -95,6 +95,8 @@ using namespace ATL;
 //- Declare it as an extern here so that it becomes available in all modules
 extern AcApDataManager<CDocData> DocVars;
 
+#define debug_print(fmt, ...) \
+            do { if (DEBUG) acutPrintf( fmt); } while (0)
 #pragma pack (pop)
 
 

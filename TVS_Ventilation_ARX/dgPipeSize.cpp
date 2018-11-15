@@ -27,11 +27,11 @@
 #include "dgPipeSize.h"
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_DYNAMIC (dgPipeSize, CAdUiBaseDialog)
+IMPLEMENT_DYNAMIC(dgPipeSize, CAdUiBaseDialog)
 
 BEGIN_MESSAGE_MAP(dgPipeSize, CAdUiBaseDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, OnAcadKeepFocus)
-//		ON_WM_SHOWWINDOW()
+	//		ON_WM_SHOWWINDOW()
 	ON_BN_CLICKED(IDOK, &dgPipeSize::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &dgPipeSize::OnBnClickedCancel)
 
@@ -63,14 +63,14 @@ BEGIN_MESSAGE_MAP(dgPipeSize, CAdUiBaseDialog)
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
-dgPipeSize::dgPipeSize (CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog (dgPipeSize::IDD, pParent, hInstance) , SizeA(0)
-	, SizeB(0)
+dgPipeSize::dgPipeSize(CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog(dgPipeSize::IDD, pParent, hInstance), SizeA(0)
+, SizeB(0)
 {
 }
 
 //-----------------------------------------------------------------------------
-void dgPipeSize::DoDataExchange (CDataExchange *pDX) {
-	CAdUiBaseDialog::DoDataExchange (pDX) ;
+void dgPipeSize::DoDataExchange(CDataExchange *pDX) {
+	CAdUiBaseDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_SizeA, fSizeA);
 	DDX_Control(pDX, IDC_SizeB, fSizeB);
 	DDX_Control(pDX, IDC_Flow, fFlow);
@@ -159,9 +159,9 @@ void dgPipeSize::DoDataExchange (CDataExchange *pDX) {
 //-----------------------------------------------------------------------------
 //----- Needed for modeless dialogs to keep focus.
 //----- Return FALSE to not keep the focus, return TRUE to keep the focus
-LRESULT dgPipeSize::OnAcadKeepFocus (WPARAM, LPARAM) {
+LRESULT dgPipeSize::OnAcadKeepFocus(WPARAM, LPARAM) {
 
-	return (TRUE) ;
+	return (TRUE);
 }
 
 
@@ -172,29 +172,29 @@ void dgPipeSize::OnBnClickedOk()
 {
 
 
-	if (TapRadiusRoundConst==TRUE)
+	if (TapRadiusRoundConst == TRUE)
 	{
-		RadiusTypeRound= RadiusTypeRound_RadiusConstant;
+		RadiusTypeRound = RadiusTypeRound_RadiusConstant;
 	}
 
-	if (TapRadiusRoundVariable==TRUE)
+	if (TapRadiusRoundVariable == TRUE)
 	{
-		RadiusTypeRound= RadiusTypeRound_RadiusVariable;
+		RadiusTypeRound = RadiusTypeRound_RadiusVariable;
 	}
 
-	if (TapRadiusRoundSpecific==TRUE)
+	if (TapRadiusRoundSpecific == TRUE)
 	{
-		RadiusTypeRound=RadiusTypeRound_RadiusSpecific;
+		RadiusTypeRound = RadiusTypeRound_RadiusSpecific;
 	}
 
-	if (TapRadiusRectConst==TRUE)
+	if (TapRadiusRectConst == TRUE)
 	{
-		RadiusTypeRect= RadiusTypeRect_RadiusConstant;
+		RadiusTypeRect = RadiusTypeRect_RadiusConstant;
 	}
 
-	if (TapRadiusRectVariable==TRUE)
+	if (TapRadiusRectVariable == TRUE)
 	{
-		RadiusTypeRect=RadiusTypeRect_RadiusVariable;
+		RadiusTypeRect = RadiusTypeRect_RadiusVariable;
 	}
 
 
@@ -218,16 +218,16 @@ void dgPipeSize::ChangeSizeA()
 {
 
 	double pSpeed, pFlow, pI, pDp, pSizeA, pSizeB;
-	CString zSizeA,zSizeB,zFlow,zSpeed,zI;
+	CString zSizeA, zSizeB, zFlow, zSpeed, zI;
 	fSizeB.GetWindowTextW(zSizeB);
 	fSizeA.GetWindowTextW(zSizeA);
 	fFlow.GetWindowTextW(zFlow);
 
-	pSizeA=_wtof(zSizeA);
-	pSizeB=_wtof(zSizeB);
-	pFlow=_wtof(zFlow);
-	pSpeed=TVS_Calculate::getSpeed(pSizeA,pSizeB,pFlow);
-	pI=TVS_Calculate::getI(pSizeA,pSizeB,pFlow);
+	pSizeA = _wtof(zSizeA);
+	pSizeB = _wtof(zSizeB);
+	pFlow = _wtof(zFlow);
+	pSpeed = TVS_Calculate::getSpeed(pSizeA, pSizeB, pFlow);
+	pI = TVS_Calculate::getI(pSizeA, pSizeB, pFlow);
 	//pDp=TVS_Calculate::getdP(pSizeA,pSizeB,pFlow);
 	zSpeed.Format(L"%g", pSpeed);
 	zI.Format(L"%g", pI);
@@ -303,32 +303,32 @@ void dgPipeSize::SetElevDown()
 
 void dgPipeSize::change_BOOL(BOOL &var, CButton &but)
 {
-	if (var==1)
+	if (var == 1)
 	{
-		var=0;
+		var = 0;
 		but.SetCheck(0);
 
 	}
 	else
 	{
-		var=1;
+		var = 1;
 		but.SetCheck(1);
 	}
 }
 
 void dgPipeSize::ChangeWipe()
 {
-	change_BOOL(Wipe,fWipeout);
+	change_BOOL(Wipe, fWipeout);
 }
 
 void dgPipeSize::ChangeGrani()
 {
-	change_BOOL(Grani,fGrani);
+	change_BOOL(Grani, fGrani);
 }
 
 void dgPipeSize::ChangeD1()
 {
-	change_BOOL(D1,fD1);
+	change_BOOL(D1, fD1);
 }
 
 
@@ -337,15 +337,15 @@ void dgPipeSize::SetRadiusTypeRound_RadiusSpecific()
 {
 
 
-	TapRadiusRoundSpecific=true;
+	TapRadiusRoundSpecific = true;
 	fTapRadiusRoundSpecific.SetCheck(1);
 
 
-	TapRadiusRoundConst=false;
+	TapRadiusRoundConst = false;
 	fTapRadiusRoundConst.SetCheck(0);
 
 
-	TapRadiusRoundVariable=false;
+	TapRadiusRoundVariable = false;
 	fTapRadiusRoundVariable.SetCheck(0);
 
 
@@ -353,39 +353,39 @@ void dgPipeSize::SetRadiusTypeRound_RadiusSpecific()
 
 void dgPipeSize::SetRadiusTypeRound_RadiusConstant()
 {
-	TapRadiusRoundSpecific=false;
+	TapRadiusRoundSpecific = false;
 	fTapRadiusRoundSpecific.SetCheck(0);
 
 
-	TapRadiusRoundConst=true;
+	TapRadiusRoundConst = true;
 	fTapRadiusRoundConst.SetCheck(1);
 
 
-	TapRadiusRoundVariable=false;
+	TapRadiusRoundVariable = false;
 	fTapRadiusRoundVariable.SetCheck(0);
 }
 
 void dgPipeSize::SetRadiusTypeRound_RadiusVariable()
 {
-	TapRadiusRoundSpecific=false;
+	TapRadiusRoundSpecific = false;
 	fTapRadiusRoundSpecific.SetCheck(0);
 
 
-	TapRadiusRoundConst=false;
+	TapRadiusRoundConst = false;
 	fTapRadiusRoundConst.SetCheck(0);
 
 
-	TapRadiusRoundVariable=true;
+	TapRadiusRoundVariable = true;
 	fTapRadiusRoundVariable.SetCheck(1);
 }
 
 void dgPipeSize::SetRadiusTypeRect_RadiusConstant()
 {
-	TapRadiusRectConst=true;
+	TapRadiusRectConst = true;
 	fTapRadiusRectConst.SetCheck(1);
 
 
-	TapRadiusRectVariable=false;
+	TapRadiusRectVariable = false;
 	fTapRadiusRectVariable.SetCheck(0);
 
 
@@ -393,11 +393,11 @@ void dgPipeSize::SetRadiusTypeRect_RadiusConstant()
 
 void dgPipeSize::SetRadiusTypeRect_RadiusVariable()
 {
-	TapRadiusRectConst=false;
+	TapRadiusRectConst = false;
 	fTapRadiusRectConst.SetCheck(0);
 
 
-	TapRadiusRectVariable=true;
+	TapRadiusRectVariable = true;
 	fTapRadiusRectVariable.SetCheck(1);
 }
 
@@ -409,61 +409,61 @@ void dgPipeSize::OnShowWindow(BOOL bShow, UINT nStatus)
 
 	fSizeA.SetFocus();
 
-	SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
-
-
-	
+	SendDlgItemMessage(IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
 
 
 
-		iTapForm=TapForm;
-		iTypeRoundTap=TypeRoundTap;
-		iRadiusTypeRound=RadiusTypeRound;
-		iRadiusTypeRect=RadiusTypeRect;
-		CString var;
 
 
 
-		switch (iRadiusTypeRound)
-		{
-		case RadiusTypeRound_RadiusSpecific:
-			TapRadiusRoundSpecific=true;
-			fTapRadiusRoundSpecific.SetCheck(1);
-			break;
-		case RadiusTypeRound_RadiusConstant:
-			TapRadiusRoundConst=true;
-			fTapRadiusRoundConst.SetCheck(1);
-			break;
-		case RadiusTypeRound_RadiusVariable:
-			TapRadiusRoundVariable=true;
-			fTapRadiusRoundVariable.SetCheck(1);
-			break;
-		default:
-			break;
-		}
-
-		switch (iRadiusTypeRect)
-		{
-
-		case RadiusTypeRect_RadiusConstant:
-			TapRadiusRectConst=true;
-			fTapRadiusRectConst.SetCheck(1);
-			break;
-		case RadiusTypeRect_RadiusVariable:
-			TapRadiusRectVariable=true;
-			fTapRadiusRectVariable.SetCheck(1);
-			break;
-		default:
-			break;
-		
+	iTapForm = TapForm;
+	iTypeRoundTap = TypeRoundTap;
+	iRadiusTypeRound = RadiusTypeRound;
+	iRadiusTypeRect = RadiusTypeRect;
+	CString var;
 
 
-	
 
-}
+	switch (iRadiusTypeRound)
+	{
+	case RadiusTypeRound_RadiusSpecific:
+		TapRadiusRoundSpecific = true;
+		fTapRadiusRoundSpecific.SetCheck(1);
+		break;
+	case RadiusTypeRound_RadiusConstant:
+		TapRadiusRoundConst = true;
+		fTapRadiusRoundConst.SetCheck(1);
+		break;
+	case RadiusTypeRound_RadiusVariable:
+		TapRadiusRoundVariable = true;
+		fTapRadiusRoundVariable.SetCheck(1);
+		break;
+	default:
+		break;
+	}
+
+	switch (iRadiusTypeRect)
+	{
+
+	case RadiusTypeRect_RadiusConstant:
+		TapRadiusRectConst = true;
+		fTapRadiusRectConst.SetCheck(1);
+		break;
+	case RadiusTypeRect_RadiusVariable:
+		TapRadiusRectVariable = true;
+		fTapRadiusRectVariable.SetCheck(1);
+		break;
+	default:
+		break;
 
 
-		ChangeSizeA();
+
+
+
+	}
+
+
+	ChangeSizeA();
 	// TODO: добавьте свой код обработчика сообщений
 }
 
@@ -471,5 +471,5 @@ void dgPipeSize::ChangeDuctFlex()
 {
 	//change_BOOL(iDuctFlex,fDuctFlex);
 
-	change_BOOL(DuctFlex,fDuctFlex);
+	change_BOOL(DuctFlex, fDuctFlex);
 }

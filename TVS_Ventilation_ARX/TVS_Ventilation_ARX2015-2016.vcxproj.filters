@@ -175,6 +175,18 @@
     <ClCompile Include="TVSPropertDynBase.cpp">
       <Filter>dynProps\TVSProperty</Filter>
     </ClCompile>
+    <ClCompile Include="TVSSpecTable.cpp">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSSpecTableColumn.cpp">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClCompile>
+    <ClCompile Include="stringHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="graphicHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GridCtrl_src\GridCell.h">
@@ -363,6 +375,18 @@
     <ClInclude Include="TVSCommandExcelSpecification.h">
       <Filter>commands\TVSExcelSpecification</Filter>
     </ClInclude>
+    <ClInclude Include="TVSSpecTable.h">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSSpecTableColumn.h">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClInclude>
+    <ClInclude Include="stringHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="graphicHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -486,6 +510,9 @@
     </Filter>
     <Filter Include="commands\TVSExcelSpecification">
       <UniqueIdentifier>{0790b6f0-f997-48a1-a3be-ae72bfd00803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\TVSSpecTable">
+      <UniqueIdentifier>{382a0295-2eee-43cd-b0f0-7e6afd54b584}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

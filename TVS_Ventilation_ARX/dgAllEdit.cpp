@@ -28,7 +28,7 @@
 #include "Calculate.h"
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_DYNAMIC (dgAllEdit, CAdUiBaseDialog)
+IMPLEMENT_DYNAMIC(dgAllEdit, CAdUiBaseDialog)
 
 BEGIN_MESSAGE_MAP(dgAllEdit, CAdUiBaseDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, OnAcadKeepFocus)
@@ -64,7 +64,7 @@ BEGIN_MESSAGE_MAP(dgAllEdit, CAdUiBaseDialog)
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
-dgAllEdit::dgAllEdit (CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog (dgAllEdit::IDD, pParent, hInstance)
+dgAllEdit::dgAllEdit(CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : CAdUiBaseDialog(dgAllEdit::IDD, pParent, hInstance)
 , SizeA(_T(""))
 , SizeB(_T(""))
 , Flow(_T(""))
@@ -85,98 +85,98 @@ dgAllEdit::dgAllEdit (CWnd *pParent /*=NULL*/, HINSTANCE hInstance /*=NULL*/) : 
 
 
 //-----------------------------------------------------------------------------
-void dgAllEdit::DoDataExchange (CDataExchange *pDX) {
-		CAdUiBaseDialog::DoDataExchange (pDX) ;
-		DDX_Control(pDX, IDC_SizeA, fSizeA);
-		DDX_Control(pDX, IDC_SizeB, fSizeB);
-		DDX_Control(pDX, IDC_Flow, fFlow);
-		DDX_Control(pDX, IDC_SizeA2, fSizeA2);
-		DDX_Control(pDX, IDC_SizeB2, fSizeB2);
-		DDX_Control(pDX, IDC_TransLength, fLengthTr);
-		DDX_Control(pDX, IDC_LengthWye, fLengthW);
-		DDX_Control(pDX, IDCANCEL, F);
-		DDX_Control(pDX, IDC_Wipeout, fWipeout);
-		DDX_Control(pDX, IDC_Grani, fGrani);
-		DDX_Control(pDX, IDC_1D, fD1);
-		DDX_Control(pDX, IDC_ElevVal, fElevation);
-		DDX_Control(pDX, IDC_ElevUp, fElevUp);
-		DDX_Control(pDX, IDC_ElevMid, fElevMid);
-		DDX_Control(pDX, IDC_ElevDown, fElevDown);
-		DDX_Control(pDX, IDC_Speed, fSpeed);
-		DDX_Control(pDX, IDC_i, fI);
-		DDX_Control(pDX, IDC_dP, fDp);
+void dgAllEdit::DoDataExchange(CDataExchange *pDX) {
+	CAdUiBaseDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_SizeA, fSizeA);
+	DDX_Control(pDX, IDC_SizeB, fSizeB);
+	DDX_Control(pDX, IDC_Flow, fFlow);
+	DDX_Control(pDX, IDC_SizeA2, fSizeA2);
+	DDX_Control(pDX, IDC_SizeB2, fSizeB2);
+	DDX_Control(pDX, IDC_TransLength, fLengthTr);
+	DDX_Control(pDX, IDC_LengthWye, fLengthW);
+	DDX_Control(pDX, IDCANCEL, F);
+	DDX_Control(pDX, IDC_Wipeout, fWipeout);
+	DDX_Control(pDX, IDC_Grani, fGrani);
+	DDX_Control(pDX, IDC_1D, fD1);
+	DDX_Control(pDX, IDC_ElevVal, fElevation);
+	DDX_Control(pDX, IDC_ElevUp, fElevUp);
+	DDX_Control(pDX, IDC_ElevMid, fElevMid);
+	DDX_Control(pDX, IDC_ElevDown, fElevDown);
+	DDX_Control(pDX, IDC_Speed, fSpeed);
+	DDX_Control(pDX, IDC_i, fI);
+	DDX_Control(pDX, IDC_dP, fDp);
 
-		DDX_Control(pDX, IDC_TapRadiusRectVariable, fTapRadiusRectVariable);
-		DDX_Control(pDX, IDC_TapRadiusRectConst, fTapRadiusRectConst);
-		DDX_Control(pDX, IDC_TapRadiusRoundVariable, fTapRadiusRoundVariable);
-		DDX_Control(pDX, IDC_TapRadiusRoundConst, fTapRadiusRoundConst);
-		DDX_Control(pDX, IDC_TapRadiusRoundSpecific, fTapRadiusRoundSpecific);
-		DDX_Control(pDX, IDC_TapUp, fTapUp);
-		DDX_Control(pDX, IDC_TapMid, fTapMid);
-		DDX_Control(pDX, IDC_TapDown, fTapDown);
-		DDX_Control(pDX, IDC_Swectangle, fSwectangle);
-		DDX_Control(pDX, IDC_TapRadiusVariableParameter, fTapRadiusVariableParameter);
-		DDX_Control(pDX, IDC_TapRadiusConst, fTapRadiusConst);
-
-
-
-		DDX_Text(pDX, IDC_SizeA, SizeA);
-		DDX_Text(pDX, IDC_SizeB, SizeB);
-		DDX_Text(pDX, IDC_Flow, Flow);
-		DDX_Text(pDX, IDC_SizeA2, SizeA2);
-		DDX_Text(pDX, IDC_SizeB2, SizeB2);
-		DDX_Text(pDX, IDC_TransLength, LengthTr);
-		DDX_Text(pDX, IDC_LengthWye, LengthW);
-		DDX_Text(pDX, IDC_ElevVal, Elev);
-		DDX_Text(pDX, IDC_Speed, Speed);
-		DDX_Text(pDX, IDC_i, I);
-		DDX_Text(pDX, IDC_dP, Dp);
-
-		DDX_Text(pDX, IDC_Swectangle, Swectangle);
-		DDX_Text(pDX, IDC_TapRadiusVariableParameter, TapRadiusVariableParameter);
-		DDX_Text(pDX, IDC_TapRadiusConst, TapRadiusConst);
+	DDX_Control(pDX, IDC_TapRadiusRectVariable, fTapRadiusRectVariable);
+	DDX_Control(pDX, IDC_TapRadiusRectConst, fTapRadiusRectConst);
+	DDX_Control(pDX, IDC_TapRadiusRoundVariable, fTapRadiusRoundVariable);
+	DDX_Control(pDX, IDC_TapRadiusRoundConst, fTapRadiusRoundConst);
+	DDX_Control(pDX, IDC_TapRadiusRoundSpecific, fTapRadiusRoundSpecific);
+	DDX_Control(pDX, IDC_TapUp, fTapUp);
+	DDX_Control(pDX, IDC_TapMid, fTapMid);
+	DDX_Control(pDX, IDC_TapDown, fTapDown);
+	DDX_Control(pDX, IDC_Swectangle, fSwectangle);
+	DDX_Control(pDX, IDC_TapRadiusVariableParameter, fTapRadiusVariableParameter);
+	DDX_Control(pDX, IDC_TapRadiusConst, fTapRadiusConst);
 
 
 
+	DDX_Text(pDX, IDC_SizeA, SizeA);
+	DDX_Text(pDX, IDC_SizeB, SizeB);
+	DDX_Text(pDX, IDC_Flow, Flow);
+	DDX_Text(pDX, IDC_SizeA2, SizeA2);
+	DDX_Text(pDX, IDC_SizeB2, SizeB2);
+	DDX_Text(pDX, IDC_TransLength, LengthTr);
+	DDX_Text(pDX, IDC_LengthWye, LengthW);
+	DDX_Text(pDX, IDC_ElevVal, Elev);
+	DDX_Text(pDX, IDC_Speed, Speed);
+	DDX_Text(pDX, IDC_i, I);
+	DDX_Text(pDX, IDC_dP, Dp);
 
-
-		DDX_Check(pDX, IDC_Wipeout, Wipe);
-		DDX_Check(pDX, IDC_Grani, Grani);
-		DDX_Check(pDX, IDC_1D, D1);
-		DDX_Check(pDX, IDC_ElevUp, ElevUp);
-		DDX_Check(pDX, IDC_ElevMid, ElevMid);
-		DDX_Check(pDX, IDC_ElevDown, ElevDown);
-
-		DDX_Check(pDX, IDC_Wipeout, Wipe);
-		DDX_Check(pDX, IDC_Grani, Grani);
-		DDX_Check(pDX, IDC_1D, D1);
-		DDX_Check(pDX, IDC_ElevUp, ElevUp);
-		DDX_Check(pDX, IDC_ElevMid, ElevMid);
-		DDX_Check(pDX, IDC_ElevDown, ElevDown);
-
-		DDX_Check(pDX, IDC_TapRadiusRectVariable, TapRadiusRectVariable);
-		DDX_Check(pDX, IDC_TapRadiusRectConst, TapRadiusRectConst);
-		DDX_Check(pDX, IDC_TapRadiusRoundVariable, TapRadiusRoundVariable);
-		DDX_Check(pDX, IDC_TapRadiusRoundConst, TapRadiusRoundConst);
-		DDX_Check(pDX, IDC_TapRadiusRoundSpecific, TapRadiusRoundSpecific);
-		DDX_Check(pDX, IDC_TapUp, TapUp);
-		DDX_Check(pDX, IDC_TapMid, TapMid);
-		DDX_Check(pDX, IDC_TapDown, TapDown);
+	DDX_Text(pDX, IDC_Swectangle, Swectangle);
+	DDX_Text(pDX, IDC_TapRadiusVariableParameter, TapRadiusVariableParameter);
+	DDX_Text(pDX, IDC_TapRadiusConst, TapRadiusConst);
 
 
 
-		DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
-		DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
 
-		DDX_Control(pDX, IDC_DuctFlex, fDuctFlex);
-		DDX_Check(pDX, IDC_DuctFlex, DuctFlex);
+
+	DDX_Check(pDX, IDC_Wipeout, Wipe);
+	DDX_Check(pDX, IDC_Grani, Grani);
+	DDX_Check(pDX, IDC_1D, D1);
+	DDX_Check(pDX, IDC_ElevUp, ElevUp);
+	DDX_Check(pDX, IDC_ElevMid, ElevMid);
+	DDX_Check(pDX, IDC_ElevDown, ElevDown);
+
+	DDX_Check(pDX, IDC_Wipeout, Wipe);
+	DDX_Check(pDX, IDC_Grani, Grani);
+	DDX_Check(pDX, IDC_1D, D1);
+	DDX_Check(pDX, IDC_ElevUp, ElevUp);
+	DDX_Check(pDX, IDC_ElevMid, ElevMid);
+	DDX_Check(pDX, IDC_ElevDown, ElevDown);
+
+	DDX_Check(pDX, IDC_TapRadiusRectVariable, TapRadiusRectVariable);
+	DDX_Check(pDX, IDC_TapRadiusRectConst, TapRadiusRectConst);
+	DDX_Check(pDX, IDC_TapRadiusRoundVariable, TapRadiusRoundVariable);
+	DDX_Check(pDX, IDC_TapRadiusRoundConst, TapRadiusRoundConst);
+	DDX_Check(pDX, IDC_TapRadiusRoundSpecific, TapRadiusRoundSpecific);
+	DDX_Check(pDX, IDC_TapUp, TapUp);
+	DDX_Check(pDX, IDC_TapMid, TapMid);
+	DDX_Check(pDX, IDC_TapDown, TapDown);
+
+
+
+	DDX_Control(pDX, IDC_WipeoutLength, fWipeoutLength);
+	DDX_Text(pDX, IDC_WipeoutLength, WipeoutLength);
+
+	DDX_Control(pDX, IDC_DuctFlex, fDuctFlex);
+	DDX_Check(pDX, IDC_DuctFlex, DuctFlex);
 }
 
 //-----------------------------------------------------------------------------
 //----- Needed for modeless dialogs to keep focus.
 //----- Return FALSE to not keep the focus, return TRUE to keep the focus
-LRESULT dgAllEdit::OnAcadKeepFocus (WPARAM, LPARAM) {
-	return (TRUE) ;
+LRESULT dgAllEdit::OnAcadKeepFocus(WPARAM, LPARAM) {
+	return (TRUE);
 }
 
 
@@ -186,115 +186,115 @@ void dgAllEdit::OnShowWindow(BOOL bShow, UINT nStatus)
 
 	fSizeA.SetFocus();
 
-  SendDlgItemMessage( IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
+	SendDlgItemMessage(IDC_SizeA, EM_SETSEL, (WPARAM)0, (LPARAM)-1);
 
 
-  	
-	if(Tpipe==false)
+
+	if (Tpipe == false)
 	{
-		
+
 		fGrani.ShowWindow(false);
 
 	}
 
-	if(Ttrans==false)
+	if (Ttrans == false)
 	{
 		fLengthTr.ShowWindow(false);
-		
+
 	}
 
-	if(Twye==false)
+	if (Twye == false)
 	{
 		fLengthW.ShowWindow(false);
-		
+
 	}
 
-if ((Twye==false)&&(Ttrans==false))
-{
-	fSizeA2.ShowWindow(false);
-	
-	fSizeB2.ShowWindow(false);
-	
-}
-
-if ((Ttap==false)&&(Tpipe==false))
-{
-	fFlow.ShowWindow(false);
-	
-}
-
-this->ChangeSizeA();
-
-if (Ttap==true)
-{
-	
-
-
-	iTapForm=_wtoi(TapForm);
-	iTypeRoundTap=_wtoi(TypeRoundTap);
-	iRadiusTypeRound=_wtoi(RadiusTypeRound);
-	iRadiusTypeRect=_wtoi(RadiusTypeRect);
-	CString var;
-	if ((_wtof(Swectangle)/M_PI*180)!=0)
+	if ((Twye == false) && (Ttrans == false))
 	{
-		var.Format(L"%g", _wtof(Swectangle)/M_PI*180);
-	fSwectangle.SetWindowTextW(var);
+		fSizeA2.ShowWindow(false);
+
+		fSizeB2.ShowWindow(false);
+
 	}
- 
 
-	switch (iTapForm)
+	if ((Ttap == false) && (Tpipe == false))
 	{
-	case Form_Up:
-			TapUp=true;
+		fFlow.ShowWindow(false);
+
+	}
+
+	this->ChangeSizeA();
+
+	if (Ttap == true)
+	{
+
+
+
+		iTapForm = _wtoi(TapForm);
+		iTypeRoundTap = _wtoi(TypeRoundTap);
+		iRadiusTypeRound = _wtoi(RadiusTypeRound);
+		iRadiusTypeRect = _wtoi(RadiusTypeRect);
+		CString var;
+		if ((_wtof(Swectangle) / M_PI * 180) != 0)
+		{
+			var.Format(L"%g", _wtof(Swectangle) / M_PI * 180);
+			fSwectangle.SetWindowTextW(var);
+		}
+
+
+		switch (iTapForm)
+		{
+		case Form_Up:
+			TapUp = true;
 			fTapUp.SetCheck(1);
 			break;
-	case Form_Down:
-		TapDown=true;
-		fTapDown.SetCheck(1);
-		break;
-	case Form_Direct:
-		TapMid=true;
-		fTapMid.SetCheck(1);
-		break;
-	default:
-		break;
+		case Form_Down:
+			TapDown = true;
+			fTapDown.SetCheck(1);
+			break;
+		case Form_Direct:
+			TapMid = true;
+			fTapMid.SetCheck(1);
+			break;
+		default:
+			break;
+		}
+
+		switch (iRadiusTypeRound)
+		{
+		case RadiusTypeRound_RadiusSpecific:
+			TapRadiusRoundSpecific = true;
+			fTapRadiusRoundSpecific.SetCheck(1);
+			break;
+		case RadiusTypeRound_RadiusConstant:
+			TapRadiusRoundConst = true;
+			fTapRadiusRoundConst.SetCheck(1);
+			break;
+		case RadiusTypeRound_RadiusVariable:
+			TapRadiusRoundVariable = true;
+			fTapRadiusRoundVariable.SetCheck(1);
+			break;
+		default:
+			break;
+		}
+
+		switch (iRadiusTypeRect)
+		{
+
+		case RadiusTypeRect_RadiusConstant:
+			TapRadiusRectConst = true;
+			fTapRadiusRectConst.SetCheck(1);
+			break;
+		case RadiusTypeRect_RadiusVariable:
+			TapRadiusRectVariable = true;
+			fTapRadiusRectVariable.SetCheck(1);
+			break;
+		default:
+			break;
+		}
+
+
 	}
-
-	switch (iRadiusTypeRound)
-	{
-	case RadiusTypeRound_RadiusSpecific:
-		TapRadiusRoundSpecific=true;
-		fTapRadiusRoundSpecific.SetCheck(1);
-		break;
-	case RadiusTypeRound_RadiusConstant:
-		TapRadiusRoundConst=true;
-		fTapRadiusRoundConst.SetCheck(1);
-		break;
-	case RadiusTypeRound_RadiusVariable:
-		TapRadiusRoundVariable=true;
-		fTapRadiusRoundVariable.SetCheck(1);
-		break;
-	default:
-		break;
-	}
-
-	switch (iRadiusTypeRect)
-	{
-
-	case RadiusTypeRect_RadiusConstant:
-		TapRadiusRectConst=true;
-		fTapRadiusRectConst.SetCheck(1);
-		break;
-	case RadiusTypeRect_RadiusVariable:
-		TapRadiusRectVariable=true;
-		fTapRadiusRectVariable.SetCheck(1);
-		break;
-	default:
-		break;
-	}
-
-
-}
 
 
 
@@ -309,23 +309,23 @@ if (Ttap==true)
 
 void dgAllEdit::ChangeSizeA()
 {
-	
-double pSpeed, pFlow, pI, pDp, pSizeA, pSizeB;
-CString zSizeA,zSizeB,zFlow,zSpeed,zI;
-fSizeB.GetWindowTextW(zSizeB);
-fSizeA.GetWindowTextW(zSizeA);
-fFlow.GetWindowTextW(zFlow);
 
-pSizeA=_wtof(zSizeA);
-pSizeB=_wtof(zSizeB);
-pFlow=_wtof(zFlow);
-pSpeed=TVS_Calculate::getSpeed(pSizeA,pSizeB,pFlow);
-pI=TVS_Calculate::getI(pSizeA,pSizeB,pFlow);
-//pDp=TVS_Calculate::getdP(pSizeA,pSizeB,pFlow);
-zSpeed.Format(L"%g", pSpeed);
-zI.Format(L"%g", pI);
-fSpeed.SetWindowTextW(zSpeed);
-fI.SetWindowTextW(zI);
+	double pSpeed, pFlow, pI, pDp, pSizeA, pSizeB;
+	CString zSizeA, zSizeB, zFlow, zSpeed, zI;
+	fSizeB.GetWindowTextW(zSizeB);
+	fSizeA.GetWindowTextW(zSizeA);
+	fFlow.GetWindowTextW(zFlow);
+
+	pSizeA = _wtof(zSizeA);
+	pSizeB = _wtof(zSizeB);
+	pFlow = _wtof(zFlow);
+	pSpeed = TVS_Calculate::getSpeed(pSizeA, pSizeB, pFlow);
+	pI = TVS_Calculate::getI(pSizeA, pSizeB, pFlow);
+	//pDp=TVS_Calculate::getdP(pSizeA,pSizeB,pFlow);
+	zSpeed.Format(L"%g", pSpeed);
+	zI.Format(L"%g", pI);
+	fSpeed.SetWindowTextW(zSpeed);
+	fI.SetWindowTextW(zI);
 
 
 
@@ -336,22 +336,22 @@ fI.SetWindowTextW(zI);
 void dgAllEdit::ChangeSpeed()
 {
 
-// 	double pSpeed, pFlow, pI, pDp, pSizeA, pSizeB;
-// 	CString zSizeA,zSizeB,zFlow,zSpeed,zI;
-// 	fSizeB.GetWindowTextW(zSizeB);
-// 	fSizeA.GetWindowTextW(zSizeA);
-// 	fSpeed.GetWindowTextW(zSpeed);
-// 
-// 	pSizeA=_wtof(zSizeA);
-// 	pSizeB=_wtof(zSizeB);
-// 	pSpeed=_wtof(zSpeed);
-// 	pFlow=TVS_Calculate::getFlow(pSizeA,pSizeB,pSpeed);
-// 	pI=TVS_Calculate::getI(pSizeA,pSizeB,pFlow);
-// 
-// 	zFlow.Format(L"%g", pFlow);
-// 	zI.Format(L"%g", pI);
-// 	fFlow.SetWindowTextW(zFlow);
-// 	fI.SetWindowTextW(zI);
+	// 	double pSpeed, pFlow, pI, pDp, pSizeA, pSizeB;
+	// 	CString zSizeA,zSizeB,zFlow,zSpeed,zI;
+	// 	fSizeB.GetWindowTextW(zSizeB);
+	// 	fSizeA.GetWindowTextW(zSizeA);
+	// 	fSpeed.GetWindowTextW(zSpeed);
+	// 
+	// 	pSizeA=_wtof(zSizeA);
+	// 	pSizeB=_wtof(zSizeB);
+	// 	pSpeed=_wtof(zSpeed);
+	// 	pFlow=TVS_Calculate::getFlow(pSizeA,pSizeB,pSpeed);
+	// 	pI=TVS_Calculate::getI(pSizeA,pSizeB,pFlow);
+	// 
+	// 	zFlow.Format(L"%g", pFlow);
+	// 	zI.Format(L"%g", pI);
+	// 	fFlow.SetWindowTextW(zFlow);
+	// 	fI.SetWindowTextW(zI);
 
 
 
@@ -366,8 +366,8 @@ void dgAllEdit::SetElevUp()
 	fElevUp.SetCheck(1);
 	fElevMid.SetCheck(0);
 	fElevDown.SetCheck(0);
-		
-	
+
+
 
 
 	// TODO: добавьте свой код обработчика уведомлений
@@ -396,32 +396,32 @@ void dgAllEdit::SetElevDown()
 
 void dgAllEdit::change_BOOL(BOOL &var, CButton &but)
 {
-	if (var==1)
+	if (var == 1)
 	{
-		var=0;
+		var = 0;
 		but.SetCheck(0);
 
 	}
 	else
 	{
-		var=1;
+		var = 1;
 		but.SetCheck(1);
 	}
 }
 
 void dgAllEdit::ChangeWipe()
 {
-	change_BOOL(Wipe,fWipeout);
+	change_BOOL(Wipe, fWipeout);
 }
 
 void dgAllEdit::ChangeGrani()
 {
-	change_BOOL(Grani,fGrani);
+	change_BOOL(Grani, fGrani);
 }
 
 void dgAllEdit::ChangeD1()
 {
-	change_BOOL(D1,fD1);
+	change_BOOL(D1, fD1);
 }
 
 
@@ -430,101 +430,101 @@ void dgAllEdit::ChangeD1()
 void dgAllEdit::SetForm_Up()
 {
 
-		TapUp=true;
-		fTapUp.SetCheck(1);
-		
+	TapUp = true;
+	fTapUp.SetCheck(1);
 
-		TapDown=false;
-		fTapDown.SetCheck(0);
-	
-	
-		TapMid=false;
-		fTapMid.SetCheck(0);
-		
+
+	TapDown = false;
+	fTapDown.SetCheck(0);
+
+
+	TapMid = false;
+	fTapMid.SetCheck(0);
+
 }
 
 void dgAllEdit::SetForm_Down()
 {
-	TapUp=false;
+	TapUp = false;
 	fTapUp.SetCheck(0);
 
 
-	TapDown=true;
+	TapDown = true;
 	fTapDown.SetCheck(1);
-	
 
-	TapMid=false;
+
+	TapMid = false;
 	fTapMid.SetCheck(0);
 }
 
 void dgAllEdit::SetFForm_Direct()
 {
-	TapUp=false;
+	TapUp = false;
 	fTapUp.SetCheck(0);
-	
 
-	TapDown=false;
+
+	TapDown = false;
 	fTapDown.SetCheck(0);
-	
 
-	TapMid=true;
+
+	TapMid = true;
 	fTapMid.SetCheck(1);
-	
+
 }
 
 void dgAllEdit::SetRadiusTypeRound_RadiusSpecific()
 {
-	
-
-		TapRadiusRoundSpecific=true;
-		fTapRadiusRoundSpecific.SetCheck(1);
 
 
-		TapRadiusRoundConst=false;
-		fTapRadiusRoundConst.SetCheck(0);
+	TapRadiusRoundSpecific = true;
+	fTapRadiusRoundSpecific.SetCheck(1);
 
 
-		TapRadiusRoundVariable=false;
-		fTapRadiusRoundVariable.SetCheck(0);
+	TapRadiusRoundConst = false;
+	fTapRadiusRoundConst.SetCheck(0);
+
+
+	TapRadiusRoundVariable = false;
+	fTapRadiusRoundVariable.SetCheck(0);
 
 
 }
 
 void dgAllEdit::SetRadiusTypeRound_RadiusConstant()
 {
-	TapRadiusRoundSpecific=false;
+	TapRadiusRoundSpecific = false;
 	fTapRadiusRoundSpecific.SetCheck(0);
 
 
-	TapRadiusRoundConst=true;
+	TapRadiusRoundConst = true;
 	fTapRadiusRoundConst.SetCheck(1);
 
 
-	TapRadiusRoundVariable=false;
+	TapRadiusRoundVariable = false;
 	fTapRadiusRoundVariable.SetCheck(0);
 }
 
 void dgAllEdit::SetRadiusTypeRound_RadiusVariable()
 {
-	TapRadiusRoundSpecific=false;
+	TapRadiusRoundSpecific = false;
 	fTapRadiusRoundSpecific.SetCheck(0);
 
 
-	TapRadiusRoundConst=false;
+	TapRadiusRoundConst = false;
 	fTapRadiusRoundConst.SetCheck(0);
 
 
-	TapRadiusRoundVariable=true;
+	TapRadiusRoundVariable = true;
 	fTapRadiusRoundVariable.SetCheck(1);
 }
 
 void dgAllEdit::SetRadiusTypeRect_RadiusConstant()
 {
-	TapRadiusRectConst=true;
+	TapRadiusRectConst = true;
 	fTapRadiusRectConst.SetCheck(1);
 
 
-	TapRadiusRectVariable=false;
+	TapRadiusRectVariable = false;
 	fTapRadiusRectVariable.SetCheck(0);
 
 
@@ -532,11 +532,11 @@ void dgAllEdit::SetRadiusTypeRect_RadiusConstant()
 
 void dgAllEdit::SetRadiusTypeRect_RadiusVariable()
 {
-	TapRadiusRectConst=false;
+	TapRadiusRectConst = false;
 	fTapRadiusRectConst.SetCheck(0);
 
 
-	TapRadiusRectVariable=true;
+	TapRadiusRectVariable = true;
 	fTapRadiusRectVariable.SetCheck(1);
 }
 
@@ -545,57 +545,57 @@ void dgAllEdit::SetRadiusTypeRect_RadiusVariable()
 
 void dgAllEdit::OnBnClickedOk()
 {
-	
 
-	if (TapMid==TRUE)
+
+	if (TapMid == TRUE)
 	{
 		TapForm.Format(L"%i", Form_Direct);
 	}
 
-	if (TapDown==TRUE)
+	if (TapDown == TRUE)
 	{
 		TapForm.Format(L"%i", Form_Down);
 	}
 
-	if (TapUp==TRUE)
+	if (TapUp == TRUE)
 	{
 		TapForm.Format(L"%i", Form_Up);
 	}
 
-	if (TapRadiusRoundConst==TRUE)
+	if (TapRadiusRoundConst == TRUE)
 	{
 		RadiusTypeRound.Format(L"%.2f\n", RadiusTypeRound_RadiusConstant);
 	}
 
-	if (TapRadiusRoundVariable==TRUE)
+	if (TapRadiusRoundVariable == TRUE)
 	{
 		RadiusTypeRound.Format(L"%i", RadiusTypeRound_RadiusVariable);
 	}
 
-	if (TapRadiusRoundSpecific==TRUE)
+	if (TapRadiusRoundSpecific == TRUE)
 	{
 		RadiusTypeRound.Format(L"%i", RadiusTypeRound_RadiusSpecific);
 	}
 
-	if (TapRadiusRectConst==TRUE)
+	if (TapRadiusRectConst == TRUE)
 	{
 		RadiusTypeRect.Format(L"%i", RadiusTypeRect_RadiusConstant);
 	}
 
-	if (TapRadiusRectVariable==TRUE)
+	if (TapRadiusRectVariable == TRUE)
 	{
 		RadiusTypeRect.Format(L"%i", RadiusTypeRect_RadiusVariable);
 	}
-	
+
 	CString var;
 	fSwectangle.GetWindowTextW(var);
 
-	if (( M_PI*_wtof(var)/180)!=0)
+	if ((M_PI*_wtof(var) / 180) != 0)
 	{
-		var.Format(L"%g", M_PI*_wtof(var)/180);
+		var.Format(L"%g", M_PI*_wtof(var) / 180);
 		fSwectangle.SetWindowTextW(var);
 	}
-	
+
 
 
 
@@ -610,6 +610,6 @@ void dgAllEdit::ChangeDuctFlex()
 {
 	//change_BOOL(iDuctFlex,fDuctFlex);
 
-	change_BOOL(DuctFlex,fDuctFlex);
+	change_BOOL(DuctFlex, fDuctFlex);
 }
 

@@ -6,7 +6,6 @@ class TVSCommandExcelSpecification :
 public:
 	TVSCommandExcelSpecification();
 	virtual ~TVSCommandExcelSpecification();
-	virtual void processId(const AcDbObjectId &objId);
-	//virtual void execute(void);
+	virtual void execute(void);
 };
 

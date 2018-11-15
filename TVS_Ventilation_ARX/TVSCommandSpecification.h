@@ -6,7 +6,6 @@ class TVSCommandSpecification :
 public:
 	TVSCommandSpecification();
 	virtual ~TVSCommandSpecification();
-	virtual void processId(const AcDbObjectId &objId);
-	//virtual void execute(void);
+	virtual void execute(void);
 };
 

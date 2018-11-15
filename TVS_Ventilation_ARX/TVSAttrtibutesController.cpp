@@ -12,7 +12,7 @@ TVSAttrtibutesController::~TVSAttrtibutesController()
 {
 }
 
-bool TVSAttrtibutesController::CheckAtt(const ACHAR* pName,const ACHAR* tag)
+bool TVSAttrtibutesController::CheckAtt(const ACHAR* pName, const ACHAR* tag)
 {
 	AcDbDatabase *pCurDb;
 	AcDbBlockTable* pBlkTbl;
@@ -136,7 +136,7 @@ bool TVSAttrtibutesController::getBlockName(const AcDbObjectId &objId, CString &
 	if ((es = pBTR.openStatus()) != Acad::eOk) {
 		acutPrintf(_T("\nОшибка открытия BlockTableRecord: %s"), acadErrorStatusText(es)); return false;
 	}
-	const ACHAR* sBTRName = NULL; 
+	const ACHAR* sBTRName = NULL;
 	pBTR->getName(sBTRName);
 	blockName = sBTRName;
 	return true;
@@ -144,7 +144,7 @@ bool TVSAttrtibutesController::getBlockName(const AcDbObjectId &objId, CString &
 
 bool TVSAttrtibutesController::convertAttributesToProperties(const AcDbObjectId & objId)
 {
-	
+
 	{
 		AcDbObjectPointer<AcDbBlockReference> pBlkRef(objId, AcDb::kForWrite);
 		if (pBlkRef.openStatus() != Acad::eOk) {
@@ -153,8 +153,8 @@ bool TVSAttrtibutesController::convertAttributesToProperties(const AcDbObjectId 
 	}
 
 	CString valueStr;
-	if (GetAtt(objId, TagPos, valueStr)&&valueStr!=L"") {
-		TVSController::get()->tvsPropertyController.setPosition(objId,valueStr);
+	if (GetAtt(objId, TagPos, valueStr) && valueStr != L"") {
+		TVSController::get()->tvsPropertyController.setPosition(objId, valueStr);
 	}
 
 	if (GetAtt(objId, TagName, valueStr) && valueStr != L"") {
@@ -301,7 +301,7 @@ bool TVSAttrtibutesController::RemoveAttr(const AcDbObjectId &objId, const CStri
 					AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
 					if (pAttdef) {
 						// Если это определение атрибута сделаем отдельную обработку
-						if (tag==pAttdef->tagConst()) {
+						if (tag == pAttdef->tagConst()) {
 							pAttdef->erase();
 							pBlkRec->close();
 							pBlkTbl->close();

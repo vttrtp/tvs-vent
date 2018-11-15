@@ -6,6 +6,6 @@ class TVSPropertySettings
 {
 public:
 	TVSPropertySettings(void) {
-		
+
 	};
 };

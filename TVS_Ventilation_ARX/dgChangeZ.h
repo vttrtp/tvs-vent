@@ -29,17 +29,17 @@
 
 //-----------------------------------------------------------------------------
 class dgChangeZ : public CAdUiBaseDialog {
-	DECLARE_DYNAMIC (dgChangeZ)
+	DECLARE_DYNAMIC(dgChangeZ)
 
 public:
-	dgChangeZ (CWnd *pParent =NULL, HINSTANCE hInstance =NULL) ;
+	dgChangeZ(CWnd *pParent = NULL, HINSTANCE hInstance = NULL);
 
-	enum { IDD = IDD_HANGEZDG} ;
-	double startZ,nextZ,Axis;
+	enum { IDD = IDD_HANGEZDG };
+	double startZ, nextZ, Axis;
 
 protected:
-	virtual void DoDataExchange (CDataExchange *pDX) ;
-	afx_msg LRESULT OnAcadKeepFocus (WPARAM, LPARAM) ;
+	virtual void DoDataExchange(CDataExchange *pDX);
+	afx_msg LRESULT OnAcadKeepFocus(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
-} ;
+};

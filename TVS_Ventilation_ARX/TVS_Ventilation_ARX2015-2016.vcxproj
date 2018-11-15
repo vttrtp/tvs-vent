@@ -153,6 +153,9 @@
     <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp" />
     <ClCompile Include="..\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="acrxEntryPoint.cpp" />
+    <ClCompile Include="graphicHelper.cpp" />
+    <ClCompile Include="stringHelper.cpp" />
+    <ClCompile Include="TVSSpecTableColumn.cpp" />
     <ClCompile Include="TVSCommandAddProperties.cpp" />
     <ClCompile Include="TVSAttrtibutesController.cpp" />
     <ClCompile Include="dgBlockManager.cpp" />
@@ -207,6 +210,7 @@
     <ClCompile Include="TVSCommandLeadRecalculate.cpp" />
     <ClCompile Include="TVSPropertySpec.cpp" />
     <ClCompile Include="TVSCommandSpecification.cpp" />
+    <ClCompile Include="TVSSpecTable.cpp" />
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
     <ClCompile Include="xRecordXdataHelper.cpp" />
   </ItemGroup>
@@ -219,6 +223,9 @@
     <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h" />
     <ClInclude Include="..\GridCtrl_src\MemDC.h" />
     <ClInclude Include="..\GridCtrl_src\TitleTip.h" />
+    <ClInclude Include="graphicHelper.h" />
+    <ClInclude Include="stringHelper.h" />
+    <ClInclude Include="TVSSpecTableColumn.h" />
     <ClInclude Include="TVSCommandAddProperties.h" />
     <ClInclude Include="TVSAttrtibutesController.h" />
     <ClInclude Include="dgBlockManager.h" />
@@ -272,6 +279,7 @@
     <ClInclude Include="TVSCommandLeadRecalculate.h" />
     <ClInclude Include="TVSPropertySpec.h" />
     <ClInclude Include="TVSCommandSpecification.h" />
+    <ClInclude Include="TVSSpecTable.h" />
     <ClInclude Include="xRecordXdataHelper.h" />
   </ItemGroup>
   <ItemGroup>

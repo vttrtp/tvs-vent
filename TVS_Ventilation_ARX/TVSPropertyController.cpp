@@ -24,7 +24,8 @@ bool TVSPropertyController::getStringValueOfAnyPropertyByName(const AcDbObjectId
 		if (prop == CTVSProperty_position)
 		{
 			return getPosition(objectId, val);
-		}else if (prop == CTVSProperty_name)
+		}
+		else if (prop == CTVSProperty_name)
 		{
 			return  getName(objectId, val);
 		}
@@ -48,7 +49,7 @@ bool TVSPropertyController::getStringValueOfAnyPropertyByName(const AcDbObjectId
 		{
 			double dVal;
 			if (getMass(objectId, dVal)) {
-				val.Format(L"%g", dVal );
+				val.Format(L"%g", dVal);
 				return true;
 			}
 			else {
@@ -90,41 +91,41 @@ bool TVSPropertyController::registerApp()
 bool TVSPropertyController::setProperty(const AcDbObjectId &objectId, const TVSProperty &tvsProperty)
 {
 	acdbRegApp(CTVSProperty);
-	resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, CTVSProperty, 
+	resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, CTVSProperty,
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_position,
 		AcDb::kDxfXdAsciiString, tvsProperty.position.GetString(),
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_name,
- 		AcDb::kDxfXdAsciiString, tvsProperty.name.GetString(),
+		AcDb::kDxfXdAsciiString, tvsProperty.name.GetString(),
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_type,
- 		AcDb::kDxfXdAsciiString, tvsProperty.type.GetString(),
+		AcDb::kDxfXdAsciiString, tvsProperty.type.GetString(),
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_size,
- 		AcDb::kDxfXdAsciiString, tvsProperty.size.GetString(),
+		AcDb::kDxfXdAsciiString, tvsProperty.size.GetString(),
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_article,
- 		AcDb::kDxfXdAsciiString, tvsProperty.article.GetString(),
+		AcDb::kDxfXdAsciiString, tvsProperty.article.GetString(),
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_manufacturer,
- 		AcDb::kDxfXdAsciiString, tvsProperty.manufacturer.GetString(),
+		AcDb::kDxfXdAsciiString, tvsProperty.manufacturer.GetString(),
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_units,
- 		AcDb::kDxfXdAsciiString, tvsProperty.units.GetString(),
+		AcDb::kDxfXdAsciiString, tvsProperty.units.GetString(),
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_count,
- 		AcDb::kDxfXdReal, tvsProperty.count,
+		AcDb::kDxfXdReal, tvsProperty.count,
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_mass,
- 		AcDb::kDxfXdReal, tvsProperty.mass,
+		AcDb::kDxfXdReal, tvsProperty.mass,
 
 		AcDb::kDxfXdInteger16, CTVSProperty_Number_note,
- 		AcDb::kDxfXdAsciiString, tvsProperty.note.GetString(),
+		AcDb::kDxfXdAsciiString, tvsProperty.note.GetString(),
 
 		AcDb::kDwgNull);
 
-	bool ret = setXdataBuf(objectId,  rb);
+	bool ret = setXdataBuf(objectId, rb);
 	acutRelRb(rb);
 
 
@@ -161,7 +162,7 @@ bool TVSPropertyController::addProperty(const AcDbObjectId &objectId) {
 }
 
 
-bool TVSPropertyController:: getProperty(const AcDbObjectId &objectId, TVSProperty &tvsProperty)
+bool TVSPropertyController::getProperty(const AcDbObjectId &objectId, TVSProperty &tvsProperty)
 {
 	if (checkProperty(objectId))
 	{
@@ -174,17 +175,17 @@ bool TVSPropertyController:: getProperty(const AcDbObjectId &objectId, TVSProper
 				}
 			}
 		}
-	getPosition(objectId, tvsProperty.position);
-	getName(objectId, tvsProperty.name);
-	getType(objectId, tvsProperty.type);
-	getSize(objectId, tvsProperty.size);
-	getArticle(objectId, tvsProperty.article);
-	getManufaturer(objectId, tvsProperty.manufacturer);
-	getMass(objectId, tvsProperty.mass);
-	getUnits(objectId, tvsProperty.units);
-	getCount(objectId, tvsProperty.count);
-	getNote(objectId, tvsProperty.note);
-	return true;
+		getPosition(objectId, tvsProperty.position);
+		getName(objectId, tvsProperty.name);
+		getType(objectId, tvsProperty.type);
+		getSize(objectId, tvsProperty.size);
+		getArticle(objectId, tvsProperty.article);
+		getManufaturer(objectId, tvsProperty.manufacturer);
+		getMass(objectId, tvsProperty.mass);
+		getUnits(objectId, tvsProperty.units);
+		getCount(objectId, tvsProperty.count);
+		getNote(objectId, tvsProperty.note);
+		return true;
 	}
 	else {
 		return false;
@@ -305,7 +306,7 @@ bool TVSPropertyController::setUnits(const AcDbObjectId &objectId, const CString
 	else {
 		return setSubXString(pObj, CTVSProperty, CTVSProperty_Number_units, val);
 	}
-	
+
 }
 
 bool TVSPropertyController::getUnits(const AcDbObjectId &objectId, CString &val)
@@ -324,7 +325,7 @@ bool TVSPropertyController::getUnits(const AcDbObjectId &objectId, CString &val)
 		};
 		return true;
 	}
-	
+
 }
 
 bool TVSPropertyController::setCount(const AcDbObjectId &objectId, const double &val)
@@ -364,7 +365,7 @@ bool TVSPropertyController::setMass(const AcDbObjectId &objectId, const double &
 bool TVSPropertyController::getMass(const AcDbObjectId &objectId, double &val)
 {
 	return getSubXReal(objectId, CTVSProperty, CTVSProperty_Number_mass, val);
-	
+
 }
 
 bool TVSPropertyController::setNote(const AcDbObjectId &objectId, const CString &val)
@@ -375,5 +376,5 @@ bool TVSPropertyController::setNote(const AcDbObjectId &objectId, const CString 
 bool TVSPropertyController::getNote(const AcDbObjectId &objectId, CString &val)
 {
 	return getSubXString(objectId, CTVSProperty, CTVSProperty_Number_note, val);
-	
+
 }

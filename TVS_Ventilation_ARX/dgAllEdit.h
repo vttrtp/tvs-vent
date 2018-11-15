@@ -82,16 +82,16 @@
 
 //-----------------------------------------------------------------------------
 class dgAllEdit : public CAdUiBaseDialog {
-	DECLARE_DYNAMIC (dgAllEdit)
+	DECLARE_DYNAMIC(dgAllEdit)
 
 public:
-	dgAllEdit (CWnd *pParent =NULL, HINSTANCE hInstance =NULL) ;
+	dgAllEdit(CWnd *pParent = NULL, HINSTANCE hInstance = NULL);
 
-	enum { IDD = IDD_DGALLEDIT} ;
+	enum { IDD = IDD_DGALLEDIT };
 
 protected:
-	virtual void DoDataExchange (CDataExchange *pDX) ;
-	afx_msg LRESULT OnAcadKeepFocus (WPARAM, LPARAM) ;
+	virtual void DoDataExchange(CDataExchange *pDX);
+	afx_msg LRESULT OnAcadKeepFocus(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -118,14 +118,14 @@ public:
 	CButton fElevDown;
 	CButton F;
 
-CButton fTapRadiusRectVariable;
-CButton fTapRadiusRectConst;
-CButton fTapRadiusRoundVariable;
-CButton fTapRadiusRoundConst;
-CButton fTapRadiusRoundSpecific;
-CButton fTapUp;
-CButton fTapMid;
-CButton fTapDown;
+	CButton fTapRadiusRectVariable;
+	CButton fTapRadiusRectConst;
+	CButton fTapRadiusRoundVariable;
+	CButton fTapRadiusRoundConst;
+	CButton fTapRadiusRoundSpecific;
+	CButton fTapUp;
+	CButton fTapMid;
+	CButton fTapDown;
 
 
 
@@ -163,14 +163,14 @@ CButton fTapDown;
 
 
 	BOOL TapRadiusRectVariable;
-		BOOL TapRadiusRectConst;
-		BOOL TapRadiusRoundVariable;
-		BOOL TapRadiusRoundConst;
-		BOOL TapRadiusRoundSpecific;
-		BOOL TapUp;
-		BOOL TapMid;
-		BOOL TapDown;
-	
+	BOOL TapRadiusRectConst;
+	BOOL TapRadiusRoundVariable;
+	BOOL TapRadiusRoundConst;
+	BOOL TapRadiusRoundSpecific;
+	BOOL TapUp;
+	BOOL TapMid;
+	BOOL TapDown;
+
 
 
 
@@ -190,7 +190,7 @@ CButton fTapDown;
 	CEdit fWipeoutLength;
 	CString WipeoutLength;
 	BOOL bWipeoutLength;
-	
+
 
 	CButton fDuctFlex;
 	BOOL DuctFlex;
@@ -202,9 +202,9 @@ CButton fTapDown;
 	bool Twye;
 	bool Ttrans;
 	bool Ttap;
-	int won, woff,gon,goff,d1on,d1off;
+	int won, woff, gon, goff, d1on, d1off;
 
-	
+
 	int iTapForm;
 	int iTypeRoundTap;
 	int iRadiusTypeRound;
@@ -229,7 +229,7 @@ CButton fTapDown;
 	afx_msg void ChangeWipe();
 	afx_msg void ChangeGrani();
 	afx_msg void ChangeD1();
-		
+
 	afx_msg void SetForm_Up();
 	afx_msg void SetForm_Down();
 	afx_msg void SetFForm_Direct();
@@ -242,10 +242,10 @@ CButton fTapDown;
 	afx_msg void SetRadiusTypeRect_RadiusConstant();
 	afx_msg void SetRadiusTypeRect_RadiusVariable();
 
-		
+
 	afx_msg void ChangeDuctFlex();
 
-	
+
 	afx_msg void OnBnClickedOk();
 
-} ;
+};

@@ -10,7 +10,7 @@ CComObject<CTVSPropertyArticleDyn>* m_article = NULL;
 CComObject<CTVSPropertyManufacturerDyn>* m_manufacturer = NULL;
 CComObject<CTVSPropertyUnitsDyn>* m_units = NULL;
 CComObject<CTVSPropertyCountDyn>* m_CountDyn = NULL;
-CComObject<CTVSPropertyMassDyn>* m_MassDyn= NULL;
+CComObject<CTVSPropertyMassDyn>* m_MassDyn = NULL;
 CComObject<CTVSPropertyNoteDyn>* m_NoteDyn = NULL;
 
 
@@ -18,11 +18,11 @@ CComObject<CTVSPropertyNoteDyn>* m_NoteDyn = NULL;
 AcRxClass* PropertyAdmin::m_pClass = AcDbEntity::desc();
 
 template<typename T>
-void addProperty(CComPtr<IPropertyManager2> &pPropMan,  T*&prop) {
+void addProperty(CComPtr<IPropertyManager2> &pPropMan, T*&prop) {
 	_com_util::CheckError(T::CreateInstance(&prop));
 	prop->AddRef();
 	_com_util::CheckError(pPropMan->AddProperty((IDynamicProperty2*)prop));
-	
+
 }
 
 template<typename T>

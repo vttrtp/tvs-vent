@@ -28,7 +28,7 @@ void TVSCommandLeadRecalculate::execute(void)
 	{
 		if (NULL != (acedSSName(sset, i, eName)))
 		{
-			
+
 			acdbGetObjectId(mLeaderId, eName);
 			mlctrl.recalculateMleader(mLeaderId);
 			acutPrintf(L"objId\%ld\n", mLeaderId);

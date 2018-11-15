@@ -31,7 +31,7 @@ bool MleaderController::setFormat(const AcDbObjectId &MLeaderId, const CString &
 }
 
 
-bool MleaderController::setObjectId(const AcDbObjectId &MLeaderId, const AcDbObjectId &objId){
+bool MleaderController::setObjectId(const AcDbObjectId &MLeaderId, const AcDbObjectId &objId) {
 
 	ads_name adsName;
 	acdbGetAdsName(adsName, objId);
@@ -39,7 +39,7 @@ bool MleaderController::setObjectId(const AcDbObjectId &MLeaderId, const AcDbObj
 }
 
 bool MleaderController::getObjectId(const AcDbObjectId &MLeaderId, AcDbObjectId &objId) {
-	
+
 	return getObjectIdXrecord(MLeaderId, MLeaderID, objId);
 }
 
@@ -55,7 +55,7 @@ bool MleaderController::recalculateMleader(const AcDbObjectId &MLeaderId)
 	//check if id exists
 	if (objectId == NULL) {
 		setFormat(MLeaderId, L"");
-			return false;
+		return false;
 	}
 
 	CString format;
@@ -69,14 +69,14 @@ bool MleaderController::setTextMessage(const AcDbObjectId &MLeaderId, const CStr
 {
 	AcDbObjectPointer<AcDbMLeader>pEnt(MLeaderId, AcDb::kForWrite);
 	if (pEnt.openStatus() != Acad::eOk) return false;
-	
+
 	AcDbMText *pMtext = pEnt->mtext();
 	if (pMtext) {
 		pMtext->setContents(textMessage.GetString());
 		pEnt->setMText(pMtext);
 		delete pMtext;
 	}
-	
+
 	return true;
 }
 
@@ -87,7 +87,7 @@ bool MleaderController::getStringMessage(const AcDbObjectId &ObjectId, const CSt
 
 	//check attrib
 	bool haveAttrib = TVSPropertyController::get()->checkProperty(ObjectId);
-	
+
 	{
 		AcDbObjectPointer<AcDbEntity>pEnt(ObjectId, AcDb::kForRead);
 
@@ -135,7 +135,7 @@ bool MleaderController::getStringMessage(const AcDbObjectId &ObjectId, const CSt
 					break;
 				}
 			}
-		
+
 			message += strVal;
 			curTemp = L"";
 			inTemp = false;
@@ -189,7 +189,7 @@ bool MleaderController::GetEntityStringPropertyByName(const AcDbObjectId  &objId
 bool MleaderController::GetBlockStringPropertyByName(const AcDbObjectId  &objId, const CString &stringTemplate, CString &stringText)
 {
 	AcDbObjectPointer<AcDbBlockReference>pBr(objId, AcDb::kForRead);
-	if (pBr.openStatus()!=Acad::eOk)
+	if (pBr.openStatus() != Acad::eOk)
 	{
 		return false;
 	}

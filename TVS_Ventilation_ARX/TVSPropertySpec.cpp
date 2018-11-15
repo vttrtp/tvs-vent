@@ -55,7 +55,7 @@ void TVSPropertySpec::addRow(const TVSProperty &props, const AcDbObjectId &objId
 			row.tvsPropery.manufacturer == props.manufacturer &&
 			row.tvsPropery.units == props.units &&
 			row.tvsPropery.mass == props.mass &&
-			row.tvsPropery.note == props.note 
+			row.tvsPropery.note == props.note
 			)
 		{
 			row.tvsPropery.count += props.count;
@@ -69,18 +69,18 @@ void TVSPropertySpec::addRow(const TVSProperty &props, const AcDbObjectId &objId
 
 bool compareRows(const TVSPropertySpecRow &a, const TVSPropertySpecRow &b)
 {
-	
-	if(a.tvsPropery.isTvsEnt!= b.tvsPropery.isTvsEnt)	return (a.tvsPropery.isTvsEnt < b.tvsPropery.isTvsEnt);
 
-	if (a.tvsPropery.position.Compare(b.tvsPropery.position) != 0)	return (a.tvsPropery.position.Compare(b.tvsPropery.position)> 0);
-	if (a.tvsPropery.name.Compare(b.tvsPropery.name)!= 0) return (a.tvsPropery.name.Compare(b.tvsPropery.name)> 0);
- 	if (a.tvsPropery.type.Compare(b.tvsPropery.type) != 0) return (a.tvsPropery.type.Compare(b.tvsPropery.type)> 0);
- 	if (a.tvsPropery.size.Compare(b.tvsPropery.size) != 0) return (a.tvsPropery.size.Compare(b.tvsPropery.size)> 0);
-	if (a.tvsPropery.article.Compare(b.tvsPropery.article) != 0) return (a.tvsPropery.article.Compare(b.tvsPropery.article)> 0);
-	if (a.tvsPropery.manufacturer.Compare(b.tvsPropery.manufacturer) != 0) return (a.tvsPropery.manufacturer.Compare(b.tvsPropery.manufacturer)> 0);
-	if (a.tvsPropery.units.Compare(b.tvsPropery.units) != 0) return (a.tvsPropery.units.Compare(b.tvsPropery.units)> 0);
+	if (a.tvsPropery.isTvsEnt != b.tvsPropery.isTvsEnt)	return (a.tvsPropery.isTvsEnt < b.tvsPropery.isTvsEnt);
+
+	if (a.tvsPropery.position.Compare(b.tvsPropery.position) != 0)	return (a.tvsPropery.position.Compare(b.tvsPropery.position) > 0);
+	if (a.tvsPropery.name.Compare(b.tvsPropery.name) != 0) return (a.tvsPropery.name.Compare(b.tvsPropery.name) > 0);
+	if (a.tvsPropery.type.Compare(b.tvsPropery.type) != 0) return (a.tvsPropery.type.Compare(b.tvsPropery.type) > 0);
+	if (a.tvsPropery.size.Compare(b.tvsPropery.size) != 0) return (a.tvsPropery.size.Compare(b.tvsPropery.size) > 0);
+	if (a.tvsPropery.article.Compare(b.tvsPropery.article) != 0) return (a.tvsPropery.article.Compare(b.tvsPropery.article) > 0);
+	if (a.tvsPropery.manufacturer.Compare(b.tvsPropery.manufacturer) != 0) return (a.tvsPropery.manufacturer.Compare(b.tvsPropery.manufacturer) > 0);
+	if (a.tvsPropery.units.Compare(b.tvsPropery.units) != 0) return (a.tvsPropery.units.Compare(b.tvsPropery.units) > 0);
 	if (a.tvsPropery.mass != b.tvsPropery.mass) return (a.tvsPropery.mass > b.tvsPropery.mass);
-	if (a.tvsPropery.note.Compare(b.tvsPropery.note)!= 0) return (a.tvsPropery.note.Compare(b.tvsPropery.note)> 0);
+	if (a.tvsPropery.note.Compare(b.tvsPropery.note) != 0) return (a.tvsPropery.note.Compare(b.tvsPropery.note) > 0);
 	return false;
 }
 

@@ -32,16 +32,16 @@
 
 //-----------------------------------------------------------------------------
 class dgBlockManager : public CAdUiBaseDialog {
-	DECLARE_DYNAMIC (dgBlockManager)
+	DECLARE_DYNAMIC(dgBlockManager)
 
 public:
-	dgBlockManager (CWnd *pParent =NULL, HINSTANCE hInstance =NULL) ;
+	dgBlockManager(CWnd *pParent = NULL, HINSTANCE hInstance = NULL);
 
-	enum { IDD = IDD_BLCKMNGRDLG} ;
+	enum { IDD = IDD_BLCKMNGRDLG };
 
 protected:
-	virtual void DoDataExchange (CDataExchange *pDX) ;
-	afx_msg LRESULT OnAcadKeepFocus (WPARAM, LPARAM) ;
+	virtual void DoDataExchange(CDataExchange *pDX);
+	afx_msg LRESULT OnAcadKeepFocus(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -49,4 +49,4 @@ public:
 	SpecWithAttrlist blckList;
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 	afx_msg void OnBnClickedOk();
-} ;
+};

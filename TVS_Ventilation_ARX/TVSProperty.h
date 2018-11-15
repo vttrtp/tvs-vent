@@ -15,6 +15,18 @@
 #define  CTVSProperty_mass     L"Масса"
 #define  CTVSProperty_note     L"Примечание"
 
+#define CTVSPropertyCategoryName _T("TVS_Свойства")
+#define  CTVSProperty_position_val L"[Позиция]"
+#define  CTVSProperty_name_val	   L"[Имя]"
+#define  CTVSProperty_type_val     L"[Тип]"
+#define  CTVSProperty_size_val     L"[Размер]"
+#define  CTVSProperty_article_val     L"[Артикул]"
+#define  CTVSProperty_manufacturer_val     L"[Производитель]"
+#define  CTVSProperty_units_val     L"[Ед.Изм]"
+#define  CTVSProperty_count_val     L"[Количество]"
+#define  CTVSProperty_mass_val     L"[Масса]"
+#define  CTVSProperty_note_val     L"[Примечание]"
+
 #define  CTVSProperty_Default_Units    CCommonCount_Unit
 #define  CTVSProperty_Default_Length	CCommonCount_Length
 

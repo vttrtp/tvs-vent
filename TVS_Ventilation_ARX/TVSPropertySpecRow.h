@@ -41,7 +41,7 @@ public:
 	// 	}
 
 	void setAndRecalculatePosition(const CString &newVal) {
-	
+
 		if (tvsPropery.position != newVal)
 		{
 			acutPrintf(L"change");
@@ -55,7 +55,7 @@ public:
 	}
 
 	void setAndRecalculateName(const CString &newVal) {
-	
+
 		if (tvsPropery.name != newVal)
 		{
 			acutPrintf(L"change");
@@ -69,7 +69,7 @@ public:
 	}
 
 	void setAndRecalculateType(const CString &newVal) {
-		
+
 		if (tvsPropery.type != newVal)
 		{
 			acutPrintf(L"change");
@@ -83,7 +83,7 @@ public:
 	}
 
 	void setAndRecalculateSize(const CString &newVal) {
-	
+
 		if (tvsPropery.size != newVal)
 		{
 			acutPrintf(L"change");
@@ -97,7 +97,7 @@ public:
 	}
 
 	void setAndRecalculateManufacturer(const CString &newVal) {
-	
+
 		if (tvsPropery.manufacturer != newVal)
 		{
 			acutPrintf(L"change");
@@ -111,7 +111,7 @@ public:
 	}
 
 	void setAndRecalculateArticle(const CString &newVal) {
-		
+
 		if (tvsPropery.article != newVal)
 		{
 			acutPrintf(L"change");
@@ -125,7 +125,7 @@ public:
 	}
 
 	void setAndRecalculateUnits(const CString &newVal) {
-		
+
 		if (tvsPropery.units != newVal)
 		{
 			acutPrintf(L"change");
@@ -153,7 +153,7 @@ public:
 	}
 
 	void setAndRecalculateCount(const double &newVal) {
-	
+
 		if (tvsPropery.count != newVal)
 		{
 			acutPrintf(L"change");
