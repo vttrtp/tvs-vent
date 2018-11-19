@@ -346,6 +346,19 @@ BEGIN
     EDITTEXT        IDC_EDIT3,166,20,118,119,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
+IDD_SPECPROPS DIALOGEX 0, 0, 621, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Настройка спецификации"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Ok",IDOK,516,156,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,570,156,50,14
+    GROUPBOX        "Шаблон спецификации",-1,0,12,354,156
+    EDITTEXT        IDC_EDIT1,6,24,342,138,ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN
+    GROUPBOX        "Условные обозначения",-1,360,12,258,138
+    EDITTEXT        IDC_EDIT3,366,28,246,110,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -402,8 +415,27 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 169
     END
+
+    IDD_SPECPROPS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 614
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_SPECPROPS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -434,11 +466,11 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 IDD_TVSPROPERTYMANAGER DIALOGEX 0, 0, 751, 376
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
-CAPTION "???????? TVS ???????"
+CAPTION "???????? ???????"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "??",IDOK,634,355,50,14
-    PUSHBUTTON      "??????",IDCANCEL,694,355,50,14
+    DEFPUSHBUTTON   "ok",IDOK,634,355,50,14
+    PUSHBUTTON      "cancel",IDCANCEL,694,355,50,14
     CONTROL         "?????????????1",IDC_GRID,"MFCGridCtrl",WS_TABSTOP,7,7,737,344
 END
 

@@ -24,13 +24,27 @@ void TVSCommandSpecification::execute(void)
 	}
 
 	ads_point pt1;
-	if (acedGetPoint(NULL, _T("\nУкажите точку вставки спецификации:"), pt1) != RTNORM)
-		return;
+	TVSSpecTable table;
+	acedInitGet(RSG_NONULL, _T("Настройки Н н Y y"));
+	int status = 0;
+
+	while (status != RTNORM) {
+		status = acedGetPoint(NULL, _T("\nУкажите точку вставки спецификации или [Настройки]:"), pt1);
+		switch (status)
+		{
+		case RTCAN:
+			return;
+			break;
+		case RTKWORD:
+			table.showPropsDlg();
+			break;
+		}
+	}
 
 	TVSPropertySpec spec;
 	spec.processSetOfObjects(sset);
 	spec.sort();
-	TVSSpecTable table;
+	
 	table.loadColumnsFromSettings();
 	table.buildDataFromSpec(spec);
 	table.toSimpleTable(asPnt3d(pt1));

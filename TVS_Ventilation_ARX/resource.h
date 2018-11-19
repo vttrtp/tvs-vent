@@ -27,6 +27,7 @@
 #define IDR_TVSPROPERTYArticleDYN       109
 #define IDD_MLEADERPROP                 109
 #define IDR_TVSPROPERTYManufacturerDYN  110
+#define IDD_SPECPROPS                   110
 #define IDR_TVSPROPERTYUnitsDYN         111
 #define IDR_TVSPROPERTYCountDYN         112
 #define IDR_TVSPROPERTYMassDYN          113
@@ -38,7 +39,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        104
+#define _APS_NEXT_RESOURCE_VALUE        105
 #define _APS_NEXT_COMMAND_VALUE         32768
 #define _APS_NEXT_CONTROL_VALUE         100
 #define _APS_NEXT_SYMED_VALUE           104

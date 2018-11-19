@@ -13,6 +13,5 @@ TVSCommandAddProperties::~TVSCommandAddProperties()
 
 void TVSCommandAddProperties::processId(const AcDbObjectId &objId)
 {
-	acutPrintf(L"hello");
 	TVSController::get()->tvsPropertyController.addProperty(objId);
 }

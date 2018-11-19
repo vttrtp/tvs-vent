@@ -187,6 +187,12 @@
     <ClCompile Include="graphicHelper.cpp">
       <Filter>helpers</Filter>
     </ClCompile>
+    <ClCompile Include="tableHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="dgSpecProperty.cpp">
+      <Filter>forms\specification</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GridCtrl_src\GridCell.h">
@@ -387,6 +393,12 @@
     <ClInclude Include="graphicHelper.h">
       <Filter>helpers</Filter>
     </ClInclude>
+    <ClInclude Include="tableHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="dgSpecProperty.h">
+      <Filter>forms\specification</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -513,6 +525,9 @@
     </Filter>
     <Filter Include="models\TVSSpecTable">
       <UniqueIdentifier>{382a0295-2eee-43cd-b0f0-7e6afd54b584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="forms\specification">
+      <UniqueIdentifier>{abb92ac5-4850-43eb-a7b7-d883a21e4c6c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
