@@ -30,7 +30,7 @@
     <CLRSupport>false</CLRSupport>
     <UseOfMfc>Dynamic</UseOfMfc>
     <UseOfAtl>false</UseOfAtl>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -49,12 +49,12 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="Autodesk.arx-2017.props" />
+    <Import Project="Autodesk.arx-2013-2014.props" />
   </ImportGroup>
   <PropertyGroup Label="Configuration">
     <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v90'">v90</PlatformToolset>
     <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v100'">v100</PlatformToolset>
-    <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v140'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v100'">v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,7 +107,7 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TurnOffAllWarnings</WarningLevel>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\$(Configuration)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level1</WarningLevel>
-      <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Autodesk\AutoCAD 2017;$(ArxSdkDir)\inc-$(Platform);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Autodesk\AutoCAD 2013;$(ArxSdkDir)\inc-$(Platform);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\$(Configuration)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>

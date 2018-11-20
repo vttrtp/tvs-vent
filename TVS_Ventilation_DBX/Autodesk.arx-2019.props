@@ -3,8 +3,8 @@
 
 	<!-- http://msdn.microsoft.com/en-us/library/ms171458.aspx -->
 	<PropertyGroup>
-		<_ProjectFileVersion>20.0.0.1</_ProjectFileVersion>
-		<_PropertySheetDisplayName>ObjectARX 2019</_PropertySheetDisplayName>
+		<_ProjectFileVersion>23.0.0.1</_ProjectFileVersion>
+		<_PropertySheetDisplayName>ObjectARX 2015</_PropertySheetDisplayName>
 	</PropertyGroup>
 	
 <Import Project="..\Configurations2019.targets" />

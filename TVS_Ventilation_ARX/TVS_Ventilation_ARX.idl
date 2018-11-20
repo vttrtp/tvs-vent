@@ -157,7 +157,7 @@ library TVSTVS_Ventilation_ARXLib
 	importlib("stdole2.tlb");
 	
 
-	importlib("axdb22enu.tlb");
+	importlib("axdb19enu.tlb");
 
 
 	//----- If the following import fails then it means that the type library 
