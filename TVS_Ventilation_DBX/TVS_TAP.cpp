@@ -50,7 +50,7 @@ TVS_TAP::~TVS_TAP() {
 void TVS_TAP::getSizeString(CString &sizeStr, const bool &sortSize/*=false*/)
 {
 	double SA, SB;
-	if (Form == Form_Direct) {
+	if (Form == Form_Direct || SizeB==0) {
 		SA = get_SizeA();
 		SB = get_SizeB();
 	}
@@ -59,7 +59,7 @@ void TVS_TAP::getSizeString(CString &sizeStr, const bool &sortSize/*=false*/)
 		SA = get_SizeB();
 	}
 
-	if (SizeB == 0)
+	if (SB == 0)
 	{
 		sizeStr.Format(L"%%%%c%g", SA);
 		return;
