@@ -127,9 +127,6 @@
     <ClCompile Include="TVSPropertySpec.cpp">
       <Filter>models\TVSPropertySpec</Filter>
     </ClCompile>
-    <ClCompile Include="TVSPropertySpecController.cpp">
-      <Filter>controllers\TVSPropertySpec</Filter>
-    </ClCompile>
     <ClCompile Include="TVSPropertySpecRow.cpp">
       <Filter>models\TVSPropertySpec</Filter>
     </ClCompile>
@@ -177,6 +174,24 @@
     </ClCompile>
     <ClCompile Include="TVSPropertDynBase.cpp">
       <Filter>dynProps\TVSProperty</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSSpecTable.cpp">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClCompile>
+    <ClCompile Include="TVSSpecTableColumn.cpp">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClCompile>
+    <ClCompile Include="stringHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="graphicHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="tableHelper.cpp">
+      <Filter>helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="dgSpecProperty.cpp">
+      <Filter>forms\specification</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,9 +336,6 @@
     <ClInclude Include="TVSPropertySpec.h">
       <Filter>models\TVSPropertySpec</Filter>
     </ClInclude>
-    <ClInclude Include="TVSPropertySpecController.h">
-      <Filter>controllers\TVSPropertySpec</Filter>
-    </ClInclude>
     <ClInclude Include="TVSPropertySpecRow.h">
       <Filter>models\TVSPropertySpec</Filter>
     </ClInclude>
@@ -368,6 +380,24 @@
     </ClInclude>
     <ClInclude Include="TVSCommandExcelSpecification.h">
       <Filter>commands\TVSExcelSpecification</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSSpecTable.h">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClInclude>
+    <ClInclude Include="TVSSpecTableColumn.h">
+      <Filter>models\TVSSpecTable</Filter>
+    </ClInclude>
+    <ClInclude Include="stringHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="graphicHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="tableHelper.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="dgSpecProperty.h">
+      <Filter>forms\specification</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -469,9 +499,6 @@
     <Filter Include="models\TVSPropertySpec">
       <UniqueIdentifier>{da5e2ce4-82ad-4484-960b-5e8a665a9e07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="controllers\TVSPropertySpec">
-      <UniqueIdentifier>{d5b677bf-1e01-4825-afae-3e452540ebd6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="old\grid">
       <UniqueIdentifier>{7051f7ce-c0a9-472e-a6f6-2635802628d7}</UniqueIdentifier>
     </Filter>
@@ -495,6 +522,12 @@
     </Filter>
     <Filter Include="commands\TVSExcelSpecification">
       <UniqueIdentifier>{0790b6f0-f997-48a1-a3be-ae72bfd00803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\TVSSpecTable">
+      <UniqueIdentifier>{382a0295-2eee-43cd-b0f0-7e6afd54b584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="forms\specification">
+      <UniqueIdentifier>{abb92ac5-4850-43eb-a7b7-d883a21e4c6c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

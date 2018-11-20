@@ -30,7 +30,7 @@ library TVSTVS_Ventilation_DBXLib
 	//----- If you want to provide localized typelib then you must import
 	//----- localized tlb here.
 
-	importlib("axdb20enu.tlb");
+	importlib("axdb19enu.tlb");
 
 	//.- Interface definition
 	[

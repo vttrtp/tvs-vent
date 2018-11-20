@@ -60,7 +60,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-openssl>
@@ -71,7 +71,7 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ACADVER)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-curl>static</Linkage-curl>
@@ -79,7 +79,7 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ACADVER)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <Linkage-curl>
     </Linkage-curl>
@@ -88,7 +88,7 @@
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(ACADVER)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath);$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
+    <IncludePath>$(IncludePath);$(SolutionDir)thirdParty\json;$(SolutionDir)TVS_Ventilation_DBX;$(ProjectDir)..\..\codegenerator\TVSPL</IncludePath>
     <LibraryPath>$(ProjectDir)..\..\codegenerator\TVSPL;$(LibraryPath)</LibraryPath>
     <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     <Linkage-curl>static</Linkage-curl>
@@ -153,6 +153,11 @@
     <ClCompile Include="..\GridCtrl_src\InPlaceEdit.cpp" />
     <ClCompile Include="..\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="acrxEntryPoint.cpp" />
+    <ClCompile Include="dgSpecProperty.cpp" />
+    <ClCompile Include="graphicHelper.cpp" />
+    <ClCompile Include="stringHelper.cpp" />
+    <ClCompile Include="tableHelper.cpp" />
+    <ClCompile Include="TVSSpecTableColumn.cpp" />
     <ClCompile Include="TVSCommandAddProperties.cpp" />
     <ClCompile Include="TVSAttrtibutesController.cpp" />
     <ClCompile Include="dgBlockManager.cpp" />
@@ -199,7 +204,6 @@
     <ClCompile Include="TVSPropertyNoteDyn.cpp" />
     <ClCompile Include="TVSPropertyPositionDyn.cpp" />
     <ClCompile Include="TVSPropertySizeDyn.cpp" />
-    <ClCompile Include="TVSPropertySpecController.cpp" />
     <ClCompile Include="TVSPropertySpecRow.cpp" />
     <ClCompile Include="TVSPropertyTypeDyn.cpp" />
     <ClCompile Include="TVSPropertyUnitsDyn.cpp" />
@@ -208,6 +212,7 @@
     <ClCompile Include="TVSCommandLeadRecalculate.cpp" />
     <ClCompile Include="TVSPropertySpec.cpp" />
     <ClCompile Include="TVSCommandSpecification.cpp" />
+    <ClCompile Include="TVSSpecTable.cpp" />
     <ClCompile Include="TVS_Ventilation_ARX.cpp" />
     <ClCompile Include="xRecordXdataHelper.cpp" />
   </ItemGroup>
@@ -220,6 +225,11 @@
     <ClInclude Include="..\GridCtrl_src\InPlaceEdit.h" />
     <ClInclude Include="..\GridCtrl_src\MemDC.h" />
     <ClInclude Include="..\GridCtrl_src\TitleTip.h" />
+    <ClInclude Include="dgSpecProperty.h" />
+    <ClInclude Include="graphicHelper.h" />
+    <ClInclude Include="stringHelper.h" />
+    <ClInclude Include="tableHelper.h" />
+    <ClInclude Include="TVSSpecTableColumn.h" />
     <ClInclude Include="TVSCommandAddProperties.h" />
     <ClInclude Include="TVSAttrtibutesController.h" />
     <ClInclude Include="dgBlockManager.h" />
@@ -265,7 +275,6 @@
     <ClInclude Include="TVSPropertyPositionDyn.h" />
     <ClInclude Include="TVSPropertySettings.h" />
     <ClInclude Include="TVSPropertySizeDyn.h" />
-    <ClInclude Include="TVSPropertySpecController.h" />
     <ClInclude Include="TVSPropertySpecRow.h" />
     <ClInclude Include="TVSPropertyTypeDyn.h" />
     <ClInclude Include="TVSPropertyUnitsDyn.h" />
@@ -274,6 +283,7 @@
     <ClInclude Include="TVSCommandLeadRecalculate.h" />
     <ClInclude Include="TVSPropertySpec.h" />
     <ClInclude Include="TVSCommandSpecification.h" />
+    <ClInclude Include="TVSSpecTable.h" />
     <ClInclude Include="xRecordXdataHelper.h" />
   </ItemGroup>
   <ItemGroup>
