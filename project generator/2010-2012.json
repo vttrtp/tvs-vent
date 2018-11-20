@@ -7,6 +7,8 @@
         "20.0" : "18.0",
         "v110" : "v90",
         "acdb20.lib":"acdb18.lib",
+		"axdb18enu.tlb" : "axdb18enu.tlb",
+		"axdb19enu.tlb" : "axdb18enu.tlb",
         "axdb20enu.tlb" : "axdb18enu.tlb",
         "axdb21enu.tlb" : "axdb18enu.tlb",
         "axdb22enu.tlb" : "axdb18enu.tlb",

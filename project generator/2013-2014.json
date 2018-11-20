@@ -7,6 +7,8 @@
         "20.0" : "19.0",
         "v110" : "v100",
         "acdb20.lib":"acdb19.lib",
+		"axdb18enu.tlb" : "axdb19enu.tlb",
+		"axdb19enu.tlb" : "axdb19enu.tlb",
         "axdb20enu.tlb" : "axdb19enu.tlb",
         "axdb21enu.tlb" : "axdb19enu.tlb",
         "axdb22enu.tlb" : "axdb19enu.tlb",

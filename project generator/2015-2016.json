@@ -3,6 +3,8 @@
     "replace_strings" : 
     {
         "acdb20.lib":"acdb20.lib",
+		"axdb18enu.tlb" : "axdb20enu.tlb",
+		"axdb19enu.tlb" : "axdb20enu.tlb",
         "axdb20enu.tlb" : "axdb20enu.tlb",
         "axdb21enu.tlb" : "axdb20enu.tlb",
         "axdb22enu.tlb" : "axdb20enu.tlb",
