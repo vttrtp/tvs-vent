@@ -222,7 +222,9 @@ public:
 	virtual void getName(CString &unit);
 
 
-static	TVS_TAP *add_new(
+	virtual void getCount(double &count);
+	virtual void getCountUnit(CString &unit);
+	static	TVS_TAP *add_new(
 		double &pSizeA,
 		double &pSizeB,
 		double &pRadius,

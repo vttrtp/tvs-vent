@@ -916,7 +916,15 @@ void TVS_Pipe::getCountUnit(CString &unit)
 
 void TVS_Pipe::getName(CString &unit)
 {
+	assertReadEnabled();
+	if (DuctType == DuctTypeFlex)
+	{
+		unit = CCommonFlexPipeName;
+	}
+	else {
+
 	unit = CCommonPipeName;
+	}
 }
 
 bool TVS_Pipe::correctConnector(const int &index,const AcGeVector3d &offset)

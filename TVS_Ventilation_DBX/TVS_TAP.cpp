@@ -49,17 +49,27 @@ TVS_TAP::~TVS_TAP() {
 
 void TVS_TAP::getSizeString(CString &sizeStr, const bool &sortSize/*=false*/)
 {
+	double SA, SB;
+	if (Form == Form_Direct) {
+		SA = get_SizeA();
+		SB = get_SizeB();
+	}
+	else {
+		SB = get_SizeA();
+		SA = get_SizeB();
+	}
+
 	if (SizeB == 0)
 	{
-		sizeStr.Format(L"%%%%c%g", SizeA);
+		sizeStr.Format(L"%%%%c%g", SA);
 		return;
 	}
 	if (sortSize) {
-		sizeStr.Format(L"%gx%g", min(SizeA, SizeB), max(SizeA, SizeB));
+		sizeStr.Format(L"%gx%g", min(SA, SB), max(SA, SB));
 		return;
 	}
 	else {
-		sizeStr.Format(L"%gx%g", SizeA, SizeB);
+		sizeStr.Format(L"%gx%g", SA, SB);
 	}
 }
 
@@ -2159,7 +2169,46 @@ Acad::ErrorStatus TVS_TAP::getArea(double &area) const {
 
 void TVS_TAP::getName(CString &unit)
 {
-	unit = CCommonTapName;
+	assertReadEnabled();
+	if (DuctType == DuctTypeFlex)
+	{
+		unit = CCommonFlexPipeName;
+	}
+	else {
+
+		unit = CCommonTapName;
+	}
+	
+}
+
+void TVS_TAP::getCount(double &count)
+{
+	assertReadEnabled();
+
+	if (DuctType == DuctTypeFlex)
+	{
+		count = M_PI*Radius*Swectangle / 2 / M_PI / 1000;
+	}
+	else {
+
+		count = 1;
+	}
+
+
+}
+
+void TVS_TAP::getCountUnit(CString &unit)
+{
+	assertReadEnabled();
+	
+	if (DuctType == DuctTypeFlex)
+	{
+		unit = CCommonLength_Unit;
+	}
+	else {
+
+		unit = CCommonCount_Unit;
+	}
 }
 
 ///////////////////

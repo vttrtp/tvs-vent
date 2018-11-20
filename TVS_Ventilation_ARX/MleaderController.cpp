@@ -102,9 +102,11 @@ bool MleaderController::getStringMessage(const AcDbObjectId &ObjectId, const CSt
 		{
 			entType = 2;
 		}
-		else return false;
+		else if (!haveAttrib)
+		{
+			return false;
+		}
 	}
-
 
 	//parse format
 	CString curTemp;

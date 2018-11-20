@@ -149,6 +149,7 @@ void TVSCommandLead::execute(void)
 
 			if (TVSController::get()->tvsPropertyController.checkProperty(id)) {
 				ft = true;
+				
 			}
 			{
 				AcDbObjectPointer<AcDbEntity>pEnt1(id, AcDb::kForRead);
@@ -214,8 +215,9 @@ void TVSCommandLead::execute(void)
 				}
 			}
 			if (ft) {
-
+				acutPrintf(L"I am here113124 \n");
 				mCtrl.getStringMessage(id, Settings::get()->mLeader.getFormatForEntity(id), resultMessage);
+				resultMessage.Trim(L"- ");
 			}
 
 		}
