@@ -30,6 +30,19 @@ bool MleaderController::setFormat(const AcDbObjectId &MLeaderId, const CString &
 	return setXdataParameter(MLeaderId, MLeaderFormat, AcDb::kDxfXdAsciiString, format.GetString());
 }
 
+bool MleaderController::checkIfMLead(AcDbObjectId objId)
+{
+	AcDbObjectPointer<AcDbEntity>pEnt(objId, AcDb::kForRead);
+	if (pEnt.openStatus() != Acad::eOk) return false;
+
+	if (AcDbMLeader::cast(pEnt) != NULL) 
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 bool MleaderController::setObjectId(const AcDbObjectId &MLeaderId, const AcDbObjectId &objId) {
 
@@ -49,7 +62,11 @@ bool MleaderController::clearMleader(const AcDbObjectId &MLeaderId) {
 
 bool MleaderController::recalculateMleader(const AcDbObjectId &MLeaderId)
 {
+
 	AcDbObjectId objectId;
+	if (!checkIfMLead(MLeaderId)) {
+		return false;
+	}
 	if (!getObjectId(MLeaderId, objectId)) return false;
 
 	//check if id exists

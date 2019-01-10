@@ -18,7 +18,7 @@ public:
 	//Format xData
 	bool getFormat(const AcDbObjectId &MLeaderId, CString &format);
 	bool setFormat(const AcDbObjectId &MLeaderId, const CString &format);
-
+	bool checkIfMLead(AcDbObjectId objId);
 	//recalculate mleader
 	bool recalculateMleader(const AcDbObjectId &MLeaderId);
 
