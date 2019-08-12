@@ -116,7 +116,7 @@ GripCback::hotGripfunc(AcDbGripData			*pthis,
 	AcDbGripOperations::ReturnValue gripStat(AcDbGripOperations::eOk);
 
 
-	int index =(int) pthis->appData();
+	int index = intptr_t(pthis->appData());
 	
 	
 		TVS_Pipe::SetParamsForDraw(entId,index);

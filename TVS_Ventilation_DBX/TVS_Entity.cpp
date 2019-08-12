@@ -262,6 +262,19 @@ Acad::ErrorStatus TVS_Entity::subMoveGripPointsAt (
 	return (AcDbCurve::subMoveGripPointsAt (gripAppData, offset, bitflags)) ;
 }
 
+double TVS_Entity::get_Speed() {
+
+	if (SizeA == 0) return 0;
+	if (get_ThisRound() == true)
+	{
+		return Flow / (3600 * 3.14*(SizeA / 1000)*(SizeA / 1000) / 4);
+	}
+	else
+	{
+		return Flow / (3600 * (SizeA / 1000)*(SizeB / 1000));
+	}
+}
+
 //-----------------------------------------------------------------------------
 //----- AcDbCurve protocols
 //- Curve property tests.

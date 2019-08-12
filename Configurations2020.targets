@@ -1,0 +1,26 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<ACADVER>2020\</ACADVER>
+		<AcadDir Condition="'$(Platform)'=='x64'">C:\Program Files\Autodesk\AutoCAD 2020\</AcadDir>
+		<AcadDir Condition="'$(Platform)'=='Win32'">C:\Program Files\Autodesk\AutoCAD 2020\</AcadDir>
+		<AcadExe Condition="'$(ArxAppType)'=='dbx' or '$(ArxAppType)'=='dbxnet' or '$(ArxAppType)'=='arx' or '$(ArxAppType)'=='arxnet'">acad.exe</AcadExe>
+		<AcadExe Condition="'$(ArxAppType)'=='crx' or '$(ArxAppType)'=='crxnet'">accoreconsole.exe</AcadExe>
+		<ArxSdkDir>$(SolutionDir)ThirdParty\ObjectARX2020\</ArxSdkDir>
+
+		<ArxSdkIncs Condition="'$(Platform)'=='Win32'">$(ArxSdkDir)\inc;$(ArxSdkDir)\inc-win32</ArxSdkIncs>
+		<ArxSdkIncs Condition="'$(Platform)'=='x64'">$(ArxSdkDir)\inc;$(ArxSdkDir)\inc-x64</ArxSdkIncs>
+		<ArxHlrIncs>$(ArxSdkDir)\utils\HlrApi\inc</ArxHlrIncs>
+		<ArxAmodelerIncs>$(ArxSdkDir)\utils\amodeler\inc</ArxAmodelerIncs>
+		<ArxBrepIncs>$(ArxSdkDir)\utils\brep\inc</ArxBrepIncs>
+		<ArxAtilIncs>$(ArxSdkDir)\utils\Atil\Inc</ArxAtilIncs>
+
+		<ArxSdkLibs Condition="'$(Platform)'=='Win32'">$(ArxSdkDir)\lib-win32</ArxSdkLibs>
+		<ArxSdkLibs Condition="'$(Platform)'=='x64'">$(ArxSdkDir)\lib-x64</ArxSdkLibs>
+		<ArxHlrLibs>$(ArxSdkDir)\utils\HlrApi\lib-$(Platform)</ArxHlrLibs>
+		<ArxAmodelerLibs>$(ArxSdkDir)\utils\amodeler\lib-$(Platform)</ArxAmodelerLibs>
+		<ArxBrepLibs>$(ArxSdkDir)\utils\brep\lib-$(Platform)</ArxBrepLibs>
+		<ArxAtilLibs>$(ArxSdkDir)\utils\Atil\Lib-$(Platform)</ArxAtilLibs>
+		<ArxSDKVersion>23.1</ArxSDKVersion>
+		<ArxSDKPlatform>v141</ArxSDKPlatform>
+	</PropertyGroup>
+</Project>

@@ -222,6 +222,7 @@ void TVS_TAP::goodbye(const AcDbObject *pDbObj) {
 	AcDbCurve::goodbye(pDbObj);
 }
 
+
 void TVS_TAP::copied(const AcDbObject *pDbObj, const AcDbObject *pNewObj) {
 	assertReadEnabled();
 	AcDbCurve::copied(pDbObj, pNewObj);

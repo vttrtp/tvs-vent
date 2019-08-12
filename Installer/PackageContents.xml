@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <ApplicationPackage SchemaVersion="1.0" AppVersion="3.3.1" AutodeskProduct="AutoCAD" Description="TVS" Author="Tryputsin Vitaut" ProductCode="{4BEE127E-95C4-434D-ABAC-65155192BB24}"  Name="TVS">
-  <RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD|AutoCAD*" SeriesMin="15.0" SeriesMax="23.0" />
+  <RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD|AutoCAD*" SeriesMin="15.0" SeriesMax="23.1" />
   <CompanyDetails Name="TVS" Email="krylatyvershnik@gmail.com" />
   
   <Components Description="TVS_Vent 2015-2016 64bit">
@@ -63,6 +63,12 @@
 		</ComponentEntry>
 	</Components>
 	
+				  <Components Description="TVS_Vent 2020 64bit">
+		<RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R23.1" SeriesMax="R23.1" SupportPath="./Contents/TVS_VENT/2020/win64;"/>
+		<ComponentEntry AppName="TVS_VENT 2019x64" Version="3.3.1" ModuleName="./Contents/TVS_VENT/2020/win64/TVSTVS_Ventilation_DBX.dbx"
+			 LoadOnAutoCADStartup="True">
+		</ComponentEntry>
+	</Components>
 	
        <Components Description="TVS_VENT menu">
 		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R23.0" SupportPath="./Contents/TVS_VENT/Resources;"/>
@@ -70,14 +76,14 @@
 			</Components>
 			
    <Components Description="TVS_TOOLS">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R23.0" SupportPath="./Contents/TVS_TOOLS/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R23.1" SupportPath="./Contents/TVS_TOOLS/Resources;"/>
 		<ComponentEntry AppName="TVS_TOOLS" Version="3.3.1" ModuleName="./Contents/TVS_TOOLS/Resources/TVS_TOOLS.cuix"/>
 		
 	</Components>
   
   
        <Components Description="Resources">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R23.0" SupportPath="./Contents/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R23.1" SupportPath="./Contents/Resources;"/>
 		
 	</Components>
   

@@ -94,7 +94,8 @@ public:
 	virtual void cancelled (const AcDbObject *pDbObj) ;
 	virtual void objectClosed (const AcDbObjectId objId) ;
 	virtual void goodbye (const AcDbObject *pDbObj) ;
-	virtual void copied (const AcDbObject *pDbObj, const AcDbObject *pNewObj) ;
+	
+	virtual void copied(const AcDbObject *pDbObj, const AcDbObject *pNewObj);
 	virtual void erased (const AcDbObject *pDbObj, Adesk::Boolean bErasing =true) ;
 	virtual void modified (const AcDbObject *pDbObj) ;
 	virtual void modifiedGraphics (const AcDbEntity *pDbEnt) ;

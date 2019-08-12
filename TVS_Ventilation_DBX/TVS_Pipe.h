@@ -238,7 +238,7 @@ static	TVS_Pipe* add_new(AcGePoint3d &pFirstPoint,
 	
 
 	ACHAR tSise[25];
-
+	
 	double Length;
 	double get_Length(void) const;
 	Acad::ErrorStatus put_Length(double newVal);

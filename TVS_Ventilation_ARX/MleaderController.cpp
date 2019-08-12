@@ -190,8 +190,8 @@ bool MleaderController::GetEntityStringPropertyByName(const AcDbObjectId  &objId
 		return true;
 	}
 	else if (stringTemplate == L"V") {
+		stringText.Format(L"%g",pEnt->get_Speed());
 		return true;
-		//stringText.Format(L"%d",pEnt->get_Speed());
 	}
 	else if (stringTemplate == L"D") {
 		pEnt->getSizeString(stringText);

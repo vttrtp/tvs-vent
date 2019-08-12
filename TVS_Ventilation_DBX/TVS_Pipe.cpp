@@ -691,7 +691,7 @@ Acad::ErrorStatus TVS_Pipe::subMoveGripPointsAt (
 	for(int i=0; i<gripAppData.length(); i++)
 	{
 
-		int idx = (int)gripAppData.at(i);
+		int idx = intptr_t(gripAppData.at(i));
 		// For FP and center point
 
 
@@ -1395,7 +1395,7 @@ Acad::ErrorStatus TVS_FlexDuct::subMoveGripPointsAt( const AcDbVoidPtrArray &gri
 	for(int i=0; i<gripAppData.length(); i++)
 	{
 
-		int idx = (int)gripAppData.at(i);
+		int idx = intptr_t(gripAppData.at(i));
 		// For FP and center point
 
 
