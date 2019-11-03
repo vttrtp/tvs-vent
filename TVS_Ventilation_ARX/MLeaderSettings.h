@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "arxHeaders.h"
 #include "TVS_Entity.h"
 #define MLeaderID _T("TVS_MLeaderID")
@@ -8,16 +8,16 @@ class MLeaderSettings
 public:
 	MLeaderSettings(void) {
 		instructionMessage = L"\
-[L]-Расход м3/ч\r\n\
-[V]-Скорость м/с\r\n\
-[D]-Размер мм\r\n\
-[P]-Потери давления P\r\n\
-[BN]-Имя блока P\r\n\
-[N]-Имя слоя\r\n\
-[Название Атрибута]-Значение\r\n\ Аттрибута (Для блоков)\r\n\
+[L]-Р Р°СЃС…РѕРґ Рј3/С‡\r\n\
+[V]-РЎРєРѕСЂРѕСЃС‚СЊ Рј/СЃ\r\n\
+[D]-Р Р°Р·РјРµСЂ РјРј\r\n\
+[P]-РџРѕС‚РµСЂРё РґР°РІР»РµРЅРёСЏ P\r\n\
+[BN]-РРјСЏ Р±Р»РѕРєР° P\r\n\
+[N]-РРјСЏ СЃР»РѕСЏ\r\n\
+[РќР°Р·РІР°РЅРёРµ РђС‚СЂРёР±СѓС‚Р°]-Р—РЅР°С‡РµРЅРёРµ\r\n\ РђС‚С‚СЂРёР±СѓС‚Р° (Р”Р»СЏ Р±Р»РѕРєРѕРІ)\r\n\
 ";
 		pipeLeader = L"[D]";
-		blockLeader = L"[Тип]-[Размер]";
+		blockLeader = L"[РўРёРї]-[Р Р°Р·РјРµСЂ]";
 
 	};
 

@@ -1,6 +1,6 @@
-//{{NO_DEPENDENCIES}}
-// Включаемый файл, созданный в Microsoft Visual C++.
-// Используется TVS_Ventilation_ARX.rc
+п»ї//{{NO_DEPENDENCIES}}
+// Р’РєР»СЋС‡Р°РµРјС‹Р№ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ РІ Microsoft Visual C++.
+// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ TVS_Ventilation_ARX.rc
 //
 #define IDS_PROJNAME                    100
 #define IDC_EDIT1                       100
@@ -45,3 +45,4 @@
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif
+

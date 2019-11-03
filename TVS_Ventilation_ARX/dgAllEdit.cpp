@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -299,10 +299,7 @@ void dgAllEdit::OnShowWindow(BOOL bShow, UINT nStatus)
 
 
 
-
-
-
-	// TODO: добавьте свой код обработчика сообщений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СЃРѕРѕР±С‰РµРЅРёР№
 }
 
 
@@ -370,7 +367,7 @@ void dgAllEdit::SetElevUp()
 
 
 
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 void dgAllEdit::SetElevMid()
@@ -380,7 +377,7 @@ void dgAllEdit::SetElevMid()
 	fElevUp.SetCheck(0);
 	fElevMid.SetCheck(1);
 	fElevDown.SetCheck(0);
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 void dgAllEdit::SetElevDown()
@@ -388,7 +385,7 @@ void dgAllEdit::SetElevDown()
 	fElevUp.SetCheck(0);
 	fElevMid.SetCheck(0);
 	fElevDown.SetCheck(1);
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 
@@ -602,7 +599,7 @@ void dgAllEdit::OnBnClickedOk()
 
 
 	this->OnOK();
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 
@@ -612,4 +609,5 @@ void dgAllEdit::ChangeDuctFlex()
 
 	change_BOOL(DuctFlex, fDuctFlex);
 }
+
 

@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include "TVS_TAP.h"
 #include "MLeaderSettings.h"
 #include "TVSPropertySettings.h"
@@ -26,14 +26,14 @@
 #define TVSEnt2isGrose 1
 #define TVSEntitiesisSame 2
 
-#define TagPos _T("œŒ«»÷»ﬂ")
-#define TagName _T("»Ãﬂ")
-#define TagType _T("“»œ")
-#define TagSize _T("–¿«Ã≈–")
-#define TagArticle _T("¿–“» ”À")
-#define TagManufacture _T("œ–Œ»«¬Œƒ»“≈À‹")
-#define TagMass _T("Ã¿——¿")
-#define TagCommit _T("œ–»Ã≈◊¿Õ»≈")
+#define TagPos _T("–ü–û–ó–ò–¶–ò–Ø")
+#define TagName _T("–ò–ú–Ø")
+#define TagType _T("–¢–ò–ü")
+#define TagSize _T("–†–ê–ó–ú–ï–†")
+#define TagArticle _T("–ê–†–¢–ò–ö–£–õ")
+#define TagManufacture _T("–ü–†–û–ò–ó–í–û–î–ò–¢–ï–õ–¨")
+#define TagMass _T("–ú–ê–°–°–ê")
+#define TagCommit _T("–ü–†–ò–ú–ï–ß–ê–ù–ò–ï")
 
 
 
@@ -73,4 +73,5 @@ public:
 	TVSPropertySettings tvsProperty;
 	MLeaderSettings mLeader;
 };
+
 

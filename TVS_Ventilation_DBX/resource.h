@@ -1,6 +1,6 @@
-//{{NO_DEPENDENCIES}}
-// Включаемый файл, созданный в Microsoft Visual C++.
-// Используется TVS_Ventilation_DBX.rc
+п»ї//{{NO_DEPENDENCIES}}
+// Р’РєР»СЋС‡Р°РµРјС‹Р№ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ РІ Microsoft Visual C++.
+// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ TVS_Ventilation_DBX.rc
 //
 #define IDS_PROJNAME                    100
 #define IDR_TVS_VENTILATION_DBX         101
@@ -20,3 +20,4 @@
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif
+

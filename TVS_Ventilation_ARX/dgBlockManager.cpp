@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -91,17 +91,17 @@ void dgBlockManager::OnShowWindow(BOOL bShow, UINT nStatus)
 	mGrid.SetColumnWidth(9, wide);
 	mGrid.SetColumnWidth(10, wide * 2);
 
-	mGrid.SetItemText(0, 0, _T("№"));
-	mGrid.SetItemText(0, 1, _T("Поз"));
-	mGrid.SetItemText(0, 2, _T("Наименование"));
-	mGrid.SetItemText(0, 3, _T("Тип"));
-	mGrid.SetItemText(0, 4, _T("Размер"));
-	mGrid.SetItemText(0, 5, _T("Артикул"));
-	mGrid.SetItemText(0, 6, _T("Производитель"));
-	mGrid.SetItemText(0, 7, _T("Единица"));
-	mGrid.SetItemText(0, 8, _T("Кол-во"));
-	mGrid.SetItemText(0, 9, _T("Масса"));
-	mGrid.SetItemText(0, 10, _T("Примечание"));
+	mGrid.SetItemText(0, 0, _T("в„–"));
+	mGrid.SetItemText(0, 1, _T("РџРѕР·"));
+	mGrid.SetItemText(0, 2, _T("РќР°РёРјРµРЅРѕРІР°РЅРёРµ"));
+	mGrid.SetItemText(0, 3, _T("РўРёРї"));
+	mGrid.SetItemText(0, 4, _T("Р Р°Р·РјРµСЂ"));
+	mGrid.SetItemText(0, 5, _T("РђСЂС‚РёРєСѓР»"));
+	mGrid.SetItemText(0, 6, _T("РџСЂРѕРёР·РІРѕРґРёС‚РµР»СЊ"));
+	mGrid.SetItemText(0, 7, _T("Р•РґРёРЅРёС†Р°"));
+	mGrid.SetItemText(0, 8, _T("РљРѕР»-РІРѕ"));
+	mGrid.SetItemText(0, 9, _T("РњР°СЃСЃР°"));
+	mGrid.SetItemText(0, 10, _T("РџСЂРёРјРµС‡Р°РЅРёРµ"));
 
 	for (int i = 0; i < blckList.specList.length(); i++)
 	{
@@ -142,5 +142,6 @@ void dgBlockManager::OnBnClickedOk()
 
 	}
 	this->OnOK();
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
+

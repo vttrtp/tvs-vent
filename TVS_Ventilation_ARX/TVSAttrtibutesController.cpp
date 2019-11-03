@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "TVSAttrtibutesController.h"
 #include "Settings.h"
 #include "TVSController.h"
@@ -40,14 +40,14 @@ bool TVSAttrtibutesController::CheckAtt(const ACHAR* pName, const ACHAR* tag)
 				AcDbObjectPointer<AcDbEntity> pSubEnt(objSubId, AcDb::kForRead);
 				if ((es = pSubEnt.openStatus()) == Acad::eOk) {
 					//
-					// Çäåñü ìîæíî ðàáîòàòü ñ ïðèìèòèâàìè â áëîêå
+					// Ð—Ð´ÐµÑÑŒ Ð¼Ð¾Ð¶Ð½Ð¾ Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ñ‚ÑŒ Ñ Ð¿Ñ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð²Ð°Ð¼Ð¸ Ð² Ð±Ð»Ð¾ÐºÐµ
 					//
 					//buf=pSubEnt->isA()->name();
-					//		 											acutPrintf(_T("\nÏðèìèòèâ: %s"),LPCTSTR(pSubEnt->isA()->name()));
+					//		 											acutPrintf(_T("\nÐŸÑ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð²: %s"),LPCTSTR(pSubEnt->isA()->name()));
 					AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
 
 					if (pAttdef) {
-						// Åñëè ýòî îïðåäåëåíèå àòðèáóòà ñäåëàåì îòäåëüíóþ îáðàáîòêó
+						// Ð•ÑÐ»Ð¸ ÑÑ‚Ð¾ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ðµ Ð°Ñ‚Ñ€Ð¸Ð±ÑƒÑ‚Ð° ÑÐ´ÐµÐ»Ð°ÐµÐ¼ Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½ÑƒÑŽ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÑƒ
 						if (wcscmp(tag, pAttdef->tagConst()) == 0) {
 							//	pAttDef->close();
 							pBlkRec->close();
@@ -57,18 +57,18 @@ bool TVSAttrtibutesController::CheckAtt(const ACHAR* pName, const ACHAR* tag)
 					}
 				}
 				else {
-					acutPrintf(_T("\nÍå óäàëîñü îòêðûòü ïðèìèòèâ â áëîêå! Îøèáêà: %s",
+					acutPrintf(_T("\nÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ð¿Ñ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð² Ð² Ð±Ð»Ð¾ÐºÐµ! ÐžÑˆÐ¸Ð±ÐºÐ°: %s",
 						LPCTSTR(acadErrorStatusText(es))));
 				}
 			}
 			else {
-				acutPrintf(_T("\nÍå óäàëîñü ïîëó÷èòü AcDbObjectId ïðèìèòâà â áëîêå! Îøèáêà: %s",
+				acutPrintf(_T("\nÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ AcDbObjectId Ð¿Ñ€Ð¸Ð¼Ð¸Ñ‚Ð²Ð° Ð² Ð±Ð»Ð¾ÐºÐµ! ÐžÑˆÐ¸Ð±ÐºÐ°: %s",
 					LPCTSTR(acadErrorStatusText(es))));
 			}
 		}
 	}
 	else {
-		acutPrintf(_T("\nÍå óäàëîñü ñîçäàòü èòåðàòîð äëÿ çàïèñè òàáëèöû áëîêîâ! Îøèáêà: %s", LPCTSTR(acadErrorStatusText(es))));
+		acutPrintf(_T("\nÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ Ð¸Ñ‚ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ð´Ð»Ñ Ð·Ð°Ð¿Ð¸ÑÐ¸ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ð±Ð»Ð¾ÐºÐ¾Ð²! ÐžÑˆÐ¸Ð±ÐºÐ°: %s", LPCTSTR(acadErrorStatusText(es))));
 	}
 
 	//pAttDef->close();
@@ -93,7 +93,7 @@ void TVSAttrtibutesController::AddNewAtt(const ACHAR* pName, const ACHAR* tag)
 	// specify the text,tag and prompt
 	ACHAR text[] = { L"" };
 
-	ACHAR prompt[] = { L"Ââåäèòå çíà÷åíèå" };
+	ACHAR prompt[] = { L"Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ" };
 
 	pCurDb =
 		acdbHostApplicationServices()->workingDatabase();
@@ -130,11 +130,11 @@ bool TVSAttrtibutesController::getBlockName(const AcDbObjectId &objId, CString &
 	Acad::ErrorStatus es;
 	AcDbObjectPointer<AcDbBlockReference> pBlkRef(objId, AcDb::kForRead);
 	if ((es = pBlkRef.openStatus()) != Acad::eOk) {
-		acutPrintf(_T("\nÎøèáêà îòêðûòèÿ BlockReference: %s"), acadErrorStatusText(es)); return false;
+		acutPrintf(_T("\nÐžÑˆÐ¸Ð±ÐºÐ° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ñ BlockReference: %s"), acadErrorStatusText(es)); return false;
 	}
 	AcDbBlockTableRecordPointer pBTR(pBlkRef->blockTableRecord(), AcDb::kForRead);
 	if ((es = pBTR.openStatus()) != Acad::eOk) {
-		acutPrintf(_T("\nÎøèáêà îòêðûòèÿ BlockTableRecord: %s"), acadErrorStatusText(es)); return false;
+		acutPrintf(_T("\nÐžÑˆÐ¸Ð±ÐºÐ° Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ñ BlockTableRecord: %s"), acadErrorStatusText(es)); return false;
 	}
 	const ACHAR* sBTRName = NULL;
 	pBTR->getName(sBTRName);
@@ -294,13 +294,13 @@ bool TVSAttrtibutesController::RemoveAttr(const AcDbObjectId &objId, const CStri
 				AcDbObjectPointer<AcDbEntity> pSubEnt(objSubId, AcDb::kForWrite);
 				if ((es = pSubEnt.openStatus()) == Acad::eOk) {
 					//
-					// Çäåñü ìîæíî ðàáîòàòü ñ ïðèìèòèâàìè â áëîêå
+					// Ð—Ð´ÐµÑÑŒ Ð¼Ð¾Ð¶Ð½Ð¾ Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ñ‚ÑŒ Ñ Ð¿Ñ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð²Ð°Ð¼Ð¸ Ð² Ð±Ð»Ð¾ÐºÐµ
 					//
 					//buf=pSubEnt->isA()->name();
-					//		 											acutPrintf(_T("\nÏðèìèòèâ: %s"),LPCTSTR(pSubEnt->isA()->name()));
+					//		 											acutPrintf(_T("\nÐŸÑ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð²: %s"),LPCTSTR(pSubEnt->isA()->name()));
 					AcDbAttributeDefinition *pAttdef = AcDbAttributeDefinition::cast(pSubEnt.object());
 					if (pAttdef) {
-						// Åñëè ýòî îïðåäåëåíèå àòðèáóòà ñäåëàåì îòäåëüíóþ îáðàáîòêó
+						// Ð•ÑÐ»Ð¸ ÑÑ‚Ð¾ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ðµ Ð°Ñ‚Ñ€Ð¸Ð±ÑƒÑ‚Ð° ÑÐ´ÐµÐ»Ð°ÐµÐ¼ Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½ÑƒÑŽ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÑƒ
 						if (tag == pAttdef->tagConst()) {
 							pAttdef->erase();
 							pBlkRec->close();
@@ -309,18 +309,18 @@ bool TVSAttrtibutesController::RemoveAttr(const AcDbObjectId &objId, const CStri
 					}
 				}
 				else {
-					acutPrintf(_T("\nÍå óäàëîñü îòêðûòü ïðèìèòèâ â áëîêå! Îøèáêà: %s",
+					acutPrintf(_T("\nÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ð¿Ñ€Ð¸Ð¼Ð¸Ñ‚Ð¸Ð² Ð² Ð±Ð»Ð¾ÐºÐµ! ÐžÑˆÐ¸Ð±ÐºÐ°: %s",
 						LPCTSTR(acadErrorStatusText(es))));
 				}
 			}
 			else {
-				acutPrintf(_T("\nÍå óäàëîñü ïîëó÷èòü AcDbObjectId ïðèìèòâà â áëîêå! Îøèáêà: %s",
+				acutPrintf(_T("\nÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ AcDbObjectId Ð¿Ñ€Ð¸Ð¼Ð¸Ñ‚Ð²Ð° Ð² Ð±Ð»Ð¾ÐºÐµ! ÐžÑˆÐ¸Ð±ÐºÐ°: %s",
 					LPCTSTR(acadErrorStatusText(es))));
 			}
 		}
 	}
 	else {
-		acutPrintf(_T("\nÍå óäàëîñü ñîçäàòü èòåðàòîð äëÿ çàïèñè òàáëèöû áëîêîâ! Îøèáêà: %s", LPCTSTR(acadErrorStatusText(es))));
+		acutPrintf(_T("\nÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ Ð¸Ñ‚ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ð´Ð»Ñ Ð·Ð°Ð¿Ð¸ÑÐ¸ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ð±Ð»Ð¾ÐºÐ¾Ð²! ÐžÑˆÐ¸Ð±ÐºÐ°: %s", LPCTSTR(acadErrorStatusText(es))));
 	}
 
 	//pAttDef->close();
@@ -348,3 +348,4 @@ bool TVSAttrtibutesController::RemoveAttr(const AcDbObjectId &objId, const CStri
 	}
 	return true;
 }
+

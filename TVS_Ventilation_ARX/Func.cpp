@@ -1,4 +1,4 @@
-#pragma once;
+п»ї#pragma once;
 #include "StdAfx.h"
 #include "Func.h"
 
@@ -78,18 +78,19 @@ void func::Givecenterpoint(AcGePoint3d &n1,
 	Norm2 = AcGePoint3d(F2.x - S2.x,
 		F2.y - S2.y,
 		0);
-	//consoleprint(Norm1,_T("\nПервая точка"));
-	//consoleprint(Norm2,_T("\nВторая точка"));
+	
+	//consoleprint(Norm1,_T("\nРџРµСЂРІР°СЏ С‚РѕС‡РєР°"));
+	//consoleprint(Norm2,_T("\nР’С‚РѕСЂР°СЏ С‚РѕС‡РєР°"));
 	pStartvector = AcGeVector3d(Norm1.x, Norm1.y, 0);
 	finishvector = AcGeVector3d(Norm2.x, Norm2.y, 0);
 
 	pAngle = angle(Norm1, Norm2);
 
-	//consoleprint(pAngle,_T("\nУгол"));
+	//consoleprint(pAngle,_T("\nРЈРіРѕР»"));
 	Givestartvector(pStartvector, finishvector, pAngle);
 	//pStartvector.normalize();
 	midp = n2;
-	//consoleprint(pAngle,_T("\nУгол"));
+	//consoleprint(pAngle,_T("\nРЈРіРѕР»"));
 
 
 
@@ -234,8 +235,8 @@ void func::Givestartvector(AcGeVector3d &Starvector, AcGeVector3d &v2, double &p
 	{
 		Starvector = v2;
 	}
-	//consoleprint(angle1,_T("\nУгол 1:"));
-	//consoleprint(angle2,_T("\nУгол 2:"));
+	//consoleprint(angle1,_T("\nРЈРіРѕР» 1:"));
+	//consoleprint(angle2,_T("\nРЈРіРѕР» 2:"));
 	pt1 = AcGePoint3d(Starvector.x, Starvector.y, 0);
 	//consoleprint(pt1,_T("\nstartvector :"));
 }
@@ -449,7 +450,7 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 // 		
 // 		if(pPipe->upgradeOpen()!=Acad::eOk)
 // 		{
-// 			acutPrintf(_T("Не могу открыть"));
+// 			acutPrintf(_T("РќРµ РјРѕРіСѓ РѕС‚РєСЂС‹С‚СЊ"));
 // 			return;
 // 		} 
 // 			
@@ -485,7 +486,7 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 // 
 // 		if(pPipe->upgradeOpen()!=Acad::eOk)
 // 		{
-// 			acutPrintf(_T("Не могу открыть"));
+// 			acutPrintf(_T("РќРµ РјРѕРіСѓ РѕС‚РєСЂС‹С‚СЊ"));
 // 			return;
 // 		} 
 // 
@@ -536,7 +537,7 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 // 
 // 		if(pTap->upgradeOpen()!=Acad::eOk)
 // 		{
-// 			acutPrintf(_T("Не могу открыть"));
+// 			acutPrintf(_T("РќРµ РјРѕРіСѓ РѕС‚РєСЂС‹С‚СЊ"));
 // 			return;
 // 		} 
 // 
@@ -552,7 +553,7 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 // 
 // 		if(pTrans->upgradeOpen()!=Acad::eOk)
 // 		{
-// 			acutPrintf(_T("Не могу открыть"));
+// 			acutPrintf(_T("РќРµ РјРѕРіСѓ РѕС‚РєСЂС‹С‚СЊ"));
 // 			return;
 // 		} 
 // 
@@ -569,7 +570,7 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 // 
 // 		if(pWye->upgradeOpen()!=Acad::eOk)
 // 		{
-// 			acutPrintf(_T("Не могу открыть"));
+// 			acutPrintf(_T("РќРµ РјРѕРіСѓ РѕС‚РєСЂС‹С‚СЊ"));
 // 			return;
 // 		} 
 // 
@@ -619,7 +620,7 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 //	long len = 0;
 //
 //	acedSSLength(sset, &len);
-//	//проверяем элементы и извлекаем данные
+//	//РїСЂРѕРІРµСЂСЏРµРј СЌР»РµРјРµРЅС‚С‹ Рё РёР·РІР»РµРєР°РµРј РґР°РЅРЅС‹Рµ
 //	bool firstPipe=false;
 //	bool firstTap=false;
 //	bool firstTrans=false;
@@ -819,7 +820,7 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 //		&&firstTrans==false
 //		&&firstWye==false)
 //	{
-//		acutPrintf(_T("\nНичего не выбрано"));
+//		acutPrintf(_T("\nРќРёС‡РµРіРѕ РЅРµ РІС‹Р±СЂР°РЅРѕ"));
 //		return;
 //	}
 //	{
@@ -856,14 +857,14 @@ AcGePoint3d func::AddSpecLine(AcGePoint3d cent,
 //
 //
 //
-//	///определение выравнивания
-//	int Emode=0;//по центру
-//	if (dg.ElevUp==1)//по верху
+//	///РѕРїСЂРµРґРµР»РµРЅРёРµ РІС‹СЂР°РІРЅРёРІР°РЅРёСЏ
+//	int Emode=0;//РїРѕ С†РµРЅС‚СЂСѓ
+//	if (dg.ElevUp==1)//РїРѕ РІРµСЂС…Сѓ
 //	{
 //		Emode=1;
 //	}
 //
-//	if (dg.ElevDown==1)//по низу
+//	if (dg.ElevDown==1)//РїРѕ РЅРёР·Сѓ
 //	{
 //		Emode=2;
 //	}
@@ -1003,7 +1004,7 @@ void func::Change(ads_name &sset)
 	Int32 len = 0;
 
 
-	//проверяем элементы и извлекаем данные
+	//РїСЂРѕРІРµСЂСЏРµРј СЌР»РµРјРµРЅС‚С‹ Рё РёР·РІР»РµРєР°РµРј РґР°РЅРЅС‹Рµ
 	bool firstPipe = false;
 	bool firstTap = false;
 	bool firstTrans = false;
@@ -1296,7 +1297,7 @@ void func::Change(ads_name &sset)
 		&& firstTrans == false
 		&& firstWye == false)
 	{
-		acutPrintf(_T("\nНичего не выбрано"));
+		acutPrintf(_T("\nРќРёС‡РµРіРѕ РЅРµ РІС‹Р±СЂР°РЅРѕ"));
 		return;
 	}
 	{
@@ -1355,14 +1356,14 @@ void func::Change(ads_name &sset)
 
 	bool cDuctFlex = true;
 	sequal(DuctFlex, sDuctFlex, dg.DuctFlex, cDuctFlex);
-	///определение выравнивания
-	int Emode = 0;//по центру
-	if (dg.ElevUp == 1)//по верху
+	///РѕРїСЂРµРґРµР»РµРЅРёРµ РІС‹СЂР°РІРЅРёРІР°РЅРёСЏ
+	int Emode = 0;//РїРѕ С†РµРЅС‚СЂСѓ
+	if (dg.ElevUp == 1)//РїРѕ РІРµСЂС…Сѓ
 	{
 		Emode = 1;
 	}
 
-	if (dg.ElevDown == 1)//по низу
+	if (dg.ElevDown == 1)//РїРѕ РЅРёР·Сѓ
 	{
 		Emode = 2;
 	}
@@ -1522,7 +1523,7 @@ void func::Change(AcDbEntity *pEnt)
 	long len = 0;
 
 
-	//проверяем элементы и извлекаем данные
+	//РїСЂРѕРІРµСЂСЏРµРј СЌР»РµРјРµРЅС‚С‹ Рё РёР·РІР»РµРєР°РµРј РґР°РЅРЅС‹Рµ
 	bool firstPipe = false;
 	bool firstTap = false;
 	bool firstTrans = false;
@@ -1795,7 +1796,7 @@ void func::Change(AcDbEntity *pEnt)
 		&& firstTrans == false
 		&& firstWye == false)
 	{
-		acutPrintf(_T("\nНичего не выбрано"));
+		acutPrintf(_T("\nРќРёС‡РµРіРѕ РЅРµ РІС‹Р±СЂР°РЅРѕ"));
 		return;
 	}
 	{
@@ -1848,14 +1849,14 @@ void func::Change(AcDbEntity *pEnt)
 	sequal(TapRadiusConst, sTapRadiusConst, dg.TapRadiusConst, cTapRadiusConst);
 	sequal(Swectangle, sSwectangle, dg.Swectangle, cSwectangle);
 
-	///определение выравнивания
-	int Emode = 0;//по центру
-	if (dg.ElevUp == 1)//по верху
+	///РѕРїСЂРµРґРµР»РµРЅРёРµ РІС‹СЂР°РІРЅРёРІР°РЅРёСЏ
+	int Emode = 0;//РїРѕ С†РµРЅС‚СЂСѓ
+	if (dg.ElevUp == 1)//РїРѕ РІРµСЂС…Сѓ
 	{
 		Emode = 1;
 	}
 
-	if (dg.ElevDown == 1)//по низу
+	if (dg.ElevDown == 1)//РїРѕ РЅРёР·Сѓ
 	{
 		Emode = 2;
 	}
@@ -2005,7 +2006,7 @@ void func::Change(AcDbEntity *pEnt)
 //	long len = 0;
 //
 //	acedSSLength(sset, &len);
-//	//проверяем элементы и извлекаем данные
+//	//РїСЂРѕРІРµСЂСЏРµРј СЌР»РµРјРµРЅС‚С‹ Рё РёР·РІР»РµРєР°РµРј РґР°РЅРЅС‹Рµ
 //	bool firstPipe=false;
 //	bool firstTap=false;
 //	bool firstTrans=false;
@@ -2215,7 +2216,7 @@ void func::Change(AcDbEntity *pEnt)
 //		&&firstTrans==false
 //		&&firstWye==false)
 //	{
-//		acutPrintf(_T("\nНичего не выбрано"));
+//		acutPrintf(_T("\nРќРёС‡РµРіРѕ РЅРµ РІС‹Р±СЂР°РЅРѕ"));
 //		return;
 //	}
 //	{
@@ -2281,19 +2282,19 @@ void func::Change(AcDbEntity *pEnt)
 //	}
 //
 //
-/////определение выравнивания
-//	int Emode=0;//по центру
-//if (dg.Up==1)//по верху
+/////РѕРїСЂРµРґРµР»РµРЅРёРµ РІС‹СЂР°РІРЅРёРІР°РЅРёСЏ
+//	int Emode=0;//РїРѕ С†РµРЅС‚СЂСѓ
+//if (dg.Up==1)//РїРѕ РІРµСЂС…Сѓ
 //{
 //Emode=1;
 //}
 //
-//if (dg.Down==1)//по низу
+//if (dg.Down==1)//РїРѕ РЅРёР·Сѓ
 //{
 //	Emode=2;
 //}
 //
-//	/////присваивание
+//	/////РїСЂРёСЃРІР°РёРІР°РЅРёРµ
 //
 //	if(pEnt->upgradeOpen()==Acad::eOk)
 //	{
@@ -2460,7 +2461,7 @@ void func::strfil(double &myvar,
 )
 {
 	if (variableconst == true)
-		stringconst = CString("Разные");
+		stringconst = CString("Р Р°Р·РЅС‹Рµ");
 	else
 	{
 		double pnum = myvar;
@@ -2485,7 +2486,7 @@ void func::strfil(int &myvar,
 )
 {
 	if (variableconst == true)
-		stringconst = CString("Разные");
+		stringconst = CString("Р Р°Р·РЅС‹Рµ");
 	else stringconst.Format(L"%i", myvar);
 
 }
@@ -2502,8 +2503,8 @@ void func::strfil(bool &myvar,
 }
 
 void func::sequal(double &var,
-	CString &Svar1,//начальный
-	CString &Svar2,//конечный
+	CString &Svar1,//РЅР°С‡Р°Р»СЊРЅС‹Р№
+	CString &Svar2,//РєРѕРЅРµС‡РЅС‹Р№
 	bool &equ
 )
 {
@@ -2540,8 +2541,8 @@ void func::sequal(double &var,
 }
 
 void func::sequal(int &var,
-	CString &Svar1,//начальный
-	CString &Svar2,//конечный
+	CString &Svar1,//РЅР°С‡Р°Р»СЊРЅС‹Р№
+	CString &Svar2,//РєРѕРЅРµС‡РЅС‹Р№
 	bool &equ
 )
 {
@@ -2861,18 +2862,18 @@ void func::GiveStartvectorAndAngle(AcGePoint3d &n1,
 	Norm2 = AcGePoint3d(F2.x - S2.x,
 		F2.y - S2.y,
 		0);
-	//consoleprint(Norm1,_T("\nПервая точка"));
-	//consoleprint(Norm2,_T("\nВторая точка"));
+	//consoleprint(Norm1,_T("\nРџРµСЂРІР°СЏ С‚РѕС‡РєР°"));
+	//consoleprint(Norm2,_T("\nР’С‚РѕСЂР°СЏ С‚РѕС‡РєР°"));
 	pStartvector = AcGeVector3d(Norm1.x, Norm1.y, 0);
 	finishvector = AcGeVector3d(Norm2.x, Norm2.y, 0);
 
 	pAngle = angle(Norm1, Norm2);
 
-	//consoleprint(pAngle,_T("\nУгол"));
+	//consoleprint(pAngle,_T("\nРЈРіРѕР»"));
 	Givestartvector(pStartvector, finishvector, pAngle);
 	//pStartvector.normalize();
 	midp = n2;
-	//consoleprint(pAngle,_T("\nУгол"));
+	//consoleprint(pAngle,_T("\nРЈРіРѕР»"));
 
 
 
@@ -2902,11 +2903,11 @@ void func::GiveStartvectorAndAngle(AcGePoint3d &n1,
 //
 //	ads_real sa,sb;
 //
-//	if (acedGetReal(_T("\nВведите Ширину:"),&sa) != RTNORM)
+//	if (acedGetReal(_T("\nР’РІРµРґРёС‚Рµ РЁРёСЂРёРЅСѓ:"),&sa) != RTNORM)
 //	{
 //		return;}
 //	
-//	if (acedGetReal(_T("\nВведите Высоту:"),&sb) != RTNORM)
+//	if (acedGetReal(_T("\nР’РІРµРґРёС‚Рµ Р’С‹СЃРѕС‚Сѓ:"),&sb) != RTNORM)
 //	{
 //		return;}
 //	globSizeA=sa;
@@ -2921,7 +2922,7 @@ void func::GiveStartvectorAndAngle(AcGePoint3d &n1,
 //			  TVS_Pipe *pipi
 //			  )
 //{
-//	acutPrintf(_T("Чурчу се ок"));
+//	acutPrintf(_T("Р§СѓСЂС‡Сѓ СЃРµ РѕРє"));
 //}
 
 
@@ -2954,7 +2955,7 @@ int func::TVSClassCheck(AcDbEntity* pEnt)
 	else
 	{
 
-		acutPrintf(_T("Объект блокирован"));
+		acutPrintf(_T("РћР±СЉРµРєС‚ Р±Р»РѕРєРёСЂРѕРІР°РЅ"));
 		return isBlocked;
 	}
 }
@@ -3014,7 +3015,7 @@ int func::ActivationErrorMessage()
 	// 		CString err_list(errstr.c_str());
 	// 
 	// 
-	// 		MessageBox(NULL, conversion::charToWchar(errstr.c_str()),L"Лицензия недействительна", MB_ICONERROR |MB_OK);
+	// 		MessageBox(NULL, conversion::charToWchar(errstr.c_str()),L"Р›РёС†РµРЅР·РёСЏ РЅРµРґРµР№СЃС‚РІРёС‚РµР»СЊРЅР°", MB_ICONERROR |MB_OK);
 	// 	
 	// 
 	// 		return err;
@@ -3025,3 +3026,4 @@ int func::ActivationErrorMessage()
 	// 	}
 	return 0;
 }
+

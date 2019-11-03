@@ -1,4 +1,4 @@
-
+п»ї
 #pragma once
 #include "dbmain.h"
 #include "../TVS_Ventilation_DBX/TVS_Pipe.h"
@@ -50,18 +50,18 @@ namespace func {
 	// 	addAtribute(*&fdsfdsf)
 	// };
 
-
+	
 
 
 	void consoleprint(double It = 0, const ACHAR*format = _T(""));
 	void consoleprint(AcGePoint3d pPointi, const ACHAR*format = _T(""));
-	//суммирует точки
+	//СЃСѓРјРјРёСЂСѓРµС‚ С‚РѕС‡РєРё
 	AcGePoint3d summ(AcGePoint3d &pA, AcGePoint3d &pB);
-	//координаты dx dy точки удаленной от отрезка на расстояние R от точки на этом отрезку
+	//РєРѕРѕСЂРґРёРЅР°С‚С‹ dx dy С‚РѕС‡РєРё СѓРґР°Р»РµРЅРЅРѕР№ РѕС‚ РѕС‚СЂРµР·РєР° РЅР° СЂР°СЃСЃС‚РѕСЏРЅРёРµ R РѕС‚ С‚РѕС‡РєРё РЅР° СЌС‚РѕРј РѕС‚СЂРµР·РєСѓ
 	AcGePoint3d dist(AcGePoint3d &pF,
 		AcGePoint3d &pN,
 		double &pR);
-	//точка пересечения отрезков
+	//С‚РѕС‡РєР° РїРµСЂРµСЃРµС‡РµРЅРёСЏ РѕС‚СЂРµР·РєРѕРІ
 	bool intersection(AcGePoint3d &p1,
 		AcGePoint3d &p2,
 		AcGePoint3d &p3,
@@ -69,7 +69,7 @@ namespace func {
 		AcGePoint3d &MID
 	);
 
-	//Точка изгиба двух труб рвдиуса R
+	//РўРѕС‡РєР° РёР·РіРёР±Р° РґРІСѓС… С‚СЂСѓР± СЂРІРґРёСѓСЃР° R
 	void Givecenterpoint(AcGePoint3d &n1,
 		AcGePoint3d &n2,
 		AcGePoint3d &n3,
@@ -160,7 +160,7 @@ namespace func {
 		BOOL &Svar2,
 		bool &equ
 	);
-	void sequal(int &var, CString &Svar1,/*начальный */ CString &Svar2,/*конечный */ bool &equ);
+	void sequal(int &var, CString &Svar1,/*РЅР°С‡Р°Р»СЊРЅС‹Р№ */ CString &Svar2,/*РєРѕРЅРµС‡РЅС‹Р№ */ bool &equ);
 	double getElev(double &Elev,
 		int &EMode,
 		double &SizeA,
@@ -182,3 +182,4 @@ namespace func {
 	void drawEntity(AcDbEntity *pent);
 	int ActivationErrorMessage();
 };
+

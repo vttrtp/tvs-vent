@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -85,7 +85,7 @@ void dgTVSPropertyManager::OnShowWindow(BOOL bShow, UINT nStatus)
 	mGrid.SetColumnWidth(10, wide * 2);
 	mGrid.SetColumnWidth(11, wide);
 
-	mGrid.SetItemText(0, 0, _T("№"));
+	mGrid.SetItemText(0, 0, _T("в„–"));
 	mGrid.SetItemText(0, 1, CTVSProperty_position);
 	mGrid.SetItemText(0, 2, CTVSProperty_name);
 	mGrid.SetItemText(0, 3, CTVSProperty_type);
@@ -96,7 +96,7 @@ void dgTVSPropertyManager::OnShowWindow(BOOL bShow, UINT nStatus)
 	mGrid.SetItemText(0, 8, CTVSProperty_count);
 	mGrid.SetItemText(0, 9, CTVSProperty_mass);
 	mGrid.SetItemText(0, 10, CTVSProperty_note);
-	mGrid.SetItemText(0, 11, L"Выбрано");
+	mGrid.SetItemText(0, 11, L"Р’С‹Р±СЂР°РЅРѕ");
 
 	int i = 1;
 	for (auto &row : propertySpec.rows)
@@ -141,5 +141,6 @@ void dgTVSPropertyManager::OnBnClickedOk()
 		i++;
 	}
 	this->OnOK();
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
+

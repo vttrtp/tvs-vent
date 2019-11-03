@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -86,7 +86,7 @@ AcString GetFormatString(VARIANT *l_selection)
 										}
 										else if (res.compare(rbnext->resval.rstring))
 										{
-											res = _T("*** Разные ***");
+											res = _T("*** Р Р°Р·РЅС‹Рµ ***");
 										}
 									}
 								}
@@ -107,7 +107,7 @@ AcString GetFormatString(VARIANT *l_selection)
 void PutFormatString(VARIANT *l_selection, AcString res)
 {
 	AcAxDocLock docLoc(acdbCurDwg());
-	// Нужно бы проверить, но мы просто регистрируем
+	// РќСѓР¶РЅРѕ Р±С‹ РїСЂРѕРІРµСЂРёС‚СЊ, РЅРѕ РјС‹ РїСЂРѕСЃС‚Рѕ СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј
 	//acdbRegApp(_T("MyMLeaderXdata"));
 	HRESULT l_hr;
 	try
@@ -186,7 +186,7 @@ STDMETHODIMP CMLeaderDynProp::GetDisplayName(BSTR *pBstrName) {
 	if (pBstrName == NULL)
 		return (E_POINTER);
 	// TODO: add your code here (and comment the line below)
-	*pBstrName = ::SysAllocString(L"Текстовый формат");
+	*pBstrName = ::SysAllocString(L"РўРµРєСЃС‚РѕРІС‹Р№ С„РѕСЂРјР°С‚");
 
 	return (S_OK);
 }
@@ -217,7 +217,7 @@ STDMETHODIMP CMLeaderDynProp::GetDescription(BSTR *pBstrName) {
 	if (pBstrName == NULL)
 		return (E_POINTER);
 	// TODO: add your code here (and comment the line below)
-	*pBstrName = ::SysAllocString(L"Текстовый формат выносок");
+	*pBstrName = ::SysAllocString(L"РўРµРєСЃС‚РѕРІС‹Р№ С„РѕСЂРјР°С‚ РІС‹РЅРѕСЃРѕРє");
 
 	return (S_OK);
 }
@@ -234,7 +234,7 @@ STDMETHODIMP CMLeaderDynProp::GetCurrentValueName(BSTR *pBstrName) {
 STDMETHODIMP CMLeaderDynProp::GetCurrentValueType(VARTYPE *pVarType) {
 	if (pVarType == NULL)
 		return (E_POINTER);
-	*pVarType = VT_BSTR; // Строковое значение
+	*pVarType = VT_BSTR; // РЎС‚СЂРѕРєРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ
 	return (S_OK);
 }
 
@@ -246,7 +246,7 @@ STDMETHODIMP CMLeaderDynProp::GetCurrentValueData(IUnknown *pUnk, VARIANT *pVarD
 	::VariantInit(pVarData);
 	V_VT(pVarData) = VT_BSTR;
 	CString v; v.Format(_T("%s"), sFormat.kTCharPtr());
-	V_BSTR(pVarData) = v.AllocSysString(); // Возвращаем строку формата
+	V_BSTR(pVarData) = v.AllocSysString(); // Р’РѕР·РІСЂР°С‰Р°РµРј СЃС‚СЂРѕРєСѓ С„РѕСЂРјР°С‚Р°
 
 	return (S_OK);
 }
@@ -310,3 +310,4 @@ STDMETHODIMP CMLeaderDynProp::GetCategoryName(PROPCAT propcat, LCID lcid, BSTR *
 	*pBstrName = ::SysAllocString(CTVSPropertyCategoryName);
 	return (S_OK);
 }
+

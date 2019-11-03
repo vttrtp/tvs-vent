@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -199,17 +199,16 @@ void dgPipeSize::OnBnClickedOk()
 
 
 
-
 	this->OnOK();
-	// TODO: добавьте свой код обработчика уведомлений
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 
 void dgPipeSize::OnBnClickedCancel()
 {
 	this->OnCancel();
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 
@@ -277,7 +276,7 @@ void dgPipeSize::SetElevUp()
 
 
 
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 void dgPipeSize::SetElevMid()
@@ -287,7 +286,7 @@ void dgPipeSize::SetElevMid()
 	fElevUp.SetCheck(0);
 	fElevMid.SetCheck(1);
 	fElevDown.SetCheck(0);
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 void dgPipeSize::SetElevDown()
@@ -295,7 +294,7 @@ void dgPipeSize::SetElevDown()
 	fElevUp.SetCheck(0);
 	fElevMid.SetCheck(0);
 	fElevDown.SetCheck(1);
-	// TODO: добавьте свой код обработчика уведомлений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СѓРІРµРґРѕРјР»РµРЅРёР№
 }
 
 
@@ -464,7 +463,7 @@ void dgPipeSize::OnShowWindow(BOOL bShow, UINT nStatus)
 
 
 	ChangeSizeA();
-	// TODO: добавьте свой код обработчика сообщений
+	// TODO: РґРѕР±Р°РІСЊС‚Рµ СЃРІРѕР№ РєРѕРґ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СЃРѕРѕР±С‰РµРЅРёР№
 }
 
 void dgPipeSize::ChangeDuctFlex()

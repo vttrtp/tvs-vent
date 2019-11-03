@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+Ôªø#include "StdAfx.h"
 #include "resource.h"
 #include "Func.h"
 #include "tdbl.h"
@@ -40,7 +40,7 @@ void HeatFloor::getOffset(AcDbPolyline *pLine)
 	{
 		indexofrecursion++;
 		if(getInsideOffset(pln,offset)==false) return;
-		//acutPrintf(_T("\n ÿ‡„: %d"),getInsideOffset(pLine,offset));
+		//acutPrintf(_T("\n –®–∞–≥: %d"),getInsideOffset(pLine,offset));
 		if(getMaxOffset(offset,pln)==false) return;
 
 		polySet.append(pln);
@@ -394,6 +394,7 @@ HFPoint::HFPoint(void)
 HFPoint::~HFPoint(void)
 {
 }
+
 
 
 

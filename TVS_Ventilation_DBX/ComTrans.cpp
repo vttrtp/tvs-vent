@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -154,24 +154,24 @@ STDMETHODIMP CComTrans::GetDisplayName (DISPID dispId, BSTR *propName)
 	}
 	switch (dispId) 
 	{
-		// стандартное 
+		// СЃС‚Р°РЅРґР°СЂС‚РЅРѕРµ 
 	case (0x401): 
-		*propName  = ::SysAllocString(_T("Переход")); 
+		*propName  = ::SysAllocString(_T("РџРµСЂРµС…РѕРґ")); 
 		break; 
 
 	case (DISPID_A): 
-		*propName  = ::SysAllocString(L"Dпр"); 
+		*propName  = ::SysAllocString(L"DРїСЂ"); 
 		break; 
 
 	case (DISPID_SizeB): 
-		*propName  = ::SysAllocString(L"Hпр"); 
+		*propName  = ::SysAllocString(L"HРїСЂ"); 
 		break; 
 	case (DISPID_A2): 
-		*propName  = ::SysAllocString(L"Dпр2"); 
+		*propName  = ::SysAllocString(L"DРїСЂ2"); 
 		break; 
 
 	case (DISPID_SizeB2): 
-		*propName  = ::SysAllocString(L"Hпр2"); 
+		*propName  = ::SysAllocString(L"HРїСЂ2"); 
 		break; 
 
 		//case (DISPID_Flow): 
@@ -185,29 +185,29 @@ STDMETHODIMP CComTrans::GetDisplayName (DISPID dispId, BSTR *propName)
 
 
 	case (DISPID_Length): 
-		*propName  = ::SysAllocString(L"Длина"); 
+		*propName  = ::SysAllocString(L"Р”Р»РёРЅР°"); 
 		break; 
 	case (DISPID_1D2D): 
 		*propName  = ::SysAllocString(L"1D"); 
 		break; 
 	case (DISPID_Rotation): 
-		*propName  = ::SysAllocString(L"Угол"); 
+		*propName  = ::SysAllocString(L"РЈРіРѕР»"); 
 		break; 
 
 	case (DISPID_Wipeout): 
-		*propName  = ::SysAllocString(L"Маскировка"); 
+		*propName  = ::SysAllocString(L"РњР°СЃРєРёСЂРѕРІРєР°"); 
 		break; 
 	case (DISPID_TransType): 
-		*propName  = ::SysAllocString(L"Тип"); 
+		*propName  = ::SysAllocString(L"РўРёРї"); 
 		break; 
 	case (DISPID_Elev): 
-		*propName  = ::SysAllocString(L"Отм. Центр"); 
+		*propName  = ::SysAllocString(L"РћС‚Рј. Р¦РµРЅС‚СЂ"); 
 		break; 
 	case (DISPID_Tag1): 
-		*propName  = ::SysAllocString(L"Тэг 1"); 
+		*propName  = ::SysAllocString(L"РўСЌРі 1"); 
 		break;
 	case (DISPID_Tag2): 
-		*propName  = ::SysAllocString(L"Тэг 2"); 
+		*propName  = ::SysAllocString(L"РўСЌРі 2"); 
 		break;
 	} 
 	return S_OK; 

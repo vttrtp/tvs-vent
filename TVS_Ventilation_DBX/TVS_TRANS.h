@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -177,9 +177,9 @@ public:
 	AcGePoint3d A,B,C,D;
 	bool ThisRoundp1;
 	bool ThisRoundp2;
-	Int8 TransType;//левый=1,правый=2,осевой=3, произвольный=4
+	Int8 TransType;//Р»РµРІС‹Р№=1,РїСЂР°РІС‹Р№=2,РѕСЃРµРІРѕР№=3, РїСЂРѕРёР·РІРѕР»СЊРЅС‹Р№=4
 
-
+	
 ////////////////////////////////////
 	virtual void getName(CString &unit);
 
@@ -233,3 +233,4 @@ public:
 #ifdef TVS_VENTILATION_DBX_MODULE
 ACDB_REGISTER_OBJECT_ENTRY_AUTO(TVS_TRANS)
 #endif
+

@@ -1,53 +1,54 @@
-#include "StdAfx.h"
+п»ї#include "StdAfx.h"
 #include "TVS_ComEntity.h"
 
 bool CTVS_ComEntity::tryToSetCommonDisplayName(const DISPID &dispId, BSTR *propName)
 {
 	switch (dispId) 
 	{ 
-		// стандартное 
+		// СЃС‚Р°РЅРґР°СЂС‚РЅРѕРµ 
 	case (0x516): 
-		*propName  = ::SysAllocString(_T("Цвет")); 
+		*propName  = ::SysAllocString(_T("Р¦РІРµС‚")); 
 		return true;
 		break; 
 
 	case (0x501): 
-		*propName  = ::SysAllocString(_T("Слой")); 
+		*propName  = ::SysAllocString(_T("РЎР»РѕР№")); 
 		return true;
 		break; 
 
 	case (0x502): 
-		*propName  = ::SysAllocString(_T("Тип линий")); 
+		*propName  = ::SysAllocString(_T("РўРёРї Р»РёРЅРёР№")); 
 		return true;
 		break; 
 
 	case (0x503): 
-		*propName  = ::SysAllocString(_T("Масштаб типа линий")); 
+		*propName  = ::SysAllocString(_T("РњР°СЃС€С‚Р°Р± С‚РёРїР° Р»РёРЅРёР№")); 
 		return true;
 		break; 
 
 	case (0x513): 
-		*propName  = ::SysAllocString(_T("Стиль печати")); 
+		*propName  = ::SysAllocString(_T("РЎС‚РёР»СЊ РїРµС‡Р°С‚Рё")); 
 		return true;
 		break; 
 
 	case (0x514): 
-		*propName  = ::SysAllocString(_T("Вес линий")); 
+		*propName  = ::SysAllocString(_T("Р’РµСЃ Р»РёРЅРёР№")); 
 		return true;
 		break; 
 
 	case (0x515): 
-		*propName  = ::SysAllocString(_T("Гиперссылка")); 
+		*propName  = ::SysAllocString(_T("Р“РёРїРµСЂСЃСЃС‹Р»РєР°")); 
 		return true;
 		break; 
 
 	case (0x577): 
-		*propName  = ::SysAllocString(_T("Материал")); 
+		*propName  = ::SysAllocString(_T("РњР°С‚РµСЂРёР°Р»")); 
 		return true;
 		break; 
 
 	}
 	return false;
 }
+
 
 

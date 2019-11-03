@@ -65,13 +65,13 @@
 	
 				  <Components Description="TVS_Vent 2020 64bit">
 		<RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R23.1" SeriesMax="R23.1" SupportPath="./Contents/TVS_VENT/2020/win64;"/>
-		<ComponentEntry AppName="TVS_VENT 2019x64" Version="3.3.1" ModuleName="./Contents/TVS_VENT/2020/win64/TVSTVS_Ventilation_DBX.dbx"
+		<ComponentEntry AppName="TVS_VENT 2020x64" Version="3.3.1" ModuleName="./Contents/TVS_VENT/2020/win64/TVSTVS_Ventilation_DBX.dbx"
 			 LoadOnAutoCADStartup="True">
 		</ComponentEntry>
 	</Components>
 	
        <Components Description="TVS_VENT menu">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R23.0" SupportPath="./Contents/TVS_VENT/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R23.1" SupportPath="./Contents/TVS_VENT/Resources;"/>
 		<ComponentEntry AppName="TVS_VENT" Version="3.3.1" ModuleName="./Contents/TVS_VENT/Resources/TVS_VENT.cuix"/>
 			</Components>
 			

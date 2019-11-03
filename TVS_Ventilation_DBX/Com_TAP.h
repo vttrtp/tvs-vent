@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+п»ї// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -142,7 +142,7 @@ public:
 
 
 public:
-	STDMETHOD(GetDisplayName) (DISPID dispId, BSTR *propName); // это в h-файл враппера 
+	STDMETHOD(GetDisplayName) (DISPID dispId, BSTR *propName); // СЌС‚Рѕ РІ h-С„Р°Р№Р» РІСЂР°РїРїРµСЂР° 
 
 	STDMETHOD(get_Dpr)(/*[out, retval]*/ double  *pVal);
 	STDMETHOD(put_Dpr)(/*[in]*/ double newVal);
@@ -176,3 +176,4 @@ public:
 } ;
 
 OBJECT_ENTRY_AUTO(__uuidof(Com_TAP), CCom_TAP)
+

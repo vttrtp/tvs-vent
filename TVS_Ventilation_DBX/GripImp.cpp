@@ -1,4 +1,4 @@
-//
+ï»¿//
 // (C) Copyright 1998-2006 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
@@ -62,7 +62,7 @@ if ( isOperationActive() )
 	else
 		{
 			
-			 acutPrintf(_T("\nÓñå"));
+			 acutPrintf(_T("\nÐ£ÑÐµ"));
 		}
 		return stat;
 }
@@ -83,7 +83,7 @@ acDocManager->sendStringToExecute(acDocManager->document(acdbHostApplicationServ
 // 	if(es == Acad::eOk) { if (acedCommandS(RTSTR,_T("_LINE"),
 // 		RTSTR, _T("0,0,0"),
 // 		RTSTR,_T("10,10,0"),
-// 		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nÎøèáêà"));}
+// 		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nÐžÑˆÐ¸Ð±ÐºÐ°"));}
 // 	int t=acedCommandS(RTSTR,_T("_LINE"),
 // 		RTSTR, _T("0,0,0"),
 // 		RTSTR,_T("10,10,0"),
@@ -91,7 +91,7 @@ acDocManager->sendStringToExecute(acDocManager->document(acdbHostApplicationServ
 // 	if (acedCommandS(RTSTR,_T("_LINE"),
 // 		RTSTR, _T("0,0,0"),
 // 		RTSTR,_T("10,10,0"),
-// 		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nÎøèáêà"));
+// 		RTSTR,_T("20,50,0"),RTSTR,_T(""), RTNONE)!=RTNORM) acutPrintf(_T("\nÐžÑˆÐ¸Ð±ÐºÐ°"));
 	//acutPrintf(ACRX_T("\nAfter acedCommandC call. acedCommandC is asynchronous..."));
 }
 
@@ -397,3 +397,4 @@ Adesk::Boolean addEntity(AcDbEntity *pEntity)
 	 pEntity->close();
      return bRetVal;
 }
+

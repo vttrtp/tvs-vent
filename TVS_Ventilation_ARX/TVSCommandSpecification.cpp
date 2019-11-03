@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "TVSCommandSpecification.h"
 #include "TVSPropertySpec.h"
 #include "TVSSpecTable.h"
@@ -22,14 +22,14 @@ void TVSCommandSpecification::execute(void)
 	{
 		return;
 	}
-
+	
 	ads_point pt1;
 	TVSSpecTable table;
-	acedInitGet(RSG_NONULL, _T("Настройки Н н Y y"));
+	acedInitGet(RSG_NONULL, _T("РќР°СЃС‚СЂРѕР№РєРё Рќ РЅ Y y"));
 	int status = 0;
 
 	while (status != RTNORM) {
-		status = acedGetPoint(NULL, _T("\nУкажите точку вставки спецификации или [Настройки]:"), pt1);
+		status = acedGetPoint(NULL, _T("\nРЈРєР°Р¶РёС‚Рµ С‚РѕС‡РєСѓ РІСЃС‚Р°РІРєРё СЃРїРµС†РёС„РёРєР°С†РёРё РёР»Рё [РќР°СЃС‚СЂРѕР№РєРё]:"), pt1);
 		switch (status)
 		{
 		case RTCAN:
@@ -49,3 +49,4 @@ void TVSCommandSpecification::execute(void)
 	table.buildDataFromSpec(spec);
 	table.toSimpleTable(asPnt3d(pt1));
 }
+
