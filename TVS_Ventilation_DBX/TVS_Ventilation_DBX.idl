@@ -133,17 +133,15 @@ library TVSTVS_Ventilation_DBXLib
 		[propput, id(5), helpstring("Угол отвода")] HRESULT Angle([in] double newVal);
 		[propget, id(6), helpstring("Угол поворота")] HRESULT Rotation([out, retval] double *pVal);
 		[propput, id(6), helpstring("Угол поворота")] HRESULT Rotation([in] double newVal);
-		
 		[propget, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([out, retval] int *pVal);
         [propput, id(7), helpstring("Отображение 1D/2D")] HRESULT _1D2D([in] int  newVal);
 		[propget, id(8), helpstring("Маскировка")] HRESULT Wipeout([out, retval] int *pVal);
 		[propput, id(8), helpstring("Маскировка")] HRESULT Wipeout([in] int newVal);
 		[propget, id(9), helpstring("Отм. центр")] HRESULT Elev([out, retval] double *pVal);
 		[propput, id(9), helpstring("Отм. центр")] HRESULT Elev([in] double newVal);
-// 		[propget, id(10), helpstring("Тэг 1")] HRESULT Tag1([out, retval]  BSTR *pVal);
-// 		[propput, id(10), helpstring("Тэг 1")] HRESULT Tag1([in] BSTR newVal);
-// 		[propget, id(11), helpstring("Тэг 2")] HRESULT Tag2([out, retval]  BSTR *pVal);
-// 		[propput, id(11), helpstring("Тэг 2")] HRESULT Tag2 ([in] BSTR newVal);
+		[propget, id(10), helpstring("Форма отвода")] HRESULT Form([out, retval] int *pVal);
+		[propput, id(10), helpstring("Форма отвода")] HRESULT Form([in] int  newVal);
+
 	};
 	//- Library section of interface ICom_TAP
 	[
@@ -190,6 +188,7 @@ library TVSTVS_Ventilation_DBXLib
 
 		[propget, id(10), helpstring("Отм. центр")] HRESULT Elev([out, retval] double *pVal);
 		[propput, id(10), helpstring("Отм. центр")] HRESULT Elev([in] double newVal);
+
 // 		[propget, id(11), helpstring("Тэг 1")] HRESULT Tag1([out, retval]  BSTR *pVal);
 // 		[propput, id(11), helpstring("Тэг 1")] HRESULT Tag1([in] BSTR newVal);
 // 		[propget, id(12), helpstring("Тэг 2")] HRESULT Tag2([out, retval]  BSTR *pVal);
@@ -237,6 +236,7 @@ library TVSTVS_Ventilation_DBXLib
 		[propput, id(8), helpstring("Маскировка")] HRESULT Wipeout([in] int newVal);
 		[propget, id(9), helpstring("Отм. центр")] HRESULT Elev([out, retval] double *pVal);
 		[propput, id(9), helpstring("Отм. центр")] HRESULT Elev([in] double newVal);
+
 // 		[propget, id(10), helpstring("Тэг 1")] HRESULT Tag1([out, retval]  BSTR *pVal);
 // 		[propput, id(10), helpstring("Тэг 1")] HRESULT Tag1([in] BSTR newVal);
 // 		[propget, id(11), helpstring("Тэг 2")] HRESULT Tag2([out, retval]  BSTR *pVal);

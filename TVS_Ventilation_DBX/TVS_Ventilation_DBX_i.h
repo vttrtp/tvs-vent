@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0595 */
-/* at Mon Nov 04 10:53:08 2019
+/* at Sun Apr 05 19:57:15 2020
  */
 /* Compiler settings for TVS_Ventilation_DBX.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0595 
@@ -1542,6 +1542,12 @@ EXTERN_C const IID IID_ICom_TAP;
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Elev( 
             /* [in] */ double newVal) = 0;
         
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Form( 
+            /* [retval][out] */ int *pVal) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Form( 
+            /* [in] */ int newVal) = 0;
+        
     };
     
     
@@ -1914,6 +1920,14 @@ EXTERN_C const IID IID_ICom_TAP;
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Form )( 
+            ICom_TAP * This,
+            /* [retval][out] */ int *pVal);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Form )( 
+            ICom_TAP * This,
+            /* [in] */ int newVal);
+        
         END_INTERFACE
     } ICom_TAPVtbl;
 
@@ -2152,6 +2166,12 @@ EXTERN_C const IID IID_ICom_TAP;
 
 #define ICom_TAP_put_Elev(This,newVal)	\
     ( (This)->lpVtbl -> put_Elev(This,newVal) ) 
+
+#define ICom_TAP_get_Form(This,pVal)	\
+    ( (This)->lpVtbl -> get_Form(This,pVal) ) 
+
+#define ICom_TAP_put_Form(This,newVal)	\
+    ( (This)->lpVtbl -> put_Form(This,newVal) ) 
 
 #endif /* COBJMACROS */
 

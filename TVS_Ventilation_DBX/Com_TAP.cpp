@@ -173,10 +173,6 @@ STDMETHODIMP CCom_TAP::GetDisplayName (DISPID dispId, BSTR *propName)
 		*propName  = ::SysAllocString(L"v="); 
 		break; 
 
-
-		//case (DISPID_Length): 
-		//	*propName  = ::SysAllocString(L"Длина"); 
-		//	break; 
 	case (DISPID_1D2D): 
 		*propName  = ::SysAllocString(L"1D"); 
 		break; 
@@ -192,11 +188,8 @@ STDMETHODIMP CCom_TAP::GetDisplayName (DISPID dispId, BSTR *propName)
 	case (DISPID_Elev): 
 		*propName  = ::SysAllocString(L"Отм. Центр"); 
 		break; 
-	case (DISPID_Tag1): 
-		*propName  = ::SysAllocString(L"Тэг 1"); 
-		break;
-	case (DISPID_Tag2): 
-		*propName  = ::SysAllocString(L"Тэг 2"); 
+	case (DISPID_Form):
+		*propName = ::SysAllocString(L"Форма отв");
 		break;
 
 	} 
@@ -561,77 +554,29 @@ STDMETHODIMP CCom_TAP::put_Elev(double  newVal)
 	return S_OK;
 }
 
-// STDMETHODIMP CCom_TAP::get_Tag1(BSTR  *pVal)
-// {
-// 	// TODO: Add your implementation code here
-// 	AcAxObjectRefPtr<TVS_TAP> pSq(&m_objRef, AcDb::kForRead);
-// 	if (pSq.openStatus() != Acad::eOk)
-// 		return E_ACCESSDENIED;          
-// 
-// 
-// 	USES_CONVERSION;
-// 	*pVal=SysAllocString(CT2W(pSq->Tag1));
-// 
-// 
-// 
-// 
-// 	return S_OK;
-// }
-// 
-// STDMETHODIMP CCom_TAP::put_Tag1(BSTR  newVal)
-// {
-// 	// TODO: Add your implementation code here
-// 	AcAxDocLock docLock(m_objRef.objectId(), AcAxDocLock::kNormal);
-// 	if(docLock.lockStatus() != Acad::eOk && docLock.lockStatus() != Acad::eNoDatabase)
-// 		return E_ACCESSDENIED;
-// 	AcAxObjectRefPtr<TVS_TAP> pSq(&m_objRef, AcDb::kForWrite);
-// 	if (pSq.openStatus() != Acad::eOk)
-// 		return E_ACCESSDENIED;   
-// 
-// 	USES_CONVERSION;
-// 	pSq->put_Tag1(W2T(newVal));
-// 
-// 
-// 	Fire_Notification(DISPID_Tag1);
-// 
-// 	return S_OK;
-// }
-// 
-// 
-// STDMETHODIMP CCom_TAP::get_Tag2(BSTR  *pVal)
-// {
-// 	// TODO: Add your implementation code here
-// 	AcAxObjectRefPtr<TVS_TAP> pSq(&m_objRef, AcDb::kForRead);
-// 	if (pSq.openStatus() != Acad::eOk)
-// 		return E_ACCESSDENIED;          
-// 
-// 
-// 	USES_CONVERSION;
-// 	*pVal=SysAllocString(CT2W(pSq->Tag2));
-// 
-// 
-// 
-// 
-// 	return S_OK;
-// }
-// 
-// STDMETHODIMP CCom_TAP::put_Tag2(BSTR  newVal)
-// {
-// 	// TODO: Add your implementation code here
-// 	AcAxDocLock docLock(m_objRef.objectId(), AcAxDocLock::kNormal);
-// 	if(docLock.lockStatus() != Acad::eOk && docLock.lockStatus() != Acad::eNoDatabase)
-// 		return E_ACCESSDENIED;
-// 	AcAxObjectRefPtr<TVS_TAP> pSq(&m_objRef, AcDb::kForWrite);
-// 	if (pSq.openStatus() != Acad::eOk)
-// 		return E_ACCESSDENIED;   
-// 
-// 	USES_CONVERSION;
-// 	pSq->put_Tag2(W2T(newVal));
-// 
-// 
-// 	Fire_Notification(DISPID_Tag2);
-// 
-// 	return S_OK;
-// }
+STDMETHODIMP CCom_TAP::get_Form(int  *pVal)
+{
+	// TODO: Add your implementation code here
+	AcAxObjectRefPtr<TVS_TAP> pSq(&m_objRef, AcDb::kForRead);
+	if (pSq.openStatus() != Acad::eOk)
+		return E_ACCESSDENIED;
+	*pVal = pSq->get_Form();
+	return S_OK;
+}
+
+STDMETHODIMP CCom_TAP::put_Form(int  newVal)
+{
+	// TODO: Add your implementation code here
+	AcAxDocLock docLock(m_objRef.objectId(), AcAxDocLock::kNormal);
+	if (docLock.lockStatus() != Acad::eOk && docLock.lockStatus() != Acad::eNoDatabase)
+		return E_ACCESSDENIED;
+	AcAxObjectRefPtr<TVS_TAP> pSq(&m_objRef, AcDb::kForWrite);
+	if (pSq.openStatus() != Acad::eOk)
+		return E_ACCESSDENIED;
 
 
+	if (newVal <= 0 || newVal > 2) pSq->put_Form(0);
+	else pSq->put_Form(newVal);
+	Fire_Notification(DISPID_Form);
+	return S_OK;
+}

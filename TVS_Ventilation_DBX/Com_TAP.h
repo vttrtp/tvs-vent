@@ -40,9 +40,7 @@
 #define DISPID_1D2D  0x07
 #define DISPID_Wipeout 0x08
 #define DISPID_Elev 0x09
-#define DISPID_Tag1 0x0a
-#define DISPID_Tag2 0x0b
-
+#define DISPID_Form 0x0a
 
 //----- CCom_TAP
 class ATL_NO_VTABLE CCom_TAP : 
@@ -105,8 +103,6 @@ public:
 	BEGIN_OPMPROP_MAP()
 		OPMPROP_ENTRY(0, DISPID_A, PROPCAT_Data, \
 		0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
-		//OPMPROP_ENTRY(0, DISPID_Length, PROPCAT_Data, \
-		//0, 0, 0, _T(""), 0, 0, IID_NULL, IID_NULL, "")
 		OPMPROP_ENTRY(0, DISPID_1D2D, PROPCAT_Data, \
 		0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
 		OPMPROP_ENTRY(0, DISPID_SizeB, PROPCAT_Data, \
@@ -123,10 +119,8 @@ public:
 		0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
 		OPMPROP_ENTRY(0, DISPID_Elev, PROPCAT_Data, \
 		0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
-		OPMPROP_ENTRY(0, DISPID_Tag1, PROPCAT_Data, \
-		0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
-		OPMPROP_ENTRY(0, DISPID_Tag2, PROPCAT_Data, \
-		0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
+		OPMPROP_ENTRY(0, DISPID_Form, PROPCAT_Data, \
+			0, 0, 0, _T(""), 0, 1, IID_NULL, IID_NULL, "")
 		//----- Use the OPMPROP_ENTRY/OPMPROP_CAT_ENTRY macros for each of your properties
 	END_OPMPROP_MAP()
 	//IOPMPropertyExtensionImpl
@@ -156,6 +150,7 @@ public:
 
 	//STDMETHOD(get_Length)(/*[out, retval]*/ double   *pVal);
 	//STDMETHOD(put_Length)(/*[in]*/ double  newVal);
+
 	STDMETHOD(get__1D2D)(/*[out, retval]*/ int   *pVal);
 	STDMETHOD(put__1D2D)(/*[in]*/ int  newVal);
 	STDMETHOD(get_Angle)(/*[out, retval]*/ double   *pVal);
@@ -167,6 +162,8 @@ public:
 	STDMETHOD(put_Wipeout)(/*[in]*/ int  newVal);
 	STDMETHOD(get_Elev)(/*[out, retval]*/ double  *pVal);
 	STDMETHOD(put_Elev)(/*[in]*/ double  newVal);
+	STDMETHOD(get_Form)(/*[out, retval]*/ int   *pVal);
+	STDMETHOD(put_Form)(/*[in]*/ int  newVal);
 // 	STDMETHOD(get_Tag1)(/*[out, retval]*/ BSTR *pVal);
 // 	STDMETHOD(put_Tag1)(/*[in]*/ BSTR  newVal);
 // 	STDMETHOD(get_Tag2)(/*[out, retval]*/ BSTR *pVal);
