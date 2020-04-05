@@ -10,13 +10,13 @@ parser.add_argument("file",
 
 def replace_by_dictionary(replace_strings,filename,new_file_name):
     file_str = open(filename, "r").read()
-    for key, value in replace_strings.iteritems():
+    for key, value in replace_strings.items():
         file_str = file_str.replace(key,value)
     new_file = open(new_file_name,"w") 
-    new_file.write(file_str.encode("UTF-8"))
+    new_file.write(file_str)
 
 def start_build(project_conf_file):
-    file_str = open("config.json", "r").read().decode('utf-8')
+    file_str = open("config.json", "r").read()
     json_data = json.loads(file_str )
     project_folder  = os.path.join(os.path.dirname(os.path.abspath(__file__)),json_data["project_relative_folder"])
    

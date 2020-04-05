@@ -575,7 +575,7 @@ STDMETHODIMP CCom_TAP::put_Form(int  newVal)
 		return E_ACCESSDENIED;
 
 
-	if (newVal <= 0 || newVal > 2) pSq->put_Form(0);
+	if (newVal < 1 || newVal > 3) pSq->put_Form(1);
 	else pSq->put_Form(newVal);
 	Fire_Notification(DISPID_Form);
 	return S_OK;
