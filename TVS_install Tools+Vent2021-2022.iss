@@ -37,14 +37,14 @@ Source: "{#SourcePath}\Installer\Resources\*"; DestDir: "{app}\Contents\Resource
 
 ;2021
 ;x64
-Source: "{#SourcePath}\x64\Release\2020\TVSTVS_Ventilation_ARX.arx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2021\win64"; Flags: ignoreversion
-Source: "{#SourcePath}\x64\Release\2020\TVSTVS_Ventilation_DBX.dbx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2021\win64"; Flags: ignoreversion
+Source: "{#SourcePath}\x64\Release\2021\TVSTVS_Ventilation_ARX.arx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2021\win64"; Flags: ignoreversion
+Source: "{#SourcePath}\x64\Release\2021\TVSTVS_Ventilation_DBX.dbx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2021\win64"; Flags: ignoreversion
 ;/////
 
 ;2022
 ;x64
-Source: "{#SourcePath}\x64\Release\2020\TVSTVS_Ventilation_ARX.arx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2022\win64"; Flags: ignoreversion
-Source: "{#SourcePath}\x64\Release\2020\TVSTVS_Ventilation_DBX.dbx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2022\win64"; Flags: ignoreversion
+Source: "{#SourcePath}\x64\Release\2022\TVSTVS_Ventilation_ARX.arx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2022\win64"; Flags: ignoreversion
+Source: "{#SourcePath}\x64\Release\2022\TVSTVS_Ventilation_DBX.dbx"; Components: TVS_VENT; DestDir: "{app}\Contents\TVS_VENT\2022\win64"; Flags: ignoreversion
 ;/////
 
 

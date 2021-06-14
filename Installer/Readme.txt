@@ -55,6 +55,6 @@ TVS_VENT-2010-2012 (x64 x32)
 
 
 Автор: Трипутин Витаут 
-krylatyvershnik@gmail.com
+tryputsin.v@gmail.com
 
 

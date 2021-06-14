@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <ApplicationPackage SchemaVersion="1.0" AppVersion="3.3.1" AutodeskProduct="AutoCAD" Description="TVS" Author="Tryputsin Vitaut" ProductCode="{4BEE127E-95C4-434D-ABAC-65155192BB24}" Name="TVS">
-	<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD|AutoCAD*" SeriesMin="15.0" SeriesMax="23.1" />
-	<CompanyDetails Name="TVS" Email="krylatyvershnik@gmail.com" />
+	<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD|AutoCAD*" SeriesMin="15.0" SeriesMax="24.1" />
+	<CompanyDetails Name="TVS" Email="tryputsin.v@gmail.com" />
 
 	<Components Description="TVS_Vent 2015-2016 64bit">
 		<RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R20.1" SupportPath="./Contents/TVS_VENT/2015-2016/win64;"/>
@@ -73,19 +73,19 @@
 		</ComponentEntry>
 	</Components>
 	<Components Description="TVS_VENT menu">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R23.1" SupportPath="./Contents/TVS_VENT/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R20.0" SeriesMax="R24.1" SupportPath="./Contents/TVS_VENT/Resources;"/>
 		<ComponentEntry AppName="TVS_VENT" Version="3.3.1" ModuleName="./Contents/TVS_VENT/Resources/TVS_VENT.cuix"/>
 	</Components>
 
 	<Components Description="TVS_TOOLS">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R23.1" SupportPath="./Contents/TVS_TOOLS/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R24.1" SupportPath="./Contents/TVS_TOOLS/Resources;"/>
 		<ComponentEntry AppName="TVS_TOOLS" Version="3.3.1" ModuleName="./Contents/TVS_TOOLS/Resources/TVS_TOOLS.cuix"/>
 
 	</Components>
 
 
 	<Components Description="Resources">
-		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R23.1" SupportPath="./Contents/Resources;"/>
+		<RuntimeRequirements OS="Win32|Win64" Platform="AutoCAD*" SeriesMin="R15.0" SeriesMax="R24.1" SupportPath="./Contents/Resources;"/>
 
 	</Components>
 
