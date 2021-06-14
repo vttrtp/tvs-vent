@@ -1,0 +1,20 @@
+{
+    "replace_name" : "2022",
+    "replace_strings" : 
+    {
+        "2015-2016":"2022",
+        "AutoCAD 2016":"AutoCAD 2022",
+        "20.0" : "23.2",
+        "v110" : "v142",
+        "AcPal.lib" : "",
+        "TVSTVS_Ventilation_DBX.lib":"TVSTVS_Ventilation_DBX.lib;AcPal.lib",
+        "acdb20.lib":"acdb24.lib",
+		"axdb18enu.tlb" : "axdb24enu.tlb",
+		"axdb19enu.tlb" : "axdb24enu.tlb",
+        "axdb20enu.tlb" : "axdb24enu.tlb",
+        "axdb21enu.tlb" : "axdb24enu.tlb",
+        "axdb22enu.tlb" : "axdb24enu.tlb",
+        "axdb23enu.tlb" : "axdb24enu.tlb",
+        "axdb24enu.tlb" : "axdb24enu.tlb"
+    }
+}

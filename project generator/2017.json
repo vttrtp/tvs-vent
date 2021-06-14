@@ -6,6 +6,7 @@
         "AutoCAD 2016":"AutoCAD 2017",
         "20.0" : "21.0",
         "v110" : "v140",
+        "AcPal.lib" : "",
         "acdb20.lib":"acdb21.lib",
 		"axdb18enu.tlb" : "axdb21enu.tlb",
 		"axdb19enu.tlb" : "axdb21enu.tlb",

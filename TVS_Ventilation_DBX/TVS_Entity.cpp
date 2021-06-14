@@ -818,13 +818,9 @@ void TVS_Entity::get_WipeoutColor(AcGiWorldDraw *mode, AcCmColor &backcolor) con
 
 
 	if(!mode->context()->isPlotGeneration()){ 
-		   
-		backcolor.setColorMethod(AcCmEntityColor::kByColor);
 		backcolor.setRGB( GetRValue(backcolorDW),(backcolorDW & 0x00FF0000) >> 16,GetBValue(backcolorDW) ); 
 
-	}else{ 
-		
-		backcolor.setColorMethod(AcCmEntityColor::kByColor);   
+	}else{  
 		backcolor.setRGB( GetRValue(backcolorDW),(backcolorDW & 0x00FF0000) >> 16,GetBValue(backcolorDW) ); 
 	} 
 }
@@ -1008,13 +1004,12 @@ void TVS_Entity::setWipeoutProperty(AcGiWorldDraw *mode, AcDbPolyline *pEnt)
 
 		    rgbColor = (COLORREF)pAcadColors.dwGfxLayoutBkColor; 
 	} 
-	backcolor.setTrueColor();
-	backcolor.setRed( (UInt8)GetRValue(rgbColor));
-	backcolor.setGreen (rgbColor & 0x00FF0000 >> 16) ;
-		backcolor.setBlue ((UInt8)GetBValue(rgbColor));
+
+	backcolor.setCOLORREF(rgbColor);
+	
 	
 	AcCmColor bgcolor;
-	bgcolor.setColor(backcolor.color());
+	bgcolor.setCOLORREF(rgbColor);
 	pEnt->setColor(bgcolor);
 	if (This1D==false) pEnt->setConstantWidth(SizeA+WipeoutLength*2);
 	else pEnt->setConstantWidth(WipeoutLength*2);

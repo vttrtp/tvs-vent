@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Com_TAP.cpp">
+      <Filter>source\comInterfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="ComPipe.cpp">
+      <Filter>source\comInterfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="ComTrans.cpp">
+      <Filter>source\comInterfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="ComWye.cpp">
+      <Filter>source\comInterfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="GripImp.cpp">
+      <Filter>source\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_ComEntity.cpp">
+      <Filter>source\comInterfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_Connector.cpp">
+      <Filter>source\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_Entity.cpp">
+      <Filter>source\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_Pipe.cpp">
+      <Filter>source\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_TAP.cpp">
+      <Filter>source\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_TRANS.cpp">
+      <Filter>source\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_WYE.cpp">
+      <Filter>source\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="acrxEntryPoint.cpp">
+      <Filter>source\main</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>source\main</Filter>
+    </ClCompile>
+    <ClCompile Include="TVS_Ventilation_DBX.cpp">
+      <Filter>source\main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Com_TAP.h">
+      <Filter>headers\comInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="commonDef.h">
+      <Filter>headers\common</Filter>
+    </ClInclude>
+    <ClInclude Include="ComPipe.h">
+      <Filter>headers\comInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ComTrans.h">
+      <Filter>headers\comInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ComWye.h">
+      <Filter>headers\comInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="GripImp.h">
+      <Filter>headers\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>headers\main</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>headers\main</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_ComEntity.h">
+      <Filter>headers\comInterfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_Connector.h">
+      <Filter>headers\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_Entity.h">
+      <Filter>headers\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_Pipe.h">
+      <Filter>headers\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_TAP.h">
+      <Filter>headers\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_TRANS.h">
+      <Filter>headers\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TVS_WYE.h">
+      <Filter>headers\entities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Com_TAP.rgs">
+      <Filter>rgs</Filter>
+    </None>
+    <None Include="ComPipe.rgs">
+      <Filter>rgs</Filter>
+    </None>
+    <None Include="ComTrans.rgs">
+      <Filter>rgs</Filter>
+    </None>
+    <None Include="ComWye.rgs">
+      <Filter>rgs</Filter>
+    </None>
+    <None Include="TVS_ComEntity.rgs">
+      <Filter>rgs</Filter>
+    </None>
+    <None Include="TVS_Ventilation_DBX.rgs">
+      <Filter>rgs</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="headers">
+      <UniqueIdentifier>{94b5485c-3c9e-4fde-80d8-d50e41073505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers\entities">
+      <UniqueIdentifier>{4f13bd2c-1cbb-4c36-8634-dc4b0b576bdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers\comInterfaces">
+      <UniqueIdentifier>{05d1ad15-8280-4d62-9c3d-13a0885e0f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers\main">
+      <UniqueIdentifier>{dd6f72b2-930d-4f30-a5d0-307af171e8ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers\common">
+      <UniqueIdentifier>{f44f9375-1136-4a6b-99ad-1502f8c5edbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{0f597c9b-374b-4b5f-aa4b-15bf4698481b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\entities">
+      <UniqueIdentifier>{d5b698be-0ef2-4a4d-910a-599235be4cab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\comInterfaces">
+      <UniqueIdentifier>{a664ac26-cf4d-48b3-9f50-86237c539e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\main">
+      <UniqueIdentifier>{bd2a8c05-5c54-4d59-9178-091bf971a811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rgs">
+      <UniqueIdentifier>{60676bb6-8876-4965-b94b-554cb928f1d1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TVS_Ventilation_DBX.rc">
+      <Filter>rgs</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>headers\main</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TVS_Ventilation_DBX.idl">
+      <Filter>source\main</Filter>
+    </Midl>
+  </ItemGroup>
+</Project>

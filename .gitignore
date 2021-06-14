@@ -172,3 +172,6 @@ TVS/Installer/TVS Addins for Autocad.exe
 Installer/Installer/TVS Addins for Autocad.exe
 packages/
 !/ThirdParty/*
+*.db-shm
+*.db-shm
+
