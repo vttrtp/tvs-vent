@@ -4,7 +4,7 @@
 #define MyAppName "TVS_Vent_Tools_2015-2019(x64,x32)_version(3.3.1)"
 #define MyAppVersion "3.3.1"
 #define MyAppPublisher "Vitaut Tryputsin"
-#define MyAppURL "http://www.tvs-vent.by/"
+#define MyAppURL "http://github.com/vttrtp/tvs-vent"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.

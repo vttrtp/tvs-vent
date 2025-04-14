@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Tue Jan 19 06:14:07 2038
  */
 /* Compiler settings for TVS_Ventilation_DBX.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0622 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -178,25 +186,30 @@ EXTERN_C const IID IID_ITVS_ComEntity;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IAcadEntity, QueryInterface)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ struct GUID *riid,
             /* [out][idldescattr] */ void **ppvObj,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, AddRef)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *AddRef )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Release)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Release )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfoCount)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             ITVS_ComEntity * This,
             /* [out][idldescattr] */ unsigned UINT *pctinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfo)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ unsigned UINT itinfo,
@@ -204,6 +217,7 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [out][idldescattr] */ void **pptinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetIDsOfNames)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ struct GUID *riid,
@@ -213,6 +227,7 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [out][idldescattr] */ signed long *rgdispid,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Invoke)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ signed long dispidMember,
@@ -225,14 +240,17 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [out][idldescattr] */ unsigned UINT *puArgErr,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Handle)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Handle )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectName )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetXData )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BSTR AppName,
@@ -240,93 +258,114 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [out][idldescattr] */ VARIANT *XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, SetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *SetXData )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT XDataType,
             /* [in][idldescattr] */ VARIANT XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Delete)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Delete )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectID )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Application)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Application )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Database)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Database )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ IAcadDatabase **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_HasExtensionDictionary)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_HasExtensionDictionary )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetExtensionDictionary)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetExtensionDictionary )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ IAcadDictionary **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_OwnerID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_OwnerID )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Document)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Document )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Erase)
         /* [id][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Erase )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_TrueColor)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_TrueColor )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ IAcadAcCmColor **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_TrueColor)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_TrueColor )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ IAcadAcCmColor *noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Layer)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Layer )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Layer)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Layer )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Linetype)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Linetype )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Linetype)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Linetype )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_LinetypeScale)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_LinetypeScale )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ ACAD_NOUNITS *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_LinetypeScale)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_LinetypeScale )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ ACAD_NOUNITS noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Visible)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Visible )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Visible)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Visible )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BOOLEAN noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayPolar)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayPolar )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ signed INT NumberOfObjects,
@@ -334,6 +373,7 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [in][idldescattr] */ VARIANT CenterPoint,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayRectangular)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayRectangular )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ signed INT NumberOfRows,
@@ -344,27 +384,32 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [in][idldescattr] */ double DistBetweenLevels,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Highlight)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Highlight )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BOOLEAN HighlightFlag,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Copy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Copy )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Move)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Move )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT FromPoint,
             /* [in][idldescattr] */ VARIANT ToPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate3D )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -372,12 +417,14 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT Point1,
             /* [in][idldescattr] */ VARIANT Point2,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror3D )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -385,85 +432,103 @@ EXTERN_C const IID IID_ITVS_ComEntity;
             /* [in][idldescattr] */ VARIANT point3,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ScaleEntity)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ScaleEntity )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double ScaleFactor,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, TransformBy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *TransformBy )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ VARIANT TransformationMatrix,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Update)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Update )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetBoundingBox)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetBoundingBox )( 
             ITVS_ComEntity * This,
             /* [out][idldescattr] */ VARIANT *MinPoint,
             /* [out][idldescattr] */ VARIANT *MaxPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, IntersectWith)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *IntersectWith )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ IDispatch *IntersectObject,
             /* [in][idldescattr] */ enum AcExtendOption option,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_PlotStyleName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_PlotStyleName )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_PlotStyleName)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_PlotStyleName )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Lineweight)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Lineweight )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ ACAD_LWEIGHT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Lineweight)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Lineweight )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ ACAD_LWEIGHT noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityTransparency)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityTransparency )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_EntityTransparency)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_EntityTransparency )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Hyperlinks)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Hyperlinks )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ IAcadHyperlinks **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Material)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Material )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Material)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Material )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityName )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityType)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityType )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ signed long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_color)
         /* [id][propget][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_color )( 
             ITVS_ComEntity * This,
             /* [retval][out] */ ACAD_COLOR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_color)
         /* [id][propput][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_color )( 
             ITVS_ComEntity * This,
             /* [in][idldescattr] */ ACAD_COLOR noname,
@@ -781,25 +846,30 @@ EXTERN_C const IID IID_IComPipe;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IAcadEntity, QueryInterface)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IComPipe * This,
             /* [in][idldescattr] */ struct GUID *riid,
             /* [out][idldescattr] */ void **ppvObj,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, AddRef)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *AddRef )( 
             IComPipe * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Release)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Release )( 
             IComPipe * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfoCount)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IComPipe * This,
             /* [out][idldescattr] */ unsigned UINT *pctinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfo)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IComPipe * This,
             /* [in][idldescattr] */ unsigned UINT itinfo,
@@ -807,6 +877,7 @@ EXTERN_C const IID IID_IComPipe;
             /* [out][idldescattr] */ void **pptinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetIDsOfNames)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IComPipe * This,
             /* [in][idldescattr] */ struct GUID *riid,
@@ -816,6 +887,7 @@ EXTERN_C const IID IID_IComPipe;
             /* [out][idldescattr] */ signed long *rgdispid,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Invoke)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IComPipe * This,
             /* [in][idldescattr] */ signed long dispidMember,
@@ -828,14 +900,17 @@ EXTERN_C const IID IID_IComPipe;
             /* [out][idldescattr] */ unsigned UINT *puArgErr,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Handle)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Handle )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectName )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetXData )( 
             IComPipe * This,
             /* [in][idldescattr] */ BSTR AppName,
@@ -843,93 +918,114 @@ EXTERN_C const IID IID_IComPipe;
             /* [out][idldescattr] */ VARIANT *XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, SetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *SetXData )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT XDataType,
             /* [in][idldescattr] */ VARIANT XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Delete)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Delete )( 
             IComPipe * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectID )( 
             IComPipe * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Application)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Application )( 
             IComPipe * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Database)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Database )( 
             IComPipe * This,
             /* [retval][out] */ IAcadDatabase **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_HasExtensionDictionary)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_HasExtensionDictionary )( 
             IComPipe * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetExtensionDictionary)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetExtensionDictionary )( 
             IComPipe * This,
             /* [retval][out] */ IAcadDictionary **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_OwnerID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_OwnerID )( 
             IComPipe * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Document)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Document )( 
             IComPipe * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Erase)
         /* [id][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Erase )( 
             IComPipe * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_TrueColor)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_TrueColor )( 
             IComPipe * This,
             /* [retval][out] */ IAcadAcCmColor **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_TrueColor)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_TrueColor )( 
             IComPipe * This,
             /* [in][idldescattr] */ IAcadAcCmColor *noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Layer)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Layer )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Layer)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Layer )( 
             IComPipe * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Linetype)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Linetype )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Linetype)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Linetype )( 
             IComPipe * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_LinetypeScale)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_LinetypeScale )( 
             IComPipe * This,
             /* [retval][out] */ ACAD_NOUNITS *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_LinetypeScale)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_LinetypeScale )( 
             IComPipe * This,
             /* [in][idldescattr] */ ACAD_NOUNITS noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Visible)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Visible )( 
             IComPipe * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Visible)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Visible )( 
             IComPipe * This,
             /* [in][idldescattr] */ BOOLEAN noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayPolar)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayPolar )( 
             IComPipe * This,
             /* [in][idldescattr] */ signed INT NumberOfObjects,
@@ -937,6 +1033,7 @@ EXTERN_C const IID IID_IComPipe;
             /* [in][idldescattr] */ VARIANT CenterPoint,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayRectangular)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayRectangular )( 
             IComPipe * This,
             /* [in][idldescattr] */ signed INT NumberOfRows,
@@ -947,27 +1044,32 @@ EXTERN_C const IID IID_IComPipe;
             /* [in][idldescattr] */ double DistBetweenLevels,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Highlight)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Highlight )( 
             IComPipe * This,
             /* [in][idldescattr] */ BOOLEAN HighlightFlag,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Copy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Copy )( 
             IComPipe * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Move)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Move )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT FromPoint,
             /* [in][idldescattr] */ VARIANT ToPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate3D )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -975,12 +1077,14 @@ EXTERN_C const IID IID_IComPipe;
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT Point1,
             /* [in][idldescattr] */ VARIANT Point2,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror3D )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -988,198 +1092,244 @@ EXTERN_C const IID IID_IComPipe;
             /* [in][idldescattr] */ VARIANT point3,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ScaleEntity)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ScaleEntity )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double ScaleFactor,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, TransformBy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *TransformBy )( 
             IComPipe * This,
             /* [in][idldescattr] */ VARIANT TransformationMatrix,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Update)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Update )( 
             IComPipe * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetBoundingBox)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetBoundingBox )( 
             IComPipe * This,
             /* [out][idldescattr] */ VARIANT *MinPoint,
             /* [out][idldescattr] */ VARIANT *MaxPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, IntersectWith)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *IntersectWith )( 
             IComPipe * This,
             /* [in][idldescattr] */ IDispatch *IntersectObject,
             /* [in][idldescattr] */ enum AcExtendOption option,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_PlotStyleName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_PlotStyleName )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_PlotStyleName)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_PlotStyleName )( 
             IComPipe * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Lineweight)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Lineweight )( 
             IComPipe * This,
             /* [retval][out] */ ACAD_LWEIGHT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Lineweight)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Lineweight )( 
             IComPipe * This,
             /* [in][idldescattr] */ ACAD_LWEIGHT noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityTransparency)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityTransparency )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_EntityTransparency)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_EntityTransparency )( 
             IComPipe * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Hyperlinks)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Hyperlinks )( 
             IComPipe * This,
             /* [retval][out] */ IAcadHyperlinks **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Material)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Material )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Material)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Material )( 
             IComPipe * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityName )( 
             IComPipe * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityType)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityType )( 
             IComPipe * This,
             /* [retval][out] */ signed long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_color)
         /* [id][propget][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_color )( 
             IComPipe * This,
             /* [retval][out] */ ACAD_COLOR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_color)
         /* [id][propput][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_color )( 
             IComPipe * This,
             /* [in][idldescattr] */ ACAD_COLOR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Dpr)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Dpr )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Dpr)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Dpr )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_SizeB)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SizeB )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_SizeB)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_SizeB )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Flow)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Flow )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Flow)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Flow )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Speed)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Speed )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Speed)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Speed )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Length)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Length )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Length)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Length )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Rotation)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Rotation )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Rotation)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Rotation )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get__1D2D)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get__1D2D )( 
             IComPipe * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put__1D2D)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put__1D2D )( 
             IComPipe * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Parami)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Parami )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Parami)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Parami )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_ParamdP)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ParamdP )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_ParamdP)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ParamdP )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Wipeout)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Wipeout )( 
             IComPipe * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Wipeout)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Wipeout )( 
             IComPipe * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Grani)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Grani )( 
             IComPipe * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Grani)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Grani )( 
             IComPipe * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_ElevUp)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ElevUp )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_ElevUp)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ElevUp )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_Elev)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Elev )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_Elev)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Elev )( 
             IComPipe * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, get_ElevDown)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ElevDown )( 
             IComPipe * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComPipe, put_ElevDown)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ElevDown )( 
             IComPipe * This,
             /* [in] */ double newVal);
@@ -1556,25 +1706,30 @@ EXTERN_C const IID IID_ICom_TAP;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IAcadEntity, QueryInterface)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ struct GUID *riid,
             /* [out][idldescattr] */ void **ppvObj,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, AddRef)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *AddRef )( 
             ICom_TAP * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Release)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Release )( 
             ICom_TAP * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfoCount)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             ICom_TAP * This,
             /* [out][idldescattr] */ unsigned UINT *pctinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfo)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ unsigned UINT itinfo,
@@ -1582,6 +1737,7 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [out][idldescattr] */ void **pptinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetIDsOfNames)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ struct GUID *riid,
@@ -1591,6 +1747,7 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [out][idldescattr] */ signed long *rgdispid,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Invoke)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ signed long dispidMember,
@@ -1603,14 +1760,17 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [out][idldescattr] */ unsigned UINT *puArgErr,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Handle)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Handle )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectName )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetXData )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BSTR AppName,
@@ -1618,93 +1778,114 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [out][idldescattr] */ VARIANT *XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, SetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *SetXData )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT XDataType,
             /* [in][idldescattr] */ VARIANT XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Delete)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Delete )( 
             ICom_TAP * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectID )( 
             ICom_TAP * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Application)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Application )( 
             ICom_TAP * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Database)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Database )( 
             ICom_TAP * This,
             /* [retval][out] */ IAcadDatabase **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_HasExtensionDictionary)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_HasExtensionDictionary )( 
             ICom_TAP * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetExtensionDictionary)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetExtensionDictionary )( 
             ICom_TAP * This,
             /* [retval][out] */ IAcadDictionary **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_OwnerID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_OwnerID )( 
             ICom_TAP * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Document)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Document )( 
             ICom_TAP * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Erase)
         /* [id][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Erase )( 
             ICom_TAP * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_TrueColor)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_TrueColor )( 
             ICom_TAP * This,
             /* [retval][out] */ IAcadAcCmColor **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_TrueColor)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_TrueColor )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ IAcadAcCmColor *noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Layer)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Layer )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Layer)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Layer )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Linetype)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Linetype )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Linetype)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Linetype )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_LinetypeScale)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_LinetypeScale )( 
             ICom_TAP * This,
             /* [retval][out] */ ACAD_NOUNITS *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_LinetypeScale)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_LinetypeScale )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ ACAD_NOUNITS noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Visible)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Visible )( 
             ICom_TAP * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Visible)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Visible )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BOOLEAN noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayPolar)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayPolar )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ signed INT NumberOfObjects,
@@ -1712,6 +1893,7 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [in][idldescattr] */ VARIANT CenterPoint,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayRectangular)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayRectangular )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ signed INT NumberOfRows,
@@ -1722,27 +1904,32 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [in][idldescattr] */ double DistBetweenLevels,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Highlight)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Highlight )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BOOLEAN HighlightFlag,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Copy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Copy )( 
             ICom_TAP * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Move)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Move )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT FromPoint,
             /* [in][idldescattr] */ VARIANT ToPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate3D )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -1750,12 +1937,14 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT Point1,
             /* [in][idldescattr] */ VARIANT Point2,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror3D )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -1763,166 +1952,204 @@ EXTERN_C const IID IID_ICom_TAP;
             /* [in][idldescattr] */ VARIANT point3,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ScaleEntity)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ScaleEntity )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double ScaleFactor,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, TransformBy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *TransformBy )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ VARIANT TransformationMatrix,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Update)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Update )( 
             ICom_TAP * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetBoundingBox)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetBoundingBox )( 
             ICom_TAP * This,
             /* [out][idldescattr] */ VARIANT *MinPoint,
             /* [out][idldescattr] */ VARIANT *MaxPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, IntersectWith)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *IntersectWith )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ IDispatch *IntersectObject,
             /* [in][idldescattr] */ enum AcExtendOption option,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_PlotStyleName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_PlotStyleName )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_PlotStyleName)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_PlotStyleName )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Lineweight)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Lineweight )( 
             ICom_TAP * This,
             /* [retval][out] */ ACAD_LWEIGHT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Lineweight)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Lineweight )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ ACAD_LWEIGHT noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityTransparency)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityTransparency )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_EntityTransparency)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_EntityTransparency )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Hyperlinks)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Hyperlinks )( 
             ICom_TAP * This,
             /* [retval][out] */ IAcadHyperlinks **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Material)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Material )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Material)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Material )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityName )( 
             ICom_TAP * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityType)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityType )( 
             ICom_TAP * This,
             /* [retval][out] */ signed long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_color)
         /* [id][propget][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_color )( 
             ICom_TAP * This,
             /* [retval][out] */ ACAD_COLOR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_color)
         /* [id][propput][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_color )( 
             ICom_TAP * This,
             /* [in][idldescattr] */ ACAD_COLOR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Dpr)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Dpr )( 
             ICom_TAP * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Dpr)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Dpr )( 
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_SizeB)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SizeB )( 
             ICom_TAP * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_SizeB)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_SizeB )( 
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Flow)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Flow )( 
             ICom_TAP * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Flow)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Flow )( 
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Speed)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Speed )( 
             ICom_TAP * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Speed)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Speed )( 
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Angle)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Angle )( 
             ICom_TAP * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Angle)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Angle )( 
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Rotation)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Rotation )( 
             ICom_TAP * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Rotation)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Rotation )( 
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get__1D2D)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get__1D2D )( 
             ICom_TAP * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put__1D2D)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put__1D2D )( 
             ICom_TAP * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Wipeout)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Wipeout )( 
             ICom_TAP * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Wipeout)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Wipeout )( 
             ICom_TAP * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Elev)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Elev )( 
             ICom_TAP * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Elev)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Elev )( 
             ICom_TAP * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, get_Form)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Form )( 
             ICom_TAP * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(ICom_TAP, put_Form)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Form )( 
             ICom_TAP * This,
             /* [in] */ int newVal);
@@ -2275,25 +2502,30 @@ EXTERN_C const IID IID_IComTrans;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IAcadEntity, QueryInterface)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IComTrans * This,
             /* [in][idldescattr] */ struct GUID *riid,
             /* [out][idldescattr] */ void **ppvObj,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, AddRef)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *AddRef )( 
             IComTrans * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Release)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Release )( 
             IComTrans * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfoCount)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IComTrans * This,
             /* [out][idldescattr] */ unsigned UINT *pctinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfo)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IComTrans * This,
             /* [in][idldescattr] */ unsigned UINT itinfo,
@@ -2301,6 +2533,7 @@ EXTERN_C const IID IID_IComTrans;
             /* [out][idldescattr] */ void **pptinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetIDsOfNames)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IComTrans * This,
             /* [in][idldescattr] */ struct GUID *riid,
@@ -2310,6 +2543,7 @@ EXTERN_C const IID IID_IComTrans;
             /* [out][idldescattr] */ signed long *rgdispid,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Invoke)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IComTrans * This,
             /* [in][idldescattr] */ signed long dispidMember,
@@ -2322,14 +2556,17 @@ EXTERN_C const IID IID_IComTrans;
             /* [out][idldescattr] */ unsigned UINT *puArgErr,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Handle)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Handle )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectName )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetXData )( 
             IComTrans * This,
             /* [in][idldescattr] */ BSTR AppName,
@@ -2337,93 +2574,114 @@ EXTERN_C const IID IID_IComTrans;
             /* [out][idldescattr] */ VARIANT *XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, SetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *SetXData )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT XDataType,
             /* [in][idldescattr] */ VARIANT XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Delete)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Delete )( 
             IComTrans * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectID )( 
             IComTrans * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Application)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Application )( 
             IComTrans * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Database)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Database )( 
             IComTrans * This,
             /* [retval][out] */ IAcadDatabase **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_HasExtensionDictionary)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_HasExtensionDictionary )( 
             IComTrans * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetExtensionDictionary)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetExtensionDictionary )( 
             IComTrans * This,
             /* [retval][out] */ IAcadDictionary **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_OwnerID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_OwnerID )( 
             IComTrans * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Document)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Document )( 
             IComTrans * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Erase)
         /* [id][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Erase )( 
             IComTrans * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_TrueColor)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_TrueColor )( 
             IComTrans * This,
             /* [retval][out] */ IAcadAcCmColor **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_TrueColor)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_TrueColor )( 
             IComTrans * This,
             /* [in][idldescattr] */ IAcadAcCmColor *noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Layer)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Layer )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Layer)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Layer )( 
             IComTrans * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Linetype)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Linetype )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Linetype)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Linetype )( 
             IComTrans * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_LinetypeScale)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_LinetypeScale )( 
             IComTrans * This,
             /* [retval][out] */ ACAD_NOUNITS *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_LinetypeScale)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_LinetypeScale )( 
             IComTrans * This,
             /* [in][idldescattr] */ ACAD_NOUNITS noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Visible)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Visible )( 
             IComTrans * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Visible)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Visible )( 
             IComTrans * This,
             /* [in][idldescattr] */ BOOLEAN noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayPolar)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayPolar )( 
             IComTrans * This,
             /* [in][idldescattr] */ signed INT NumberOfObjects,
@@ -2431,6 +2689,7 @@ EXTERN_C const IID IID_IComTrans;
             /* [in][idldescattr] */ VARIANT CenterPoint,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayRectangular)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayRectangular )( 
             IComTrans * This,
             /* [in][idldescattr] */ signed INT NumberOfRows,
@@ -2441,27 +2700,32 @@ EXTERN_C const IID IID_IComTrans;
             /* [in][idldescattr] */ double DistBetweenLevels,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Highlight)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Highlight )( 
             IComTrans * This,
             /* [in][idldescattr] */ BOOLEAN HighlightFlag,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Copy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Copy )( 
             IComTrans * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Move)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Move )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT FromPoint,
             /* [in][idldescattr] */ VARIANT ToPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate3D )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -2469,12 +2733,14 @@ EXTERN_C const IID IID_IComTrans;
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT Point1,
             /* [in][idldescattr] */ VARIANT Point2,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror3D )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -2482,166 +2748,204 @@ EXTERN_C const IID IID_IComTrans;
             /* [in][idldescattr] */ VARIANT point3,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ScaleEntity)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ScaleEntity )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double ScaleFactor,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, TransformBy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *TransformBy )( 
             IComTrans * This,
             /* [in][idldescattr] */ VARIANT TransformationMatrix,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Update)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Update )( 
             IComTrans * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetBoundingBox)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetBoundingBox )( 
             IComTrans * This,
             /* [out][idldescattr] */ VARIANT *MinPoint,
             /* [out][idldescattr] */ VARIANT *MaxPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, IntersectWith)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *IntersectWith )( 
             IComTrans * This,
             /* [in][idldescattr] */ IDispatch *IntersectObject,
             /* [in][idldescattr] */ enum AcExtendOption option,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_PlotStyleName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_PlotStyleName )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_PlotStyleName)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_PlotStyleName )( 
             IComTrans * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Lineweight)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Lineweight )( 
             IComTrans * This,
             /* [retval][out] */ ACAD_LWEIGHT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Lineweight)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Lineweight )( 
             IComTrans * This,
             /* [in][idldescattr] */ ACAD_LWEIGHT noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityTransparency)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityTransparency )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_EntityTransparency)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_EntityTransparency )( 
             IComTrans * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Hyperlinks)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Hyperlinks )( 
             IComTrans * This,
             /* [retval][out] */ IAcadHyperlinks **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Material)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Material )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Material)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Material )( 
             IComTrans * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityName )( 
             IComTrans * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityType)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityType )( 
             IComTrans * This,
             /* [retval][out] */ signed long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_color)
         /* [id][propget][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_color )( 
             IComTrans * This,
             /* [retval][out] */ ACAD_COLOR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_color)
         /* [id][propput][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_color )( 
             IComTrans * This,
             /* [in][idldescattr] */ ACAD_COLOR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_Dpr)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Dpr )( 
             IComTrans * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_Dpr)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Dpr )( 
             IComTrans * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_SizeB)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SizeB )( 
             IComTrans * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_SizeB)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_SizeB )( 
             IComTrans * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_Dpr2)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Dpr2 )( 
             IComTrans * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_Dpr2)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Dpr2 )( 
             IComTrans * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_SizeB2)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SizeB2 )( 
             IComTrans * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_SizeB2)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_SizeB2 )( 
             IComTrans * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_Length)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Length )( 
             IComTrans * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_Length)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Length )( 
             IComTrans * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_Rotation)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Rotation )( 
             IComTrans * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_Rotation)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Rotation )( 
             IComTrans * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get__1D2D)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get__1D2D )( 
             IComTrans * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put__1D2D)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put__1D2D )( 
             IComTrans * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_Wipeout)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Wipeout )( 
             IComTrans * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_Wipeout)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Wipeout )( 
             IComTrans * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_TransType)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_TransType )( 
             IComTrans * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_TransType)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_TransType )( 
             IComTrans * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, get_Elev)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Elev )( 
             IComTrans * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComTrans, put_Elev)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Elev )( 
             IComTrans * This,
             /* [in] */ double newVal);
@@ -2988,25 +3292,30 @@ EXTERN_C const IID IID_IComWye;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IAcadEntity, QueryInterface)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IComWye * This,
             /* [in][idldescattr] */ struct GUID *riid,
             /* [out][idldescattr] */ void **ppvObj,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, AddRef)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *AddRef )( 
             IComWye * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Release)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Release )( 
             IComWye * This,
             /* [retval][out] */ unsigned long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfoCount)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IComWye * This,
             /* [out][idldescattr] */ unsigned UINT *pctinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetTypeInfo)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IComWye * This,
             /* [in][idldescattr] */ unsigned UINT itinfo,
@@ -3014,6 +3323,7 @@ EXTERN_C const IID IID_IComWye;
             /* [out][idldescattr] */ void **pptinfo,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetIDsOfNames)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IComWye * This,
             /* [in][idldescattr] */ struct GUID *riid,
@@ -3023,6 +3333,7 @@ EXTERN_C const IID IID_IComWye;
             /* [out][idldescattr] */ signed long *rgdispid,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Invoke)
         /* [id][restricted][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IComWye * This,
             /* [in][idldescattr] */ signed long dispidMember,
@@ -3035,14 +3346,17 @@ EXTERN_C const IID IID_IComWye;
             /* [out][idldescattr] */ unsigned UINT *puArgErr,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Handle)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Handle )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectName )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetXData )( 
             IComWye * This,
             /* [in][idldescattr] */ BSTR AppName,
@@ -3050,93 +3364,114 @@ EXTERN_C const IID IID_IComWye;
             /* [out][idldescattr] */ VARIANT *XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, SetXData)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *SetXData )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT XDataType,
             /* [in][idldescattr] */ VARIANT XDataValue,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Delete)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Delete )( 
             IComWye * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_ObjectID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_ObjectID )( 
             IComWye * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Application)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Application )( 
             IComWye * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Database)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Database )( 
             IComWye * This,
             /* [retval][out] */ IAcadDatabase **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_HasExtensionDictionary)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_HasExtensionDictionary )( 
             IComWye * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetExtensionDictionary)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetExtensionDictionary )( 
             IComWye * This,
             /* [retval][out] */ IAcadDictionary **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_OwnerID)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_OwnerID )( 
             IComWye * This,
             /* [retval][out] */ LONG_PTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Document)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Document )( 
             IComWye * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Erase)
         /* [id][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Erase )( 
             IComWye * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_TrueColor)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_TrueColor )( 
             IComWye * This,
             /* [retval][out] */ IAcadAcCmColor **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_TrueColor)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_TrueColor )( 
             IComWye * This,
             /* [in][idldescattr] */ IAcadAcCmColor *noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Layer)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Layer )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Layer)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Layer )( 
             IComWye * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Linetype)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Linetype )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Linetype)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Linetype )( 
             IComWye * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_LinetypeScale)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_LinetypeScale )( 
             IComWye * This,
             /* [retval][out] */ ACAD_NOUNITS *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_LinetypeScale)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_LinetypeScale )( 
             IComWye * This,
             /* [in][idldescattr] */ ACAD_NOUNITS noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Visible)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Visible )( 
             IComWye * This,
             /* [retval][out] */ BOOLEAN *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Visible)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Visible )( 
             IComWye * This,
             /* [in][idldescattr] */ BOOLEAN noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayPolar)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayPolar )( 
             IComWye * This,
             /* [in][idldescattr] */ signed INT NumberOfObjects,
@@ -3144,6 +3479,7 @@ EXTERN_C const IID IID_IComWye;
             /* [in][idldescattr] */ VARIANT CenterPoint,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ArrayRectangular)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ArrayRectangular )( 
             IComWye * This,
             /* [in][idldescattr] */ signed INT NumberOfRows,
@@ -3154,27 +3490,32 @@ EXTERN_C const IID IID_IComWye;
             /* [in][idldescattr] */ double DistBetweenLevels,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Highlight)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Highlight )( 
             IComWye * This,
             /* [in][idldescattr] */ BOOLEAN HighlightFlag,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Copy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Copy )( 
             IComWye * This,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Move)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Move )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT FromPoint,
             /* [in][idldescattr] */ VARIANT ToPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Rotate3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Rotate3D )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -3182,12 +3523,14 @@ EXTERN_C const IID IID_IComWye;
             /* [in][idldescattr] */ double RotationAngle,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT Point1,
             /* [in][idldescattr] */ VARIANT Point2,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Mirror3D)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Mirror3D )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT Point1,
@@ -3195,158 +3538,194 @@ EXTERN_C const IID IID_IComWye;
             /* [in][idldescattr] */ VARIANT point3,
             /* [retval][out] */ IDispatch **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, ScaleEntity)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *ScaleEntity )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT BasePoint,
             /* [in][idldescattr] */ double ScaleFactor,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, TransformBy)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *TransformBy )( 
             IComWye * This,
             /* [in][idldescattr] */ VARIANT TransformationMatrix,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, Update)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *Update )( 
             IComWye * This,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, GetBoundingBox)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *GetBoundingBox )( 
             IComWye * This,
             /* [out][idldescattr] */ VARIANT *MinPoint,
             /* [out][idldescattr] */ VARIANT *MaxPoint,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, IntersectWith)
         /* [id][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *IntersectWith )( 
             IComWye * This,
             /* [in][idldescattr] */ IDispatch *IntersectObject,
             /* [in][idldescattr] */ enum AcExtendOption option,
             /* [retval][out] */ VARIANT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_PlotStyleName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_PlotStyleName )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_PlotStyleName)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_PlotStyleName )( 
             IComWye * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Lineweight)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Lineweight )( 
             IComWye * This,
             /* [retval][out] */ ACAD_LWEIGHT *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Lineweight)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Lineweight )( 
             IComWye * This,
             /* [in][idldescattr] */ ACAD_LWEIGHT noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityTransparency)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityTransparency )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_EntityTransparency)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_EntityTransparency )( 
             IComWye * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Hyperlinks)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Hyperlinks )( 
             IComWye * This,
             /* [retval][out] */ IAcadHyperlinks **retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_Material)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_Material )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_Material)
         /* [id][propput][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_Material )( 
             IComWye * This,
             /* [in][idldescattr] */ BSTR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityName)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityName )( 
             IComWye * This,
             /* [retval][out] */ BSTR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_EntityType)
         /* [id][propget][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_EntityType )( 
             IComWye * This,
             /* [retval][out] */ signed long *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, get_color)
         /* [id][propget][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *get_color )( 
             IComWye * This,
             /* [retval][out] */ ACAD_COLOR *retval);
         
+        DECLSPEC_XFGVIRT(IAcadEntity, put_color)
         /* [id][propput][hidden][funcdescattr] */ HRESULT ( STDMETHODCALLTYPE *put_color )( 
             IComWye * This,
             /* [in][idldescattr] */ ACAD_COLOR noname,
             /* [retval][out] */ void *retval);
         
+        DECLSPEC_XFGVIRT(IComWye, get_Dpr)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Dpr )( 
             IComWye * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_Dpr)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Dpr )( 
             IComWye * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get_SizeB)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SizeB )( 
             IComWye * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_SizeB)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_SizeB )( 
             IComWye * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get_Dpr2)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Dpr2 )( 
             IComWye * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_Dpr2)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Dpr2 )( 
             IComWye * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get_SizeB2)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SizeB2 )( 
             IComWye * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_SizeB2)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_SizeB2 )( 
             IComWye * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get_Length)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Length )( 
             IComWye * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_Length)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Length )( 
             IComWye * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get_Rotation)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Rotation )( 
             IComWye * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_Rotation)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Rotation )( 
             IComWye * This,
             /* [in] */ double newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get__1D2D)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get__1D2D )( 
             IComWye * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put__1D2D)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put__1D2D )( 
             IComWye * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get_Wipeout)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Wipeout )( 
             IComWye * This,
             /* [retval][out] */ int *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_Wipeout)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Wipeout )( 
             IComWye * This,
             /* [in] */ int newVal);
         
+        DECLSPEC_XFGVIRT(IComWye, get_Elev)
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Elev )( 
             IComWye * This,
             /* [retval][out] */ double *pVal);
         
+        DECLSPEC_XFGVIRT(IComWye, put_Elev)
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Elev )( 
             IComWye * This,
             /* [in] */ double newVal);

@@ -20,5 +20,10 @@
 @REM "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\msbuild.exe" "../TVS_Ventilation %%A.sln" /property:Configuration=Release /property:Platform=x64
 @REM )
 
-"C:\Program Files (x86)\Inno Setup 6\iscc.exe" "../TVS_install Tools+Vent2021-2022.iss"
+FOR %%A IN (2024) DO (
+python pg.py %%A.json
+"C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\msbuild.exe" "../TVS_Ventilation %%A.sln" /property:Configuration=Release /property:Platform=x64
+)
+
+"C:\Program Files (x86)\Inno Setup 6\iscc.exe" "../TVS_install Tools+Vent2024.iss"
 python pg.py 2015-2016.json
